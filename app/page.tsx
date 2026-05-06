@@ -1,7 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 
 export default function NewspaperPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <div className="min-h-screen bg-[#F8F5F0] text-[#111] font-sans">
       <style
@@ -11,27 +14,53 @@ export default function NewspaperPage() {
           .font-playfair {
             font-family: 'Playfair Display', serif;
           }
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+          .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
         `,
         }}
       />
 
       {/* Header */}
-      <header className="py-8 border-b-4 border-black flex flex-col md:flex-row items-center justify-between px-4 md:px-8 max-w-screen-2xl mx-auto">
-        <div className="text-xs tracking-wide font-semibold text-gray-600 mb-3 md:mb-0 w-full md:w-48 text-center md:text-left">
-          10 मई 2026
+      <header className="py-5 md:py-8 border-b-4 border-black px-4 md:px-8 max-w-screen-2xl mx-auto">
+        <div className="flex justify-between items-center mb-5 md:hidden text-[10px] font-bold tracking-widest text-gray-600 border-b border-gray-300 pb-2 uppercase">
+           <span>10 मई 2026</span>
+           <span>राष्ट्रीय संस्करण</span>
         </div>
-        <h1 className="text-4xl md:text-6xl font-black font-playfair tracking-tight text-center flex-1">
-          भरतेंदु शिखर
-        </h1>
-        <div className="text-xs tracking-wide font-semibold text-gray-600 mt-3 md:mt-0 w-full md:w-48 text-center md:text-right">
-          राष्ट्रीय संस्करण
+        <div className="flex items-center justify-between">
+          <div className="hidden md:block text-xs tracking-wide font-semibold text-gray-600 w-48 text-left">
+            10 मई 2026
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black font-playfair tracking-tight text-center flex-1 py-1 md:py-0">
+            भरतेंदु शिखर
+          </h1>
+          <div className="hidden md:block text-xs tracking-wide font-semibold text-gray-600 w-48 text-right">
+            राष्ट्रीय संस्करण
+          </div>
         </div>
       </header>
 
       {/* Navigation */}
-      <nav className="bg-[#CC2200] text-white">
-        <div className="max-w-screen-2xl mx-auto flex flex-col md:flex-row items-center justify-between px-4 md:px-8 py-4 gap-6">
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs font-bold tracking-wider">
+      <nav className="bg-[#CC2200] text-white relative">
+        <div className="max-w-screen-2xl mx-auto flex flex-row items-center justify-between px-4 md:px-8 py-3 md:py-4">
+          
+          {/* Mobile Hamburger Button */}
+          <button 
+            className="md:hidden flex flex-col justify-center items-center w-6 h-6 space-y-1 focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle Menu"
+          >
+            <span className={`block w-5 h-[2px] bg-white transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[6px]' : ''}`}></span>
+            <span className={`block w-5 h-[2px] bg-white transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`block w-5 h-[2px] bg-white transition-transform duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-6px' : ''}`}></span>
+          </button>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs font-bold tracking-wider">
             <a href="#" className="hover:underline transition-all">
               राजनीति
             </a>
@@ -51,13 +80,14 @@ export default function NewspaperPage() {
               विज्ञान
             </a>
           </div>
-          <div className="flex items-center space-x-6">
+
+          <div className="flex items-center space-x-4 md:space-x-6">
             <button
               aria-label="Search"
               className="hover:text-gray-200 transition-colors"
             >
               <svg
-                className="w-4 h-4"
+                className="w-4 h-4 md:w-4 md:h-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -70,32 +100,46 @@ export default function NewspaperPage() {
                 />
               </svg>
             </button>
-            <button className="bg-white text-[#CC2200] px-4 py-1.5 text-[10px] font-black tracking-widest hover:bg-gray-100 transition-colors">
+            <button className="bg-white text-[#CC2200] px-3 py-1.5 md:px-4 md:py-1.5 text-[10px] font-black tracking-widest hover:bg-gray-100 transition-colors">
               सदस्यता लें
             </button>
+          </div>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        <div 
+          className={`md:hidden absolute top-full left-0 w-full bg-[#B31E00] z-50 border-t border-white/20 transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-96' : 'max-h-0 border-t-0'}`}
+        >
+          <div className="flex flex-col px-4 py-2">
+            <a href="#" className="py-3 border-b border-white/10 text-xs font-bold tracking-wider hover:bg-white/5 transition-colors">राजनीति</a>
+            <a href="#" className="py-3 border-b border-white/10 text-xs font-bold tracking-wider hover:bg-white/5 transition-colors">संस्कृति</a>
+            <a href="#" className="py-3 border-b border-white/10 text-xs font-bold tracking-wider hover:bg-white/5 transition-colors">व्यापार</a>
+            <a href="#" className="py-3 border-b border-white/10 text-xs font-bold tracking-wider hover:bg-white/5 transition-colors">राय</a>
+            <a href="#" className="py-3 border-b border-white/10 text-xs font-bold tracking-wider hover:bg-white/5 transition-colors">तकनीक</a>
+            <a href="#" className="py-3 text-xs font-bold tracking-wider hover:bg-white/5 transition-colors">विज्ञान</a>
           </div>
         </div>
       </nav>
 
       {/* Breaking News Ticker */}
       <div className="border-b border-black">
-        <div className="max-w-screen-2xl mx-auto py-3 px-4 md:px-8 flex items-center text-xs">
-          <span className="text-[#CC2200] font-bold whitespace-nowrap mr-6">
+        <div className="max-w-screen-2xl mx-auto py-2.5 md:py-3 px-4 md:px-8 flex items-center text-[11px] md:text-xs">
+          <span className="text-[#CC2200] font-bold whitespace-nowrap mr-4 md:mr-6">
             ताज़ा ख़बरें
           </span>
-          <div className="overflow-hidden whitespace-nowrap flex-1 flex items-center text-gray-800">
-            <span className="mr-6 hover:underline cursor-pointer">
+          <div className="overflow-x-auto hide-scrollbar whitespace-nowrap flex-1 flex items-center text-gray-800">
+            <span className="mr-4 md:mr-6 hover:underline cursor-pointer">
               मैराथन सत्र के बाद सीनेट ने ऐतिहासिक बुनियादी ढांचा विधेयक पारित
               किया
             </span>
-            <span className="text-[#CC2200] mr-6 text-base leading-none">
+            <span className="text-[#CC2200] mr-4 md:mr-6 text-base leading-none">
               •
             </span>
-            <span className="mr-6 hover:underline cursor-pointer">
+            <span className="mr-4 md:mr-6 hover:underline cursor-pointer">
               नए अध्ययन से नींद के पैटर्न और याददाश्त के बीच अप्रत्याशित संबंध
               का पता चला
             </span>
-            <span className="text-[#CC2200] mr-6 text-base leading-none">
+            <span className="text-[#CC2200] mr-4 md:mr-6 text-base leading-none">
               •
             </span>
             <span className="hover:underline cursor-pointer">
@@ -107,10 +151,10 @@ export default function NewspaperPage() {
       </div>
 
       {/* Main Content */}
-      <main className="max-w-screen-2xl mx-auto px-4 md:px-8 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* Left Column */}
-        <section className="col-span-12 lg:col-span-3 flex flex-col gap-8">
-          <div className="border-b-2 border-black pb-2 mb-3">
+      <main className="max-w-screen-2xl mx-auto px-4 md:px-8 py-8 md:py-12 flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-12">
+        {/* Left Column (Moves to bottom on mobile) */}
+        <section className="col-span-12 lg:col-span-3 flex flex-col gap-6 md:gap-8 order-2 lg:order-1 mt-6 lg:mt-0">
+          <div className="border-b-2 border-black pb-2 mb-1 md:mb-3">
             <h2 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest">
               संक्षेप में
             </h2>
@@ -163,15 +207,15 @@ export default function NewspaperPage() {
           </article>
         </section>
 
-        {/* Center Column */}
-        <section className="col-span-12 lg:col-span-6 flex flex-col px-0 lg:px-8 border-y border-transparent lg:border-x lg:border-gray-300">
-          <div className="mb-6">
+        {/* Center Column (Moves to top on mobile) */}
+        <section className="col-span-12 lg:col-span-6 flex flex-col px-0 lg:px-8 border-y-0 lg:border-y-0 border-x-0 lg:border-x border-gray-300 order-1 lg:order-2">
+          <div className="mb-4 md:mb-6">
             <span className="bg-[#CC2200] text-white text-[10px] font-bold px-2.5 py-1 tracking-widest inline-block">
               विशेष
             </span>
           </div>
 
-          <h1 className="font-playfair font-black text-3xl md:text-5xl leading-[1.15] mb-8 cursor-pointer hover:text-gray-800 transition-colors">
+          <h1 className="font-playfair font-black text-3xl md:text-5xl leading-[1.15] mb-5 md:mb-8 cursor-pointer hover:text-gray-800 transition-colors">
             तकनीकी नवाचारों से आर्थिक स्थिरता के नए युग का संकेत मिलने से
             वैश्विक बाजारों में तेजी
           </h1>
@@ -182,7 +226,7 @@ export default function NewspaperPage() {
             हैं।
           </p>
 
-          <div className="w-full aspect-[16/9] relative mb-10 group overflow-hidden cursor-pointer bg-gray-200">
+          <div className="w-full aspect-video relative mb-10 group overflow-hidden cursor-pointer bg-gray-200">
             <Image
               src="https://picsum.photos/id/122/800/450"
               alt="City Street Night"
@@ -193,7 +237,7 @@ export default function NewspaperPage() {
           </div>
 
           {/* Sub-columns inside center */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 border-t-2 border-black pt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 border-t-2 border-black pt-6 md:pt-8 mt-2 md:mt-0">
             {/* Market Watch */}
             <div>
               <h3 className="text-[10px] font-black text-gray-800 uppercase tracking-widest border-b border-black pb-3 mb-5">
@@ -306,8 +350,8 @@ export default function NewspaperPage() {
         </section>
 
         {/* Right Column */}
-        <section className="col-span-12 lg:col-span-3 flex flex-col gap-8">
-          <div className="border-b-2 border-black pb-2 mb-3">
+        <section className="col-span-12 lg:col-span-3 flex flex-col gap-6 md:gap-8 order-3 mt-6 lg:mt-0">
+          <div className="border-b-2 border-black pb-2 mb-1 md:mb-3">
             <h2 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest">
               प्रमुख कहानियाँ
             </h2>
@@ -319,7 +363,7 @@ export default function NewspaperPage() {
                 src="https://picsum.photos/id/164/400/300"
                 width={400}
                 height={300}
-                className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full aspect-[4/3 object-cover group-hover:scale-105 transition-transform duration-700"
                 alt="Business"
               />
             </div>
@@ -343,7 +387,7 @@ export default function NewspaperPage() {
                 src="https://picsum.photos/id/0/400/300"
                 width={400}
                 height={300}
-                className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full aspect-4/3 object-cover group-hover:scale-105 transition-transform duration-700"
                 alt="Tech"
               />
             </div>
@@ -367,7 +411,7 @@ export default function NewspaperPage() {
                 src="https://picsum.photos/id/119/400/300"
                 width={400}
                 height={300}
-                className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full aspect-4/3 object-cover group-hover:scale-105 transition-transform duration-700"
                 alt="Opinion"
               />
             </div>
