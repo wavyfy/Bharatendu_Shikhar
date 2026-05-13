@@ -1,0 +1,58 @@
+{
+  "D:\\Bharatendu_Shikhar\\eslint.config.mjs": {
+    "mtime": 1777994781.5784,
+    "hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "D:\\Bharatendu_Shikhar\\next-env.d.ts": {
+    "mtime": 1778011635.136684,
+    "hash": "d0f8375ae1199dc7acd3977fc33b78b8"
+  },
+  "D:\\Bharatendu_Shikhar\\next.config.ts": {
+    "mtime": 1778158150.663678,
+    "hash": "05cae6294f99e77ab1e994206def0d25"
+  },
+  "D:\\Bharatendu_Shikhar\\postcss.config.mjs": {
+    "mtime": 1777994781.6252582,
+    "hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "D:\\Bharatendu_Shikhar\\app\\layout.tsx": {
+    "mtime": 1777994781.7890196,
+    "hash": "94c34ef68b3949a75807a0211ec2273c"
+  },
+  "D:\\Bharatendu_Shikhar\\app\\page.tsx": {
+    "mtime": 1778441211.5784707,
+    "hash": "20337b6e5aeba6607ce212ff6e9f9470"
+  },
+  "D:\\Bharatendu_Shikhar\\AGENTS.md": {
+    "mtime": 1778663035.8964822,
+    "hash": "caed7ddbf9030409ba88e6ba9fb82c7a"
+  },
+  "D:\\Bharatendu_Shikhar\\CLAUDE.md": {
+    "mtime": 1778011416.9901109,
+    "hash": "5c27369b226fcf2be8a6cfe52224e767"
+  },
+  "D:\\Bharatendu_Shikhar\\README.md": {
+    "mtime": 1777994781.5457501,
+    "hash": "f15aaa42d5d299d091b1171097ea56ad"
+  },
+  "D:\\Bharatendu_Shikhar\\public\\file.svg": {
+    "mtime": 1777994781.6364958,
+    "hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
+  },
+  "D:\\Bharatendu_Shikhar\\public\\globe.svg": {
+    "mtime": 1777994781.6561022,
+    "hash": "2aaafa6a49b6563925fe440891e32717"
+  },
+  "D:\\Bharatendu_Shikhar\\public\\next.svg": {
+    "mtime": 1777994781.6742823,
+    "hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "D:\\Bharatendu_Shikhar\\public\\vercel.svg": {
+    "mtime": 1777994781.6912985,
+    "hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
+  },
+  "D:\\Bharatendu_Shikhar\\public\\window.svg": {
+    "mtime": 1777994781.7062993,
+    "hash": "a2760511c65806022ad20adf74370ff3"
+  }
+}
