@@ -1410,6 +1410,519 @@
     {
       "label": "eslint.config.mjs",
       "file_type": "code",
+      "source_file": "apps/admin/eslint.config.mjs",
+      "source_location": "L1",
+      "id": "apps_admin_eslint_config_mjs",
+      "community": 39,
+      "norm_label": "eslint.config.mjs"
+    },
+    {
+      "label": "eslintConfig",
+      "file_type": "code",
+      "source_file": "apps/admin/eslint.config.mjs",
+      "source_location": "L5",
+      "id": "admin_eslint_config_eslintconfig",
+      "community": 39,
+      "norm_label": "eslintconfig"
+    },
+    {
+      "label": "next-env.d.ts",
+      "file_type": "code",
+      "source_file": "apps/admin/next-env.d.ts",
+      "source_location": "L1",
+      "id": "apps_admin_next_env_d_ts",
+      "community": 43,
+      "norm_label": "next-env.d.ts"
+    },
+    {
+      "label": "next.config.ts",
+      "file_type": "code",
+      "source_file": "apps/admin/next.config.ts",
+      "source_location": "L1",
+      "id": "apps_admin_next_config_ts",
+      "community": 40,
+      "norm_label": "next.config.ts"
+    },
+    {
+      "label": "nextConfig",
+      "file_type": "code",
+      "source_file": "apps/admin/next.config.ts",
+      "source_location": "L3",
+      "id": "admin_next_config_nextconfig",
+      "community": 40,
+      "norm_label": "nextconfig"
+    },
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L1",
+      "id": "apps_admin_package_json",
+      "community": 31,
+      "norm_label": "package.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L2",
+      "id": "admin_package_name",
+      "community": 31,
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L3",
+      "id": "admin_package_version",
+      "community": 31,
+      "norm_label": "version"
+    },
+    {
+      "label": "private",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L4",
+      "id": "admin_package_private",
+      "community": 31,
+      "norm_label": "private"
+    },
+    {
+      "label": "scripts",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L5",
+      "id": "admin_package_scripts",
+      "community": 31,
+      "norm_label": "scripts"
+    },
+    {
+      "label": "dev",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L6",
+      "id": "admin_package_scripts_dev",
+      "community": 31,
+      "norm_label": "dev"
+    },
+    {
+      "label": "build",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L7",
+      "id": "admin_package_scripts_build",
+      "community": 31,
+      "norm_label": "build"
+    },
+    {
+      "label": "start",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L8",
+      "id": "admin_package_scripts_start",
+      "community": 31,
+      "norm_label": "start"
+    },
+    {
+      "label": "lint",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L9",
+      "id": "admin_package_scripts_lint",
+      "community": 31,
+      "norm_label": "lint"
+    },
+    {
+      "label": "dependencies",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L11",
+      "id": "admin_package_dependencies",
+      "community": 31,
+      "norm_label": "dependencies"
+    },
+    {
+      "label": "@supabase/supabase-js",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L12",
+      "id": "admin_package_dependencies_supabase_supabase_js",
+      "community": 31,
+      "norm_label": "@supabase/supabase-js"
+    },
+    {
+      "label": "next",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L13",
+      "id": "admin_package_dependencies_next",
+      "community": 31,
+      "norm_label": "next"
+    },
+    {
+      "label": "react",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L14",
+      "id": "admin_package_dependencies_react",
+      "community": 31,
+      "norm_label": "react"
+    },
+    {
+      "label": "react-dom",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L15",
+      "id": "admin_package_dependencies_react_dom",
+      "community": 31,
+      "norm_label": "react-dom"
+    },
+    {
+      "label": "devDependencies",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L17",
+      "id": "admin_package_devdependencies",
+      "community": 31,
+      "norm_label": "devdependencies"
+    },
+    {
+      "label": "@tailwindcss/postcss",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L18",
+      "id": "admin_package_devdependencies_tailwindcss_postcss",
+      "community": 31,
+      "norm_label": "@tailwindcss/postcss"
+    },
+    {
+      "label": "@types/node",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L19",
+      "id": "admin_package_devdependencies_types_node",
+      "community": 31,
+      "norm_label": "@types/node"
+    },
+    {
+      "label": "@types/react",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L20",
+      "id": "admin_package_devdependencies_types_react",
+      "community": 31,
+      "norm_label": "@types/react"
+    },
+    {
+      "label": "@types/react-dom",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L21",
+      "id": "admin_package_devdependencies_types_react_dom",
+      "community": 31,
+      "norm_label": "@types/react-dom"
+    },
+    {
+      "label": "eslint",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L22",
+      "id": "admin_package_devdependencies_eslint",
+      "community": 31,
+      "norm_label": "eslint"
+    },
+    {
+      "label": "eslint-config-next",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L23",
+      "id": "admin_package_devdependencies_eslint_config_next",
+      "community": 31,
+      "norm_label": "eslint-config-next"
+    },
+    {
+      "label": "tailwindcss",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L24",
+      "id": "admin_package_devdependencies_tailwindcss",
+      "community": 31,
+      "norm_label": "tailwindcss"
+    },
+    {
+      "label": "typescript",
+      "file_type": "code",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L25",
+      "id": "admin_package_devdependencies_typescript",
+      "community": 31,
+      "norm_label": "typescript"
+    },
+    {
+      "label": "postcss.config.mjs",
+      "file_type": "code",
+      "source_file": "apps/admin/postcss.config.mjs",
+      "source_location": "L1",
+      "id": "apps_admin_postcss_config_mjs",
+      "community": 41,
+      "norm_label": "postcss.config.mjs"
+    },
+    {
+      "label": "config",
+      "file_type": "code",
+      "source_file": "apps/admin/postcss.config.mjs",
+      "source_location": "L1",
+      "id": "admin_postcss_config_config",
+      "community": 41,
+      "norm_label": "config"
+    },
+    {
+      "label": "tsconfig.json",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L1",
+      "id": "apps_admin_tsconfig_json",
+      "community": 32,
+      "norm_label": "tsconfig.json"
+    },
+    {
+      "label": "compilerOptions",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L2",
+      "id": "admin_tsconfig_compileroptions",
+      "community": 32,
+      "norm_label": "compileroptions"
+    },
+    {
+      "label": "target",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L3",
+      "id": "admin_tsconfig_compileroptions_target",
+      "community": 32,
+      "norm_label": "target"
+    },
+    {
+      "label": "lib",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L4",
+      "id": "admin_tsconfig_compileroptions_lib",
+      "community": 32,
+      "norm_label": "lib"
+    },
+    {
+      "label": "allowJs",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L5",
+      "id": "admin_tsconfig_compileroptions_allowjs",
+      "community": 32,
+      "norm_label": "allowjs"
+    },
+    {
+      "label": "skipLibCheck",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L6",
+      "id": "admin_tsconfig_compileroptions_skiplibcheck",
+      "community": 32,
+      "norm_label": "skiplibcheck"
+    },
+    {
+      "label": "strict",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L7",
+      "id": "admin_tsconfig_compileroptions_strict",
+      "community": 32,
+      "norm_label": "strict"
+    },
+    {
+      "label": "noEmit",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L8",
+      "id": "admin_tsconfig_compileroptions_noemit",
+      "community": 32,
+      "norm_label": "noemit"
+    },
+    {
+      "label": "esModuleInterop",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L9",
+      "id": "admin_tsconfig_compileroptions_esmoduleinterop",
+      "community": 32,
+      "norm_label": "esmoduleinterop"
+    },
+    {
+      "label": "module",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L10",
+      "id": "admin_tsconfig_compileroptions_module",
+      "community": 32,
+      "norm_label": "module"
+    },
+    {
+      "label": "moduleResolution",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L11",
+      "id": "admin_tsconfig_compileroptions_moduleresolution",
+      "community": 32,
+      "norm_label": "moduleresolution"
+    },
+    {
+      "label": "resolveJsonModule",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L12",
+      "id": "admin_tsconfig_compileroptions_resolvejsonmodule",
+      "community": 32,
+      "norm_label": "resolvejsonmodule"
+    },
+    {
+      "label": "isolatedModules",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L13",
+      "id": "admin_tsconfig_compileroptions_isolatedmodules",
+      "community": 32,
+      "norm_label": "isolatedmodules"
+    },
+    {
+      "label": "jsx",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L14",
+      "id": "admin_tsconfig_compileroptions_jsx",
+      "community": 32,
+      "norm_label": "jsx"
+    },
+    {
+      "label": "incremental",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L15",
+      "id": "admin_tsconfig_compileroptions_incremental",
+      "community": 32,
+      "norm_label": "incremental"
+    },
+    {
+      "label": "plugins",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L16",
+      "id": "admin_tsconfig_compileroptions_plugins",
+      "community": 32,
+      "norm_label": "plugins"
+    },
+    {
+      "label": "paths",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L21",
+      "id": "admin_tsconfig_compileroptions_paths",
+      "community": 32,
+      "norm_label": "paths"
+    },
+    {
+      "label": "@/*",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L22",
+      "id": "admin_tsconfig_paths",
+      "community": 32,
+      "norm_label": "@/*"
+    },
+    {
+      "label": "include",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L25",
+      "id": "admin_tsconfig_include",
+      "community": 32,
+      "norm_label": "include"
+    },
+    {
+      "label": "exclude",
+      "file_type": "code",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L33",
+      "id": "admin_tsconfig_exclude",
+      "community": 32,
+      "norm_label": "exclude"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L1",
+      "id": "apps_admin_src_app_layout_tsx",
+      "community": 37,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "geistSans",
+      "file_type": "code",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L5",
+      "id": "apps_admin_src_app_layout_tsx_app_layout_geistsans",
+      "community": 37,
+      "norm_label": "geistsans"
+    },
+    {
+      "label": "geistMono",
+      "file_type": "code",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L10",
+      "id": "apps_admin_src_app_layout_tsx_app_layout_geistmono",
+      "community": 37,
+      "norm_label": "geistmono"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L15",
+      "id": "apps_admin_src_app_layout_tsx_app_layout_metadata",
+      "community": 37,
+      "norm_label": "metadata"
+    },
+    {
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L20",
+      "id": "apps_admin_src_app_layout_tsx_app_layout_rootlayout",
+      "community": 37,
+      "norm_label": "rootlayout()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "apps/admin/src/app/page.tsx",
+      "source_location": "L1",
+      "id": "apps_admin_src_app_page_tsx",
+      "community": 42,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "Home()",
+      "file_type": "code",
+      "source_file": "apps/admin/src/app/page.tsx",
+      "source_location": "L1",
+      "id": "apps_admin_src_app_page_tsx_app_page_home",
+      "community": 42,
+      "norm_label": "home()"
+    },
+    {
+      "label": "eslint.config.mjs",
+      "file_type": "code",
       "source_file": "apps/web/eslint.config.mjs",
       "source_location": "L1",
       "id": "apps_web_eslint_config_mjs",
@@ -1543,10 +2056,19 @@
       "norm_label": "dependencies"
     },
     {
-      "label": "next",
+      "label": "@supabase/supabase-js",
       "file_type": "code",
       "source_file": "apps/web/package.json",
       "source_location": "L12",
+      "id": "web_package_dependencies_supabase_supabase_js",
+      "community": 4,
+      "norm_label": "@supabase/supabase-js"
+    },
+    {
+      "label": "next",
+      "file_type": "code",
+      "source_file": "apps/web/package.json",
+      "source_location": "L13",
       "id": "web_package_dependencies_next",
       "community": 4,
       "norm_label": "next"
@@ -1555,7 +2077,7 @@
       "label": "react",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L13",
+      "source_location": "L14",
       "id": "web_package_dependencies_react",
       "community": 4,
       "norm_label": "react"
@@ -1564,7 +2086,7 @@
       "label": "react-dom",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "web_package_dependencies_react_dom",
       "community": 4,
       "norm_label": "react-dom"
@@ -1573,7 +2095,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L16",
+      "source_location": "L17",
       "id": "web_package_devdependencies",
       "community": 4,
       "norm_label": "devdependencies"
@@ -1582,7 +2104,7 @@
       "label": "@tailwindcss/postcss",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L17",
+      "source_location": "L18",
       "id": "web_package_devdependencies_tailwindcss_postcss",
       "community": 4,
       "norm_label": "@tailwindcss/postcss"
@@ -1591,7 +2113,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L18",
+      "source_location": "L19",
       "id": "web_package_devdependencies_types_node",
       "community": 4,
       "norm_label": "@types/node"
@@ -1600,7 +2122,7 @@
       "label": "@types/react",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "web_package_devdependencies_types_react",
       "community": 4,
       "norm_label": "@types/react"
@@ -1609,7 +2131,7 @@
       "label": "@types/react-dom",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L20",
+      "source_location": "L21",
       "id": "web_package_devdependencies_types_react_dom",
       "community": 4,
       "norm_label": "@types/react-dom"
@@ -1618,7 +2140,7 @@
       "label": "eslint",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L21",
+      "source_location": "L22",
       "id": "web_package_devdependencies_eslint",
       "community": 4,
       "norm_label": "eslint"
@@ -1627,7 +2149,7 @@
       "label": "eslint-config-next",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "id": "web_package_devdependencies_eslint_config_next",
       "community": 4,
       "norm_label": "eslint-config-next"
@@ -1636,7 +2158,7 @@
       "label": "tailwindcss",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "id": "web_package_devdependencies_tailwindcss",
       "community": 4,
       "norm_label": "tailwindcss"
@@ -1645,7 +2167,7 @@
       "label": "typescript",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "id": "web_package_devdependencies_typescript",
       "community": 4,
       "norm_label": "typescript"
@@ -1862,7 +2384,7 @@
       "file_type": "code",
       "source_file": "apps/web/src/app/layout.tsx",
       "source_location": "L5",
-      "id": "app_layout_geistsans",
+      "id": "apps_web_src_app_layout_tsx_app_layout_geistsans",
       "community": 6,
       "norm_label": "geistsans"
     },
@@ -1871,7 +2393,7 @@
       "file_type": "code",
       "source_file": "apps/web/src/app/layout.tsx",
       "source_location": "L10",
-      "id": "app_layout_geistmono",
+      "id": "apps_web_src_app_layout_tsx_app_layout_geistmono",
       "community": 6,
       "norm_label": "geistmono"
     },
@@ -1880,7 +2402,7 @@
       "file_type": "code",
       "source_file": "apps/web/src/app/layout.tsx",
       "source_location": "L15",
-      "id": "app_layout_metadata",
+      "id": "apps_web_src_app_layout_tsx_app_layout_metadata",
       "community": 6,
       "norm_label": "metadata"
     },
@@ -1889,7 +2411,7 @@
       "file_type": "code",
       "source_file": "apps/web/src/app/layout.tsx",
       "source_location": "L20",
-      "id": "app_layout_rootlayout",
+      "id": "apps_web_src_app_layout_tsx_app_layout_rootlayout",
       "community": 6,
       "norm_label": "rootlayout()"
     },
@@ -1907,9 +2429,351 @@
       "file_type": "code",
       "source_file": "apps/web/src/app/page.tsx",
       "source_location": "L6",
-      "id": "app_page_home",
+      "id": "apps_web_src_app_page_tsx_app_page_home",
       "community": 9,
       "norm_label": "home()"
+    },
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L1",
+      "id": "packages_api_package_json",
+      "community": 33,
+      "norm_label": "package.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L2",
+      "id": "api_package_name",
+      "community": 33,
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L3",
+      "id": "api_package_version",
+      "community": 33,
+      "norm_label": "version"
+    },
+    {
+      "label": "private",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L4",
+      "id": "api_package_private",
+      "community": 33,
+      "norm_label": "private"
+    },
+    {
+      "label": "main",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L5",
+      "id": "api_package_main",
+      "community": 33,
+      "norm_label": "main"
+    },
+    {
+      "label": "dependencies",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L6",
+      "id": "api_package_dependencies",
+      "community": 33,
+      "norm_label": "dependencies"
+    },
+    {
+      "label": "@supabase/ssr",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L7",
+      "id": "api_package_dependencies_supabase_ssr",
+      "community": 33,
+      "norm_label": "@supabase/ssr"
+    },
+    {
+      "label": "@supabase/supabase-js",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L8",
+      "id": "api_package_dependencies_supabase_supabase_js",
+      "community": 33,
+      "norm_label": "@supabase/supabase-js"
+    },
+    {
+      "label": "devDependencies",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L10",
+      "id": "api_package_devdependencies",
+      "community": 33,
+      "norm_label": "devdependencies"
+    },
+    {
+      "label": "@types/node",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": "L11",
+      "id": "api_package_devdependencies_types_node",
+      "community": 33,
+      "norm_label": "@types/node"
+    },
+    {
+      "label": "tsconfig.json",
+      "file_type": "code",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L1",
+      "id": "packages_api_tsconfig_json",
+      "community": 36,
+      "norm_label": "tsconfig.json"
+    },
+    {
+      "label": "extends",
+      "file_type": "code",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L2",
+      "id": "api_tsconfig_extends",
+      "community": 36,
+      "norm_label": "extends"
+    },
+    {
+      "label": "compilerOptions",
+      "file_type": "code",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L3",
+      "id": "api_tsconfig_compileroptions",
+      "community": 36,
+      "norm_label": "compileroptions"
+    },
+    {
+      "label": "types",
+      "file_type": "code",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L4",
+      "id": "api_tsconfig_compileroptions_types",
+      "community": 36,
+      "norm_label": "types"
+    },
+    {
+      "label": "include",
+      "file_type": "code",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L8",
+      "id": "api_tsconfig_include",
+      "community": 36,
+      "norm_label": "include"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L1",
+      "id": "packages_api_src_index_ts",
+      "community": 38,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "admin.ts",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/admin.ts",
+      "source_location": "L1",
+      "id": "packages_api_src_supabase_admin_ts",
+      "community": 38,
+      "norm_label": "admin.ts"
+    },
+    {
+      "label": "supabaseAdmin",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/admin.ts",
+      "source_location": "L9",
+      "id": "supabase_admin_supabaseadmin",
+      "community": 38,
+      "norm_label": "supabaseadmin"
+    },
+    {
+      "label": "client.ts",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/client.ts",
+      "source_location": "L1",
+      "id": "packages_api_src_supabase_client_ts",
+      "community": 38,
+      "norm_label": "client.ts"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/client.ts",
+      "source_location": "L11",
+      "id": "supabase_client_supabase",
+      "community": 38,
+      "norm_label": "supabase"
+    },
+    {
+      "label": "middleware.ts",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/middleware.ts",
+      "source_location": "L1",
+      "id": "packages_api_src_supabase_middleware_ts",
+      "community": 38,
+      "norm_label": "middleware.ts"
+    },
+    {
+      "label": "createSupabaseMiddlewareClient()",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/middleware.ts",
+      "source_location": "L10",
+      "id": "supabase_middleware_createsupabasemiddlewareclient",
+      "community": 38,
+      "norm_label": "createsupabasemiddlewareclient()"
+    },
+    {
+      "label": "updateSession()",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/middleware.ts",
+      "source_location": "L39",
+      "id": "supabase_middleware_updatesession",
+      "community": 38,
+      "norm_label": "updatesession()"
+    },
+    {
+      "label": "server.ts",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/server.ts",
+      "source_location": "L1",
+      "id": "packages_api_src_supabase_server_ts",
+      "community": 38,
+      "norm_label": "server.ts"
+    },
+    {
+      "label": "CookieMethods",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/server.ts",
+      "source_location": "L5",
+      "id": "supabase_server_cookiemethods",
+      "community": 38,
+      "norm_label": "cookiemethods"
+    },
+    {
+      "label": "createSupabaseServerClient()",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase/server.ts",
+      "source_location": "L16",
+      "id": "supabase_server_createsupabaseserverclient",
+      "community": 38,
+      "norm_label": "createsupabaseserverclient()"
+    },
+    {
+      "label": "database.types.ts",
+      "file_type": "code",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L1",
+      "id": "packages_api_src_types_database_types_ts",
+      "community": 38,
+      "norm_label": "database.types.ts"
+    },
+    {
+      "label": "Json",
+      "file_type": "code",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L3",
+      "id": "types_database_types_json",
+      "community": 38,
+      "norm_label": "json"
+    },
+    {
+      "label": "Database",
+      "file_type": "code",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L11",
+      "id": "types_database_types_database",
+      "community": 38,
+      "norm_label": "database"
+    },
+    {
+      "label": "Tables",
+      "file_type": "code",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L21",
+      "id": "types_database_types_tables",
+      "community": 38,
+      "norm_label": "tables"
+    },
+    {
+      "label": "TablesInsert",
+      "file_type": "code",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L24",
+      "id": "types_database_types_tablesinsert",
+      "community": 38,
+      "norm_label": "tablesinsert"
+    },
+    {
+      "label": "TablesUpdate",
+      "file_type": "code",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L27",
+      "id": "types_database_types_tablesupdate",
+      "community": 38,
+      "norm_label": "tablesupdate"
+    },
+    {
+      "label": "Enums",
+      "file_type": "code",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L30",
+      "id": "types_database_types_enums",
+      "community": 38,
+      "norm_label": "enums"
+    },
+    {
+      "label": "AGENTS.md",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "id": "agents_md",
+      "community": 35,
+      "norm_label": "agents.md"
+    },
+    {
+      "label": "This is NOT the Next.js you know",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L2",
+      "id": "bharatendu_shikhar_agents_this_is_not_the_next_js_you_know",
+      "community": 35,
+      "norm_label": "this is not the next.js you know"
+    },
+    {
+      "label": "Caveman Mode (ALWAYS ACTIVE)",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L7",
+      "id": "bharatendu_shikhar_agents_caveman_mode_always_active",
+      "community": 35,
+      "norm_label": "caveman mode (always active)"
+    },
+    {
+      "label": "Rules",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L11",
+      "id": "bharatendu_shikhar_agents_rules",
+      "community": 35,
+      "norm_label": "rules"
+    },
+    {
+      "label": "Graphify (ALWAYS USE & SIGNIFICANT-UPDATE)",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L27",
+      "id": "bharatendu_shikhar_agents_graphify_always_use_significant_update",
+      "community": 35,
+      "norm_label": "graphify (always use & significant-update)"
     },
     {
       "label": "README.md",
@@ -3039,6 +3903,51 @@
     {
       "label": "README.md",
       "file_type": "document",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L1",
+      "id": "apps_admin_readme_md",
+      "community": 34,
+      "norm_label": "readme.md"
+    },
+    {
+      "label": "Getting Started",
+      "file_type": "document",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L3",
+      "id": "admin_readme_getting_started",
+      "community": 34,
+      "norm_label": "getting started"
+    },
+    {
+      "label": "code:bash (npm run dev)",
+      "file_type": "document",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L7",
+      "id": "admin_readme_codeblock_1",
+      "community": 34,
+      "norm_label": "code:bash (npm run dev)"
+    },
+    {
+      "label": "Learn More",
+      "file_type": "document",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L23",
+      "id": "admin_readme_learn_more",
+      "community": 34,
+      "norm_label": "learn more"
+    },
+    {
+      "label": "Deploy on Vercel",
+      "file_type": "document",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L32",
+      "id": "admin_readme_deploy_on_vercel",
+      "community": 34,
+      "norm_label": "deploy on vercel"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
       "source_file": "apps/web/README.md",
       "source_location": "L1",
       "id": "apps_web_readme_md",
@@ -3080,6 +3989,69 @@
       "id": "web_readme_deploy_on_vercel",
       "community": 8,
       "norm_label": "deploy on vercel"
+    },
+    {
+      "label": "supabase.ts",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase.ts",
+      "source_location": "L1",
+      "community": 38,
+      "norm_label": "supabase.ts",
+      "id": "packages_api_src_supabase_ts"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "packages/api/src/supabase.ts",
+      "source_location": "L3",
+      "community": 38,
+      "norm_label": "supabase",
+      "id": "src_supabase_supabase"
+    },
+    {
+      "label": "geistSans",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L5",
+      "community": 6,
+      "norm_label": "geistsans",
+      "id": "app_layout_geistsans"
+    },
+    {
+      "label": "geistMono",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L10",
+      "community": 6,
+      "norm_label": "geistmono",
+      "id": "app_layout_geistmono"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L15",
+      "community": 6,
+      "norm_label": "metadata",
+      "id": "app_layout_metadata"
+    },
+    {
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L20",
+      "community": 6,
+      "norm_label": "rootlayout()",
+      "id": "app_layout_rootlayout"
+    },
+    {
+      "label": "Home()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/page.tsx",
+      "source_location": "L6",
+      "community": 9,
+      "norm_label": "home()",
+      "id": "app_page_home"
     }
   ],
   "links": [
@@ -3259,9 +4231,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "skills_lock_json",
-      "target": "bharatendu_shikhar_skills_lock_version",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_version"
     },
     {
       "relation": "contains",
@@ -3269,9 +4241,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "skills_lock_json",
-      "target": "bharatendu_shikhar_skills_lock_skills",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_skills"
     },
     {
       "relation": "contains",
@@ -3279,9 +4251,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills",
-      "target": "bharatendu_shikhar_skills_lock_skills_cavecrew",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_skills_cavecrew"
     },
     {
       "relation": "contains",
@@ -3289,9 +4261,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills",
-      "target": "bharatendu_shikhar_skills_lock_skills_caveman",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_skills_caveman"
     },
     {
       "relation": "contains",
@@ -3299,9 +4271,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills",
-      "target": "bharatendu_shikhar_skills_lock_skills_caveman_commit",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_skills_caveman_commit"
     },
     {
       "relation": "contains",
@@ -3309,9 +4281,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills",
-      "target": "bharatendu_shikhar_skills_lock_skills_caveman_compress",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_skills_caveman_compress"
     },
     {
       "relation": "contains",
@@ -3319,9 +4291,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills",
-      "target": "bharatendu_shikhar_skills_lock_skills_caveman_help",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_skills_caveman_help"
     },
     {
       "relation": "contains",
@@ -3329,9 +4301,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills",
-      "target": "bharatendu_shikhar_skills_lock_skills_caveman_review",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_skills_caveman_review"
     },
     {
       "relation": "contains",
@@ -3339,9 +4311,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills",
-      "target": "bharatendu_shikhar_skills_lock_skills_caveman_stats",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_skills_caveman_stats"
     },
     {
       "relation": "contains",
@@ -3349,9 +4321,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_cavecrew",
-      "target": "bharatendu_shikhar_skills_lock_cavecrew_source",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_cavecrew_source"
     },
     {
       "relation": "contains",
@@ -3359,9 +4331,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_cavecrew",
-      "target": "bharatendu_shikhar_skills_lock_cavecrew_sourcetype",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_cavecrew_sourcetype"
     },
     {
       "relation": "contains",
@@ -3369,9 +4341,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_cavecrew",
-      "target": "bharatendu_shikhar_skills_lock_cavecrew_skillpath",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_cavecrew_skillpath"
     },
     {
       "relation": "contains",
@@ -3379,9 +4351,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_cavecrew",
-      "target": "bharatendu_shikhar_skills_lock_cavecrew_computedhash",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_cavecrew_computedhash"
     },
     {
       "relation": "contains",
@@ -3389,9 +4361,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman",
-      "target": "bharatendu_shikhar_skills_lock_caveman_source",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_source"
     },
     {
       "relation": "contains",
@@ -3399,9 +4371,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman",
-      "target": "bharatendu_shikhar_skills_lock_caveman_sourcetype",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_sourcetype"
     },
     {
       "relation": "contains",
@@ -3409,9 +4381,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman",
-      "target": "bharatendu_shikhar_skills_lock_caveman_skillpath",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_skillpath"
     },
     {
       "relation": "contains",
@@ -3419,9 +4391,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman",
-      "target": "bharatendu_shikhar_skills_lock_caveman_computedhash",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_computedhash"
     },
     {
       "relation": "contains",
@@ -3429,9 +4401,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_commit",
-      "target": "bharatendu_shikhar_skills_lock_caveman_commit_source",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_commit_source"
     },
     {
       "relation": "contains",
@@ -3439,9 +4411,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_commit",
-      "target": "bharatendu_shikhar_skills_lock_caveman_commit_sourcetype",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_commit_sourcetype"
     },
     {
       "relation": "contains",
@@ -3449,9 +4421,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_commit",
-      "target": "bharatendu_shikhar_skills_lock_caveman_commit_skillpath",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_commit_skillpath"
     },
     {
       "relation": "contains",
@@ -3459,9 +4431,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_commit",
-      "target": "bharatendu_shikhar_skills_lock_caveman_commit_computedhash",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_commit_computedhash"
     },
     {
       "relation": "contains",
@@ -3469,9 +4441,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_compress",
-      "target": "bharatendu_shikhar_skills_lock_caveman_compress_source",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_compress_source"
     },
     {
       "relation": "contains",
@@ -3479,9 +4451,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_compress",
-      "target": "bharatendu_shikhar_skills_lock_caveman_compress_sourcetype",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_compress_sourcetype"
     },
     {
       "relation": "contains",
@@ -3489,9 +4461,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_compress",
-      "target": "bharatendu_shikhar_skills_lock_caveman_compress_skillpath",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_compress_skillpath"
     },
     {
       "relation": "contains",
@@ -3499,9 +4471,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_compress",
-      "target": "bharatendu_shikhar_skills_lock_caveman_compress_computedhash",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_compress_computedhash"
     },
     {
       "relation": "contains",
@@ -3509,9 +4481,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_help",
-      "target": "bharatendu_shikhar_skills_lock_caveman_help_source",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_help_source"
     },
     {
       "relation": "contains",
@@ -3519,9 +4491,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_help",
-      "target": "bharatendu_shikhar_skills_lock_caveman_help_sourcetype",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_help_sourcetype"
     },
     {
       "relation": "contains",
@@ -3529,9 +4501,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_help",
-      "target": "bharatendu_shikhar_skills_lock_caveman_help_skillpath",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_help_skillpath"
     },
     {
       "relation": "contains",
@@ -3539,9 +4511,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_help",
-      "target": "bharatendu_shikhar_skills_lock_caveman_help_computedhash",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_help_computedhash"
     },
     {
       "relation": "contains",
@@ -3549,9 +4521,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_review",
-      "target": "bharatendu_shikhar_skills_lock_caveman_review_source",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_review_source"
     },
     {
       "relation": "contains",
@@ -3559,9 +4531,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_review",
-      "target": "bharatendu_shikhar_skills_lock_caveman_review_sourcetype",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_review_sourcetype"
     },
     {
       "relation": "contains",
@@ -3569,9 +4541,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_review",
-      "target": "bharatendu_shikhar_skills_lock_caveman_review_skillpath",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_review_skillpath"
     },
     {
       "relation": "contains",
@@ -3579,9 +4551,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_review",
-      "target": "bharatendu_shikhar_skills_lock_caveman_review_computedhash",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_review_computedhash"
     },
     {
       "relation": "contains",
@@ -3589,9 +4561,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_stats",
-      "target": "bharatendu_shikhar_skills_lock_caveman_stats_source",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_stats_source"
     },
     {
       "relation": "contains",
@@ -3599,9 +4571,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_stats",
-      "target": "bharatendu_shikhar_skills_lock_caveman_stats_sourcetype",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_stats_sourcetype"
     },
     {
       "relation": "contains",
@@ -3609,9 +4581,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_stats",
-      "target": "bharatendu_shikhar_skills_lock_caveman_stats_skillpath",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_stats_skillpath"
     },
     {
       "relation": "contains",
@@ -3619,9 +4591,9 @@
       "source_file": "skills-lock.json",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bharatendu_shikhar_skills_lock_skills_caveman_stats",
-      "target": "bharatendu_shikhar_skills_lock_caveman_stats_computedhash",
-      "confidence_score": 1.0
+      "target": "bharatendu_shikhar_skills_lock_caveman_stats_computedhash"
     },
     {
       "relation": "contains",
@@ -4010,9 +4982,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_benchmark_py",
-      "target": "agents_skills_caveman_compress_scripts_validate_py",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_validate_py"
     },
     {
       "relation": "contains",
@@ -4020,9 +4992,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_benchmark_py",
-      "target": "scripts_benchmark_count_tokens",
-      "confidence_score": 1.0
+      "target": "scripts_benchmark_count_tokens"
     },
     {
       "relation": "contains",
@@ -4030,9 +5002,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_benchmark_py",
-      "target": "scripts_benchmark_benchmark_pair",
-      "confidence_score": 1.0
+      "target": "scripts_benchmark_benchmark_pair"
     },
     {
       "relation": "contains",
@@ -4040,9 +5012,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_benchmark_py",
-      "target": "scripts_benchmark_print_table",
-      "confidence_score": 1.0
+      "target": "scripts_benchmark_print_table"
     },
     {
       "relation": "contains",
@@ -4050,9 +5022,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_benchmark_py",
-      "target": "scripts_benchmark_main",
-      "confidence_score": 1.0
+      "target": "scripts_benchmark_main"
     },
     {
       "relation": "imports",
@@ -4061,9 +5033,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_benchmark_py",
-      "target": "scripts_validate_validate",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate"
     },
     {
       "relation": "calls",
@@ -4072,9 +5044,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_benchmark_benchmark_pair",
-      "target": "scripts_benchmark_count_tokens",
-      "confidence_score": 1.0
+      "target": "scripts_benchmark_count_tokens"
     },
     {
       "relation": "references",
@@ -4083,9 +5055,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_benchmark_benchmark_pair",
-      "target": "agents_skills_caveman_compress_scripts_benchmark_py_path",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_benchmark_py_path"
     },
     {
       "relation": "calls",
@@ -4094,9 +5066,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_benchmark_main",
-      "target": "scripts_benchmark_benchmark_pair",
-      "confidence_score": 1.0
+      "target": "scripts_benchmark_benchmark_pair"
     },
     {
       "relation": "calls",
@@ -4105,9 +5077,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_benchmark_benchmark_pair",
-      "target": "scripts_validate_validate",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate"
     },
     {
       "relation": "calls",
@@ -4116,9 +5088,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_benchmark_main",
-      "target": "agents_skills_caveman_compress_scripts_benchmark_py_path",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_benchmark_py_path"
     },
     {
       "relation": "calls",
@@ -4127,9 +5099,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/benchmark.py",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_benchmark_main",
-      "target": "scripts_benchmark_print_table",
-      "confidence_score": 1.0
+      "target": "scripts_benchmark_print_table"
     },
     {
       "relation": "imports_from",
@@ -4138,9 +5110,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_cli_py",
-      "target": "agents_skills_caveman_compress_scripts_compress_py",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py"
     },
     {
       "relation": "imports_from",
@@ -4149,9 +5121,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_cli_py",
-      "target": "agents_skills_caveman_compress_scripts_detect_py",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py"
     },
     {
       "relation": "contains",
@@ -4159,9 +5131,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_cli_py",
-      "target": "scripts_cli_print_usage",
-      "confidence_score": 1.0
+      "target": "scripts_cli_print_usage"
     },
     {
       "relation": "contains",
@@ -4169,9 +5141,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_cli_py",
-      "target": "scripts_cli_main",
-      "confidence_score": 1.0
+      "target": "scripts_cli_main"
     },
     {
       "relation": "imports_from",
@@ -4180,9 +5152,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/__main__.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_main_py",
-      "target": "agents_skills_caveman_compress_scripts_cli_py",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_cli_py"
     },
     {
       "relation": "imports",
@@ -4191,9 +5163,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_cli_py",
-      "target": "scripts_compress_compress_file",
-      "confidence_score": 1.0
+      "target": "scripts_compress_compress_file"
     },
     {
       "relation": "imports",
@@ -4202,9 +5174,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_cli_py",
-      "target": "scripts_detect_detect_file_type",
-      "confidence_score": 1.0
+      "target": "scripts_detect_detect_file_type"
     },
     {
       "relation": "imports",
@@ -4213,9 +5185,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_cli_py",
-      "target": "scripts_detect_should_compress",
-      "confidence_score": 1.0
+      "target": "scripts_detect_should_compress"
     },
     {
       "relation": "calls",
@@ -4224,9 +5196,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_cli_main",
-      "target": "scripts_cli_print_usage",
-      "confidence_score": 1.0
+      "target": "scripts_cli_print_usage"
     },
     {
       "relation": "imports",
@@ -4235,9 +5207,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/__main__.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_main_py",
-      "target": "scripts_cli_main",
-      "confidence_score": 1.0
+      "target": "scripts_cli_main"
     },
     {
       "relation": "calls",
@@ -4246,9 +5218,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_cli_main",
-      "target": "scripts_detect_detect_file_type",
-      "confidence_score": 1.0
+      "target": "scripts_detect_detect_file_type"
     },
     {
       "relation": "calls",
@@ -4257,9 +5229,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_cli_main",
-      "target": "scripts_detect_should_compress",
-      "confidence_score": 1.0
+      "target": "scripts_detect_should_compress"
     },
     {
       "relation": "calls",
@@ -4268,9 +5240,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/cli.py",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_cli_main",
-      "target": "scripts_compress_compress_file",
-      "confidence_score": 1.0
+      "target": "scripts_compress_compress_file"
     },
     {
       "relation": "contains",
@@ -4278,9 +5250,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "scripts_compress_is_sensitive_path",
-      "confidence_score": 1.0
+      "target": "scripts_compress_is_sensitive_path"
     },
     {
       "relation": "contains",
@@ -4288,9 +5260,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "scripts_compress_strip_llm_wrapper",
-      "confidence_score": 1.0
+      "target": "scripts_compress_strip_llm_wrapper"
     },
     {
       "relation": "imports_from",
@@ -4299,9 +5271,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "agents_skills_caveman_compress_scripts_detect_py",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py"
     },
     {
       "relation": "imports_from",
@@ -4310,9 +5282,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "agents_skills_caveman_compress_scripts_validate_py",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_validate_py"
     },
     {
       "relation": "contains",
@@ -4320,9 +5292,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "scripts_compress_call_claude",
-      "confidence_score": 1.0
+      "target": "scripts_compress_call_claude"
     },
     {
       "relation": "contains",
@@ -4330,9 +5302,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L104",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "scripts_compress_build_compress_prompt",
-      "confidence_score": 1.0
+      "target": "scripts_compress_build_compress_prompt"
     },
     {
       "relation": "contains",
@@ -4340,9 +5312,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L123",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "scripts_compress_build_fix_prompt",
-      "confidence_score": 1.0
+      "target": "scripts_compress_build_fix_prompt"
     },
     {
       "relation": "contains",
@@ -4350,9 +5322,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L155",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "scripts_compress_compress_file",
-      "confidence_score": 1.0
+      "target": "scripts_compress_compress_file"
     },
     {
       "relation": "imports",
@@ -4361,9 +5333,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "scripts_detect_should_compress",
-      "confidence_score": 1.0
+      "target": "scripts_detect_should_compress"
     },
     {
       "relation": "imports",
@@ -4372,9 +5344,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_compress_py",
-      "target": "scripts_validate_validate",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate"
     },
     {
       "relation": "references",
@@ -4383,9 +5355,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_is_sensitive_path",
-      "target": "agents_skills_caveman_compress_scripts_compress_py_path",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py_path"
     },
     {
       "relation": "references",
@@ -4394,9 +5366,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_is_sensitive_path",
-      "target": "agents_skills_caveman_compress_scripts_compress_py_bool",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py_bool"
     },
     {
       "relation": "calls",
@@ -4405,9 +5377,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L168",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_compress_file",
-      "target": "scripts_compress_is_sensitive_path",
-      "confidence_score": 1.0
+      "target": "scripts_compress_is_sensitive_path"
     },
     {
       "relation": "rationale_for",
@@ -4415,9 +5387,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_rationale_47",
-      "target": "scripts_compress_is_sensitive_path",
-      "confidence_score": 1.0
+      "target": "scripts_compress_is_sensitive_path"
     },
     {
       "relation": "references",
@@ -4426,9 +5398,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L155",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_compress_file",
-      "target": "agents_skills_caveman_compress_scripts_compress_py_path",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py_path"
     },
     {
       "relation": "references",
@@ -4437,9 +5409,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L155",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_compress_file",
-      "target": "agents_skills_caveman_compress_scripts_compress_py_bool",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py_bool"
     },
     {
       "relation": "references",
@@ -4448,9 +5420,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_strip_llm_wrapper",
-      "target": "agents_skills_caveman_compress_scripts_compress_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py_str"
     },
     {
       "relation": "calls",
@@ -4459,9 +5431,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_call_claude",
-      "target": "scripts_compress_strip_llm_wrapper",
-      "confidence_score": 1.0
+      "target": "scripts_compress_strip_llm_wrapper"
     },
     {
       "relation": "rationale_for",
@@ -4469,9 +5441,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_rationale_60",
-      "target": "scripts_compress_strip_llm_wrapper",
-      "confidence_score": 1.0
+      "target": "scripts_compress_strip_llm_wrapper"
     },
     {
       "relation": "references",
@@ -4480,9 +5452,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_call_claude",
-      "target": "agents_skills_caveman_compress_scripts_compress_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py_str"
     },
     {
       "relation": "references",
@@ -4491,9 +5463,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L104",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_build_compress_prompt",
-      "target": "agents_skills_caveman_compress_scripts_compress_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py_str"
     },
     {
       "relation": "references",
@@ -4502,9 +5474,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L123",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_build_fix_prompt",
-      "target": "agents_skills_caveman_compress_scripts_compress_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_compress_py_str"
     },
     {
       "relation": "calls",
@@ -4513,9 +5485,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L198",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_compress_file",
-      "target": "scripts_compress_call_claude",
-      "confidence_score": 1.0
+      "target": "scripts_compress_call_claude"
     },
     {
       "relation": "calls",
@@ -4524,9 +5496,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L198",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_compress_file",
-      "target": "scripts_compress_build_compress_prompt",
-      "confidence_score": 1.0
+      "target": "scripts_compress_build_compress_prompt"
     },
     {
       "relation": "calls",
@@ -4535,9 +5507,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L250",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_compress_file",
-      "target": "scripts_compress_build_fix_prompt",
-      "confidence_score": 1.0
+      "target": "scripts_compress_build_fix_prompt"
     },
     {
       "relation": "calls",
@@ -4546,9 +5518,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L178",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_compress_file",
-      "target": "scripts_detect_should_compress",
-      "confidence_score": 1.0
+      "target": "scripts_detect_should_compress"
     },
     {
       "relation": "calls",
@@ -4557,9 +5529,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/compress.py",
       "source_location": "L231",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_compress_compress_file",
-      "target": "scripts_validate_validate",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate"
     },
     {
       "relation": "contains",
@@ -4567,9 +5539,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_detect_py",
-      "target": "scripts_detect_is_code_line",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_code_line"
     },
     {
       "relation": "contains",
@@ -4577,9 +5549,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_detect_py",
-      "target": "scripts_detect_is_json_content",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_json_content"
     },
     {
       "relation": "contains",
@@ -4587,9 +5559,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_detect_py",
-      "target": "scripts_detect_is_yaml_content",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_yaml_content"
     },
     {
       "relation": "contains",
@@ -4597,9 +5569,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_detect_py",
-      "target": "scripts_detect_detect_file_type",
-      "confidence_score": 1.0
+      "target": "scripts_detect_detect_file_type"
     },
     {
       "relation": "contains",
@@ -4607,9 +5579,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_detect_py",
-      "target": "scripts_detect_should_compress",
-      "confidence_score": 1.0
+      "target": "scripts_detect_should_compress"
     },
     {
       "relation": "references",
@@ -4618,9 +5590,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_is_code_line",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_str"
     },
     {
       "relation": "references",
@@ -4629,9 +5601,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_is_code_line",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_bool",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_bool"
     },
     {
       "relation": "calls",
@@ -4640,9 +5612,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L90",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_detect_file_type",
-      "target": "scripts_detect_is_code_line",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_code_line"
     },
     {
       "relation": "rationale_for",
@@ -4650,9 +5622,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_rationale_33",
-      "target": "scripts_detect_is_code_line",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_code_line"
     },
     {
       "relation": "references",
@@ -4661,9 +5633,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_is_json_content",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_str"
     },
     {
       "relation": "references",
@@ -4672,9 +5644,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_is_yaml_content",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_str"
     },
     {
       "relation": "references",
@@ -4683,9 +5655,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_detect_file_type",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_str"
     },
     {
       "relation": "references",
@@ -4694,9 +5666,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_is_json_content",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_bool",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_bool"
     },
     {
       "relation": "references",
@@ -4705,9 +5677,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_is_yaml_content",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_bool",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_bool"
     },
     {
       "relation": "references",
@@ -4716,9 +5688,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_should_compress",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_bool",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_bool"
     },
     {
       "relation": "calls",
@@ -4727,9 +5699,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_detect_file_type",
-      "target": "scripts_detect_is_json_content",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_json_content"
     },
     {
       "relation": "rationale_for",
@@ -4737,9 +5709,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_rationale_38",
-      "target": "scripts_detect_is_json_content",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_json_content"
     },
     {
       "relation": "calls",
@@ -4748,9 +5720,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_detect_file_type",
-      "target": "scripts_detect_is_yaml_content",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_yaml_content"
     },
     {
       "relation": "rationale_for",
@@ -4758,9 +5730,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_rationale_47",
-      "target": "scripts_detect_is_yaml_content",
-      "confidence_score": 1.0
+      "target": "scripts_detect_is_yaml_content"
     },
     {
       "relation": "references",
@@ -4769,9 +5741,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_detect_file_type",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_path",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_path"
     },
     {
       "relation": "calls",
@@ -4780,9 +5752,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_should_compress",
-      "target": "scripts_detect_detect_file_type",
-      "confidence_score": 1.0
+      "target": "scripts_detect_detect_file_type"
     },
     {
       "relation": "rationale_for",
@@ -4790,9 +5762,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_rationale_63",
-      "target": "scripts_detect_detect_file_type",
-      "confidence_score": 1.0
+      "target": "scripts_detect_detect_file_type"
     },
     {
       "relation": "references",
@@ -4801,9 +5773,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_should_compress",
-      "target": "agents_skills_caveman_compress_scripts_detect_py_path",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_detect_py_path"
     },
     {
       "relation": "rationale_for",
@@ -4811,9 +5783,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/detect.py",
       "source_location": "L101",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_detect_rationale_101",
-      "target": "scripts_detect_should_compress",
-      "confidence_score": 1.0
+      "target": "scripts_detect_should_compress"
     },
     {
       "relation": "contains",
@@ -4821,9 +5793,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_validationresult",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult"
     },
     {
       "relation": "contains",
@@ -4831,9 +5803,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_read_file",
-      "confidence_score": 1.0
+      "target": "scripts_validate_read_file"
     },
     {
       "relation": "contains",
@@ -4841,9 +5813,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_extract_headings",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_headings"
     },
     {
       "relation": "contains",
@@ -4851,9 +5823,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_extract_code_blocks",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_code_blocks"
     },
     {
       "relation": "contains",
@@ -4861,9 +5833,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_extract_urls",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_urls"
     },
     {
       "relation": "contains",
@@ -4871,9 +5843,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L89",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_extract_paths",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_paths"
     },
     {
       "relation": "contains",
@@ -4881,9 +5853,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_count_bullets",
-      "confidence_score": 1.0
+      "target": "scripts_validate_count_bullets"
     },
     {
       "relation": "contains",
@@ -4891,9 +5863,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L97",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_extract_inline_codes",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_inline_codes"
     },
     {
       "relation": "contains",
@@ -4901,9 +5873,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_validate_headings",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_headings"
     },
     {
       "relation": "contains",
@@ -4911,9 +5883,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_validate_code_blocks",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_code_blocks"
     },
     {
       "relation": "contains",
@@ -4921,9 +5893,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L125",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_validate_urls",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_urls"
     },
     {
       "relation": "contains",
@@ -4931,9 +5903,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L133",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_validate_paths",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_paths"
     },
     {
       "relation": "contains",
@@ -4941,9 +5913,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L141",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_validate_bullets",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_bullets"
     },
     {
       "relation": "contains",
@@ -4951,9 +5923,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L154",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_validate_inline_codes",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_inline_codes"
     },
     {
       "relation": "contains",
@@ -4961,9 +5933,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L173",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_scripts_validate_py",
-      "target": "scripts_validate_validate",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate"
     },
     {
       "relation": "method",
@@ -4971,9 +5943,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validationresult",
-      "target": "scripts_validate_validationresult_init",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_init"
     },
     {
       "relation": "method",
@@ -4981,9 +5953,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validationresult",
-      "target": "scripts_validate_validationresult_add_error",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_error"
     },
     {
       "relation": "method",
@@ -4991,9 +5963,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validationresult",
-      "target": "scripts_validate_validationresult_add_warning",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_warning"
     },
     {
       "relation": "calls",
@@ -5002,9 +5974,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L174",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "scripts_validate_validationresult",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult"
     },
     {
       "relation": "calls",
@@ -5013,9 +5985,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_headings",
-      "target": "scripts_validate_validationresult_add_error",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_error"
     },
     {
       "relation": "calls",
@@ -5024,9 +5996,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L122",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_code_blocks",
-      "target": "scripts_validate_validationresult_add_error",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_error"
     },
     {
       "relation": "calls",
@@ -5035,9 +6007,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L130",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_urls",
-      "target": "scripts_validate_validationresult_add_error",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_error"
     },
     {
       "relation": "calls",
@@ -5046,9 +6018,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L165",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_inline_codes",
-      "target": "scripts_validate_validationresult_add_error",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_error"
     },
     {
       "relation": "calls",
@@ -5057,9 +6029,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_headings",
-      "target": "scripts_validate_validationresult_add_warning",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_warning"
     },
     {
       "relation": "calls",
@@ -5068,9 +6040,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L138",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_paths",
-      "target": "scripts_validate_validationresult_add_warning",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_warning"
     },
     {
       "relation": "calls",
@@ -5079,9 +6051,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L151",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_bullets",
-      "target": "scripts_validate_validationresult_add_warning",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_warning"
     },
     {
       "relation": "calls",
@@ -5090,9 +6062,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L167",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_inline_codes",
-      "target": "scripts_validate_validationresult_add_warning",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validationresult_add_warning"
     },
     {
       "relation": "references",
@@ -5101,9 +6073,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_read_file",
-      "target": "agents_skills_caveman_compress_scripts_validate_py_path",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_validate_py_path"
     },
     {
       "relation": "references",
@@ -5112,9 +6084,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_read_file",
-      "target": "agents_skills_caveman_compress_scripts_validate_py_str",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_validate_py_str"
     },
     {
       "relation": "calls",
@@ -5123,9 +6095,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L176",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "scripts_validate_read_file",
-      "confidence_score": 1.0
+      "target": "scripts_validate_read_file"
     },
     {
       "relation": "references",
@@ -5134,9 +6106,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L173",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "agents_skills_caveman_compress_scripts_validate_py_path",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_validate_py_path"
     },
     {
       "relation": "calls",
@@ -5145,9 +6117,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_headings",
-      "target": "scripts_validate_extract_headings",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_headings"
     },
     {
       "relation": "calls",
@@ -5156,9 +6128,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_code_blocks",
-      "target": "scripts_validate_extract_code_blocks",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_code_blocks"
     },
     {
       "relation": "rationale_for",
@@ -5166,9 +6138,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_rationale_42",
-      "target": "scripts_validate_extract_code_blocks",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_code_blocks"
     },
     {
       "relation": "calls",
@@ -5177,9 +6149,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L126",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_urls",
-      "target": "scripts_validate_extract_urls",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_urls"
     },
     {
       "relation": "calls",
@@ -5188,9 +6160,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L134",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_paths",
-      "target": "scripts_validate_extract_paths",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_paths"
     },
     {
       "relation": "calls",
@@ -5199,9 +6171,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L142",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_bullets",
-      "target": "scripts_validate_count_bullets",
-      "confidence_score": 1.0
+      "target": "scripts_validate_count_bullets"
     },
     {
       "relation": "calls",
@@ -5210,9 +6182,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L155",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate_inline_codes",
-      "target": "scripts_validate_extract_inline_codes",
-      "confidence_score": 1.0
+      "target": "scripts_validate_extract_inline_codes"
     },
     {
       "relation": "calls",
@@ -5221,9 +6193,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L179",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "scripts_validate_validate_headings",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_headings"
     },
     {
       "relation": "calls",
@@ -5232,9 +6204,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L180",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "scripts_validate_validate_code_blocks",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_code_blocks"
     },
     {
       "relation": "calls",
@@ -5243,9 +6215,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "scripts_validate_validate_urls",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_urls"
     },
     {
       "relation": "calls",
@@ -5254,9 +6226,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L182",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "scripts_validate_validate_paths",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_paths"
     },
     {
       "relation": "calls",
@@ -5265,9 +6237,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L183",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "scripts_validate_validate_bullets",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_bullets"
     },
     {
       "relation": "calls",
@@ -5276,9 +6248,9 @@
       "source_file": ".agents/skills/caveman-compress/scripts/validate.py",
       "source_location": "L184",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_validate",
-      "target": "scripts_validate_validate_inline_codes",
-      "confidence_score": 1.0
+      "target": "scripts_validate_validate_inline_codes"
     },
     {
       "relation": "rationale_for",
@@ -5286,9 +6258,499 @@
       "source_file": ".agents/skills/caveman-compress/scripts/__init__.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_init_rationale_1",
-      "target": "agents_skills_caveman_compress_scripts_init_py",
-      "confidence_score": 1.0
+      "target": "agents_skills_caveman_compress_scripts_init_py"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/eslint.config.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_eslint_config_mjs",
+      "target": "admin_eslint_config_eslintconfig"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/next.config.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_next_config_ts",
+      "target": "admin_next_config_nextconfig"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_package_json",
+      "target": "admin_package_name"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_package_json",
+      "target": "admin_package_version"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_package_json",
+      "target": "admin_package_private"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_package_json",
+      "target": "admin_package_scripts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_package_json",
+      "target": "admin_package_dependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_package_json",
+      "target": "admin_package_devdependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_scripts",
+      "target": "admin_package_scripts_dev"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_scripts",
+      "target": "admin_package_scripts_build"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_scripts",
+      "target": "admin_package_scripts_start"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_scripts",
+      "target": "admin_package_scripts_lint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_dependencies",
+      "target": "admin_package_dependencies_supabase_supabase_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_dependencies",
+      "target": "admin_package_dependencies_next"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_dependencies",
+      "target": "admin_package_dependencies_react"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_dependencies",
+      "target": "admin_package_dependencies_react_dom"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_devdependencies",
+      "target": "admin_package_devdependencies_tailwindcss_postcss"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_devdependencies",
+      "target": "admin_package_devdependencies_types_node"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_devdependencies",
+      "target": "admin_package_devdependencies_types_react"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_devdependencies",
+      "target": "admin_package_devdependencies_types_react_dom"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_devdependencies",
+      "target": "admin_package_devdependencies_eslint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_devdependencies",
+      "target": "admin_package_devdependencies_eslint_config_next"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_devdependencies",
+      "target": "admin_package_devdependencies_tailwindcss"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/package.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_package_devdependencies",
+      "target": "admin_package_devdependencies_typescript"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/postcss.config.mjs",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_postcss_config_mjs",
+      "target": "admin_postcss_config_config"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_tsconfig_json",
+      "target": "admin_tsconfig_compileroptions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_tsconfig_json",
+      "target": "admin_tsconfig_include"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_tsconfig_json",
+      "target": "admin_tsconfig_exclude"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_target"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_lib"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_allowjs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_skiplibcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_strict"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_noemit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_esmoduleinterop"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_module"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_moduleresolution"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_resolvejsonmodule"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_isolatedmodules"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_jsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_incremental"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_plugins"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions",
+      "target": "admin_tsconfig_compileroptions_paths"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/tsconfig.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_tsconfig_compileroptions_paths",
+      "target": "admin_tsconfig_paths"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_src_app_layout_tsx",
+      "target": "apps_admin_src_app_layout_tsx_app_layout_geistsans"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_src_app_layout_tsx",
+      "target": "apps_admin_src_app_layout_tsx_app_layout_geistmono"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_src_app_layout_tsx",
+      "target": "apps_admin_src_app_layout_tsx_app_layout_metadata"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/src/app/layout.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_src_app_layout_tsx",
+      "target": "apps_admin_src_app_layout_tsx_app_layout_rootlayout"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/src/app/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_src_app_page_tsx",
+      "target": "apps_admin_src_app_page_tsx_app_page_home"
     },
     {
       "relation": "contains",
@@ -5409,6 +6871,16 @@
       "confidence_score": 1.0,
       "source": "web_package_scripts",
       "target": "web_package_scripts_lint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "web_package_dependencies",
+      "target": "web_package_dependencies_supabase_supabase_js"
     },
     {
       "relation": "contains",
@@ -5728,6 +7200,46 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "apps_web_src_app_layout_tsx",
+      "target": "apps_web_src_app_layout_tsx_app_layout_geistsans"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "apps_web_src_app_layout_tsx_app_layout_geistmono"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "apps_web_src_app_layout_tsx_app_layout_metadata"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "apps_web_src_app_layout_tsx_app_layout_rootlayout"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
       "target": "app_layout_geistsans"
     },
     {
@@ -5768,7 +7280,582 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "apps_web_src_app_page_tsx",
+      "target": "apps_web_src_app_page_tsx_app_page_home"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_web_src_app_page_tsx",
       "target": "app_page_home"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_package_json",
+      "target": "api_package_name"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_package_json",
+      "target": "api_package_version"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_package_json",
+      "target": "api_package_private"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_package_json",
+      "target": "api_package_main"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_package_json",
+      "target": "api_package_dependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_package_json",
+      "target": "api_package_devdependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "api_package_dependencies",
+      "target": "api_package_dependencies_supabase_ssr",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_package_dependencies",
+      "target": "api_package_dependencies_supabase_supabase_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/package.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_package_devdependencies",
+      "target": "api_package_devdependencies_types_node"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_tsconfig_json",
+      "target": "api_tsconfig_extends"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_tsconfig_json",
+      "target": "api_tsconfig_compileroptions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_tsconfig_json",
+      "target": "api_tsconfig_include"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_tsconfig_compileroptions",
+      "target": "api_tsconfig_compileroptions_types"
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "packages_api_src_supabase_client_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "supabase_client_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "packages_api_src_supabase_server_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "supabase_server_createsupabaseserverclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "packages_api_src_supabase_middleware_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "supabase_middleware_createsupabasemiddlewareclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "supabase_middleware_updatesession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "packages_api_src_supabase_admin_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "supabase_admin_supabaseadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "packages_api_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "types_database_types_tables",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "types_database_types_tablesinsert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "types_database_types_tablesupdate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "types_database_types_enums",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_src_index_ts",
+      "target": "packages_api_src_supabase_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/admin.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_admin_ts",
+      "target": "packages_api_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/admin.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_admin_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/admin.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_admin_ts",
+      "target": "supabase_admin_supabaseadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/client.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_client_ts",
+      "target": "packages_api_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/client.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_client_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/client.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_client_ts",
+      "target": "supabase_client_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/middleware.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_middleware_ts",
+      "target": "packages_api_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/middleware.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_middleware_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/middleware.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_middleware_ts",
+      "target": "supabase_middleware_createsupabasemiddlewareclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/middleware.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_middleware_ts",
+      "target": "supabase_middleware_updatesession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/middleware.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "supabase_middleware_updatesession",
+      "target": "supabase_middleware_createsupabasemiddlewareclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/server.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_server_ts",
+      "target": "packages_api_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/server.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_server_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/server.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_server_ts",
+      "target": "supabase_server_cookiemethods",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase/server.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "packages_api_src_supabase_server_ts",
+      "target": "supabase_server_createsupabaseserverclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_api_src_types_database_types_ts",
+      "target": "types_database_types_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "packages_api_src_types_database_types_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "packages_api_src_types_database_types_ts",
+      "target": "types_database_types_tables",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "packages_api_src_types_database_types_ts",
+      "target": "types_database_types_tablesinsert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "packages_api_src_types_database_types_ts",
+      "target": "types_database_types_tablesupdate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/types/database.types.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "packages_api_src_types_database_types_ts",
+      "target": "types_database_types_enums",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_md",
+      "target": "bharatendu_shikhar_agents_this_is_not_the_next_js_you_know"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_md",
+      "target": "bharatendu_shikhar_agents_caveman_mode_always_active"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_md",
+      "target": "bharatendu_shikhar_agents_graphify_always_use_significant_update"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "bharatendu_shikhar_agents_caveman_mode_always_active",
+      "target": "bharatendu_shikhar_agents_rules"
     },
     {
       "relation": "contains",
@@ -5776,9 +7863,9 @@
       "source_file": ".agents/skills/cavecrew/README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_cavecrew_readme_md",
-      "target": "cavecrew_readme_cavecrew",
-      "confidence_score": 1.0
+      "target": "cavecrew_readme_cavecrew"
     },
     {
       "relation": "contains",
@@ -5786,9 +7873,9 @@
       "source_file": ".agents/skills/cavecrew/README.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "cavecrew_readme_cavecrew",
-      "target": "cavecrew_readme_what_it_does",
-      "confidence_score": 1.0
+      "target": "cavecrew_readme_what_it_does"
     },
     {
       "relation": "contains",
@@ -5796,9 +7883,9 @@
       "source_file": ".agents/skills/cavecrew/README.md",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "cavecrew_readme_cavecrew",
-      "target": "cavecrew_readme_how_to_invoke",
-      "confidence_score": 1.0
+      "target": "cavecrew_readme_how_to_invoke"
     },
     {
       "relation": "contains",
@@ -5806,9 +7893,9 @@
       "source_file": ".agents/skills/cavecrew/README.md",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "cavecrew_readme_cavecrew",
-      "target": "cavecrew_readme_example_chaining",
-      "confidence_score": 1.0
+      "target": "cavecrew_readme_example_chaining"
     },
     {
       "relation": "contains",
@@ -5816,9 +7903,9 @@
       "source_file": ".agents/skills/cavecrew/README.md",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "cavecrew_readme_cavecrew",
-      "target": "cavecrew_readme_see_also",
-      "confidence_score": 1.0
+      "target": "cavecrew_readme_see_also"
     },
     {
       "relation": "contains",
@@ -5826,9 +7913,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_cavecrew_skill_md",
-      "target": "cavecrew_skill_when_to_use_cavecrew_vs_alternatives",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_when_to_use_cavecrew_vs_alternatives"
     },
     {
       "relation": "contains",
@@ -5836,9 +7923,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_cavecrew_skill_md",
-      "target": "cavecrew_skill_why_this_exists_the_real_win",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_why_this_exists_the_real_win"
     },
     {
       "relation": "contains",
@@ -5846,9 +7933,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_cavecrew_skill_md",
-      "target": "cavecrew_skill_output_contracts",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_output_contracts"
     },
     {
       "relation": "contains",
@@ -5856,9 +7943,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_cavecrew_skill_md",
-      "target": "cavecrew_skill_chaining_patterns",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_chaining_patterns"
     },
     {
       "relation": "contains",
@@ -5866,9 +7953,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_cavecrew_skill_md",
-      "target": "cavecrew_skill_what_not_to_do",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_what_not_to_do"
     },
     {
       "relation": "contains",
@@ -5876,9 +7963,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_cavecrew_skill_md",
-      "target": "cavecrew_skill_auto_clarity_inherited",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_auto_clarity_inherited"
     },
     {
       "relation": "contains",
@@ -5886,9 +7973,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "cavecrew_skill_output_contracts",
-      "target": "cavecrew_skill_codeblock_1",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_codeblock_1"
     },
     {
       "relation": "contains",
@@ -5896,9 +7983,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "cavecrew_skill_output_contracts",
-      "target": "cavecrew_skill_codeblock_2",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_codeblock_2"
     },
     {
       "relation": "contains",
@@ -5906,9 +7993,9 @@
       "source_file": ".agents/skills/cavecrew/SKILL.md",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "cavecrew_skill_output_contracts",
-      "target": "cavecrew_skill_codeblock_3",
-      "confidence_score": 1.0
+      "target": "cavecrew_skill_codeblock_3"
     },
     {
       "relation": "contains",
@@ -5916,9 +8003,9 @@
       "source_file": ".agents/skills/caveman/README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_readme_md",
-      "target": "caveman_readme_caveman",
-      "confidence_score": 1.0
+      "target": "caveman_readme_caveman"
     },
     {
       "relation": "contains",
@@ -5926,9 +8013,9 @@
       "source_file": ".agents/skills/caveman/README.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_readme_caveman",
-      "target": "caveman_readme_what_it_does",
-      "confidence_score": 1.0
+      "target": "caveman_readme_what_it_does"
     },
     {
       "relation": "contains",
@@ -5936,9 +8023,9 @@
       "source_file": ".agents/skills/caveman/README.md",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_readme_caveman",
-      "target": "caveman_readme_how_to_invoke",
-      "confidence_score": 1.0
+      "target": "caveman_readme_how_to_invoke"
     },
     {
       "relation": "contains",
@@ -5946,9 +8033,9 @@
       "source_file": ".agents/skills/caveman/README.md",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_readme_caveman",
-      "target": "caveman_readme_example_output",
-      "confidence_score": 1.0
+      "target": "caveman_readme_example_output"
     },
     {
       "relation": "contains",
@@ -5956,9 +8043,9 @@
       "source_file": ".agents/skills/caveman/README.md",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_readme_caveman",
-      "target": "caveman_readme_see_also",
-      "confidence_score": 1.0
+      "target": "caveman_readme_see_also"
     },
     {
       "relation": "contains",
@@ -5966,9 +8053,9 @@
       "source_file": ".agents/skills/caveman/README.md",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_readme_how_to_invoke",
-      "target": "caveman_readme_codeblock_1",
-      "confidence_score": 1.0
+      "target": "caveman_readme_codeblock_1"
     },
     {
       "relation": "contains",
@@ -5976,9 +8063,9 @@
       "source_file": ".agents/skills/caveman/SKILL.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_skill_md",
-      "target": "caveman_skill_persistence",
-      "confidence_score": 1.0
+      "target": "caveman_skill_persistence"
     },
     {
       "relation": "contains",
@@ -5986,9 +8073,9 @@
       "source_file": ".agents/skills/caveman/SKILL.md",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_skill_md",
-      "target": "caveman_skill_rules",
-      "confidence_score": 1.0
+      "target": "caveman_skill_rules"
     },
     {
       "relation": "contains",
@@ -5996,9 +8083,9 @@
       "source_file": ".agents/skills/caveman/SKILL.md",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_skill_md",
-      "target": "caveman_skill_intensity",
-      "confidence_score": 1.0
+      "target": "caveman_skill_intensity"
     },
     {
       "relation": "contains",
@@ -6006,9 +8093,9 @@
       "source_file": ".agents/skills/caveman/SKILL.md",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_skill_md",
-      "target": "caveman_skill_auto_clarity",
-      "confidence_score": 1.0
+      "target": "caveman_skill_auto_clarity"
     },
     {
       "relation": "contains",
@@ -6016,9 +8103,9 @@
       "source_file": ".agents/skills/caveman/SKILL.md",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_skill_md",
-      "target": "caveman_skill_boundaries",
-      "confidence_score": 1.0
+      "target": "caveman_skill_boundaries"
     },
     {
       "relation": "contains",
@@ -6026,9 +8113,9 @@
       "source_file": ".agents/skills/caveman-commit/README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_commit_readme_md",
-      "target": "caveman_commit_readme_caveman_commit",
-      "confidence_score": 1.0
+      "target": "caveman_commit_readme_caveman_commit"
     },
     {
       "relation": "contains",
@@ -6036,9 +8123,9 @@
       "source_file": ".agents/skills/caveman-commit/README.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_readme_caveman_commit",
-      "target": "caveman_commit_readme_what_it_does",
-      "confidence_score": 1.0
+      "target": "caveman_commit_readme_what_it_does"
     },
     {
       "relation": "contains",
@@ -6046,9 +8133,9 @@
       "source_file": ".agents/skills/caveman-commit/README.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_readme_caveman_commit",
-      "target": "caveman_commit_readme_how_to_invoke",
-      "confidence_score": 1.0
+      "target": "caveman_commit_readme_how_to_invoke"
     },
     {
       "relation": "contains",
@@ -6056,9 +8143,9 @@
       "source_file": ".agents/skills/caveman-commit/README.md",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_readme_caveman_commit",
-      "target": "caveman_commit_readme_example_output",
-      "confidence_score": 1.0
+      "target": "caveman_commit_readme_example_output"
     },
     {
       "relation": "contains",
@@ -6066,9 +8153,9 @@
       "source_file": ".agents/skills/caveman-commit/README.md",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_readme_caveman_commit",
-      "target": "caveman_commit_readme_see_also",
-      "confidence_score": 1.0
+      "target": "caveman_commit_readme_see_also"
     },
     {
       "relation": "contains",
@@ -6076,9 +8163,9 @@
       "source_file": ".agents/skills/caveman-commit/README.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_readme_how_to_invoke",
-      "target": "caveman_commit_readme_codeblock_1",
-      "confidence_score": 1.0
+      "target": "caveman_commit_readme_codeblock_1"
     },
     {
       "relation": "contains",
@@ -6086,9 +8173,9 @@
       "source_file": ".agents/skills/caveman-commit/README.md",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_readme_example_output",
-      "target": "caveman_commit_readme_codeblock_2",
-      "confidence_score": 1.0
+      "target": "caveman_commit_readme_codeblock_2"
     },
     {
       "relation": "contains",
@@ -6096,9 +8183,9 @@
       "source_file": ".agents/skills/caveman-commit/README.md",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_readme_example_output",
-      "target": "caveman_commit_readme_codeblock_3",
-      "confidence_score": 1.0
+      "target": "caveman_commit_readme_codeblock_3"
     },
     {
       "relation": "contains",
@@ -6106,9 +8193,9 @@
       "source_file": ".agents/skills/caveman-commit/SKILL.md",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_commit_skill_md",
-      "target": "caveman_commit_skill_rules",
-      "confidence_score": 1.0
+      "target": "caveman_commit_skill_rules"
     },
     {
       "relation": "contains",
@@ -6116,9 +8203,9 @@
       "source_file": ".agents/skills/caveman-commit/SKILL.md",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_commit_skill_md",
-      "target": "caveman_commit_skill_examples",
-      "confidence_score": 1.0
+      "target": "caveman_commit_skill_examples"
     },
     {
       "relation": "contains",
@@ -6126,9 +8213,9 @@
       "source_file": ".agents/skills/caveman-commit/SKILL.md",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_commit_skill_md",
-      "target": "caveman_commit_skill_auto_clarity",
-      "confidence_score": 1.0
+      "target": "caveman_commit_skill_auto_clarity"
     },
     {
       "relation": "contains",
@@ -6136,9 +8223,9 @@
       "source_file": ".agents/skills/caveman-commit/SKILL.md",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_commit_skill_md",
-      "target": "caveman_commit_skill_boundaries",
-      "confidence_score": 1.0
+      "target": "caveman_commit_skill_boundaries"
     },
     {
       "relation": "contains",
@@ -6146,9 +8233,9 @@
       "source_file": ".agents/skills/caveman-commit/SKILL.md",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_skill_examples",
-      "target": "caveman_commit_skill_codeblock_1",
-      "confidence_score": 1.0
+      "target": "caveman_commit_skill_codeblock_1"
     },
     {
       "relation": "contains",
@@ -6156,9 +8243,9 @@
       "source_file": ".agents/skills/caveman-commit/SKILL.md",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_commit_skill_examples",
-      "target": "caveman_commit_skill_codeblock_2",
-      "confidence_score": 1.0
+      "target": "caveman_commit_skill_codeblock_2"
     },
     {
       "relation": "contains",
@@ -6166,9 +8253,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_what_it_do",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_what_it_do"
     },
     {
       "relation": "contains",
@@ -6176,9 +8263,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_benchmarks",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_benchmarks"
     },
     {
       "relation": "contains",
@@ -6186,9 +8273,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_before_after",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_before_after"
     },
     {
       "relation": "contains",
@@ -6196,9 +8283,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_security",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_security"
     },
     {
       "relation": "contains",
@@ -6206,9 +8293,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_install",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_install"
     },
     {
       "relation": "contains",
@@ -6216,9 +8303,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L84",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_usage",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_usage"
     },
     {
       "relation": "contains",
@@ -6226,9 +8313,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_how_it_work",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_how_it_work"
     },
     {
       "relation": "contains",
@@ -6236,9 +8323,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_what_is_preserved",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_what_is_preserved"
     },
     {
       "relation": "contains",
@@ -6246,9 +8333,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_why_this_matter",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_why_this_matter"
     },
     {
       "relation": "contains",
@@ -6256,9 +8343,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L158",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_readme_md",
-      "target": "caveman_compress_readme_part_of_caveman",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_part_of_caveman"
     },
     {
       "relation": "contains",
@@ -6266,9 +8353,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_what_it_do",
-      "target": "caveman_compress_readme_codeblock_1",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_codeblock_1"
     },
     {
       "relation": "contains",
@@ -6276,9 +8363,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_what_it_do",
-      "target": "caveman_compress_readme_codeblock_2",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_codeblock_2"
     },
     {
       "relation": "contains",
@@ -6286,9 +8373,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_before_after",
-      "target": "caveman_compress_readme_original_706_tokens",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_original_706_tokens"
     },
     {
       "relation": "contains",
@@ -6296,9 +8383,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_before_after",
-      "target": "caveman_compress_readme_img_src_docs_assets_dancing_rock_svg_width_20_height_20_alt_rock_caveman_285_tokens",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_img_src_docs_assets_dancing_rock_svg_width_20_height_20_alt_rock_caveman_285_tokens"
     },
     {
       "relation": "contains",
@@ -6306,9 +8393,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L78",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_install",
-      "target": "caveman_compress_readme_codeblock_3",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_codeblock_3"
     },
     {
       "relation": "contains",
@@ -6316,9 +8403,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_usage",
-      "target": "caveman_compress_readme_codeblock_4",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_codeblock_4"
     },
     {
       "relation": "contains",
@@ -6326,9 +8413,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_usage",
-      "target": "caveman_compress_readme_codeblock_5",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_codeblock_5"
     },
     {
       "relation": "contains",
@@ -6336,9 +8423,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L97",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_usage",
-      "target": "caveman_compress_readme_what_files_work",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_what_files_work"
     },
     {
       "relation": "contains",
@@ -6346,9 +8433,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L108",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_how_it_work",
-      "target": "caveman_compress_readme_codeblock_6",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_codeblock_6"
     },
     {
       "relation": "contains",
@@ -6356,9 +8443,9 @@
       "source_file": ".agents/skills/caveman-compress/README.md",
       "source_location": "L149",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_readme_why_this_matter",
-      "target": "caveman_compress_readme_codeblock_7",
-      "confidence_score": 1.0
+      "target": "caveman_compress_readme_codeblock_7"
     },
     {
       "relation": "contains",
@@ -6366,9 +8453,9 @@
       "source_file": ".agents/skills/caveman-compress/SECURITY.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_security_md",
-      "target": "caveman_compress_security_security",
-      "confidence_score": 1.0
+      "target": "caveman_compress_security_security"
     },
     {
       "relation": "contains",
@@ -6376,9 +8463,9 @@
       "source_file": ".agents/skills/caveman-compress/SECURITY.md",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_security_security",
-      "target": "caveman_compress_security_snyk_high_risk_rating",
-      "confidence_score": 1.0
+      "target": "caveman_compress_security_snyk_high_risk_rating"
     },
     {
       "relation": "contains",
@@ -6386,9 +8473,9 @@
       "source_file": ".agents/skills/caveman-compress/SECURITY.md",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_security_snyk_high_risk_rating",
-      "target": "caveman_compress_security_what_triggers_the_rating",
-      "confidence_score": 1.0
+      "target": "caveman_compress_security_what_triggers_the_rating"
     },
     {
       "relation": "contains",
@@ -6396,9 +8483,9 @@
       "source_file": ".agents/skills/caveman-compress/SECURITY.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_security_snyk_high_risk_rating",
-      "target": "caveman_compress_security_what_the_skill_does_not_do",
-      "confidence_score": 1.0
+      "target": "caveman_compress_security_what_the_skill_does_not_do"
     },
     {
       "relation": "contains",
@@ -6406,9 +8493,9 @@
       "source_file": ".agents/skills/caveman-compress/SECURITY.md",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_security_snyk_high_risk_rating",
-      "target": "caveman_compress_security_auth_behavior",
-      "confidence_score": 1.0
+      "target": "caveman_compress_security_auth_behavior"
     },
     {
       "relation": "contains",
@@ -6416,9 +8503,9 @@
       "source_file": ".agents/skills/caveman-compress/SECURITY.md",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_security_snyk_high_risk_rating",
-      "target": "caveman_compress_security_file_size_limit",
-      "confidence_score": 1.0
+      "target": "caveman_compress_security_file_size_limit"
     },
     {
       "relation": "contains",
@@ -6426,9 +8513,9 @@
       "source_file": ".agents/skills/caveman-compress/SECURITY.md",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_security_snyk_high_risk_rating",
-      "target": "caveman_compress_security_reporting_a_vulnerability",
-      "confidence_score": 1.0
+      "target": "caveman_compress_security_reporting_a_vulnerability"
     },
     {
       "relation": "contains",
@@ -6436,9 +8523,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_compress_skill_md",
-      "target": "caveman_compress_skill_caveman_compress",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_caveman_compress"
     },
     {
       "relation": "contains",
@@ -6446,9 +8533,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_caveman_compress",
-      "target": "caveman_compress_skill_purpose",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_purpose"
     },
     {
       "relation": "contains",
@@ -6456,9 +8543,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_caveman_compress",
-      "target": "caveman_compress_skill_trigger",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_trigger"
     },
     {
       "relation": "contains",
@@ -6466,9 +8553,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_caveman_compress",
-      "target": "caveman_compress_skill_process",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_process"
     },
     {
       "relation": "contains",
@@ -6476,9 +8563,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_caveman_compress",
-      "target": "caveman_compress_skill_compression_rules",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_compression_rules"
     },
     {
       "relation": "contains",
@@ -6486,9 +8573,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L90",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_caveman_compress",
-      "target": "caveman_compress_skill_pattern",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_pattern"
     },
     {
       "relation": "contains",
@@ -6496,9 +8583,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L104",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_caveman_compress",
-      "target": "caveman_compress_skill_boundaries",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_boundaries"
     },
     {
       "relation": "contains",
@@ -6506,9 +8593,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_compression_rules",
-      "target": "caveman_compress_skill_remove",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_remove"
     },
     {
       "relation": "contains",
@@ -6516,9 +8603,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_compression_rules",
-      "target": "caveman_compress_skill_preserve_exactly_never_modify",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_preserve_exactly_never_modify"
     },
     {
       "relation": "contains",
@@ -6526,9 +8613,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_compression_rules",
-      "target": "caveman_compress_skill_preserve_structure",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_preserve_structure"
     },
     {
       "relation": "contains",
@@ -6536,9 +8623,9 @@
       "source_file": ".agents/skills/caveman-compress/SKILL.md",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_compress_skill_compression_rules",
-      "target": "caveman_compress_skill_compress",
-      "confidence_score": 1.0
+      "target": "caveman_compress_skill_compress"
     },
     {
       "relation": "contains",
@@ -6546,9 +8633,9 @@
       "source_file": ".agents/skills/caveman-help/README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_help_readme_md",
-      "target": "caveman_help_readme_caveman_help",
-      "confidence_score": 1.0
+      "target": "caveman_help_readme_caveman_help"
     },
     {
       "relation": "contains",
@@ -6556,9 +8643,9 @@
       "source_file": ".agents/skills/caveman-help/README.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_readme_caveman_help",
-      "target": "caveman_help_readme_what_it_does",
-      "confidence_score": 1.0
+      "target": "caveman_help_readme_what_it_does"
     },
     {
       "relation": "contains",
@@ -6566,9 +8653,9 @@
       "source_file": ".agents/skills/caveman-help/README.md",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_readme_caveman_help",
-      "target": "caveman_help_readme_how_to_invoke",
-      "confidence_score": 1.0
+      "target": "caveman_help_readme_how_to_invoke"
     },
     {
       "relation": "contains",
@@ -6576,9 +8663,9 @@
       "source_file": ".agents/skills/caveman-help/README.md",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_readme_caveman_help",
-      "target": "caveman_help_readme_example_output",
-      "confidence_score": 1.0
+      "target": "caveman_help_readme_example_output"
     },
     {
       "relation": "contains",
@@ -6586,9 +8673,9 @@
       "source_file": ".agents/skills/caveman-help/README.md",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_readme_caveman_help",
-      "target": "caveman_help_readme_see_also",
-      "confidence_score": 1.0
+      "target": "caveman_help_readme_see_also"
     },
     {
       "relation": "contains",
@@ -6596,9 +8683,9 @@
       "source_file": ".agents/skills/caveman-help/README.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_readme_how_to_invoke",
-      "target": "caveman_help_readme_codeblock_1",
-      "confidence_score": 1.0
+      "target": "caveman_help_readme_codeblock_1"
     },
     {
       "relation": "contains",
@@ -6606,9 +8693,9 @@
       "source_file": ".agents/skills/caveman-help/README.md",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_readme_example_output",
-      "target": "caveman_help_readme_codeblock_2",
-      "confidence_score": 1.0
+      "target": "caveman_help_readme_codeblock_2"
     },
     {
       "relation": "contains",
@@ -6616,9 +8703,9 @@
       "source_file": ".agents/skills/caveman-help/SKILL.md",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_help_skill_md",
-      "target": "caveman_help_skill_caveman_help",
-      "confidence_score": 1.0
+      "target": "caveman_help_skill_caveman_help"
     },
     {
       "relation": "contains",
@@ -6626,9 +8713,9 @@
       "source_file": ".agents/skills/caveman-help/SKILL.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_skill_caveman_help",
-      "target": "caveman_help_skill_modes",
-      "confidence_score": 1.0
+      "target": "caveman_help_skill_modes"
     },
     {
       "relation": "contains",
@@ -6636,9 +8723,9 @@
       "source_file": ".agents/skills/caveman-help/SKILL.md",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_skill_caveman_help",
-      "target": "caveman_help_skill_skills",
-      "confidence_score": 1.0
+      "target": "caveman_help_skill_skills"
     },
     {
       "relation": "contains",
@@ -6646,9 +8733,9 @@
       "source_file": ".agents/skills/caveman-help/SKILL.md",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_skill_caveman_help",
-      "target": "caveman_help_skill_deactivate",
-      "confidence_score": 1.0
+      "target": "caveman_help_skill_deactivate"
     },
     {
       "relation": "contains",
@@ -6656,9 +8743,9 @@
       "source_file": ".agents/skills/caveman-help/SKILL.md",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_skill_caveman_help",
-      "target": "caveman_help_skill_configure_default_mode",
-      "confidence_score": 1.0
+      "target": "caveman_help_skill_configure_default_mode"
     },
     {
       "relation": "contains",
@@ -6666,9 +8753,9 @@
       "source_file": ".agents/skills/caveman-help/SKILL.md",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_skill_caveman_help",
-      "target": "caveman_help_skill_more",
-      "confidence_score": 1.0
+      "target": "caveman_help_skill_more"
     },
     {
       "relation": "contains",
@@ -6676,9 +8763,9 @@
       "source_file": ".agents/skills/caveman-help/SKILL.md",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_skill_configure_default_mode",
-      "target": "caveman_help_skill_codeblock_1",
-      "confidence_score": 1.0
+      "target": "caveman_help_skill_codeblock_1"
     },
     {
       "relation": "contains",
@@ -6686,9 +8773,9 @@
       "source_file": ".agents/skills/caveman-help/SKILL.md",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_help_skill_configure_default_mode",
-      "target": "caveman_help_skill_codeblock_2",
-      "confidence_score": 1.0
+      "target": "caveman_help_skill_codeblock_2"
     },
     {
       "relation": "contains",
@@ -6696,9 +8783,9 @@
       "source_file": ".agents/skills/caveman-review/README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_review_readme_md",
-      "target": "caveman_review_readme_caveman_review",
-      "confidence_score": 1.0
+      "target": "caveman_review_readme_caveman_review"
     },
     {
       "relation": "contains",
@@ -6706,9 +8793,9 @@
       "source_file": ".agents/skills/caveman-review/README.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_review_readme_caveman_review",
-      "target": "caveman_review_readme_what_it_does",
-      "confidence_score": 1.0
+      "target": "caveman_review_readme_what_it_does"
     },
     {
       "relation": "contains",
@@ -6716,9 +8803,9 @@
       "source_file": ".agents/skills/caveman-review/README.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_review_readme_caveman_review",
-      "target": "caveman_review_readme_how_to_invoke",
-      "confidence_score": 1.0
+      "target": "caveman_review_readme_how_to_invoke"
     },
     {
       "relation": "contains",
@@ -6726,9 +8813,9 @@
       "source_file": ".agents/skills/caveman-review/README.md",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_review_readme_caveman_review",
-      "target": "caveman_review_readme_example_output",
-      "confidence_score": 1.0
+      "target": "caveman_review_readme_example_output"
     },
     {
       "relation": "contains",
@@ -6736,9 +8823,9 @@
       "source_file": ".agents/skills/caveman-review/README.md",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_review_readme_caveman_review",
-      "target": "caveman_review_readme_see_also",
-      "confidence_score": 1.0
+      "target": "caveman_review_readme_see_also"
     },
     {
       "relation": "contains",
@@ -6746,9 +8833,9 @@
       "source_file": ".agents/skills/caveman-review/README.md",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_review_readme_how_to_invoke",
-      "target": "caveman_review_readme_codeblock_1",
-      "confidence_score": 1.0
+      "target": "caveman_review_readme_codeblock_1"
     },
     {
       "relation": "contains",
@@ -6756,9 +8843,9 @@
       "source_file": ".agents/skills/caveman-review/README.md",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_review_readme_example_output",
-      "target": "caveman_review_readme_codeblock_2",
-      "confidence_score": 1.0
+      "target": "caveman_review_readme_codeblock_2"
     },
     {
       "relation": "contains",
@@ -6766,9 +8853,9 @@
       "source_file": ".agents/skills/caveman-review/SKILL.md",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_review_skill_md",
-      "target": "caveman_review_skill_rules",
-      "confidence_score": 1.0
+      "target": "caveman_review_skill_rules"
     },
     {
       "relation": "contains",
@@ -6776,9 +8863,9 @@
       "source_file": ".agents/skills/caveman-review/SKILL.md",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_review_skill_md",
-      "target": "caveman_review_skill_examples",
-      "confidence_score": 1.0
+      "target": "caveman_review_skill_examples"
     },
     {
       "relation": "contains",
@@ -6786,9 +8873,9 @@
       "source_file": ".agents/skills/caveman-review/SKILL.md",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_review_skill_md",
-      "target": "caveman_review_skill_auto_clarity",
-      "confidence_score": 1.0
+      "target": "caveman_review_skill_auto_clarity"
     },
     {
       "relation": "contains",
@@ -6796,9 +8883,9 @@
       "source_file": ".agents/skills/caveman-review/SKILL.md",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_review_skill_md",
-      "target": "caveman_review_skill_boundaries",
-      "confidence_score": 1.0
+      "target": "caveman_review_skill_boundaries"
     },
     {
       "relation": "contains",
@@ -6806,9 +8893,9 @@
       "source_file": ".agents/skills/caveman-stats/README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_skills_caveman_stats_readme_md",
-      "target": "caveman_stats_readme_caveman_stats",
-      "confidence_score": 1.0
+      "target": "caveman_stats_readme_caveman_stats"
     },
     {
       "relation": "contains",
@@ -6816,9 +8903,9 @@
       "source_file": ".agents/skills/caveman-stats/README.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_stats_readme_caveman_stats",
-      "target": "caveman_stats_readme_what_it_does",
-      "confidence_score": 1.0
+      "target": "caveman_stats_readme_what_it_does"
     },
     {
       "relation": "contains",
@@ -6826,9 +8913,9 @@
       "source_file": ".agents/skills/caveman-stats/README.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_stats_readme_caveman_stats",
-      "target": "caveman_stats_readme_how_to_invoke",
-      "confidence_score": 1.0
+      "target": "caveman_stats_readme_how_to_invoke"
     },
     {
       "relation": "contains",
@@ -6836,9 +8923,9 @@
       "source_file": ".agents/skills/caveman-stats/README.md",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_stats_readme_caveman_stats",
-      "target": "caveman_stats_readme_example_output",
-      "confidence_score": 1.0
+      "target": "caveman_stats_readme_example_output"
     },
     {
       "relation": "contains",
@@ -6846,9 +8933,9 @@
       "source_file": ".agents/skills/caveman-stats/README.md",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_stats_readme_caveman_stats",
-      "target": "caveman_stats_readme_see_also",
-      "confidence_score": 1.0
+      "target": "caveman_stats_readme_see_also"
     },
     {
       "relation": "contains",
@@ -6856,9 +8943,9 @@
       "source_file": ".agents/skills/caveman-stats/README.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_stats_readme_how_to_invoke",
-      "target": "caveman_stats_readme_codeblock_1",
-      "confidence_score": 1.0
+      "target": "caveman_stats_readme_codeblock_1"
     },
     {
       "relation": "contains",
@@ -6866,9 +8953,49 @@
       "source_file": ".agents/skills/caveman-stats/README.md",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "caveman_stats_readme_example_output",
-      "target": "caveman_stats_readme_codeblock_2",
-      "confidence_score": 1.0
+      "target": "caveman_stats_readme_codeblock_2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_readme_md",
+      "target": "admin_readme_getting_started"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_readme_md",
+      "target": "admin_readme_learn_more"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "apps_admin_readme_md",
+      "target": "admin_readme_deploy_on_vercel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/admin/README.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_readme_getting_started",
+      "target": "admin_readme_codeblock_1"
     },
     {
       "relation": "contains",
@@ -6909,8 +9036,18 @@
       "confidence_score": 1.0,
       "source": "web_readme_getting_started",
       "target": "web_readme_codeblock_1"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/api/src/supabase.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "packages_api_src_supabase_ts",
+      "target": "src_supabase_supabase"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "582a4d62ffc4dbf33a6ae1af931ee347df31a38d"
+  "built_at_commit": "b0d5b46ba278f0ecc4037a2cfd00a49f2da296b0"
 }

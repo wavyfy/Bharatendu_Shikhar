@@ -1,16 +1,16 @@
 # Graph Report - Bharatendu_Shikhar  (2026-05-25)
 
 ## Corpus Check
-- 35 files · ~9,576 words
+- 53 files · ~10,255 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 342 nodes · 375 edges · 31 communities (27 shown, 4 thin omitted)
+- 450 nodes · 489 edges · 44 communities (37 shown, 7 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `582a4d62`
+- Built from commit: `b0d5b46b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -43,18 +43,29 @@
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
 - [[_COMMUNITY_Community 29|Community 29]]
+- [[_COMMUNITY_Community 31|Community 31]]
+- [[_COMMUNITY_Community 32|Community 32]]
+- [[_COMMUNITY_Community 33|Community 33]]
+- [[_COMMUNITY_Community 34|Community 34]]
+- [[_COMMUNITY_Community 35|Community 35]]
+- [[_COMMUNITY_Community 36|Community 36]]
+- [[_COMMUNITY_Community 37|Community 37]]
+- [[_COMMUNITY_Community 38|Community 38]]
+- [[_COMMUNITY_Community 39|Community 39]]
+- [[_COMMUNITY_Community 40|Community 40]]
+- [[_COMMUNITY_Community 41|Community 41]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 17 edges
 2. `compilerOptions` - 16 edges
-3. `validate()` - 14 edges
-4. `compress_file()` - 11 edges
-5. `detect_file_type()` - 10 edges
-6. `should_compress()` - 9 edges
-7. `skills` - 8 edges
-8. `tasks` - 7 edges
-9. `Caveman Compress` - 7 edges
-10. `main()` - 6 edges
+3. `compilerOptions` - 16 edges
+4. `validate()` - 14 edges
+5. `compress_file()` - 11 edges
+6. `detect_file_type()` - 10 edges
+7. `should_compress()` - 9 edges
+8. `skills` - 8 edges
+9. `tasks` - 7 edges
+10. `Caveman Compress` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `compress_file()` --calls--> `validate()`  [EXTRACTED]
@@ -68,7 +79,7 @@
 - `main()` --calls--> `compress_file()`  [EXTRACTED]
   .agents/skills/caveman-compress/scripts/cli.py → .agents/skills/caveman-compress/scripts/compress.py
 
-## Communities (31 total, 4 thin omitted)
+## Communities (44 total, 7 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
@@ -88,15 +99,15 @@ Nodes (17): author, description, devDependencies, turbo, typescript, keywords, l
 
 ### Community 4 - "Community 4"
 Cohesion: 0.09
-Nodes (21): dependencies, next, react, react-dom, devDependencies, eslint, eslint-config-next, tailwindcss (+13 more)
+Nodes (22): dependencies, next, react, react-dom, @supabase/supabase-js, devDependencies, eslint, eslint-config-next (+14 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.05
 Nodes (37): computedHash, skillPath, source, sourceType, computedHash, skillPath, source, sourceType (+29 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.40
-Nodes (3): geistMono, geistSans, metadata
+Cohesion: 0.22
+Nodes (6): geistMono, geistSans, metadata, geistMono, geistSans, metadata
 
 ### Community 7 - "Community 7"
 Cohesion: 0.14
@@ -166,20 +177,52 @@ Nodes (5): Auto-Clarity, Boundaries, Intensity, Persistence, Rules
 Cohesion: 0.40
 Nodes (4): Auto-Clarity, Boundaries, Examples, Rules
 
+### Community 31 - "Community 31"
+Cohesion: 0.09
+Nodes (22): dependencies, next, react, react-dom, @supabase/supabase-js, devDependencies, eslint, eslint-config-next (+14 more)
+
+### Community 32 - "Community 32"
+Cohesion: 0.10
+Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
+
+### Community 33 - "Community 33"
+Cohesion: 0.20
+Nodes (9): dependencies, @supabase/ssr, @supabase/supabase-js, devDependencies, @types/node, main, name, private (+1 more)
+
+### Community 34 - "Community 34"
+Cohesion: 0.40
+Nodes (4): code:bash (npm run dev), Deploy on Vercel, Getting Started, Learn More
+
+### Community 35 - "Community 35"
+Cohesion: 0.40
+Nodes (4): Caveman Mode (ALWAYS ACTIVE), Graphify (ALWAYS USE & SIGNIFICANT-UPDATE), Rules, This is NOT the Next.js you know
+
+### Community 36 - "Community 36"
+Cohesion: 0.40
+Nodes (4): compilerOptions, types, extends, include
+
+### Community 37 - "Community 37"
+Cohesion: 0.40
+Nodes (3): geistMono, geistSans, metadata
+
+### Community 38 - "Community 38"
+Cohesion: 0.20
+Nodes (13): supabase, supabaseAdmin, supabase, createSupabaseMiddlewareClient(), updateSession(), CookieMethods, createSupabaseServerClient(), Database (+5 more)
+
 ## Knowledge Gaps
-- **200 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+195 more)
+- **265 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+260 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `validate()` connect `Community 14` to `Community 7`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `compress_file()` connect `Community 7` to `Community 14`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `compress_file()` connect `Community 7` to `Community 14`?**
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `packageManager` to the rest of the system?**
-  _209 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _274 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

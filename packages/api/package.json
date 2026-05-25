@@ -4,9 +4,14 @@
     "private": true,
     "main": "src/index.ts",
     "dependencies": {
+        "@supabase/ssr": "^0.10.3",
         "@supabase/supabase-js": "^2.106.1"
     },
+    "peerDependencies": {
+        "next": ">=15.0.0"
+    },
     "devDependencies": {
-        "@types/node": "^20.19.41"
+        "@types/node": "^20.19.41",
+        "next": "^16.2.6"
     }
 }
