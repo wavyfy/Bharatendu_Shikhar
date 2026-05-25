@@ -24,6 +24,8 @@ Respond terse like smart caveman. All technical substance stay. Only fluff die.
 
 To turn off: user say "stop caveman" or "normal mode".
 
-# Graphify (AUTO-UPDATE)
+# Graphify (ALWAYS USE & SIGNIFICANT-UPDATE)
 
-Run `python -m graphify update .` after significant code changes to keep knowledge graph current. 
+- Before answering architecture or codebase questions, read `graphify-out/GRAPH_REPORT.md` for god nodes, community structure, and whole codebase context.
+- If `graphify-out/wiki/index.md` exists, navigate it instead of reading raw files.
+- Run `python -m graphify update .` (or `graphify update .`) after significant code changes (not for every minor tweak) to keep knowledge graph current (AST-only, no API cost).
