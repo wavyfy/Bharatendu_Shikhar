@@ -197,6 +197,8 @@ export default function Home() {
               src="https://picsum.photos/id/1011/1000/600"
               alt="News"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 50vw"
+              priority
               className="object-cover"
             />
           </div>

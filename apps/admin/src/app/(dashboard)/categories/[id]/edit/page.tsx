@@ -1,0 +1,55 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { createSupabaseServerClient } from "@repo/api";
+import { CategoryFormPlaceholder } from "@/features/categories/components/CategoryFormPlaceholder";
+import { getCategoryById } from "@/features/categories/queries";
+
+export const metadata = {
+  title: "Edit Category | Bharatendu Shikhar",
+};
+
+interface EditCategoryPageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function EditCategoryPage({ params }: EditCategoryPageProps) {
+  const resolvedParams = await params;
+  const categoryId = parseInt(resolvedParams.id, 10);
+  
+  if (isNaN(categoryId)) redirect("/categories");
+
+  const cookieStore = await cookies();
+  const supabase = createSupabaseServerClient({
+    get: (name) => cookieStore.get(name)?.value,
+    set: () => {},
+    remove: () => {},
+  });
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { supabaseAdmin } = await import("@repo/api");
+  const { data } = await supabaseAdmin
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  const profile = data as { role: unknown } | null;
+  if (profile?.role !== "admin") {
+    redirect("/dashboard");
+  }
+
+  const category = await getCategoryById(categoryId);
+  if (!category) redirect("/categories");
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-neutral-900 font-serif">Edit Category</h1>
+        <p className="text-neutral-500">Update category details.</p>
+      </div>
+      <CategoryFormPlaceholder initialData={category} />
+    </div>
+  );
+}

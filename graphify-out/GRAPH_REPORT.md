@@ -1,16 +1,16 @@
-# Graph Report - Bharatendu_Shikhar  (2026-05-25)
+# Graph Report - Bharatendu_Shikhar  (2026-05-26)
 
 ## Corpus Check
-- 53 files · ~10,255 words
+- 124 files · ~29,135 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 450 nodes · 489 edges · 44 communities (37 shown, 7 thin omitted)
+- 776 nodes · 1294 edges · 51 communities (43 shown, 8 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b0d5b46b`
+- Built from commit: `1ceb80e0`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -54,32 +54,40 @@
 - [[_COMMUNITY_Community 39|Community 39]]
 - [[_COMMUNITY_Community 40|Community 40]]
 - [[_COMMUNITY_Community 41|Community 41]]
+- [[_COMMUNITY_Community 42|Community 42]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 45|Community 45]]
+- [[_COMMUNITY_Community 46|Community 46]]
+- [[_COMMUNITY_Community 47|Community 47]]
+- [[_COMMUNITY_Community 48|Community 48]]
+- [[_COMMUNITY_Community 49|Community 49]]
+- [[_COMMUNITY_Community 51|Community 51]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `compilerOptions` - 17 edges
-2. `compilerOptions` - 16 edges
-3. `compilerOptions` - 16 edges
-4. `validate()` - 14 edges
-5. `compress_file()` - 11 edges
-6. `detect_file_type()` - 10 edges
-7. `should_compress()` - 9 edges
-8. `skills` - 8 edges
-9. `tasks` - 7 edges
-10. `Caveman Compress` - 7 edges
+1. `createSupabaseServerClient()` - 58 edges
+2. `Button()` - 23 edges
+3. `useToast()` - 21 edges
+4. `compilerOptions` - 17 edges
+5. `compilerOptions` - 16 edges
+6. `compilerOptions` - 16 edges
+7. `RegionRow` - 15 edges
+8. `validate()` - 14 edges
+9. `getRegions()` - 14 edges
+10. `compress_file()` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `compress_file()` --calls--> `validate()`  [EXTRACTED]
-  .agents/skills/caveman-compress/scripts/compress.py → .agents/skills/caveman-compress/scripts/validate.py
-- `benchmark_pair()` --calls--> `validate()`  [EXTRACTED]
-  .agents/skills/caveman-compress/scripts/benchmark.py → .agents/skills/caveman-compress/scripts/validate.py
-- `main()` --calls--> `detect_file_type()`  [EXTRACTED]
-  .agents/skills/caveman-compress/scripts/cli.py → .agents/skills/caveman-compress/scripts/detect.py
-- `main()` --calls--> `should_compress()`  [EXTRACTED]
-  .agents/skills/caveman-compress/scripts/cli.py → .agents/skills/caveman-compress/scripts/detect.py
-- `main()` --calls--> `compress_file()`  [EXTRACTED]
-  .agents/skills/caveman-compress/scripts/cli.py → .agents/skills/caveman-compress/scripts/compress.py
+- `middleware()` --calls--> `createSupabaseMiddlewareClient()`  [EXTRACTED]
+  apps/admin/src/middleware.ts → packages/api/src/supabase/middleware.ts
+- `getSessionUser()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
+  apps/admin/src/app/(dashboard)/layout.tsx → packages/api/src/supabase/server.ts
+- `NewCategoryPage()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
+  apps/admin/src/app/(dashboard)/categories/new/page.tsx → packages/api/src/supabase/server.ts
+- `EditCategoryPage()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
+  apps/admin/src/app/(dashboard)/categories/[id]/edit/page.tsx → packages/api/src/supabase/server.ts
+- `EPapersPage()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
+  apps/admin/src/app/(dashboard)/epapers/page.tsx → packages/api/src/supabase/server.ts
 
-## Communities (44 total, 7 thin omitted)
+## Communities (51 total, 8 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
@@ -178,16 +186,16 @@ Cohesion: 0.40
 Nodes (4): Auto-Clarity, Boundaries, Examples, Rules
 
 ### Community 31 - "Community 31"
-Cohesion: 0.09
-Nodes (22): dependencies, next, react, react-dom, @supabase/supabase-js, devDependencies, eslint, eslint-config-next (+14 more)
+Cohesion: 0.07
+Nodes (28): dependencies, next, react, react-dom, @repo/api, @supabase/supabase-js, @tiptap/pm, @tiptap/react (+20 more)
 
 ### Community 32 - "Community 32"
 Cohesion: 0.10
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 33 - "Community 33"
-Cohesion: 0.20
-Nodes (9): dependencies, @supabase/ssr, @supabase/supabase-js, devDependencies, @types/node, main, name, private (+1 more)
+Cohesion: 0.15
+Nodes (12): dependencies, @supabase/ssr, @supabase/supabase-js, devDependencies, next, @types/node, main, name (+4 more)
 
 ### Community 34 - "Community 34"
 Cohesion: 0.40
@@ -202,32 +210,60 @@ Cohesion: 0.40
 Nodes (4): compilerOptions, types, extends, include
 
 ### Community 37 - "Community 37"
-Cohesion: 0.40
-Nodes (3): geistMono, geistSans, metadata
+Cohesion: 0.33
+Nodes (4): playfair, geistMono, geistSans, metadata
 
 ### Community 38 - "Community 38"
-Cohesion: 0.20
-Nodes (13): supabase, supabaseAdmin, supabase, createSupabaseMiddlewareClient(), updateSession(), CookieMethods, createSupabaseServerClient(), Database (+5 more)
+Cohesion: 0.08
+Nodes (33): createCategoryAction(), deleteCategoryAction(), updateCategoryAction(), metadata, metadata, getAdminAuth(), CategoryFormPlaceholder(), CategoryFormProps (+25 more)
+
+### Community 42 - "Community 42"
+Cohesion: 0.12
+Nodes (22): loginAction(), LoginState, logoutAction(), metadata, NAV_ITEMS, Home(), DashboardLayout(), getSessionUser() (+14 more)
+
+### Community 44 - "Community 44"
+Cohesion: 0.08
+Nodes (32): CategoriesPage(), metadata, PageProps, CategoriesTable(), CategoriesTableProps, RegionsTable(), SettingsForm(), metadata (+24 more)
+
+### Community 46 - "Community 46"
+Cohesion: 0.10
+Nodes (30): metadata, metadata, metadata, metadata, ArticlesPage(), metadata, PageProps, ArticleFormPlaceholder() (+22 more)
+
+### Community 47 - "Community 47"
+Cohesion: 0.06
+Nodes (46): createArticleAction(), deleteArticleAction(), getAuth(), publishArticleAction(), updateArticleAction(), ArticleFilters(), ArticleFiltersProps, ArticleFormProps (+38 more)
+
+### Community 48 - "Community 48"
+Cohesion: 0.07
+Nodes (31): metadata, metadata, PublisherForm(), PublisherFormProps, PublishersTable(), RegionsTableProps, EditPublisherPage(), Props (+23 more)
+
+### Community 49 - "Community 49"
+Cohesion: 0.14
+Nodes (18): createRegionAction(), deleteRegionAction(), updateRegionAction(), metadata, metadata, getAdminAuth(), RegionFormPlaceholder(), RegionFormProps (+10 more)
+
+### Community 51 - "Community 51"
+Cohesion: 0.11
+Nodes (34): updateContactAction(), updateHomepageAction(), updateMaintenanceAction(), updateNotificationsAction(), updateSeoAction(), updateSiteInfoAction(), updateSocialAction(), upsertSettings() (+26 more)
 
 ## Knowledge Gaps
-- **265 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+260 more)
+- **358 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+353 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `validate()` connect `Community 14` to `Community 7`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `compress_file()` connect `Community 7` to `Community 14`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+- **Why does `createSupabaseServerClient()` connect `Community 46` to `Community 38`, `Community 42`, `Community 44`, `Community 47`, `Community 48`, `Community 49`, `Community 51`?**
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+- **Why does `Button()` connect `Community 44` to `Community 38`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+- **Why does `useToast()` connect `Community 51` to `Community 38`, `Community 44`, `Community 46`, `Community 47`, `Community 48`, `Community 49`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `packageManager` to the rest of the system?**
-  _274 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _367 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
-- **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._

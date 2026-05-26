@@ -1,0 +1,568 @@
+"use client";
+
+import { useState, useTransition } from "react";
+import { Button } from "@/components/ui/Button";
+import { Card, CardBody, CardHeader } from "@/components/ui/Card";
+import type { SettingsRow } from "../types";
+import { useToast } from "@/components/ui/Toast";
+import {
+  updateSiteInfoAction,
+  updateSeoAction,
+  updateSocialAction,
+  updateContactAction,
+  updateNotificationsAction,
+  updateHomepageAction,
+  updateMaintenanceAction,
+} from "../actions";
+
+// ─── Shared primitives ────────────────────────────────────────────────────────
+
+function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-1">
+      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      {children}
+      {hint && <p className="text-xs text-gray-400">{hint}</p>}
+    </div>
+  );
+}
+
+const inputCls =
+  "w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#CC2200] transition-colors";
+
+function SectionFooter({
+  isPending,
+  error,
+}: {
+  isPending: boolean;
+  error: string | null;
+}) {
+  return (
+    <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
+      {error && (
+        <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded px-3 py-2">
+          {error}
+        </p>
+      )}
+      <div className="flex justify-end">
+        <Button type="submit" disabled={isPending}>
+          {isPending ? "Saving..." : "Save"}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+// ─── Section: Site Info ───────────────────────────────────────────────────────
+
+function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const res = await updateSiteInfoAction({
+        site_name: fd.get("site_name") as string,
+        site_tagline: (fd.get("site_tagline") as string) || null,
+        site_logo_url: (fd.get("site_logo_url") as string) || null,
+        favicon_url: (fd.get("favicon_url") as string) || null,
+      });
+      if (res.success) {
+        toast.success("Site Information saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>Site Information</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Field label="Site Name *">
+            <input
+              name="site_name"
+              type="text"
+              required
+              defaultValue={settings?.site_name ?? "Bharatendu Shikhar"}
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Tagline">
+            <input
+              name="site_tagline"
+              type="text"
+              defaultValue={settings?.site_tagline ?? ""}
+              placeholder="A short tagline..."
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Logo URL" hint="Full URL to SVG or PNG logo">
+            <input
+              name="site_logo_url"
+              type="url"
+              defaultValue={settings?.site_logo_url ?? ""}
+              placeholder="https://..."
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Favicon URL">
+            <input
+              name="favicon_url"
+              type="url"
+              defaultValue={settings?.favicon_url ?? ""}
+              placeholder="https://..."
+              className={inputCls}
+            />
+          </Field>
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+// ─── Section: SEO ────────────────────────────────────────────────────────────
+
+function SeoSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const res = await updateSeoAction({
+        meta_title: (fd.get("meta_title") as string) || null,
+        meta_description: (fd.get("meta_description") as string) || null,
+        meta_keywords: (fd.get("meta_keywords") as string) || null,
+        og_image_url: (fd.get("og_image_url") as string) || null,
+      });
+      if (res.success) {
+        toast.success("SEO Defaults saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>SEO Defaults</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Field label="Default Meta Title" hint="Max 70 characters">
+            <input
+              name="meta_title"
+              type="text"
+              maxLength={70}
+              defaultValue={settings?.meta_title ?? ""}
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Default Meta Description" hint="Max 160 characters">
+            <textarea
+              name="meta_description"
+              rows={3}
+              maxLength={160}
+              defaultValue={settings?.meta_description ?? ""}
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Default Keywords" hint="Comma-separated">
+            <input
+              name="meta_keywords"
+              type="text"
+              defaultValue={settings?.meta_keywords ?? ""}
+              placeholder="news, india, hindi"
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Open Graph Image URL">
+            <input
+              name="og_image_url"
+              type="url"
+              defaultValue={settings?.og_image_url ?? ""}
+              placeholder="https://..."
+              className={inputCls}
+            />
+          </Field>
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+// ─── Section: Social Media ────────────────────────────────────────────────────
+
+function SocialSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+
+  const platforms = [
+    { name: "facebook_url", label: "Facebook", val: settings?.facebook_url },
+    { name: "twitter_url", label: "Twitter / X", val: settings?.twitter_url },
+    { name: "instagram_url", label: "Instagram", val: settings?.instagram_url },
+    { name: "youtube_url", label: "YouTube", val: settings?.youtube_url },
+    { name: "linkedin_url", label: "LinkedIn", val: settings?.linkedin_url },
+  ] as const;
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const res = await updateSocialAction({
+        facebook_url: (fd.get("facebook_url") as string) || null,
+        twitter_url: (fd.get("twitter_url") as string) || null,
+        instagram_url: (fd.get("instagram_url") as string) || null,
+        youtube_url: (fd.get("youtube_url") as string) || null,
+        linkedin_url: (fd.get("linkedin_url") as string) || null,
+      });
+      if (res.success) {
+        toast.success("Social Media Links saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>Social Media Links</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {platforms.map((p) => (
+            <Field key={p.name} label={p.label}>
+              <input
+                name={p.name}
+                type="url"
+                defaultValue={p.val ?? ""}
+                placeholder="https://..."
+                className={inputCls}
+              />
+            </Field>
+          ))}
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+// ─── Section: Contact ─────────────────────────────────────────────────────────
+
+function ContactSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const res = await updateContactAction({
+        contact_email: (fd.get("contact_email") as string) || null,
+        contact_phone: (fd.get("contact_phone") as string) || null,
+        contact_address: (fd.get("contact_address") as string) || null,
+      });
+      if (res.success) {
+        toast.success("Contact Information saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>Contact Information</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Field label="Contact Email">
+            <input
+              name="contact_email"
+              type="email"
+              defaultValue={settings?.contact_email ?? ""}
+              placeholder="contact@example.com"
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Phone Number">
+            <input
+              name="contact_phone"
+              type="tel"
+              defaultValue={settings?.contact_phone ?? ""}
+              placeholder="+91 XXXXX XXXXX"
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Address">
+            <textarea
+              name="contact_address"
+              rows={3}
+              defaultValue={settings?.contact_address ?? ""}
+              placeholder="Street, City, State, PIN"
+              className={inputCls}
+            />
+          </Field>
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+// ─── Section: Notifications ───────────────────────────────────────────────────
+
+function NotificationsSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+  const [enabled, setEnabled] = useState(settings?.notify_on_new_article ?? false);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const res = await updateNotificationsAction({
+        notify_on_new_article: fd.get("notify_on_new_article") === "true",
+        notify_email: (fd.get("notify_email") as string) || null,
+      });
+      if (res.success) {
+        toast.success("Notification Settings saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>Notification Settings</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex items-start gap-3">
+            <input
+              id="notify_on_new_article"
+              name="notify_on_new_article"
+              type="checkbox"
+              value="true"
+              checked={enabled}
+              onChange={(e) => setEnabled(e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#CC2200] focus:ring-[#CC2200]"
+            />
+            <div>
+              <label htmlFor="notify_on_new_article" className="text-sm font-medium text-gray-700">
+                Email on new article published
+              </label>
+              <p className="text-xs text-gray-400">Send an email whenever an article is published.</p>
+            </div>
+          </div>
+          {enabled && (
+            <Field label="Notification Email">
+              <input
+                name="notify_email"
+                type="email"
+                defaultValue={settings?.notify_email ?? ""}
+                placeholder="admin@example.com"
+                className={inputCls}
+              />
+            </Field>
+          )}
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+// ─── Section: Homepage ────────────────────────────────────────────────────────
+
+function HomepageSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const res = await updateHomepageAction({
+        hero_title: (fd.get("hero_title") as string) || null,
+        hero_subtitle: (fd.get("hero_subtitle") as string) || null,
+        featured_articles_count: Number(fd.get("featured_articles_count")) || 6,
+      });
+      if (res.success) {
+        toast.success("Homepage Settings saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>Homepage Settings</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Field label="Hero Title">
+            <input
+              name="hero_title"
+              type="text"
+              defaultValue={settings?.hero_title ?? ""}
+              placeholder="Latest News & Updates"
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Hero Subtitle">
+            <textarea
+              name="hero_subtitle"
+              rows={2}
+              defaultValue={settings?.hero_subtitle ?? ""}
+              placeholder="Your trusted source for news..."
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Featured Articles Count" hint="Number of articles on homepage (1–20)">
+            <input
+              name="featured_articles_count"
+              type="number"
+              min={1}
+              max={20}
+              defaultValue={settings?.featured_articles_count ?? 6}
+              className={inputCls}
+            />
+          </Field>
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+// ─── Section: Maintenance ─────────────────────────────────────────────────────
+
+function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+  const [active, setActive] = useState(settings?.maintenance_mode ?? false);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const res = await updateMaintenanceAction({
+        maintenance_mode: fd.get("maintenance_mode") === "true",
+        maintenance_message: (fd.get("maintenance_message") as string) || null,
+      });
+      if (res.success) {
+        toast.success("Maintenance Mode Settings saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>Maintenance Mode</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex items-start gap-3">
+            <input
+              id="maintenance_mode"
+              name="maintenance_mode"
+              type="checkbox"
+              value="true"
+              checked={active}
+              onChange={(e) => setActive(e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#CC2200] focus:ring-[#CC2200]"
+            />
+            <div>
+              <label htmlFor="maintenance_mode" className="text-sm font-medium text-gray-700">
+                Enable Maintenance Mode
+              </label>
+              <p className="text-xs text-gray-400">
+                Puts the public site into maintenance. Admin panel stays accessible.
+              </p>
+            </div>
+          </div>
+          {active && (
+            <Field label="Maintenance Message">
+              <textarea
+                name="maintenance_message"
+                rows={2}
+                defaultValue={settings?.maintenance_message ?? ""}
+                placeholder="We'll be back soon..."
+                className={inputCls}
+              />
+            </Field>
+          )}
+          {active && (
+            <div className="flex items-center gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">
+              <span>⚠</span>
+              <span>The public-facing website will show the maintenance page until this is disabled.</span>
+            </div>
+          )}
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+// ─── Root Export ──────────────────────────────────────────────────────────────
+
+export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <SiteInfoSection settings={settings} />
+        <SeoSection settings={settings} />
+        <SocialSection settings={settings} />
+        <ContactSection settings={settings} />
+        <NotificationsSection settings={settings} />
+        <HomepageSection settings={settings} />
+      </div>
+      {/* Maintenance spans full width — visually distinct danger zone */}
+      <MaintenanceSection settings={settings} />
+    </div>
+  );
+}
