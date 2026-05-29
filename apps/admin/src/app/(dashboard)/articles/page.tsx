@@ -8,6 +8,8 @@ import { getCategories } from "@/features/categories/queries";
 import { getRegions } from "@/features/regions/queries";
 import { ArticlesTable } from "@/features/articles/components/ArticlesTable";
 import { ArticleFilters } from "@/features/articles/components/ArticleFilters";
+import { Pagination } from "@/components/ui/Pagination";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = { title: "Articles | Bharatendu Shikhar Admin" };
 
@@ -63,22 +65,12 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
     getRegions({ limit: 100 }),
   ]);
 
-  const buildQuery = (newPage: number) => {
-    const q = new URLSearchParams();
-    q.set("page", newPage.toString());
-    if (search) q.set("search", search);
-    if (status) q.set("status", status);
-    if (categoryId) q.set("category_id", categoryId.toString());
-    if (regionId) q.set("region_id", regionId.toString());
-    return `?${q.toString()}`;
-  };
-
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-[#111]">Articles</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Manage all news articles</p>
+          <h1 className="text-xl font-bold text-[#111] dark:text-slate-100">Articles</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">Manage all news articles</p>
         </div>
         <Link href="/articles/new">
           <Button>+ New Article</Button>
@@ -92,27 +84,8 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
           <ArticlesTable articles={articles} />
         </div>
         
-        {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-lg">
-            <span className="text-sm text-gray-700">
-              Page {page} of {totalPages}
-            </span>
-            <div className="space-x-2">
-              <Link href={`/articles${buildQuery(Math.max(1, page - 1))}`}>
-                <Button variant="secondary" size="sm" disabled={page <= 1}>
-                  Previous
-                </Button>
-              </Link>
-              <Link href={`/articles${buildQuery(Math.min(totalPages, page + 1))}`}>
-                <Button variant="secondary" size="sm" disabled={page >= totalPages}>
-                  Next
-                </Button>
-              </Link>
-            </div>
-          </div>
-        )}
+        <Pagination currentPage={page} totalPages={totalPages} />
       </Card>
-    </div>
+    </AnimatedPage>
   );
 }

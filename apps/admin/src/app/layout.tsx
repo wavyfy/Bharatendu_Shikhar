@@ -24,6 +24,11 @@ export const metadata: Metadata = {
   description: "Admin App",
 };
 
+import { ToastProvider } from "@/components/ui/Toast";
+
+import { ThemeProvider } from "@/components/ui/ThemeProvider";
+import NextTopLoader from "nextjs-toploader";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,7 +39,14 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <NextTopLoader color="#CC2200" showSpinner={false} />
+        <ThemeProvider>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

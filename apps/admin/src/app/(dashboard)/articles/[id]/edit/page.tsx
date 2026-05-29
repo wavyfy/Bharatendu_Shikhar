@@ -60,12 +60,6 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-neutral-900 font-serif">Edit Article</h1>
-          <p className="text-neutral-500">Update the article contents.</p>
-        </div>
-      </div>
 
       <ArticleFormPlaceholder 
         initialData={article} 

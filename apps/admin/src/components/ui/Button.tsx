@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
+import { Spinner } from "@/components/ui/Spinner";
 
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md";
@@ -14,9 +15,9 @@ const VARIANTS: Record<Variant, string> = {
   primary:
     "bg-[#CC2200] hover:bg-[#B31E00] text-white disabled:opacity-50",
   secondary:
-    "border border-gray-300 hover:border-gray-400 text-[#111] bg-white",
+    "border border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500 text-[#111] dark:text-slate-200 bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600",
   ghost:
-    "text-gray-600 hover:text-[#111] hover:bg-gray-100",
+    "text-gray-600 dark:text-slate-400 hover:text-[#111] dark:hover:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-700",
 };
 
 const SIZES: Record<Size, string> = {
@@ -36,8 +37,9 @@ export function Button({
   return (
     <button
       {...props}
+      disabled={props.disabled || isLoading}
       className={[
-        "font-semibold rounded transition-colors disabled:cursor-not-allowed",
+        "font-semibold rounded transition-all duration-200 active:scale-[0.98] disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:shadow-sm",
         VARIANTS[variant],
         SIZES[size],
         fullWidth ? "w-full" : "",
@@ -47,7 +49,8 @@ export function Button({
         .filter(Boolean)
         .join(" ")}
     >
-      {isLoading ? "Loading..." : children}
+      {isLoading && <Spinner size="sm" className="text-current" />}
+      {children}
     </button>
   );
 }

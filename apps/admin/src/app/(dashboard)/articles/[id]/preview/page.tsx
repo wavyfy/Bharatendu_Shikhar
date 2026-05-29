@@ -63,9 +63,9 @@ export default async function PreviewArticlePage({ params }: PreviewArticlePageP
             </Button>
           </Link>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-neutral-900 font-serif">Preview</h1>
-            <p className="text-neutral-500 text-sm">
-              Status: <span className="font-semibold text-neutral-800">{article.status}</span>
+            <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-slate-100 font-serif">Preview</h1>
+            <p className="text-neutral-500 dark:text-slate-400 text-sm">
+              Status: <span className="font-semibold text-neutral-800 dark:text-slate-200">{article.status}</span>
             </p>
           </div>
         </div>
@@ -74,9 +74,9 @@ export default async function PreviewArticlePage({ params }: PreviewArticlePageP
         </Link>
       </div>
 
-      <article className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <article className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         {article.featured_image ? (
-          <div className="relative w-full aspect-video bg-gray-100">
+          <div className="relative w-full aspect-video bg-gray-100 dark:bg-slate-700/50">
             <Image
               src={article.featured_image}
               alt={article.title}
@@ -86,8 +86,8 @@ export default async function PreviewArticlePage({ params }: PreviewArticlePageP
             />
           </div>
         ) : (
-          <div className="w-full aspect-video bg-gray-100 flex items-center justify-center">
-            <p className="text-gray-400">No featured image</p>
+          <div className="w-full aspect-video bg-gray-100 dark:bg-slate-700/50 flex items-center justify-center">
+            <p className="text-gray-400 dark:text-slate-500">No featured image</p>
           </div>
         )}
         
@@ -98,10 +98,10 @@ export default async function PreviewArticlePage({ params }: PreviewArticlePageP
               {article.category?.name && article.region?.name && <span>•</span>}
               {article.region?.name && <span>{article.region.name}</span>}
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 font-serif leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-slate-100 font-serif leading-tight">
               {article.title}
             </h1>
-            <div className="flex items-center gap-4 text-sm text-gray-500 pt-2">
+            <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-slate-400 pt-2">
               <span>By {article.author?.full_name || "Unknown"}</span>
               <span>•</span>
               <time dateTime={article.created_at}>
@@ -115,13 +115,13 @@ export default async function PreviewArticlePage({ params }: PreviewArticlePageP
           </div>
 
           {article.excerpt && (
-            <p className="text-lg text-gray-600 font-medium leading-relaxed border-l-4 border-gray-200 pl-4">
+            <p className="text-lg text-gray-600 dark:text-slate-300 font-medium leading-relaxed border-l-4 border-gray-200 dark:border-slate-700 pl-4">
               {article.excerpt}
             </p>
           )}
 
           <div 
-            className="prose prose-lg max-w-none prose-headings:font-serif prose-a:text-red-600 hover:prose-a:text-red-500"
+            className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-serif prose-a:text-red-600 hover:prose-a:text-red-500"
             dangerouslySetInnerHTML={{ __html: article.content || "" }}
           />
         </div>

@@ -3,6 +3,7 @@ import { Sidebar } from "./Sidebar";
 import type { UserRole } from "@/features/auth/utils/roles";
 import { ToastProvider } from "@/components/ui/Toast";
 import { ConfirmProvider } from "@/components/ui/ConfirmDialog";
+import { PageTransition } from "@/components/ui/PageTransition";
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -18,13 +19,13 @@ export function DashboardShell({
   return (
     <ToastProvider>
       <ConfirmProvider>
-        <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex flex-col">
+        <div className="h-screen overflow-hidden bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col">
           <Topbar displayName={displayName} role={role} />
 
-          <div className="flex flex-1 overflow-hidden">
+          <div className="flex flex-1 overflow-hidden min-h-0">
             <Sidebar role={role} />
 
-            <main className="flex-1 overflow-auto p-6 lg:p-8">
+            <main className="flex-1 overflow-auto p-6 lg:p-8 bg-[#F8FAFC] dark:bg-slate-950 min-h-0 min-w-0">
               {children}
             </main>
           </div>

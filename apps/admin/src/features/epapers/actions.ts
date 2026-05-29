@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { createSupabaseServerClient } from "@repo/api";
 import { revalidatePath } from "next/cache";
+import { deleteFileAction } from "../storage/actions";
 
 const epaperSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters").max(200),
@@ -87,17 +88,21 @@ export async function updateEpaperAction(id: number, formData: FormData) {
   try {
     const { supabase, user, role } = await getAuth();
 
+    // Fetch existing for auth and cleanup
+    const { data, error: fetchError } = await supabase
+      .from("epapers")
+      .select("author_id, pdf_url, thumbnail_url")
+      .eq("id", id)
+      .single();
+    const existing = data as any;
+      
+    if (fetchError || !existing) {
+      throw new Error("Epaper not found");
+    }
+
     // Verify ownership if not admin
-    if (role !== "admin") {
-      const { data } = await supabase
-        .from("epapers")
-        .select("author_id")
-        .eq("id", id)
-        .single();
-        
-      if (!data || (data as { author_id: string }).author_id !== user.id) {
-        throw new Error("You don't have permission to edit this epaper");
-      }
+    if (role !== "admin" && existing.author_id !== user.id) {
+      throw new Error("You don't have permission to edit this epaper");
     }
 
     const payload = {
@@ -125,6 +130,14 @@ export async function updateEpaperAction(id: number, formData: FormData) {
 
     if (error) throw error;
 
+    // Cleanup old files if changed
+    if (existing.pdf_url && validated.pdf_url !== existing.pdf_url) {
+      await deleteFileAction(existing.pdf_url, "epapers").catch(console.error);
+    }
+    if (existing.thumbnail_url && validated.thumbnail_url !== existing.thumbnail_url) {
+      await deleteFileAction(existing.thumbnail_url, "epapers").catch(console.error);
+    }
+
     revalidatePath("/epapers");
     return { success: true };
   } catch (error: unknown) {
@@ -140,17 +153,21 @@ export async function deleteEpaperAction(id: number) {
   try {
     const { supabase, user, role } = await getAuth();
 
+    // Fetch existing for auth and cleanup
+    const { data, error: fetchError } = await supabase
+      .from("epapers")
+      .select("author_id, pdf_url, thumbnail_url")
+      .eq("id", id)
+      .single();
+    const existing = data as any;
+      
+    if (fetchError || !existing) {
+      throw new Error("Epaper not found");
+    }
+
     // Verify ownership if not admin
-    if (role !== "admin") {
-      const { data } = await supabase
-        .from("epapers")
-        .select("author_id")
-        .eq("id", id)
-        .single();
-        
-      if (!data || (data as { author_id: string }).author_id !== user.id) {
-        throw new Error("You don't have permission to delete this epaper");
-      }
+    if (role !== "admin" && existing.author_id !== user.id) {
+      throw new Error("You don't have permission to delete this epaper");
     }
 
     const { error } = await supabase
@@ -159,6 +176,14 @@ export async function deleteEpaperAction(id: number) {
       .eq("id", id);
 
     if (error) throw error;
+
+    // Cleanup files
+    if (existing.pdf_url) {
+      await deleteFileAction(existing.pdf_url, "epapers").catch(console.error);
+    }
+    if (existing.thumbnail_url) {
+      await deleteFileAction(existing.thumbnail_url, "epapers").catch(console.error);
+    }
 
     revalidatePath("/epapers");
     return { success: true };

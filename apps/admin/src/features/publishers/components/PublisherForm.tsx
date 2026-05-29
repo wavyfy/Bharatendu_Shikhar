@@ -95,7 +95,7 @@ export function PublisherForm({ initialData }: PublisherFormProps) {
                   name="email"
                   required
                   placeholder="publisher@example.com"
-                  defaultValue={(initialData as any)?.email || ""}
+                  defaultValue={(initialData as PublisherRow & { email?: string })?.email || ""}
                 />
                 <p className="text-xs text-slate-500">They will use this to log in.</p>
               </div>

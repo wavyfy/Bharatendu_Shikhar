@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardHeader } from "@/components/ui/Card";
 import { getEpapers } from "@/features/epapers/queries";
 import { EpapersTable } from "@/features/epapers/components/EpapersTable";
-
+import { SearchInput } from "@/components/ui/SearchInput";
+import { Pagination } from "@/components/ui/Pagination";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 export const metadata = { title: "E-Papers | Bharatendu Shikhar Admin" };
 
 interface PageProps {
@@ -50,19 +52,12 @@ export default async function EPapersPage({ searchParams }: PageProps) {
     search,
   });
 
-  const buildQuery = (newPage: number) => {
-    const q = new URLSearchParams();
-    q.set("page", newPage.toString());
-    if (search) q.set("search", search);
-    return `?${q.toString()}`;
-  };
-
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-[#111]">E-Papers</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Upload and manage digital editions</p>
+          <h1 className="text-xl font-bold text-[#111] dark:text-slate-100">E-Papers</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">Upload and manage digital editions</p>
         </div>
         <Link href="/epapers/new">
           <Button>+ Upload E-Paper</Button>
@@ -70,16 +65,10 @@ export default async function EPapersPage({ searchParams }: PageProps) {
       </div>
       
       <Card>
-        <div className="p-4 bg-white border-b border-gray-200 rounded-t-lg">
-          <form method="GET" action="/epapers">
-            <input
-              type="search"
-              name="search"
-              placeholder="Search e-papers..."
-              defaultValue={search}
-              className="w-full sm:max-w-xs px-3 py-2 border border-gray-300 rounded focus:ring-red-500 focus:border-red-500 text-sm"
-            />
-          </form>
+        <div className="p-4 bg-gray-50/50 dark:bg-slate-700/30 border-b border-gray-200 dark:border-slate-700 rounded-t-lg">
+          <div className="w-full sm:max-w-md">
+            <SearchInput placeholder="Search e-papers..." />
+          </div>
         </div>
         
         <CardHeader>All E-Papers ({count})</CardHeader>
@@ -87,27 +76,8 @@ export default async function EPapersPage({ searchParams }: PageProps) {
           <EpapersTable epapers={epapers} />
         </div>
         
-        {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-lg">
-            <span className="text-sm text-gray-700">
-              Page {page} of {totalPages}
-            </span>
-            <div className="space-x-2">
-              <Link href={`/epapers${buildQuery(Math.max(1, page - 1))}`}>
-                <Button variant="secondary" size="sm" disabled={page <= 1}>
-                  Previous
-                </Button>
-              </Link>
-              <Link href={`/epapers${buildQuery(Math.min(totalPages, page + 1))}`}>
-                <Button variant="secondary" size="sm" disabled={page >= totalPages}>
-                  Next
-                </Button>
-              </Link>
-            </div>
-          </div>
-        )}
+        <Pagination currentPage={page} totalPages={totalPages} />
       </Card>
-    </div>
+    </AnimatedPage>
   );
 }

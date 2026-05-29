@@ -44,7 +44,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions }: Art
     const title = formData.get("title") as string;
     const excerpt = formData.get("excerpt") as string;
 
-    const payload: any = {
+    const payload = {
       title,
       content,
       status: status as "draft" | "published",

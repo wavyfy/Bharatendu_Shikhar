@@ -6,6 +6,7 @@ import { createSupabaseServerClient } from "@repo/api";
 import { createArticleSchema, updateArticleSchema, type CreateArticleInput, type UpdateArticleInput } from "../schemas";
 import { generateSlug } from "../utils/slug";
 import { getArticleById } from "../queries";
+import { deleteFileAction } from "../../storage/actions";
 
 // Helper to get authenticated user and client
 async function getAuth() {
@@ -103,6 +104,17 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput)
       updates.published_at = null;
     }
 
+    // Cleanup old image if changed
+    if (
+      validatedData.featured_image && 
+      existing.featured_image && 
+      validatedData.featured_image !== existing.featured_image
+    ) {
+      // Don't await to avoid blocking update, or await if we want strictness.
+      // Better to await to avoid orphan files if it fails, but not throw if it fails
+      await deleteFileAction(existing.featured_image, "articles").catch(console.error);
+    }
+
     const { error } = await supabase
       .from("articles")
       .update(updates as never)
@@ -134,6 +146,11 @@ export async function deleteArticleAction(id: number) {
       .eq("id", id);
 
     if (error) throw error;
+
+    // Cleanup image
+    if (existing.featured_image) {
+      await deleteFileAction(existing.featured_image, "articles").catch(console.error);
+    }
 
     revalidatePath("/articles");
     return { success: true };

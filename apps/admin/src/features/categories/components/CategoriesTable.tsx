@@ -52,10 +52,10 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
-          <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase text-xs font-semibold">
+          <thead className="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 uppercase text-xs font-semibold">
             <tr>
               <th className="px-6 py-3 font-medium">Name</th>
               <th className="px-6 py-3 font-medium">Slug</th>
@@ -63,16 +63,16 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
               <th className="px-6 py-3 font-medium text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800">
           {categories.map((category) => (
-            <tr key={category.id} className="hover:bg-slate-50 transition-colors duration-150">
-              <td className="px-6 py-4 font-medium text-slate-900 max-w-xs truncate">
+            <tr key={category.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-150">
+              <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-100 max-w-xs truncate">
                 {category.name}
               </td>
-              <td className="px-6 py-4 text-slate-500">
+              <td className="px-6 py-4 text-slate-500 dark:text-slate-400">
                 {category.slug}
               </td>
-              <td className="px-6 py-4 text-slate-500">
+              <td className="px-6 py-4 text-slate-500 dark:text-slate-400">
                 {new Date(category.created_at).toLocaleDateString()}
               </td>
               <td className="px-6 py-4 text-right">

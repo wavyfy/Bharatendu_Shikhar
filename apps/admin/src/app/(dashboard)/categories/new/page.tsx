@@ -30,13 +30,5 @@ export default async function NewCategoryPage() {
     redirect("/dashboard");
   }
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-neutral-900 font-serif">Create Category</h1>
-        <p className="text-neutral-500">Add a new category for articles.</p>
-      </div>
-      <CategoryFormPlaceholder />
-    </div>
-  );
+  return <CategoryFormPlaceholder />;
 }

@@ -69,10 +69,10 @@ export function ArticlesTable({ articles }: ArticlesTableProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
-          <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase text-xs font-semibold">
+          <thead className="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 uppercase text-xs font-semibold">
             <tr>
               <th className="px-6 py-3 font-medium">Title</th>
               <th className="px-6 py-3 font-medium">Status</th>
@@ -81,19 +81,19 @@ export function ArticlesTable({ articles }: ArticlesTableProps) {
               <th className="px-6 py-3 font-medium text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800">
           {articles.map((article) => (
-            <tr key={article.id} className="hover:bg-slate-50 transition-colors duration-150">
-              <td className="px-6 py-4 font-medium text-slate-900 max-w-xs truncate">
+            <tr key={article.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-150">
+              <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-100 max-w-xs truncate">
                 {article.title}
               </td>
               <td className="px-6 py-4">
                 <StatusBadge variant={article.status === 'published' ? 'published' : 'draft'} />
               </td>
-              <td className="px-6 py-4 text-slate-500">
-                {article.author?.full_name || "Unknown"}
+              <td className="px-6 py-4 text-slate-500 dark:text-slate-400">
+                {article.author?.full_name || "—"}
               </td>
-              <td className="px-6 py-4 text-slate-500">
+              <td className="px-6 py-4 text-slate-500 dark:text-slate-400">
                 {new Date(article.created_at).toLocaleDateString()}
               </td>
               <td className="px-6 py-4 text-right">

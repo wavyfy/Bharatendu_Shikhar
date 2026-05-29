@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import type { UserRole } from "@/features/auth/utils/roles";
 import { hasPermission } from "@/features/auth/utils/roles";
 
+import { Button } from "@/components/ui/Button";
+
 const NAV_ITEMS = [
   {
     label: "Dashboard",
@@ -103,10 +105,10 @@ export function Sidebar({ role }: SidebarProps) {
           key={section}
           href={href}
           onClick={() => setMobileOpen(false)}
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-200 active:scale-95 ${
             isActive(href)
-              ? "bg-[#CC2200]/10 text-[#CC2200]"
-              : "text-gray-600 hover:bg-gray-100 hover:text-[#111]"
+              ? "bg-[#CC2200]/10 text-[#CC2200] dark:bg-[#CC2200]/20"
+              : "text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-[#111] dark:hover:text-slate-100"
           }`}
         >
           <span className={isActive(href) ? "text-[#CC2200]" : "text-gray-400"}>
@@ -118,12 +120,24 @@ export function Sidebar({ role }: SidebarProps) {
     </nav>
   );
 
+  const quickActions = (
+    <div className="mt-auto p-4 space-y-2 border-t border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/50">
+      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-1">Quick Actions</p>
+      <Link href="/articles/new" className="block w-full">
+        <Button className="w-full justify-center text-sm" size="sm">New Article</Button>
+      </Link>
+      <Link href="/epapers/new" className="block w-full">
+        <Button variant="secondary" className="w-full justify-center text-sm" size="sm">Upload E-Paper</Button>
+      </Link>
+    </div>
+  );
+
   return (
     <>
       {/* Mobile toggle button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="lg:hidden fixed top-3.5 left-4 z-50 p-2 rounded-md text-gray-600 hover:bg-gray-100 transition-colors"
+        className="lg:hidden fixed top-3.5 left-4 z-50 p-2 rounded-md text-gray-600 hover:bg-gray-100 transition-all duration-200 active:scale-95"
         aria-label="Toggle menu"
       >
         {mobileOpen ? (
@@ -147,16 +161,18 @@ export function Sidebar({ role }: SidebarProps) {
 
       {/* Mobile drawer */}
       <aside
-        className={`lg:hidden fixed top-0 left-0 z-40 h-full w-56 bg-white border-r border-gray-200 pt-14 transition-transform duration-200 ${
+        className={`lg:hidden flex flex-col fixed top-0 left-0 z-40 h-full w-56 bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-700 pt-14 transition-transform duration-200 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {navContent}
+        {quickActions}
       </aside>
 
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-56 shrink-0 bg-white border-r border-gray-200 min-h-[calc(100vh-56px)]">
+      <aside className="hidden lg:flex flex-col w-56 shrink-0 bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-700 h-full overflow-y-auto">
         {navContent}
+        {quickActions}
       </aside>
     </>
   );

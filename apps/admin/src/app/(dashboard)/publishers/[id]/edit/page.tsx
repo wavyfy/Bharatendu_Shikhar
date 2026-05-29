@@ -20,10 +20,6 @@ export default async function EditPublisherPage({ params }: Props) {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900 font-playfair tracking-tight">Edit Publisher</h1>
-        <p className="text-sm text-gray-500 mt-1">Manage publisher profile, email, and access state.</p>
-      </div>
 
       <PublisherForm initialData={publisher} />
     </div>

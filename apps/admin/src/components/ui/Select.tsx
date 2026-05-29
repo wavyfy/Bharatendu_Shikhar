@@ -17,6 +17,7 @@ interface SelectProps {
   placeholder?: string;
   className?: string;
   disabled?: boolean;
+  error?: string;
 }
 
 export function Select({
@@ -26,6 +27,7 @@ export function Select({
   placeholder = "Select an option",
   className,
   disabled = false,
+  error,
 }: SelectProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -58,14 +60,17 @@ export function Select({
           "flex h-10 w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 transition-shadow duration-150",
           isOpen && "ring-2 ring-slate-400 ring-offset-2",
           !isOpen && "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
-          disabled && "cursor-not-allowed opacity-50"
+          disabled && "cursor-not-allowed opacity-50",
+          error && "border-red-500 focus:ring-red-400 text-red-900 ring-red-400 ring-offset-2"
         )}
       >
-        <span className={cn("truncate", !selectedOption && "text-slate-400")}>
+        <span className={cn("truncate", !selectedOption && "text-slate-400", error && "text-red-900")}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <ChevronDown className="h-4 w-4 opacity-50 shrink-0" />
+        <ChevronDown className={cn("h-4 w-4 shrink-0 opacity-50", error && "text-red-900")} />
       </button>
+
+      {error && <p className="mt-1.5 text-xs font-medium text-red-500">{error}</p>}
 
       <AnimatePresence>
         {isOpen && (

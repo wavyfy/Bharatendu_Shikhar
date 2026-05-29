@@ -55,10 +55,6 @@ export default async function EditEpaperPage({ params }: PageProps) {
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
-      <div>
-        <h1 className="text-xl font-bold text-[#111]">Edit E-Paper</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Update digital edition details</p>
-      </div>
 
       <EpaperForm initialData={epaper} regions={regionsData.regions} />
     </div>

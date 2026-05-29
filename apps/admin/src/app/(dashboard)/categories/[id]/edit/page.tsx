@@ -45,10 +45,7 @@ export default async function EditCategoryPage({ params }: EditCategoryPageProps
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-neutral-900 font-serif">Edit Category</h1>
-        <p className="text-neutral-500">Update category details.</p>
-      </div>
+
       <CategoryFormPlaceholder initialData={category} />
     </div>
   );

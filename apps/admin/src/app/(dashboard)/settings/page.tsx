@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import { getSettings } from "@/features/settings/queries";
 import { SettingsForm } from "@/features/settings/components/SettingsForm";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = { title: "Settings | Bharatendu Shikhar Admin" };
 
@@ -35,14 +36,14 @@ export default async function SettingsPage() {
   const settings = await getSettings();
 
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-[#111]">Settings</h1>
-        <p className="text-sm text-gray-500 mt-0.5">
+        <h1 className="text-xl font-bold text-[#111] dark:text-slate-100">Settings</h1>
+        <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
           Manage global site settings. Each section saves independently.
         </p>
       </div>
       <SettingsForm settings={settings} />
-    </div>
+    </AnimatedPage>
   );
 }

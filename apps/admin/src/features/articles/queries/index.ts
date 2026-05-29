@@ -1,4 +1,4 @@
-import { createSupabaseServerClient } from "@repo/api";
+import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import { cookies } from "next/headers";
 import type { ArticleWithRelations } from "../types";
 
@@ -15,14 +15,8 @@ export interface GetArticlesOptions {
 
 export async function getArticles(options: GetArticlesOptions = {}) {
   const { page = 1, limit = 10, role = "publisher", userId, search, status, categoryId, regionId } = options;
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
 
-  let query = supabase
+  let query = supabaseAdmin
     .from("articles")
     .select(`
       *,

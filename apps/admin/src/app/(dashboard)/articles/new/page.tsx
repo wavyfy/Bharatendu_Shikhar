@@ -14,12 +14,6 @@ export default async function NewArticlePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-neutral-900 font-serif">Create Article</h1>
-          <p className="text-neutral-500">Draft a new article for publication.</p>
-        </div>
-      </div>
 
       <ArticleFormPlaceholder categories={categories} regions={regions} />
     </div>

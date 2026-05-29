@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardHeader } from "@/components/ui/Card";
 import { getCategories } from "@/features/categories/queries";
 import { CategoriesTable } from "@/features/categories/components/CategoriesTable";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = { title: "Categories | Bharatendu Shikhar Admin" };
 
@@ -20,11 +21,11 @@ export default async function CategoriesPage({ searchParams }: PageProps) {
   });
 
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-[#111]">Categories</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Manage article categories</p>
+          <h1 className="text-xl font-bold text-[#111] dark:text-slate-100">Categories</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">Manage article categories</p>
         </div>
         <Link href="/categories/new">
           <Button>+ New Category</Button>
@@ -57,6 +58,6 @@ export default async function CategoriesPage({ searchParams }: PageProps) {
           </div>
         )}
       </Card>
-    </div>
+    </AnimatedPage>
   );
 }

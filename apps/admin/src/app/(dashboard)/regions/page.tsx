@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardHeader } from "@/components/ui/Card";
 import { getRegions } from "@/features/regions/queries";
 import { RegionsTable } from "@/features/regions/components/RegionsTable";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = { title: "Regions | Bharatendu Shikhar Admin" };
 
@@ -20,11 +21,11 @@ export default async function RegionsPage({ searchParams }: PageProps) {
   });
 
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-[#111]">Regions</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Manage article regions</p>
+          <h1 className="text-xl font-bold text-[#111] dark:text-slate-100">Regions</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">Manage article regions</p>
         </div>
         <Link href="/regions/new">
           <Button>+ New Region</Button>
@@ -57,6 +58,6 @@ export default async function RegionsPage({ searchParams }: PageProps) {
           </div>
         )}
       </Card>
-    </div>
+    </AnimatedPage>
   );
 }

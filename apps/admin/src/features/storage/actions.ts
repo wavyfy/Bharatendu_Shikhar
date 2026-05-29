@@ -142,3 +142,65 @@ export async function getSignedUploadUrlAction(bucket: string, fileName: string)
     };
   }
 }
+
+export async function cleanupOrphanedFilesAction(bucket = "articles") {
+  try {
+    const { supabase, user } = await getAuth();
+    
+    // Require admin
+    const { supabaseAdmin } = await import("@repo/api");
+    const { data: profile } = await supabaseAdmin
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+      
+    if ((profile as unknown as { role?: string })?.role !== "admin") {
+      throw new Error("Admin access required for cleanup");
+    }
+
+    // 1. Get all files in bucket
+    const { data: files, error: listError } = await supabase.storage.from(bucket).list();
+    if (listError) throw listError;
+    if (!files || files.length === 0) return { success: true, deletedCount: 0 };
+
+    const fileNames = files.map(f => f.name).filter(n => n !== ".emptyFolderPlaceholder");
+
+    // 2. Get all used files from DB
+    let usedFileNames: string[] = [];
+    
+    if (bucket === "articles") {
+      const { data: articles } = await supabase.from("articles").select("featured_image").not("featured_image", "is", null);
+      usedFileNames = (articles || []).map(a => {
+        const parts = ((a as any).featured_image as string).split("/");
+        return parts.pop() || "";
+      });
+    } else if (bucket === "epapers") {
+      const { data: epapers } = await supabase.from("epapers").select("pdf_url, thumbnail_url");
+      const pdfs = (epapers || []).filter(e => (e as any).pdf_url).map(e => ((e as any).pdf_url as string).split("/").pop() || "");
+      const thumbs = (epapers || []).filter(e => (e as any).thumbnail_url).map(e => ((e as any).thumbnail_url as string).split("/").pop() || "");
+      usedFileNames = [...pdfs, ...thumbs];
+    } else {
+      throw new Error("Unsupported bucket for automated cleanup");
+    }
+
+    // 3. Find orphans
+    const usedSet = new Set(usedFileNames);
+    const orphans = fileNames.filter(name => !usedSet.has(name));
+
+    if (orphans.length === 0) return { success: true, deletedCount: 0 };
+
+    // 4. Delete orphans
+    const { error: deleteError } = await supabase.storage.from(bucket).remove(orphans);
+    if (deleteError) throw deleteError;
+
+    return { success: true, deletedCount: orphans.length };
+  } catch (error: unknown) {
+    console.error("Cleanup error:", error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : "Failed to cleanup files" 
+    };
+  }
+}
+

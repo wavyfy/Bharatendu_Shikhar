@@ -10,7 +10,6 @@ import {
   updateSeoAction,
   updateSocialAction,
   updateContactAction,
-  updateNotificationsAction,
   updateHomepageAction,
   updateMaintenanceAction,
 } from "../actions";
@@ -339,73 +338,6 @@ function ContactSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Section: Notifications ───────────────────────────────────────────────────
-
-function NotificationsSection({ settings }: { settings: SettingsRow | null }) {
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
-  const toast = useToast();
-  const [enabled, setEnabled] = useState(settings?.notify_on_new_article ?? false);
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError(null);
-    const fd = new FormData(e.currentTarget);
-    startTransition(async () => {
-      const res = await updateNotificationsAction({
-        notify_on_new_article: fd.get("notify_on_new_article") === "true",
-        notify_email: (fd.get("notify_email") as string) || null,
-      });
-      if (res.success) {
-        toast.success("Notification Settings saved.");
-      } else {
-        const msg = res.error ?? "Unknown error";
-        setError(msg);
-        toast.error(msg);
-      }
-    });
-  }
-
-  return (
-    <Card>
-      <CardHeader>Notification Settings</CardHeader>
-      <CardBody>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex items-start gap-3">
-            <input
-              id="notify_on_new_article"
-              name="notify_on_new_article"
-              type="checkbox"
-              value="true"
-              checked={enabled}
-              onChange={(e) => setEnabled(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#CC2200] focus:ring-[#CC2200]"
-            />
-            <div>
-              <label htmlFor="notify_on_new_article" className="text-sm font-medium text-gray-700">
-                Email on new article published
-              </label>
-              <p className="text-xs text-gray-400">Send an email whenever an article is published.</p>
-            </div>
-          </div>
-          {enabled && (
-            <Field label="Notification Email">
-              <input
-                name="notify_email"
-                type="email"
-                defaultValue={settings?.notify_email ?? ""}
-                placeholder="admin@example.com"
-                className={inputCls}
-              />
-            </Field>
-          )}
-          <SectionFooter isPending={isPending} error={error} />
-        </form>
-      </CardBody>
-    </Card>
-  );
-}
-
 // ─── Section: Homepage ────────────────────────────────────────────────────────
 
 function HomepageSection({ settings }: { settings: SettingsRow | null }) {
@@ -551,18 +483,45 @@ function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
 // ─── Root Export ──────────────────────────────────────────────────────────────
 
 export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
+  const [activeTab, setActiveTab] = useState("site");
+
+  const tabs = [
+    { id: "site", label: "Site Info" },
+    { id: "seo", label: "SEO" },
+    { id: "social", label: "Social Media" },
+    { id: "contact", label: "Contact" },
+    { id: "homepage", label: "Homepage" },
+    { id: "maintenance", label: "Maintenance" },
+  ];
+
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SiteInfoSection settings={settings} />
-        <SeoSection settings={settings} />
-        <SocialSection settings={settings} />
-        <ContactSection settings={settings} />
-        <NotificationsSection settings={settings} />
-        <HomepageSection settings={settings} />
+      <div className="border-b border-gray-200">
+        <nav className="-mb-px flex space-x-6 overflow-x-auto pb-1">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`whitespace-nowrap pb-3 pt-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === tab.id
+                  ? "border-[#CC2200] text-[#CC2200]"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
       </div>
-      {/* Maintenance spans full width — visually distinct danger zone */}
-      <MaintenanceSection settings={settings} />
+
+      <div className="max-w-3xl">
+        {activeTab === "site" && <SiteInfoSection settings={settings} />}
+        {activeTab === "seo" && <SeoSection settings={settings} />}
+        {activeTab === "social" && <SocialSection settings={settings} />}
+        {activeTab === "contact" && <ContactSection settings={settings} />}
+        {activeTab === "homepage" && <HomepageSection settings={settings} />}
+        {activeTab === "maintenance" && <MaintenanceSection settings={settings} />}
+      </div>
     </div>
   );
 }

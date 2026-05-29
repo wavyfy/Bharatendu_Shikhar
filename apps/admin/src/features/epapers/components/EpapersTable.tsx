@@ -54,10 +54,10 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
-          <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase text-xs font-semibold">
+          <thead className="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 uppercase text-xs font-semibold">
             <tr>
               <th className="px-6 py-3 font-medium">Title & Region</th>
               <th className="px-6 py-3 font-medium">Published Date</th>
@@ -66,27 +66,27 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
               <th className="px-6 py-3 font-medium text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800">
           {epapers.map((epaper) => {
             const isExpired = epaper.expiry_date && new Date(epaper.expiry_date) < new Date();
             const isPublished = epaper.published_at && new Date(epaper.published_at) <= new Date();
 
             return (
-              <tr key={epaper.id} className="hover:bg-slate-50 transition-colors duration-150">
-                <td className="px-6 py-4 font-medium text-slate-900">
+              <tr key={epaper.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-150">
+                <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">
                   <div className="truncate max-w-[250px]">{epaper.title}</div>
-                  <div className="text-xs text-slate-500 mt-1">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                     {epaper.region?.name || "No Region"}
                   </div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-col items-start gap-1">
                     {epaper.published_at ? (
-                      <span className="text-slate-600">
+                      <span className="text-slate-600 dark:text-slate-300">
                         {new Date(epaper.published_at).toLocaleDateString()}
                       </span>
                     ) : (
-                      <span className="text-slate-400 italic">Not set</span>
+                      <span className="text-slate-400 dark:text-slate-500 italic">Not set</span>
                     )}
                     <StatusBadge variant={isPublished ? 'published' : 'draft'} />
                   </div>
@@ -94,7 +94,7 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
                 <td className="px-6 py-4">
                   {epaper.expiry_date ? (
                     <div className="flex flex-col items-start gap-1">
-                      <span className={isExpired ? "text-red-500 line-through" : "text-slate-600"}>
+                      <span className={isExpired ? "text-red-500 line-through" : "text-slate-600 dark:text-slate-300"}>
                         {new Date(epaper.expiry_date).toLocaleDateString()}
                       </span>
                       {isExpired && (
@@ -102,11 +102,11 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
                       )}
                     </div>
                   ) : (
-                    <span className="text-slate-400 italic">Never</span>
+                    <span className="text-slate-400 dark:text-slate-500 italic">Never</span>
                   )}
                 </td>
-                <td className="px-6 py-4 text-slate-500">
-                  {epaper.author?.full_name || "Unknown"}
+                <td className="px-6 py-4 text-slate-500 dark:text-slate-400">
+                  {epaper.author?.full_name || "—"}
                 </td>
                 <td className="px-6 py-4 text-right">
                   <ActionMenu

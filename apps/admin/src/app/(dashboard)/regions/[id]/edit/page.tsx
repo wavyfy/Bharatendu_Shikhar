@@ -45,10 +45,7 @@ export default async function EditRegionPage({ params }: EditRegionPageProps) {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-neutral-900 font-serif">Edit Region</h1>
-        <p className="text-neutral-500">Update region details.</p>
-      </div>
+
       <RegionFormPlaceholder initialData={region} />
     </div>
   );

@@ -30,13 +30,5 @@ export default async function NewRegionPage() {
     redirect("/dashboard");
   }
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-neutral-900 font-serif">Create Region</h1>
-        <p className="text-neutral-500">Add a new region for articles.</p>
-      </div>
-      <RegionFormPlaceholder />
-    </div>
-  );
+  return <RegionFormPlaceholder />;
 }
