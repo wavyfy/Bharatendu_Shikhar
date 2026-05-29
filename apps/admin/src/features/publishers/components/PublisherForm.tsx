@@ -2,139 +2,135 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { createPublisherAction, updatePublisherAction } from "../actions";
+import type { PublisherRow } from "../types";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
-import { createPublisherAction, updatePublisherAction } from "../actions";
-import type { PublisherWithAuth } from "../types";
+import { FormSection } from "@/components/ui/FormSection";
+import { Input } from "@/components/ui/Input";
+import { PageContainer } from "@/components/ui/PageContainer";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { motion } from "framer-motion";
 
 interface PublisherFormProps {
-  initialData?: PublisherWithAuth;
+  initialData?: PublisherRow;
 }
 
 export function PublisherForm({ initialData }: PublisherFormProps) {
   const router = useRouter();
   const toast = useToast();
-  const [isPending, startTransition] = useTransition();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+  const [, startTransition] = useTransition();
+
   const isEditing = !!initialData;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setLoading(true);
     setError(null);
-    
-    const formData = new FormData(e.currentTarget);
-    const password = formData.get("password") as string;
-    
-    if (!isEditing && !password) {
-      setError("Password is required for new publishers");
-      return;
-    }
 
+    const formData = new FormData(e.currentTarget);
     startTransition(async () => {
-      let result;
-      if (isEditing) {
-        result = await updatePublisherAction(initialData.id, formData);
-      } else {
-        result = await createPublisherAction(formData);
-      }
+      const result = isEditing && initialData
+        ? await updatePublisherAction(initialData.id, formData)
+        : await createPublisherAction(formData);
 
       if (result.success) {
         toast.success(isEditing ? "Publisher updated." : "Publisher created.");
         router.push("/publishers");
-        router.refresh();
       } else {
-        const msg = result.error || "Something went wrong";
+        const msg = result.error ?? "Something went wrong.";
         setError(msg);
         toast.error(msg);
+        setLoading(false);
       }
     });
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm space-y-6">
-      {error && (
-        <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-100 rounded-md">
-          {error}
-        </div>
-      )}
+    <PageContainer>
+      <PageHeader 
+        title={isEditing ? "Edit Publisher" : "Create Publisher"} 
+        description="Manage publisher accounts and access."
+      />
 
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Full Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            name="full_name"
-            type="text"
-            required
-            defaultValue={initialData?.full_name}
-            placeholder="John Doe"
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#E86149] focus:ring-[#E86149] text-sm"
-          />
-        </div>
+      <motion.form 
+        onSubmit={handleSubmit} 
+        className="space-y-6 max-w-2xl"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md border border-red-200 text-sm max-w-4xl font-medium">
+            {error}
+          </div>
+        )}
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email Address <span className="text-red-500">*</span>
-          </label>
-          <input
-            name="email"
-            type="email"
-            required
-            defaultValue={initialData?.email}
-            placeholder="john@example.com"
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#E86149] focus:ring-[#E86149] text-sm"
-          />
-        </div>
+        <fieldset disabled={loading} className="group-disabled:opacity-70 transition-opacity">
+          <FormSection title="Publisher Details">
+            <div className="grid grid-cols-1 gap-6">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="full_name" className="text-sm font-medium text-slate-700">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  type="text"
+                  id="full_name"
+                  name="full_name"
+                  required
+                  placeholder="e.g. John Doe"
+                  defaultValue={initialData?.full_name || ""}
+                />
+              </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Password {isEditing ? "(Leave blank to keep unchanged)" : <span className="text-red-500">*</span>}
-          </label>
-          <input
-            name="password"
-            type="password"
-            placeholder={isEditing ? "Enter new password to reset" : "Enter a secure password"}
-            minLength={6}
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#E86149] focus:ring-[#E86149] text-sm"
-          />
-        </div>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                  Email Address <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="publisher@example.com"
+                  defaultValue={(initialData as any)?.email || ""}
+                />
+                <p className="text-xs text-slate-500">They will use this to log in.</p>
+              </div>
 
-        <div className="flex items-center pt-2">
-          <input
-            id="is_active"
-            name="is_active"
-            type="checkbox"
-            value="true"
-            defaultChecked={initialData ? initialData.is_active : true}
-            className="h-4 w-4 rounded border-gray-300 text-[#E86149] focus:ring-[#E86149]"
-          />
-          <label htmlFor="is_active" className="ml-2 block text-sm text-gray-900 font-medium">
-            Account Active
-          </label>
-        </div>
-        <p className="text-xs text-gray-500 pl-6">
-          Uncheck to instantly block this publisher from logging in or modifying content.
-        </p>
-      </div>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="password" className="text-sm font-medium text-slate-700">
+                  Password {isEditing ? "(Leave blank to keep current)" : <span className="text-red-500">*</span>}
+                </label>
+                <Input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required={!isEditing}
+                  minLength={6}
+                  placeholder={isEditing ? "••••••••" : "Enter a strong password"}
+                />
+              </div>
+            </div>
+          </FormSection>
+        </fieldset>
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-        <Button 
-          type="button" 
-          variant="secondary" 
-          onClick={() => router.push("/publishers")}
-          disabled={isPending}
-        >
-          Cancel
-        </Button>
-        <Button 
-          type="submit" 
-          disabled={isPending}
-        >
-          {isPending ? "Saving..." : isEditing ? "Save Changes" : "Create Publisher"}
-        </Button>
-      </div>
-    </form>
+        <div className="flex justify-end gap-3 pt-4">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => router.back()}
+            disabled={loading}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Saving..." : isEditing ? "Save Changes" : "Create Publisher"}
+          </Button>
+        </div>
+      </motion.form>
+    </PageContainer>
   );
 }

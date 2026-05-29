@@ -18,7 +18,7 @@ export function DashboardShell({
   return (
     <ToastProvider>
       <ConfirmProvider>
-        <div className="min-h-screen bg-[#F8F5F0] text-[#111] flex flex-col">
+        <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex flex-col">
           <Topbar displayName={displayName} role={role} />
 
           <div className="flex flex-1 overflow-hidden">

@@ -1,13 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { deleteCategoryAction } from "../actions";
 import type { CategoryRow } from "../types";
-import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ActionMenu } from "@/components/ui/ActionMenu";
+import { Pencil, Trash2 } from "lucide-react";
 
 interface CategoriesTableProps {
   categories: CategoryRow[];
@@ -41,58 +42,63 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
 
   if (categories.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-gray-300 rounded-lg">
-        <p className="text-sm text-gray-500 mb-4">No categories found.</p>
-        <Link href="/categories/new">
-          <Button>Create your first category</Button>
-        </Link>
-      </div>
+      <EmptyState
+        title="No categories found"
+        description="Get started by creating your first category."
+        actionLabel="Create Category"
+        actionHref="/categories/new"
+      />
     );
   }
 
   return (
-    <div className="overflow-x-auto border border-gray-200 rounded-lg">
-      <table className="w-full text-sm text-left">
-        <thead className="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-200">
-          <tr>
-            <th className="px-6 py-3 font-medium">Name</th>
-            <th className="px-6 py-3 font-medium">Slug</th>
-            <th className="px-6 py-3 font-medium">Created Date</th>
-            <th className="px-6 py-3 font-medium text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
+    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left">
+          <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase text-xs font-semibold">
+            <tr>
+              <th className="px-6 py-3 font-medium">Name</th>
+              <th className="px-6 py-3 font-medium">Slug</th>
+              <th className="px-6 py-3 font-medium">Created Date</th>
+              <th className="px-6 py-3 font-medium text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100 bg-white">
           {categories.map((category) => (
-            <tr key={category.id} className="hover:bg-gray-50 transition-colors">
-              <td className="px-6 py-4 font-medium text-gray-900 max-w-xs truncate">
+            <tr key={category.id} className="hover:bg-slate-50 transition-colors duration-150">
+              <td className="px-6 py-4 font-medium text-slate-900 max-w-xs truncate">
                 {category.name}
               </td>
-              <td className="px-6 py-4 text-gray-500">
+              <td className="px-6 py-4 text-slate-500">
                 {category.slug}
               </td>
-              <td className="px-6 py-4 text-gray-500">
+              <td className="px-6 py-4 text-slate-500">
                 {new Date(category.created_at).toLocaleDateString()}
               </td>
-              <td className="px-6 py-4 text-right space-x-2">
-                <Link href={`/categories/${category.id}/edit`}>
-                  <Button variant="secondary" size="sm" disabled={isPending}>
-                    Edit
-                  </Button>
-                </Link>
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  className="text-red-600 hover:bg-red-50"
-                  onClick={() => handleDelete(category)}
-                  disabled={isPending}
-                >
-                  Delete
-                </Button>
+              <td className="px-6 py-4 text-right">
+                <ActionMenu
+                  items={[
+                    {
+                      label: "Edit",
+                      icon: <Pencil strokeWidth={1.5} />,
+                      href: `/categories/${category.id}/edit`,
+                      disabled: isPending,
+                    },
+                    {
+                      label: "Delete",
+                      icon: <Trash2 strokeWidth={1.5} />,
+                      onClick: () => handleDelete(category),
+                      variant: "danger",
+                      disabled: isPending,
+                    },
+                  ]}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

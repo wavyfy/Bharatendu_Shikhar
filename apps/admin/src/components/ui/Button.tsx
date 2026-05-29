@@ -7,6 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
   size?: Size;
   fullWidth?: boolean;
+  isLoading?: boolean;
 }
 
 const VARIANTS: Record<Variant, string> = {
@@ -27,6 +28,7 @@ export function Button({
   variant = "primary",
   size = "md",
   fullWidth = false,
+  isLoading = false,
   className = "",
   children,
   ...props
@@ -39,12 +41,13 @@ export function Button({
         VARIANTS[variant],
         SIZES[size],
         fullWidth ? "w-full" : "",
+        isLoading ? "opacity-70 cursor-not-allowed" : "",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      {children}
+      {isLoading ? "Loading..." : children}
     </button>
   );
 }

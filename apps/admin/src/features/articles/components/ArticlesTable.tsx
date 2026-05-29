@@ -1,13 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteArticleAction, publishArticleAction } from "../actions";
 import type { ArticleWithRelations } from "../types";
-import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ActionMenu } from "@/components/ui/ActionMenu";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { Pencil, Eye, Trash2, Globe, Archive } from "lucide-react";
 
 interface ArticlesTableProps {
   articles: ArticleWithRelations[];
@@ -57,85 +59,79 @@ export function ArticlesTable({ articles }: ArticlesTableProps) {
 
   if (articles.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-gray-300 rounded-lg">
-        <p className="text-sm text-gray-500 mb-4">No articles found.</p>
-        <Link href="/articles/new">
-          <Button>Create your first article</Button>
-        </Link>
-      </div>
+      <EmptyState
+        title="No articles found"
+        description="Get started by creating your first article."
+        actionLabel="Create Article"
+        actionHref="/articles/new"
+      />
     );
   }
 
   return (
-    <div className="overflow-x-auto border border-gray-200 rounded-lg">
-      <table className="w-full text-sm text-left">
-        <thead className="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-200">
-          <tr>
-            <th className="px-6 py-3 font-medium">Title</th>
-            <th className="px-6 py-3 font-medium">Status</th>
-            <th className="px-6 py-3 font-medium">Author</th>
-            <th className="px-6 py-3 font-medium">Created Date</th>
-            <th className="px-6 py-3 font-medium">Updated At</th>
-            <th className="px-6 py-3 font-medium text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
+    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left">
+          <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase text-xs font-semibold">
+            <tr>
+              <th className="px-6 py-3 font-medium">Title</th>
+              <th className="px-6 py-3 font-medium">Status</th>
+              <th className="px-6 py-3 font-medium">Author</th>
+              <th className="px-6 py-3 font-medium">Created Date</th>
+              <th className="px-6 py-3 font-medium text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100 bg-white">
           {articles.map((article) => (
-            <tr key={article.id} className="hover:bg-gray-50 transition-colors">
-              <td className="px-6 py-4 font-medium text-gray-900 max-w-xs truncate">
+            <tr key={article.id} className="hover:bg-slate-50 transition-colors duration-150">
+              <td className="px-6 py-4 font-medium text-slate-900 max-w-xs truncate">
                 {article.title}
               </td>
               <td className="px-6 py-4">
-                <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                  article.status === 'published' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {article.status}
-                </span>
+                <StatusBadge variant={article.status === 'published' ? 'published' : 'draft'} />
               </td>
-              <td className="px-6 py-4 text-gray-500">
+              <td className="px-6 py-4 text-slate-500">
                 {article.author?.full_name || "Unknown"}
               </td>
-              <td className="px-6 py-4 text-gray-500">
+              <td className="px-6 py-4 text-slate-500">
                 {new Date(article.created_at).toLocaleDateString()}
               </td>
-              <td className="px-6 py-4 text-gray-500">
-                {new Date(article.updated_at || article.created_at).toLocaleDateString()}
-              </td>
-              <td className="px-6 py-4 text-right space-x-2 whitespace-nowrap">
-                <Button 
-                  variant="secondary" 
-                  size="sm"
-                  onClick={() => handleTogglePublish(article.id, article.status)}
-                  disabled={processingId === article.id || isPending}
-                >
-                  {article.status === "draft" ? "Publish" : "Unpublish"}
-                </Button>
-                <Link href={`/articles/${article.id}/preview`}>
-                  <Button variant="secondary" size="sm" disabled={processingId === article.id || isPending}>
-                    Preview
-                  </Button>
-                </Link>
-                <Link href={`/articles/${article.id}/edit`}>
-                  <Button variant="secondary" size="sm" disabled={isPending}>
-                    Edit
-                  </Button>
-                </Link>
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  className="text-red-600 hover:bg-red-50"
-                  onClick={() => handleDelete(article)}
-                  disabled={isPending}
-                >
-                  Delete
-                </Button>
+              <td className="px-6 py-4 text-right">
+                <ActionMenu
+                  items={[
+                    {
+                      label: "Preview",
+                      icon: <Eye strokeWidth={1.5} />,
+                      href: `/articles/${article.id}/preview`,
+                      disabled: processingId === article.id || isPending,
+                    },
+                    {
+                      label: "Edit",
+                      icon: <Pencil strokeWidth={1.5} />,
+                      href: `/articles/${article.id}/edit`,
+                      disabled: isPending,
+                    },
+                    {
+                      label: article.status === "draft" ? "Publish" : "Unpublish",
+                      icon: article.status === "draft" ? <Globe strokeWidth={1.5} /> : <Archive strokeWidth={1.5} />,
+                      onClick: () => handleTogglePublish(article.id, article.status),
+                      disabled: processingId === article.id || isPending,
+                    },
+                    {
+                      label: "Delete",
+                      icon: <Trash2 strokeWidth={1.5} />,
+                      onClick: () => handleDelete(article),
+                      variant: "danger",
+                      disabled: isPending,
+                    },
+                  ]}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

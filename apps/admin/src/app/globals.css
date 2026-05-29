@@ -29,3 +29,22 @@ body {
 .font-playfair {
   font-family: var(--font-playfair), serif;
 }
+
+@layer utilities {
+  .text-gradient {
+    @apply text-slate-900;
+  }
+}
+
+@layer base {
+  /* Remove native blue focus rings globally for form elements */
+  *,
+  *::before,
+  *::after {
+    @apply outline-none;
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-slate-400 ring-offset-2 ring-offset-white transition-shadow duration-150;
+  }
+}

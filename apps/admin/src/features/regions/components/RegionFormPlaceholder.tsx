@@ -6,6 +6,11 @@ import { createRegionAction, updateRegionAction } from "../actions";
 import type { RegionRow } from "../types";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
+import { FormSection } from "@/components/ui/FormSection";
+import { Input } from "@/components/ui/Input";
+import { PageContainer } from "@/components/ui/PageContainer";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { motion } from "framer-motion";
 
 interface RegionFormProps {
   initialData?: RegionRow;
@@ -47,30 +52,44 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
   }
 
   return (
-    <div className="bg-white p-6 border border-neutral-200 rounded-lg max-w-2xl">
-      {error && (
-        <div className="mb-4 p-3 bg-red-50 text-red-700 rounded border border-red-200 text-sm">
-          {error}
-        </div>
-      )}
+    <PageContainer>
+      <PageHeader 
+        title={isEditing ? "Edit Region" : "Create Region"} 
+        description="Manage geographical regions for e-papers."
+      />
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
-            Region Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            minLength={2}
-            className="w-full px-3 py-2 border border-neutral-300 rounded focus:ring-red-500 focus:border-red-500"
-            placeholder="Enter region name..."
-            defaultValue={initialData?.name}
-          />
-          <p className="mt-1 text-xs text-neutral-500">Slug will be generated automatically.</p>
-        </div>
+      <motion.form 
+        onSubmit={handleSubmit} 
+        className="space-y-6 max-w-2xl"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md border border-red-200 text-sm max-w-4xl font-medium">
+            {error}
+          </div>
+        )}
+
+        <fieldset disabled={loading} className="group-disabled:opacity-70 transition-opacity">
+          <FormSection title="Region Details">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                Region Name <span className="text-red-500">*</span>
+              </label>
+              <Input
+                type="text"
+                id="name"
+                name="name"
+                required
+                minLength={2}
+                placeholder="Enter region name..."
+                defaultValue={initialData?.name}
+              />
+              <p className="text-xs text-slate-500">Slug will be generated automatically.</p>
+            </div>
+          </FormSection>
+        </fieldset>
 
         <div className="flex justify-end gap-3 pt-4">
           <Button
@@ -85,7 +104,7 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
             {loading ? "Saving..." : isEditing ? "Save Changes" : "Create Region"}
           </Button>
         </div>
-      </form>
-    </div>
+      </motion.form>
+    </PageContainer>
   );
 }

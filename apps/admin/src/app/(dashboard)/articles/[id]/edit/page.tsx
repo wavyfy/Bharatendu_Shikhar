@@ -41,7 +41,7 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
     .eq("id", user.id)
     .single();
     
-  if ((data as any)?.role === "admin") {
+  if ((data as { role?: string } | null)?.role === "admin") {
     role = "admin";
   }
 
