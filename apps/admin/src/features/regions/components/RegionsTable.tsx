@@ -2,13 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { deleteRegionAction } from "../actions";
+import { deleteRegionAction, toggleRegionActiveAction } from "../actions";
 import type { RegionRow } from "../types";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { ActionMenu } from "@/components/ui/ActionMenu";
-import { Pencil, Trash2 } from "lucide-react";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { Pencil, Trash2, Ban, CheckCircle } from "lucide-react";
 
 interface RegionsTableProps {
   regions: RegionRow[];
@@ -40,6 +41,29 @@ export function RegionsTable({ regions }: RegionsTableProps) {
     });
   }
 
+  async function handleToggleActive(region: RegionRow) {
+    const action = region.is_active ? "deactivate" : "reactivate";
+    const ok = await confirm({
+      title: `${region.is_active ? "Deactivate" : "Reactivate"} "${region.name}"?`,
+      description: region.is_active
+        ? "This region will be hidden from new e-papers and articles."
+        : "This region will be available again.",
+      confirmLabel: region.is_active ? "Deactivate" : "Reactivate",
+      destructive: region.is_active,
+    });
+    if (!ok) return;
+
+    startTransition(async () => {
+      const res = await toggleRegionActiveAction(region.id, !region.is_active);
+      if (res.success) {
+        toast.success(`"${region.name}" ${action}d.`);
+        router.refresh();
+      } else {
+        toast.error(res.error ?? `Failed to ${action} region.`);
+      }
+    });
+  }
+
   if (regions.length === 0) {
     return (
       <EmptyState
@@ -52,21 +76,25 @@ export function RegionsTable({ regions }: RegionsTableProps) {
   }
 
   return (
-    <div className="overflow-x-auto border border-gray-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
+    <div className="overflow-x-auto border border-gray-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 m-4 sm:m-6 shadow-sm">
       <table className="w-full text-sm text-left">
-        <thead className="text-xs text-gray-500 dark:text-slate-400 uppercase bg-gray-50 dark:bg-slate-700/50 border-b border-gray-200 dark:border-slate-600">
+        <thead className="text-xs text-gray-500 dark:text-slate-300 uppercase bg-slate-200 dark:bg-slate-700/80 border-b border-slate-300 dark:border-slate-600">
           <tr>
             <th className="px-6 py-3 font-medium">Name</th>
             <th className="px-6 py-3 font-medium">Slug</th>
+            <th className="px-6 py-3 font-medium">Status</th>
             <th className="px-6 py-3 font-medium">Created</th>
             <th className="px-6 py-3 font-medium text-right">Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
+        <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-slate-50 dark:bg-slate-800/50">
           {regions.map((region) => (
-            <tr key={region.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+            <tr key={region.id} className="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
               <td className="px-6 py-4 font-medium text-gray-900 dark:text-slate-100">{region.name}</td>
               <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-mono text-xs">{region.slug}</td>
+              <td className="px-6 py-4">
+                <StatusBadge variant={region.is_active ? "active" : "inactive"} />
+              </td>
               <td className="px-6 py-4 text-gray-500 dark:text-slate-400">
                 {new Date(region.created_at).toLocaleDateString()}
               </td>
@@ -77,6 +105,13 @@ export function RegionsTable({ regions }: RegionsTableProps) {
                       label: "Edit",
                       icon: <Pencil strokeWidth={1.5} />,
                       href: `/regions/${region.id}/edit`,
+                      disabled: isPending,
+                    },
+                    {
+                      label: region.is_active ? "Deactivate" : "Reactivate",
+                      icon: region.is_active ? <Ban strokeWidth={1.5} /> : <CheckCircle strokeWidth={1.5} />,
+                      onClick: () => handleToggleActive(region),
+                      variant: region.is_active ? "danger" : "default",
                       disabled: isPending,
                     },
                     {

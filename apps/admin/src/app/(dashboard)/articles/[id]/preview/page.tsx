@@ -5,6 +5,7 @@ import Image from "next/image";
 import { createSupabaseServerClient } from "@repo/api";
 import { getArticleById } from "@/features/articles/queries";
 import { Button } from "@/components/ui/Button";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
   title: "Preview Article | Bharatendu Shikhar",

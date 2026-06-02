@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@repo/api";
 import { CategoryFormPlaceholder } from "@/features/categories/components/CategoryFormPlaceholder";
 import { getCategoryById } from "@/features/categories/queries";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
   title: "Edit Category | Bharatendu Shikhar",
@@ -44,9 +45,9 @@ export default async function EditCategoryPage({ params }: EditCategoryPageProps
   if (!category) redirect("/categories");
 
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
 
       <CategoryFormPlaceholder initialData={category} />
-    </div>
+    </AnimatedPage>
   );
 }

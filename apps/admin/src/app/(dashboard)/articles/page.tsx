@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@repo/api";
-import { Button } from "@/components/ui/Button";
-import { Card, CardHeader } from "@/components/ui/Card";
 import { getArticles } from "@/features/articles/queries";
 import { getCategories } from "@/features/categories/queries";
 import { getRegions } from "@/features/regions/queries";
@@ -25,7 +23,6 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   const categoryId = params?.category_id ? parseInt(params.category_id, 10) : undefined;
   const regionId = params?.region_id ? parseInt(params.region_id, 10) : undefined;
 
-  // Get user and role to determine authorId for fetching
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
     get: (name) => cookieStore.get(name)?.value,
@@ -34,8 +31,8 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   });
 
   const { data: { user } } = await supabase.auth.getUser();
-  
-  let role = "publisher"; // default
+
+  let role = "publisher";
   if (user) {
     const { supabaseAdmin } = await import("@repo/api");
     const { data } = await supabaseAdmin
@@ -51,41 +48,43 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   const userId = role === "admin" ? undefined : user?.id;
 
   const [{ articles, count, totalPages }, { categories }, { regions }] = await Promise.all([
-    getArticles({
-      page,
-      limit: 10,
-      role,
-      userId,
-      search,
-      status,
-      categoryId,
-      regionId,
-    }),
+    getArticles({ page, limit: 10, role, userId, search, status, categoryId, regionId }),
     getCategories({ limit: 100 }),
     getRegions({ limit: 100 }),
   ]);
 
   return (
     <AnimatedPage className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-[#111] dark:text-slate-100">Articles</h1>
-          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">Manage all news articles</p>
+          <h1 className="page-title">Articles</h1>
+          <p className="page-subtitle">
+            Manage content, track publication status, and author new stories across all channels.
+          </p>
         </div>
-        <Link href="/articles/new">
-          <Button>+ New Article</Button>
+        <Link href="/articles/new" className="btn-cms-primary self-start md:self-auto">
+          <span className="material-symbols-outlined text-[20px]">add</span>
+          New Article
         </Link>
       </div>
-      
-      <Card>
-        <ArticleFilters categories={categories} regions={regions} />
-        <CardHeader>All Articles ({count})</CardHeader>
-        <div className="p-0">
+
+      <div className="cms-card">
+        <div className="cms-card-header">
+          <ArticleFilters categories={categories} regions={regions} />
+        </div>
+
+        <div className="px-5 py-3 border-b border-surface-variant">
+          <span className="cms-card-label">All Articles ({count})</span>
+        </div>
+
+        <div className="overflow-x-auto custom-scrollbar">
           <ArticlesTable articles={articles} />
         </div>
-        
-        <Pagination currentPage={page} totalPages={totalPages} />
-      </Card>
+
+        <div className="px-5 py-3 border-t border-surface-variant bg-surface">
+          <Pagination currentPage={page} totalPages={totalPages} />
+        </div>
+      </div>
     </AnimatedPage>
   );
 }

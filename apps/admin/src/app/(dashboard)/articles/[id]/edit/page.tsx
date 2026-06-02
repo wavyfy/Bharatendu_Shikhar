@@ -5,6 +5,7 @@ import { getArticleById } from "@/features/articles/queries";
 import { ArticleFormPlaceholder } from "@/features/articles/components/ArticleFormPlaceholder";
 import { getCategories } from "@/features/categories/queries";
 import { getRegions } from "@/features/regions/queries";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
   title: "Edit Article | Bharatendu Shikhar",
@@ -59,13 +60,13 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
   }
 
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
 
       <ArticleFormPlaceholder 
         initialData={article} 
         categories={categories} 
         regions={regions} 
       />
-    </div>
+    </AnimatedPage>
   );
 }

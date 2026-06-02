@@ -1,6 +1,7 @@
 import { ArticleFormPlaceholder } from "@/features/articles/components/ArticleFormPlaceholder";
 import { getCategories } from "@/features/categories/queries";
 import { getRegions } from "@/features/regions/queries";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
   title: "Create Article | Bharatendu Shikhar",
@@ -13,9 +14,9 @@ export default async function NewArticlePage() {
   ]);
 
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
 
       <ArticleFormPlaceholder categories={categories} regions={regions} />
-    </div>
+    </AnimatedPage>
   );
 }

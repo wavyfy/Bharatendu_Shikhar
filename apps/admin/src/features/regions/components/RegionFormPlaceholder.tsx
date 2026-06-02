@@ -32,7 +32,8 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
 
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name") as string;
-    const payload = { name };
+    const is_active = formData.get("is_active") === "on";
+    const payload = { name, is_active };
 
     startTransition(async () => {
       const result = isEditing && initialData
@@ -73,20 +74,38 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
 
         <fieldset disabled={loading} className="group-disabled:opacity-70 transition-opacity">
           <FormSection title="Region Details">
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="name" className="text-sm font-medium text-slate-700">
-                Region Name <span className="text-red-500">*</span>
-              </label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                required
-                minLength={2}
-                placeholder="Enter region name..."
-                defaultValue={initialData?.name}
-              />
-              <p className="text-xs text-slate-500">Slug will be generated automatically.</p>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                  Region Name <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  minLength={2}
+                  placeholder="Enter region name..."
+                  defaultValue={initialData?.name}
+                />
+                <p className="text-xs text-slate-500">Slug will be generated automatically.</p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="is_active"
+                  name="is_active"
+                  defaultChecked={isEditing ? initialData.is_active : true}
+                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary bg-primary"
+                />
+                <label htmlFor="is_active" className="text-sm font-medium text-slate-700">
+                  Active
+                </label>
+                <p className="text-xs text-slate-500 ml-2">
+                  (Inactive regions are hidden from content creation)
+                </p>
+              </div>
             </div>
           </FormSection>
         </fieldset>

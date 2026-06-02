@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
-import { Card, CardHeader } from "@/components/ui/Card";
 import { getRegions } from "@/features/regions/queries";
 import { RegionsTable } from "@/features/regions/components/RegionsTable";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
@@ -22,42 +20,52 @@ export default async function RegionsPage({ searchParams }: PageProps) {
 
   return (
     <AnimatedPage className="space-y-6">
-      <div className="flex items-center justify-between">
+      {/* Page header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-[#111] dark:text-slate-100">Regions</h1>
-          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">Manage article regions</p>
+          <h1 className="page-title">Regions</h1>
+          <p className="page-subtitle">Manage geographic regions for article distribution.</p>
         </div>
-        <Link href="/regions/new">
-          <Button>+ New Region</Button>
+        <Link href="/regions/new" className="btn-cms-primary self-start md:self-auto">
+          <span className="material-symbols-outlined text-[20px]">add</span>
+          New Region
         </Link>
       </div>
-      
-      <Card>
-        <CardHeader>All Regions ({count})</CardHeader>
-        <div className="p-0">
+
+      {/* Table card */}
+      <div className="cms-card">
+        <div className="cms-card-header">
+          <span className="cms-card-label">All Regions ({count})</span>
+        </div>
+
+        <div className="overflow-x-auto custom-scrollbar">
           <RegionsTable regions={regions} />
         </div>
-        
+
         {totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-lg">
-            <span className="text-sm text-gray-700">
-              Page {page} of {totalPages}
-            </span>
-            <div className="space-x-2">
-              <Link href={`/regions?page=${Math.max(1, page - 1)}`}>
-                <Button variant="secondary" size="sm" disabled={page <= 1}>
-                  Previous
-                </Button>
+          <div className="px-5 py-3 border-t border-surface-variant bg-surface flex items-center justify-between">
+            <span className="text-sm text-on-surface-variant">Page {page} of {totalPages}</span>
+            <div className="flex gap-1">
+              <Link
+                href={`/regions?page=${Math.max(1, page - 1)}`}
+                className={`px-3 py-1 rounded border border-outline-variant text-sm font-medium transition-colors ${
+                  page <= 1 ? "opacity-40 pointer-events-none text-outline" : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
+                }`}
+              >
+                Previous
               </Link>
-              <Link href={`/regions?page=${Math.min(totalPages, page + 1)}`}>
-                <Button variant="secondary" size="sm" disabled={page >= totalPages}>
-                  Next
-                </Button>
+              <Link
+                href={`/regions?page=${Math.min(totalPages, page + 1)}`}
+                className={`px-3 py-1 rounded border border-outline-variant text-sm font-medium transition-colors ${
+                  page >= totalPages ? "opacity-40 pointer-events-none text-outline" : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
+                }`}
+              >
+                Next
               </Link>
             </div>
           </div>
         )}
-      </Card>
+      </div>
     </AnimatedPage>
   );
 }

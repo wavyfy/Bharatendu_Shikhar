@@ -3,7 +3,7 @@
 import { logoutAction } from "@/features/auth/actions/logout";
 import { ActionMenu } from "@/components/ui/ActionMenu";
 import type { UserRole } from "@/features/auth/utils/roles";
-import { LogOut, Settings as Settings } from "lucide-react";
+import { LogOut, Settings as SettingsIcon } from "lucide-react";
 import { DarkModeToggleItem } from "@/components/ui/DarkModeToggleItem";
 
 interface TopbarProps {
@@ -13,57 +13,55 @@ interface TopbarProps {
 
 export function Topbar({ displayName, role }: TopbarProps) {
   return (
-    <header className="h-14 sticky top-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 flex items-center px-4 lg:px-6 justify-between shrink-0 z-30">
-      {/* Brand — offset for mobile hamburger (40px) */}
-      <span className="font-sans font-bold tracking-tight text-lg text-slate-900 dark:text-slate-100 pl-10 lg:pl-0">
-        Bharatendu Shikhar
-      </span>
-
-      {/* Right — user info + dropdown */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-3">
-          <div className="hidden sm:flex flex-col items-end">
-            <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-tight">
-              {displayName}
-            </span>
-            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">
-              {role}
-            </span>
-          </div>
-          
-          {/* Avatar Area with Dropdown */}
-          <ActionMenu 
-            headerSlot={<DarkModeToggleItem />}
-            items={[
-              {
-                label: "Settings",
-                icon: <Settings className="w-4 h-4" strokeWidth={1.5} />,
-                href: "/settings"
-              },
-              {
-                label: "Sign out",
-                icon: <LogOut className="w-4 h-4" strokeWidth={1.5} />,
-                variant: "danger",
-                onClick: () => {
-                  // We need to trigger the form action
-                  const form = document.getElementById('logout-form') as HTMLFormElement;
-                  if (form) form.requestSubmit();
-                }
-              }
-            ]}
-            customTrigger={
-              <button
-                type="button"
-                className="h-9 w-9 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition-colors border border-slate-200 dark:border-slate-600 shadow-sm"
-              >
-                <span className="text-sm font-semibold">
-                  {displayName.charAt(0).toUpperCase()}
-                </span>
-              </button>
-            }
-          />
-          <form id="logout-form" action={logoutAction} className="hidden" />
+    <header className="h-16 sticky top-0 bg-surface/80 backdrop-blur-md border-b border-outline-variant flex items-center px-6 justify-between shrink-0 z-30 shadow-sm">
+      {/* Brand title — left side, offset for mobile hamburger */}
+      <div className="pl-10 lg:pl-0">
+        <div
+          className="font-bold text-primary leading-tight"
+          style={{ fontFamily: "Plus Jakarta Sans, system-ui, sans-serif", fontSize: "17px", letterSpacing: "-0.01em" }}
+        >
+          Bharatendu Shikhar
         </div>
+        <div className="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">
+          CMS Portal
+        </div>
+      </div>
+
+      {/* Right — user info + dropdown only */}
+      <div className="flex items-center gap-3">
+        <div className="hidden sm:flex flex-col items-end">
+          <span className="text-sm font-semibold text-on-surface leading-tight">{displayName}</span>
+          <span className="text-[10px] font-semibold text-on-surface-variant uppercase tracking-wide">{role}</span>
+        </div>
+
+        <ActionMenu
+          headerSlot={<DarkModeToggleItem />}
+          items={[
+            {
+              label: "Settings",
+              icon: <SettingsIcon className="w-4 h-4" strokeWidth={1.5} />,
+              href: "/settings",
+            },
+            {
+              label: "Sign out",
+              icon: <LogOut className="w-4 h-4" strokeWidth={1.5} />,
+              variant: "danger",
+              onClick: () => {
+                const form = document.getElementById("logout-form") as HTMLFormElement;
+                if (form) form.requestSubmit();
+              },
+            },
+          ]}
+          customTrigger={
+            <button
+              type="button"
+              className="w-9 h-9 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center text-primary font-bold text-sm hover:bg-surface-container-high hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm"
+            >
+              {displayName.charAt(0).toUpperCase()}
+            </button>
+          }
+        />
+        <form id="logout-form" action={logoutAction} className="hidden" />
       </div>
     </header>
   );

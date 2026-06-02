@@ -495,32 +495,42 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-6 overflow-x-auto pb-1">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`whitespace-nowrap pb-3 pt-2 px-1 border-b-2 font-medium text-sm transition-colors ${
-                activeTab === tab.id
-                  ? "border-[#CC2200] text-[#CC2200]"
-                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+    <div className="flex flex-col md:flex-row gap-6">
+      {/* Sidebar tabs */}
+      <aside className="w-full md:w-52 shrink-0">
+        <nav className="flex md:flex-col gap-1 md:gap-0.5 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                  isActive
+                    ? "bg-surface-container-high text-primary font-bold border-l-2 border-primary"
+                    : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high border-transparent"
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </nav>
-      </div>
+      </aside>
 
-      <div className="max-w-3xl">
-        {activeTab === "site" && <SiteInfoSection settings={settings} />}
-        {activeTab === "seo" && <SeoSection settings={settings} />}
-        {activeTab === "social" && <SocialSection settings={settings} />}
-        {activeTab === "contact" && <ContactSection settings={settings} />}
-        {activeTab === "homepage" && <HomepageSection settings={settings} />}
-        {activeTab === "maintenance" && <MaintenanceSection settings={settings} />}
+      {/* Form canvas */}
+      <div className="flex-1 max-w-3xl">
+        <div className="cms-card p-6 md:p-8">
+          <h2 className="cms-card-label mb-6">
+            {tabs.find((t) => t.id === activeTab)?.label}
+          </h2>
+          {activeTab === "site" && <SiteInfoSection settings={settings} />}
+          {activeTab === "seo" && <SeoSection settings={settings} />}
+          {activeTab === "social" && <SocialSection settings={settings} />}
+          {activeTab === "contact" && <ContactSection settings={settings} />}
+          {activeTab === "homepage" && <HomepageSection settings={settings} />}
+          {activeTab === "maintenance" && <MaintenanceSection settings={settings} />}
+        </div>
       </div>
     </div>
   );

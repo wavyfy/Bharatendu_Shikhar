@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-type StatusVariant = "draft" | "published" | "expired";
+export type StatusVariant = "draft" | "published" | "expired" | "active" | "inactive";
 
 interface StatusBadgeProps {
   variant: StatusVariant;
@@ -9,21 +9,25 @@ interface StatusBadgeProps {
 
 export function StatusBadge({ variant, className }: StatusBadgeProps) {
   const styles = {
-    draft: "bg-slate-100 text-slate-700 border-slate-200",
-    published: "bg-green-50 text-green-700 border-green-200",
-    expired: "bg-red-50 text-red-700 border-red-200",
+    published: "bg-[#0284c7] text-white",
+    active: "bg-emerald-700 text-white",
+    draft: "bg-on-surface-variant text-white",
+    inactive: "bg-on-surface-variant text-white",
+    expired: "bg-red-700 text-white",
   };
 
   const labels = {
-    draft: "Draft",
     published: "Published",
+    active: "Active",
+    draft: "Draft",
+    inactive: "Inactive",
     expired: "Expired",
   };
 
   return (
     <span
       className={cn(
-        "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border",
+        "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold",
         styles[variant],
         className
       )}

@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@repo/api";
 import { CategoryFormPlaceholder } from "@/features/categories/components/CategoryFormPlaceholder";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
   title: "New Category | Bharatendu Shikhar",

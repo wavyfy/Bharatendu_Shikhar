@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const regionSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters long"),
+  is_active: z.boolean().default(true).optional(),
 });
 
 export const createRegionSchema = regionSchema;

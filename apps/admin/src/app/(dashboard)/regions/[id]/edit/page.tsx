@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@repo/api";
 import { RegionFormPlaceholder } from "@/features/regions/components/RegionFormPlaceholder";
 import { getRegionById } from "@/features/regions/queries";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
   title: "Edit Region | Bharatendu Shikhar",
@@ -44,9 +45,9 @@ export default async function EditRegionPage({ params }: EditRegionPageProps) {
   if (!region) redirect("/regions");
 
   return (
-    <div className="space-y-6">
+    <AnimatedPage className="space-y-6">
 
       <RegionFormPlaceholder initialData={region} />
-    </div>
+    </AnimatedPage>
   );
 }

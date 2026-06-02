@@ -22,6 +22,7 @@ export interface DashboardStats {
     title: string;
     published_at: string | null;
     created_at: string;
+    pdf_url: string;
   }[];
   isAdmin: boolean;
 }
@@ -44,7 +45,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     .eq("id", user.id)
     .single();
 
-  const role = (profile as any)?.role || "publisher";
+  const role = (profile as { role?: string } | null)?.role || "publisher";
   const isAdmin = role === "admin" || role === "superadmin";
 
   let articlesQuery = supabase.from("articles").select("*", { count: "exact", head: true });
@@ -52,15 +53,15 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   let draftQuery = supabase.from("articles").select("*", { count: "exact", head: true }).eq("status", "draft");
   let epapersQuery = supabase.from("epapers").select("*", { count: "exact", head: true });
 
-  let recentArticlesQuery = supabaseAdmin.from("articles").select("id, title, status, created_at, author:profiles!articles_author_id_fkey(full_name)").order("created_at", { ascending: false }).limit(5);
-  let recentEpapersQuery = supabase.from("epapers").select("id, title, published_at, created_at").order("created_at", { ascending: false }).limit(5);
+  let recentArticlesQuery = supabaseAdmin.from("articles").select("id, title, status, created_at, author_id, author:profiles!articles_author_id_fkey(full_name)").order("created_at", { ascending: false }).limit(5);
+  let recentEpapersQuery = supabase.from("epapers").select("id, title, published_at, created_at, pdf_url").order("created_at", { ascending: false }).limit(5);
 
   if (!isAdmin) {
     articlesQuery = articlesQuery.eq("author_id", user.id);
     publishedQuery = publishedQuery.eq("author_id", user.id);
     draftQuery = draftQuery.eq("author_id", user.id);
     epapersQuery = epapersQuery.eq("author_id", user.id);
-    recentArticlesQuery = (recentArticlesQuery as any).eq("author_id", user.id);
+    recentArticlesQuery = recentArticlesQuery.eq("author_id", user.id);
     recentEpapersQuery = recentEpapersQuery.eq("author_id", user.id);
   }
 

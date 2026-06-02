@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useTransition, useState, useEffect } from "react";
+import { Search } from "lucide-react";
 
 interface SearchInputProps {
   placeholder?: string;
@@ -40,14 +41,21 @@ export function SearchInput({ placeholder = "Search...", className = "" }: Searc
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative w-full sm:min-w-[300px] md:min-w-[400px] ${className}`}>
+      <button 
+        type="button"
+        onClick={() => applySearch(value)}
+        className="absolute left-3 top-2.5 text-slate-400 hover:text-red-600 transition-colors"
+      >
+        <Search className="h-4 w-4" />
+      </button>
       <input
         type="search"
         placeholder={placeholder}
         value={value}
-        className={`w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-gray-300 focus:border-gray-400 text-sm bg-white shadow-sm text-gray-700 outline-none transition-shadow ${
+        className={`w-full pl-10 pr-10 py-2 border border-slate-300 rounded-lg focus:border-red-600 focus:ring-1 focus:ring-red-600/30 text-sm bg-white text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-sm ${
           isPending ? "opacity-70" : ""
-        }`}
+        } ${className}`}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {

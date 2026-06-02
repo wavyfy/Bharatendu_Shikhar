@@ -121,3 +121,23 @@ export async function deleteCategoryAction(id: number) {
     return { success: false, error: message };
   }
 }
+
+export async function toggleCategoryActiveAction(id: number, is_active: boolean) {
+  try {
+    const { supabase } = await getAdminAuth();
+    
+    const { error } = await supabase
+      .from("categories")
+      .update({ is_active } as never)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    revalidatePath("/categories");
+    return { success: true };
+  } catch (error: unknown) {
+    console.error("Toggle category status error:", error);
+    const message = error instanceof Error ? error.message : "Failed to update category status";
+    return { success: false, error: message };
+  }
+}

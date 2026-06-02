@@ -15,9 +15,7 @@ async function verifyAdminOrRedirect() {
     remove: () => {},
   });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
   const { data: profile } = await supabaseAdmin
@@ -38,12 +36,12 @@ export default async function SettingsPage() {
   return (
     <AnimatedPage className="space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-[#111] dark:text-slate-100">Settings</h1>
-        <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
-          Manage global site settings. Each section saves independently.
-        </p>
+        <h1 className="page-title">Settings</h1>
+        <p className="page-subtitle">Manage global site configuration. Each section saves independently.</p>
       </div>
+
       <SettingsForm settings={settings} />
     </AnimatedPage>
   );
 }
+

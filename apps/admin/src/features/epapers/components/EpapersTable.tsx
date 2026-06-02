@@ -54,10 +54,10 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm m-4 sm:m-6">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
-          <thead className="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 uppercase text-xs font-semibold">
+          <thead className="bg-slate-200 dark:bg-slate-700/80 border-b border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 uppercase text-xs font-semibold">
             <tr>
               <th className="px-6 py-3 font-medium">Title & Region</th>
               <th className="px-6 py-3 font-medium">Published Date</th>
@@ -66,13 +66,13 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
               <th className="px-6 py-3 font-medium text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800">
+          <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-slate-50 dark:bg-slate-800/50">
           {epapers.map((epaper) => {
             const isExpired = epaper.expiry_date && new Date(epaper.expiry_date) < new Date();
             const isPublished = epaper.published_at && new Date(epaper.published_at) <= new Date();
 
             return (
-              <tr key={epaper.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-150">
+              <tr key={epaper.id} className="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors duration-150">
                 <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">
                   <div className="truncate max-w-[250px]">{epaper.title}</div>
                   <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">

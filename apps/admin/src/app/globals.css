@@ -2,41 +2,279 @@
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-.dark {
-  --background: #0f172a;
-  --foreground: #e2e8f0;
-}
-
+/* ── Stitch Design System Tokens ── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* Fonts */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
+
+  /* Stitch Color Palette (Material You - Red) */
+  --color-primary: #ba1a1a;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #ffdad6;
+  --color-on-primary-container: #410002;
+  --color-primary-fixed: #ffdad6;
+  --color-primary-fixed-dim: #ffb4ab;
+  --color-on-primary-fixed: #410002;
+  --color-on-primary-fixed-variant: #93000a;
+  --color-inverse-primary: #ffb4ab;
+
+  --color-secondary: #5d5e66;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #e3e1ec;
+  --color-on-secondary-container: #63646c;
+  --color-secondary-fixed: #e3e1ec;
+  --color-secondary-fixed-dim: #c6c5cf;
+  --color-on-secondary-fixed: #1a1b22;
+  --color-on-secondary-fixed-variant: #46464e;
+
+  --color-tertiary: #a23d00;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #ca4e00;
+  --color-on-tertiary-container: #fffeff;
+  --color-tertiary-fixed: #ffdbcd;
+  --color-tertiary-fixed-dim: #ffb596;
+  --color-on-tertiary-fixed: #360f00;
+  --color-on-tertiary-fixed-variant: #7d2d00;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-surface: #faf9ff;
+  --color-on-surface: #181b23;
+  --color-surface-variant: #e0e2ed;
+  --color-on-surface-variant: #414754;
+  --color-surface-dim: #d8d9e4;
+  --color-surface-bright: #faf9ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f2f3fe;
+  --color-surface-container: #ecedf8;
+  --color-surface-container-high: #e6e7f3;
+  --color-surface-container-highest: #e0e2ed;
+  --color-surface-tint: #0059c5;
+  --color-inverse-surface: #2d3039;
+  --color-inverse-on-surface: #eff0fb;
+
+  --color-background: #faf9ff;
+  --color-on-background: #181b23;
+
+  --color-outline: #727786;
+  --color-outline-variant: #c1c6d7;
+
+  /* Legacy compatibility */
+  --color-foreground: var(--color-on-surface);
+}
+
+/* Material Symbols base style */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-symbols-fill {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* Shadow levels */
+.shadow-level-2 {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+
+/* Primary button gradient */
+.btn-primary-gradient {
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-on-primary-fixed-variant) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.btn-primary-gradient:hover {
+  background: linear-gradient(180deg, #cc2222 0%, var(--color-primary) 100%);
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #c1c6d7;
+  border-radius: 9999px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
 }
 
 .font-playfair {
-  font-family: var(--font-playfair), serif;
+  font-family: var(--font-geist-sans), serif;
 }
 
-@layer utilities {
-  .text-gradient {
-    @apply text-slate-900;
-  }
+/* ── Shared page anatomy ── */
+
+/* Page display heading (h1 on every section page) */
+.page-title {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: #181b23;
+}
+
+/* Page subtitle */
+.page-subtitle {
+  color: #414754;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-top: 0.5rem;
+  max-width: 42rem;
+}
+
+/* Primary CTA button (shared by all pages AND sidebar) */
+.btn-cms-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-on-primary-fixed-variant) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0.08);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+.btn-cms-primary:hover {
+  background: linear-gradient(180deg, #cc2222 0%, var(--color-primary) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.12);
+  color: #ffffff;
+}
+.btn-cms-primary:active {
+  transform: scale(0.97);
+}
+
+/* Secondary / ghost CTA */
+.btn-cms-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  color: #181b23;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid #c1c6d7;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-cms-secondary:hover {
+  background: var(--color-surface-container-low);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.btn-cms-secondary:active {
+  transform: scale(0.97);
+}
+
+/* Table card wrapper */
+.cms-card {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #e0e2ed;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  overflow: hidden;
+}
+
+/* Card header bar */
+.cms-card-header {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid #e0e2ed;
+  background: #faf9ff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Card header label */
+.cms-card-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #414754;
+}
+
+/* Stitch-style search input */
+.cms-search-input {
+  width: 100%;
+  background: var(--color-surface-container-low);
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.875rem 0.5rem 2.5rem;
+  font-size: 0.875rem;
+  color: var(--color-on-surface);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.cms-search-input::placeholder {
+  color: var(--color-outline);
+}
+.cms-search-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-fixed);
+  background: #ffffff;
+}
+
+/* Search wrapper (icon + input) */
+.cms-search-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 20rem;
+}
+.cms-search-wrap::before {
+  content: "search";
+  font-family: "Material Symbols Outlined";
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  position: absolute;
+  left: 0.625rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #727786;
+  font-size: 18px;
+  line-height: 1;
+  pointer-events: none;
 }
 
 @layer base {
-  /* Remove native blue focus rings globally for form elements */
   *,
   *::before,
   *::after {
@@ -44,6 +282,6 @@ body {
   }
 
   *:focus-visible {
-    @apply outline-none ring-2 ring-slate-400 ring-offset-2 ring-offset-white transition-shadow duration-150;
+    @apply outline-none ring-2 ring-primary ring-offset-1 ring-offset-white transition-shadow duration-150;
   }
 }

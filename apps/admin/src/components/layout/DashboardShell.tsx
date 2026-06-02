@@ -19,14 +19,18 @@ export function DashboardShell({
   return (
     <ToastProvider>
       <ConfirmProvider>
-        <div className="h-screen overflow-hidden bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col">
+        <div className="h-screen overflow-hidden bg-surface text-on-surface flex flex-col">
           <Topbar displayName={displayName} role={role} />
 
           <div className="flex flex-1 overflow-hidden min-h-0">
             <Sidebar role={role} />
 
-            <main className="flex-1 overflow-auto p-6 lg:p-8 bg-[#F8FAFC] dark:bg-slate-950 min-h-0 min-w-0">
-              {children}
+            <main className="flex-1 overflow-auto bg-surface min-h-0 min-w-0">
+              <PageTransition>
+                <div className="p-6 lg:p-8 max-w-[1440px] mx-auto w-full">
+                  {children}
+                </div>
+              </PageTransition>
             </main>
           </div>
         </div>
@@ -34,4 +38,3 @@ export function DashboardShell({
     </ToastProvider>
   );
 }
-

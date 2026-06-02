@@ -8,6 +8,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { ActionMenu } from "@/components/ui/ActionMenu";
+import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Pencil, Ban, CheckCircle } from "lucide-react";
 
 export function PublishersTable({ publishers }: { publishers: PublisherWithAuth[] }) {
@@ -51,10 +52,10 @@ export function PublishersTable({ publishers }: { publishers: PublisherWithAuth[
   }
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden shadow-sm">
+    <div className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden shadow-sm m-4 sm:m-6">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
-          <thead className="bg-gray-50 dark:bg-slate-700/50 border-b border-gray-200 dark:border-slate-600 text-gray-500 dark:text-slate-400 uppercase text-xs font-semibold">
+          <thead className="bg-slate-200 dark:bg-slate-700/80 border-b border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 uppercase text-xs font-semibold">
             <tr>
               <th className="px-6 py-4">Publisher</th>
               <th className="px-6 py-4">Status</th>
@@ -63,23 +64,15 @@ export function PublishersTable({ publishers }: { publishers: PublisherWithAuth[
               <th className="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
+          <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-slate-50 dark:bg-slate-800/50">
             {publishers.map((pub) => (
-              <tr key={pub.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+              <tr key={pub.id} className="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
                 <td className="px-6 py-4">
                   <div className="font-medium text-gray-900 dark:text-slate-100">{pub.full_name}</div>
                   <div className="text-gray-500 dark:text-slate-400 text-xs mt-0.5">{pub.email}</div>
                 </td>
                 <td className="px-6 py-4">
-                  {pub.is_active ? (
-                    <span className="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">
-                      Active
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center rounded-full bg-red-50 dark:bg-red-900/30 px-2 py-1 text-xs font-medium text-red-700 dark:text-red-400 ring-1 ring-inset ring-red-600/10">
-                      Inactive
-                    </span>
-                  )}
+                  <StatusBadge variant={pub.is_active ? "active" : "inactive"} />
                 </td>
                 <td className="px-6 py-4 text-center">
                   <span className="font-medium text-gray-900 dark:text-slate-100">{pub.article_count || 0}</span>

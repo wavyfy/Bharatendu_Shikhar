@@ -121,3 +121,23 @@ export async function deleteRegionAction(id: number) {
     return { success: false, error: message };
   }
 }
+
+export async function toggleRegionActiveAction(id: number, is_active: boolean) {
+  try {
+    const { supabase } = await getAdminAuth();
+    
+    const { error } = await supabase
+      .from("regions")
+      .update({ is_active } as never)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    revalidatePath("/regions");
+    return { success: true };
+  } catch (error: unknown) {
+    console.error("Toggle region status error:", error);
+    const message = error instanceof Error ? error.message : "Failed to update region status";
+    return { success: false, error: message };
+  }
+}

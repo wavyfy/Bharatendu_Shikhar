@@ -4,6 +4,7 @@ export interface CategoryRow {
   id: number;
   name: string;
   slug: string;
+  is_active: boolean;
   created_at: string;
 }
 
@@ -11,6 +12,7 @@ export interface RegionRow {
   id: number;
   name: string;
   slug: string;
+  is_active: boolean;
   created_at: string;
 }
 

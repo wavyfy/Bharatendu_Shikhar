@@ -4,6 +4,7 @@ import { createSupabaseServerClient } from "@repo/api";
 import { EpaperForm } from "@/features/epapers/components/EpaperForm";
 import { getEpaperById } from "@/features/epapers/queries";
 import { getRegions } from "@/features/regions/queries";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = { title: "Edit E-Paper | Bharatendu Shikhar Admin" };
 

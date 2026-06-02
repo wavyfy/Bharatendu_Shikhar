@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { PublisherForm } from "@/features/publishers/components/PublisherForm";
 import { getPublisherById } from "@/features/publishers/queries";
+import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
   title: "Edit Publisher | Admin",

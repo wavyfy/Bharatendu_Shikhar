@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,14 +32,19 @@ export function Select({
 }: SelectProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const menuRef = React.useRef<HTMLDivElement>(null);
+  const [menuStyle, setMenuStyle] = React.useState({ top: 0, left: 0, width: 0 });
 
   const selectedOption = options.find((opt) => opt.value === value);
 
   React.useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as Node;
       if (
         containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
+        !containerRef.current.contains(target) &&
+        menuRef.current &&
+        !menuRef.current.contains(target)
       ) {
         setIsOpen(false);
       }
@@ -46,16 +52,28 @@ export function Select({
 
     if (isOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setMenuStyle({
+          top: rect.bottom + window.scrollY + 4,
+          left: rect.left + window.scrollX,
+          width: rect.width,
+        });
+      }
     }
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [isOpen]);
+
+  const toggle = () => {
+    if (!disabled) setIsOpen(!isOpen);
+  };
 
   return (
     <div className={cn("relative w-full", className)} ref={containerRef}>
       <button
         type="button"
         disabled={disabled}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggle}
         className={cn(
           "flex h-10 w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 transition-shadow duration-150",
           isOpen && "ring-2 ring-slate-400 ring-offset-2",
@@ -72,43 +90,53 @@ export function Select({
 
       {error && <p className="mt-1.5 text-xs font-medium text-red-500">{error}</p>}
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.15 }}
-            className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-slate-200 bg-white py-1 shadow-lg"
-          >
-            {options.length === 0 ? (
-              <div className="px-3 py-2 text-sm text-slate-500">
-                No options found
-              </div>
-            ) : (
-              options.map((option) => (
-                <button
-                  type="button"
-                  key={option.value}
-                  className={cn(
-                    "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900",
-                    option.value === value && "bg-slate-50 font-medium text-slate-900"
-                  )}
-                  onClick={() => {
-                    onChange?.(option.value);
-                    setIsOpen(false);
-                  }}
-                >
-                  <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-                    {option.value === value && <Check className="h-4 w-4" />}
-                  </span>
-                  <span className="truncate">{option.label}</span>
-                </button>
-              ))
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {typeof window !== "undefined" && createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              ref={menuRef}
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.15 }}
+              style={{
+                position: "absolute",
+                top: menuStyle.top,
+                left: menuStyle.left,
+                width: menuStyle.width,
+              }}
+              className="z-9999 max-h-60 overflow-auto rounded-md border border-slate-200 bg-white py-1 shadow-lg"
+            >
+              {options.length === 0 ? (
+                <div className="px-3 py-2 text-sm text-slate-500">
+                  No options found
+                </div>
+              ) : (
+                options.map((option) => (
+                  <button
+                    type="button"
+                    key={option.value}
+                    className={cn(
+                      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900",
+                      option.value === value && "bg-slate-50 font-medium text-slate-900"
+                    )}
+                    onClick={() => {
+                      onChange?.(option.value);
+                      setIsOpen(false);
+                    }}
+                  >
+                    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+                      {option.value === value && <Check className="h-4 w-4" />}
+                    </span>
+                    <span className="truncate">{option.label}</span>
+                  </button>
+                ))
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 }
