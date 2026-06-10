@@ -28,25 +28,31 @@ CREATE INDEX IF NOT EXISTS idx_live_updates_created_at
 ALTER TABLE article_live_updates ENABLE ROW LEVEL SECURITY;
 
 -- Admin: full access to all live updates
-CREATE POLICY "admin_all_live_updates"
-  ON article_live_updates
-  FOR ALL
-  USING (
-    EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid()
-        AND profiles.role = 'admin'
-    )
-  );
+DO $$ BEGIN
+  CREATE POLICY "admin_all_live_updates"
+    ON article_live_updates
+    FOR ALL
+    USING (
+      EXISTS (
+        SELECT 1 FROM profiles
+        WHERE profiles.id = auth.uid()
+          AND profiles.role = 'admin'
+      )
+    );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
 -- Publisher: only their own articles' updates
-CREATE POLICY "publisher_own_live_updates"
-  ON article_live_updates
-  FOR ALL
-  USING (
-    EXISTS (
-      SELECT 1 FROM articles
-      WHERE articles.id = article_live_updates.article_id
-        AND articles.author_id = auth.uid()
-    )
-  );
+DO $$ BEGIN
+  CREATE POLICY "publisher_own_live_updates"
+    ON article_live_updates
+    FOR ALL
+    USING (
+      EXISTS (
+        SELECT 1 FROM articles
+        WHERE articles.id = article_live_updates.article_id
+          AND articles.author_id = auth.uid()
+      )
+    );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;

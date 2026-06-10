@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { createSupabaseServerClient } from "@repo/api";
+import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import {
   createLiveUpdateSchema,
   updateLiveUpdateSchema,
@@ -23,7 +23,6 @@ async function getAuth() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Unauthorized");
 
-  const { supabaseAdmin } = await import("@repo/api");
   const { data } = await supabaseAdmin
     .from("profiles")
     .select("role")
@@ -52,7 +51,7 @@ export async function createLiveUpdateAction(
   input: CreateLiveUpdateInput
 ) {
   try {
-    const { supabase, user, role } = await getAuth();
+    const { user, role } = await getAuth();
 
     await verifyArticleAccess(articleId, user.id, role);
 
@@ -61,7 +60,7 @@ export async function createLiveUpdateAction(
       return { success: false, error: validation.error.issues[0]?.message || "Invalid input" };
     }
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("article_live_updates")
       .insert({
         article_id: articleId,
@@ -76,8 +75,11 @@ export async function createLiveUpdateAction(
     revalidatePath(`/articles/${articleId}/edit`);
     return { success: true };
   } catch (err: unknown) {
-    console.error("Create live update error:", err);
-    const message = err instanceof Error ? err.message : "Failed to create live update";
+    console.error("Create live update error:", JSON.stringify(err));
+    const message =
+      err instanceof Error
+        ? err.message
+        : (err as { message?: string })?.message ?? "Failed to create live update";
     return { success: false, error: message };
   }
 }
@@ -88,7 +90,7 @@ export async function updateLiveUpdateAction(
   articleId: number
 ) {
   try {
-    const { supabase, user, role } = await getAuth();
+    const { user, role } = await getAuth();
 
     await verifyArticleAccess(articleId, user.id, role);
 
@@ -97,7 +99,7 @@ export async function updateLiveUpdateAction(
       return { success: false, error: validation.error.issues[0]?.message || "Invalid input" };
     }
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("article_live_updates")
       .update({
         ...validation.data,
@@ -112,19 +114,22 @@ export async function updateLiveUpdateAction(
     revalidatePath(`/articles/${articleId}/edit`);
     return { success: true };
   } catch (err: unknown) {
-    console.error("Update live update error:", err);
-    const message = err instanceof Error ? err.message : "Failed to update live update";
+    console.error("Update live update error:", JSON.stringify(err));
+    const message =
+      err instanceof Error
+        ? err.message
+        : (err as { message?: string })?.message ?? "Failed to update live update";
     return { success: false, error: message };
   }
 }
 
 export async function deleteLiveUpdateAction(updateId: number, articleId: number) {
   try {
-    const { supabase, user, role } = await getAuth();
+    const { user, role } = await getAuth();
 
     await verifyArticleAccess(articleId, user.id, role);
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("article_live_updates")
       .delete()
       .eq("id", updateId)
@@ -136,8 +141,11 @@ export async function deleteLiveUpdateAction(updateId: number, articleId: number
     revalidatePath(`/articles/${articleId}/edit`);
     return { success: true };
   } catch (err: unknown) {
-    console.error("Delete live update error:", err);
-    const message = err instanceof Error ? err.message : "Failed to delete live update";
+    console.error("Delete live update error:", JSON.stringify(err));
+    const message =
+      err instanceof Error
+        ? err.message
+        : (err as { message?: string })?.message ?? "Failed to delete live update";
     return { success: false, error: message };
   }
 }
