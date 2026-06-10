@@ -10,18 +10,18 @@ export default async function DashboardPage() {
   const stats = await getDashboardStats();
 
   const BASE_STATS = [
-    { label: "Total Articles", value: stats.totalArticles, icon: "description", cardBg: "btn-primary-gradient text-white", iconBg: "bg-white/20 text-white" },
-    { label: "Published", value: stats.publishedArticles, icon: "check_circle", cardBg: "btn-primary-gradient text-white", iconBg: "bg-white/20 text-white" },
-    { label: "Drafts", value: stats.draftArticles, icon: "edit_document", cardBg: "btn-primary-gradient text-white", iconBg: "bg-white/20 text-white" },
-    { label: "E-Papers", value: stats.totalEpapers, icon: "newspaper", cardBg: "btn-primary-gradient text-white", iconBg: "bg-white/20 text-white" },
+    { label: "Total Articles", value: stats.totalArticles, icon: "description", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+    { label: "Published", value: stats.publishedArticles, icon: "check_circle", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+    { label: "Drafts", value: stats.draftArticles, icon: "edit_document", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+    { label: "E-Papers", value: stats.totalEpapers, icon: "newspaper", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
   ];
 
   const ADMIN_STATS = stats.isAdmin
     ? [
-        { label: "Categories", value: stats.totalCategories, icon: "category", cardBg: "btn-primary-gradient text-white", iconBg: "bg-white/20 text-white" },
-        { label: "Regions", value: stats.totalRegions, icon: "public", cardBg: "btn-primary-gradient text-white", iconBg: "bg-white/20 text-white" },
-        { label: "Active Publishers", value: stats.activePublishers, icon: "group", cardBg: "btn-primary-gradient text-white", iconBg: "bg-white/20 text-white" },
-        { label: "Total Publishers", value: stats.totalPublishers, icon: "business", cardBg: "btn-primary-gradient text-white", iconBg: "bg-white/20 text-white" },
+        { label: "Categories", value: stats.totalCategories, icon: "category", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+        { label: "Regions", value: stats.totalRegions, icon: "public", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+        { label: "Active Publishers", value: stats.activePublishers, icon: "group", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+        { label: "Total Publishers", value: stats.totalPublishers, icon: "business", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
       ]
     : [];
 

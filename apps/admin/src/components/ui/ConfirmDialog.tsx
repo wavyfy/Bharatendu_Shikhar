@@ -65,7 +65,7 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
             onClick={() => handleResult(false)}
           />
           {/* Dialog box */}
-          <div className="relative bg-white rounded-lg shadow-xl w-full max-w-sm p-6 space-y-4">
+          <div className="relative bg-surface rounded-lg shadow-xl w-full max-w-sm p-6 space-y-4">
             <div className="space-y-1.5">
               <h2 id="confirm-title" className="text-base font-semibold text-gray-900">
                 {dialog.title}

@@ -1,6 +1,7 @@
 import { ArticleFormPlaceholder } from "@/features/articles/components/ArticleFormPlaceholder";
 import { getCategories } from "@/features/categories/queries";
 import { getRegions } from "@/features/regions/queries";
+import { getBadges } from "@/features/badges/queries";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
@@ -8,15 +9,15 @@ export const metadata = {
 };
 
 export default async function NewArticlePage() {
-  const [{ categories }, { regions }] = await Promise.all([
+  const [{ categories }, { regions }, { badges }] = await Promise.all([
     getCategories({ limit: 100 }),
-    getRegions({ limit: 100 })
+    getRegions({ limit: 100 }),
+    getBadges({ limit: 100 }),
   ]);
 
   return (
     <AnimatedPage className="space-y-6">
-
-      <ArticleFormPlaceholder categories={categories} regions={regions} />
+      <ArticleFormPlaceholder categories={categories} regions={regions} badges={badges} />
     </AnimatedPage>
   );
 }

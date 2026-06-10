@@ -21,7 +21,7 @@ export function RichEditor({ value, onChange }: RichEditorProps) {
     },
     editorProps: {
       attributes: {
-        class: "prose prose-sm max-w-none focus:outline-none min-h-[300px] p-4 bg-white",
+        class: "prose prose-sm max-w-none focus:outline-none min-h-[300px] p-4 bg-surface",
       },
     },
   });
@@ -34,18 +34,18 @@ export function RichEditor({ value, onChange }: RichEditorProps) {
   }, [value, editor]);
 
   if (!editor) {
-    return <div className="h-[300px] bg-gray-50 animate-pulse rounded border border-gray-300" />;
+    return <div className="h-[300px] bg-surface-container-low animate-pulse rounded-md border border-outline-variant" />;
   }
 
   return (
-    <div className="border border-neutral-300 rounded overflow-hidden flex flex-col focus-within:ring-1 focus-within:ring-red-500 focus-within:border-red-500">
-      <div className="flex flex-wrap items-center gap-1 p-2 border-b border-neutral-200 bg-neutral-50">
+    <div className="border border-outline-variant rounded-md overflow-hidden flex flex-col focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 dark:focus-within:ring-offset-slate-800 transition-shadow duration-150">
+      <div className="flex flex-wrap items-center gap-1 p-2 border-b border-outline-variant bg-surface-container-low">
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleBold().run()}
-          className={editor.isActive("bold") ? "bg-neutral-200 text-black" : "text-neutral-600"}
+          className={editor.isActive("bold") ? "bg-surface-container-highest text-on-surface" : "text-on-surface-variant"}
         >
           Bold
         </Button>
@@ -54,17 +54,17 @@ export function RichEditor({ value, onChange }: RichEditorProps) {
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={editor.isActive("italic") ? "bg-neutral-200 text-black" : "text-neutral-600"}
+          className={editor.isActive("italic") ? "bg-surface-container-highest text-on-surface" : "text-on-surface-variant"}
         >
           Italic
         </Button>
-        <span className="w-px h-4 bg-neutral-300 mx-1" />
+        <span className="w-px h-4 bg-outline-variant mx-1" />
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          className={editor.isActive("heading", { level: 2 }) ? "bg-neutral-200 text-black" : "text-neutral-600"}
+          className={editor.isActive("heading", { level: 2 }) ? "bg-surface-container-highest text-on-surface" : "text-on-surface-variant"}
         >
           H2
         </Button>
@@ -73,17 +73,17 @@ export function RichEditor({ value, onChange }: RichEditorProps) {
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          className={editor.isActive("heading", { level: 3 }) ? "bg-neutral-200 text-black" : "text-neutral-600"}
+          className={editor.isActive("heading", { level: 3 }) ? "bg-surface-container-highest text-on-surface" : "text-on-surface-variant"}
         >
           H3
         </Button>
-        <span className="w-px h-4 bg-neutral-300 mx-1" />
+        <span className="w-px h-4 bg-outline-variant mx-1" />
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive("bulletList") ? "bg-neutral-200 text-black" : "text-neutral-600"}
+          className={editor.isActive("bulletList") ? "bg-surface-container-highest text-on-surface" : "text-on-surface-variant"}
         >
           Bullets
         </Button>
@@ -92,22 +92,22 @@ export function RichEditor({ value, onChange }: RichEditorProps) {
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editor.isActive("orderedList") ? "bg-neutral-200 text-black" : "text-neutral-600"}
+          className={editor.isActive("orderedList") ? "bg-surface-container-highest text-on-surface" : "text-on-surface-variant"}
         >
           Numbers
         </Button>
-        <span className="w-px h-4 bg-neutral-300 mx-1" />
+        <span className="w-px h-4 bg-outline-variant mx-1" />
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive("blockquote") ? "bg-neutral-200 text-black" : "text-neutral-600"}
+          className={editor.isActive("blockquote") ? "bg-surface-container-highest text-on-surface" : "text-on-surface-variant"}
         >
           Quote
         </Button>
       </div>
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto bg-surface-container-lowest text-on-surface min-h-[300px]">
         <EditorContent editor={editor} />
       </div>
     </div>

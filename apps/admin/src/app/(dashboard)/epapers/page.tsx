@@ -57,22 +57,20 @@ export default async function EPapersPage({ searchParams }: PageProps) {
         </Link>
       </div>
 
-      {/* Search */}
-      <div className="cms-search-wrap">
-        <SearchInput placeholder="Search e-papers..." className="cms-search-input" />
-      </div>
-
       {/* Table card */}
       <div className="cms-card">
-        <div className="cms-card-header">
+        <div className="cms-card-header flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <span className="cms-card-label">All E-Papers ({count})</span>
+          <div className="w-full sm:max-w-md">
+            <SearchInput placeholder="Search e-papers..." />
+          </div>
         </div>
 
         <div className="overflow-x-auto custom-scrollbar">
           <EpapersTable epapers={epapers} />
         </div>
 
-        <div className="px-5 py-3 border-t border-surface-variant bg-surface">
+        <div className="px-5 pb-3 bg-surface">
           <Pagination currentPage={page} totalPages={totalPages} />
         </div>
       </div>

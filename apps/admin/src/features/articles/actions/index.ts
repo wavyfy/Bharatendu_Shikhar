@@ -34,7 +34,7 @@ async function getAuth() {
   return { supabase, user, role };
 }
 
-export async function createArticleAction(input: CreateArticleInput) {
+export async function createArticleAction(input: CreateArticleInput, badgeIds: number[] = []) {
   try {
     const { supabase, user } = await getAuth();
     
@@ -62,6 +62,16 @@ export async function createArticleAction(input: CreateArticleInput) {
     if (error) throw error;
     const inserted = data as { id: number } | null;
 
+    // Sync badges
+    if (inserted?.id && badgeIds.length > 0) {
+      const { error: badgeError } = await supabase
+        .from("article_badges")
+        .insert(
+          badgeIds.map((badge_id) => ({ article_id: inserted.id, badge_id })) as never
+        );
+      if (badgeError) console.error("Badge sync error:", badgeError.message);
+    }
+
     revalidatePath("/articles");
     return { success: true, articleId: inserted?.id };
   } catch (error: unknown) {
@@ -71,7 +81,7 @@ export async function createArticleAction(input: CreateArticleInput) {
   }
 }
 
-export async function updateArticleAction(id: number, input: UpdateArticleInput) {
+export async function updateArticleAction(id: number, input: UpdateArticleInput, badgeIds?: number[]) {
   try {
     const { supabase, user, role } = await getAuth();
     
@@ -110,8 +120,6 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput)
       existing.featured_image && 
       validatedData.featured_image !== existing.featured_image
     ) {
-      // Don't await to avoid blocking update, or await if we want strictness.
-      // Better to await to avoid orphan files if it fails, but not throw if it fails
       await deleteFileAction(existing.featured_image, "articles").catch(console.error);
     }
 
@@ -121,6 +129,19 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput)
       .eq("id", id);
 
     if (error) throw error;
+
+    // Sync badges if provided
+    if (badgeIds !== undefined) {
+      await supabase.from("article_badges").delete().eq("article_id", id);
+      if (badgeIds.length > 0) {
+        const { error: badgeError } = await supabase
+          .from("article_badges")
+          .insert(
+            badgeIds.map((badge_id) => ({ article_id: id, badge_id })) as never
+          );
+        if (badgeError) console.error("Badge sync error:", badgeError.message);
+      }
+    }
 
     revalidatePath("/articles");
     revalidatePath(`/articles/${id}`);

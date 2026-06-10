@@ -6,9 +6,7 @@ export function Card({
   className?: string;
 }) {
   return (
-    <div
-      className={`bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg overflow-hidden ${className}`}
-    >
+    <div className={`cms-card shadow-md ${className}`}>
       {children}
     </div>
   );
@@ -16,8 +14,8 @@ export function Card({
 
 export function CardHeader({ children }: { children: React.ReactNode }) {
   return (
-    <div className="px-5 py-3 border-b border-gray-100 dark:border-slate-700 text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide">
-      {children}
+    <div className="cms-card-header bg-surface-container-high px-6 py-4">
+      <h2 className="text-lg font-bold leading-tight text-on-surface tracking-wide">{children}</h2>
     </div>
   );
 }
@@ -29,5 +27,5 @@ export function CardBody({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={`p-5 ${className}`}>{children}</div>;
+  return <div className={`p-6 bg-surface-container-lowest ${className}`}>{children}</div>;
 }

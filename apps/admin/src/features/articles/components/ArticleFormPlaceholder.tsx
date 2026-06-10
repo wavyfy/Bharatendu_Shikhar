@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import type { CategoryRow } from "@/features/categories/types";
 import type { RegionRow } from "@/features/regions/types";
-import type { ArticleWithRelations } from "../types";
+import type { ArticleWithRelations, BadgeRow } from "../types";
 import { createArticleAction, updateArticleAction } from "../actions";
 import { RichEditor } from "@/components/ui/RichEditor";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { BadgeMultiSelect } from "@/components/ui/BadgeMultiSelect";
 import { PageContainer } from "@/components/ui/PageContainer";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { motion } from "framer-motion";
@@ -20,9 +21,10 @@ interface ArticleFormProps {
   initialData?: ArticleWithRelations;
   categories: CategoryRow[];
   regions: RegionRow[];
+  badges: BadgeRow[];
 }
 
-export function ArticleFormPlaceholder({ initialData, categories, regions }: ArticleFormProps) {
+export function ArticleFormPlaceholder({ initialData, categories, regions, badges }: ArticleFormProps) {
   const router = useRouter();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
@@ -34,6 +36,9 @@ export function ArticleFormPlaceholder({ initialData, categories, regions }: Art
   const [status, setStatus] = useState<string>(initialData?.status || "draft");
   const [categoryId, setCategoryId] = useState<string>(initialData?.category_id?.toString() || "");
   const [regionId, setRegionId] = useState<string>(initialData?.region_id?.toString() || "");
+  const [selectedBadgeIds, setSelectedBadgeIds] = useState<number[]>(
+    initialData?.article_badges?.map((ab) => ab.badge_id) ?? []
+  );
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -55,8 +60,8 @@ export function ArticleFormPlaceholder({ initialData, categories, regions }: Art
 
     startTransition(async () => {
       const result = isEditing && initialData
-        ? await updateArticleAction(initialData.id, payload)
-        : await createArticleAction(payload);
+        ? await updateArticleAction(initialData.id, payload, selectedBadgeIds)
+        : await createArticleAction(payload, selectedBadgeIds);
 
       if (result.success) {
         toast.success(isEditing ? "Article updated." : "Article created.");
@@ -115,8 +120,8 @@ export function ArticleFormPlaceholder({ initialData, categories, regions }: Art
               <textarea
                 id="excerpt"
                 name="excerpt"
-                rows={2}
-                className="w-full px-3 py-2 border border-slate-200 rounded-md bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition-shadow duration-150"
+                rows={3}
+                className="flex w-full rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-sm text-on-surface placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-800 transition-shadow duration-150"
                 placeholder="Brief summary of the article..."
                 defaultValue={initialData?.excerpt || ""}
               />
@@ -177,6 +182,21 @@ export function ArticleFormPlaceholder({ initialData, categories, regions }: Art
                     ...regions.map(r => ({ label: r.name, value: r.id.toString() }))
                   ]}
                 />
+              </div>
+
+              <div className="flex flex-col gap-1.5 md:col-span-2">
+                <label className="text-sm font-medium text-slate-700">
+                  Badges
+                </label>
+                <BadgeMultiSelect
+                  badges={badges}
+                  value={selectedBadgeIds}
+                  onChange={setSelectedBadgeIds}
+                  placeholder="Attach badges (e.g. Breaking News, Live)"
+                />
+                <p className="text-xs text-slate-500">
+                  Articles can have multiple badges.
+                </p>
               </div>
             </div>
           </FormSection>

@@ -183,7 +183,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
                 PDF File <span className="text-red-500">*</span>
               </label>
               {pdfUrl ? (
-                <div className="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-surface-container-low border border-gray-200 rounded-lg">
                   <div className="flex items-center gap-3 overflow-hidden">
                     <svg className="w-8 h-8 text-red-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
@@ -206,7 +206,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
               ) : (
                 <div className="flex flex-col items-center justify-center w-full mt-2 relative">
                   {isUploading && (
-                    <div className="absolute inset-0 bg-white/50 z-10 flex items-center justify-center rounded-xl">
+                    <div className="absolute inset-0 bg-surface/50 z-10 flex items-center justify-center rounded-xl">
                       <div className="flex items-center gap-2 text-sm font-medium text-slate-900">
                         <svg className="animate-spin h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

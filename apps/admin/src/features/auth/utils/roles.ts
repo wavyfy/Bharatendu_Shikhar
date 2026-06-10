@@ -6,6 +6,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, string[]> = {
     "articles",
     "categories",
     "regions",
+    "badges",
     "publishers",
     "epapers",
     "settings",

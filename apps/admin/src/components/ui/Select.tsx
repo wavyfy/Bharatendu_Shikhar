@@ -75,11 +75,11 @@ export function Select({
         disabled={disabled}
         onClick={toggle}
         className={cn(
-          "flex h-10 w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 transition-shadow duration-150",
-          isOpen && "ring-2 ring-slate-400 ring-offset-2",
-          !isOpen && "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
+          "flex h-10 w-full items-center justify-between rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-sm text-on-surface transition-shadow duration-150",
+          isOpen && "ring-2 ring-slate-400 dark:ring-slate-600 ring-offset-2 dark:ring-offset-slate-900",
+          !isOpen && "focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-600 focus:ring-offset-2 dark:focus:ring-offset-slate-900",
           disabled && "cursor-not-allowed opacity-50",
-          error && "border-red-500 focus:ring-red-400 text-red-900 ring-red-400 ring-offset-2"
+          error && "border-red-500 focus:ring-red-400 text-red-900 dark:text-red-400 ring-red-400 ring-offset-2 dark:ring-offset-slate-900"
         )}
       >
         <span className={cn("truncate", !selectedOption && "text-slate-400", error && "text-red-900")}>
@@ -105,10 +105,10 @@ export function Select({
                 left: menuStyle.left,
                 width: menuStyle.width,
               }}
-              className="z-9999 max-h-60 overflow-auto rounded-md border border-slate-200 bg-white py-1 shadow-lg"
+              className="z-9999 max-h-60 overflow-auto rounded-md border border-outline-variant bg-surface py-1 shadow-lg"
             >
               {options.length === 0 ? (
-                <div className="px-3 py-2 text-sm text-slate-500">
+                <div className="px-3 py-2 text-sm text-outline">
                   No options found
                 </div>
               ) : (
@@ -117,8 +117,8 @@ export function Select({
                     type="button"
                     key={option.value}
                     className={cn(
-                      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900",
-                      option.value === value && "bg-slate-50 font-medium text-slate-900"
+                      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-100",
+                      option.value === value && "bg-surface-container-low font-medium text-on-surface"
                     )}
                     onClick={() => {
                       onChange?.(option.value);

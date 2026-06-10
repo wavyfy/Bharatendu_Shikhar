@@ -38,7 +38,7 @@ export default async function CategoriesPage({ searchParams }: PageProps) {
         </div>
 
         {totalPages > 1 && (
-          <div className="px-5 py-3 border-t border-surface-variant bg-surface flex items-center justify-between">
+          <div className="px-5 pb-3 bg-surface flex items-center justify-between">
             <span className="text-sm text-on-surface-variant">Page {page} of {totalPages}</span>
             <div className="flex gap-1">
               <Link

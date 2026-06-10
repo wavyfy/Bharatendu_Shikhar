@@ -81,14 +81,14 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -4 }}
               transition={{ duration: 0.15 }}
-              className="fixed z-9999 w-56 origin-top-right rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 py-1 shadow-xl ring-1 ring-black/5 dark:ring-white/5"
+              className="fixed z-9999 w-56 origin-top-right rounded-lg border border-outline-variant bg-surface-container-lowest py-1 shadow-xl ring-1 ring-black/5 dark:ring-white/5"
               style={{ top: menuCoords.top, right: menuCoords.right }}
             >
               {/* Header slot — e.g. dark mode toggle */}
               {headerSlot && (
                 <>
                   {headerSlot}
-                  <div className="my-1 h-px bg-slate-100 dark:bg-slate-700" />
+                  <div className="my-1 h-px bg-outline-variant" />
                 </>
               )}
 
@@ -99,8 +99,8 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
                       key={index}
                       href={item.href}
                       className={cn(
-                        "group flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors",
-                        item.variant === "danger" && "text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900/30"
+                        "group flex items-center px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors",
+                        item.variant === "danger" && "text-red-600 hover:bg-red-500/10 hover:text-red-700 dark:hover:text-red-500"
                       )}
                       onClick={() => setIsOpen(false)}
                     >
@@ -120,10 +120,10 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
                     type="button"
                     disabled={item.disabled}
                     className={cn(
-                      "group flex w-full items-center px-4 py-2 text-left text-sm text-slate-700 dark:text-slate-200 transition-colors",
-                      !item.disabled && "hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white",
+                      "group flex w-full items-center px-4 py-2 text-left text-sm text-on-surface transition-colors",
+                      !item.disabled && "hover:bg-surface-container-low",
                       item.disabled && "cursor-not-allowed opacity-50",
-                      item.variant === "danger" && !item.disabled && "text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900/30"
+                      item.variant === "danger" && !item.disabled && "text-red-600 hover:bg-red-500/10 hover:text-red-700 dark:hover:text-red-500"
                     )}
                     onClick={() => {
                       if (!item.disabled && item.onClick) {

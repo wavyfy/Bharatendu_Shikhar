@@ -1,5 +1,13 @@
 export type ArticleStatus = "draft" | "published";
 
+export interface BadgeRow {
+  id: number;
+  name: string;
+  slug: string;
+  color: string;
+  created_at: string;
+}
+
 export interface CategoryRow {
   id: number;
   name: string;
@@ -39,6 +47,7 @@ export interface ArticleWithRelations extends ArticleRow {
     id: string;
     full_name: string | null;
   } | null;
+  article_badges?: { badge_id: number; badge: BadgeRow }[];
 }
 
 export type ArticleInsert = Omit<ArticleRow, "id" | "created_at" | "updated_at">;

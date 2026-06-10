@@ -5,6 +5,7 @@ import { getArticleById } from "@/features/articles/queries";
 import { ArticleFormPlaceholder } from "@/features/articles/components/ArticleFormPlaceholder";
 import { getCategories } from "@/features/categories/queries";
 import { getRegions } from "@/features/regions/queries";
+import { getBadges } from "@/features/badges/queries";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
 
 export const metadata = {
@@ -48,10 +49,11 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
 
   const authorId = role === "admin" ? null : user.id;
 
-  const [article, { categories }, { regions }] = await Promise.all([
+  const [article, { categories }, { regions }, { badges }] = await Promise.all([
     getArticleById(articleId, authorId),
     getCategories({ limit: 100 }),
-    getRegions({ limit: 100 })
+    getRegions({ limit: 100 }),
+    getBadges({ limit: 100 }),
   ]);
 
   if (!article) {
@@ -61,11 +63,11 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
 
   return (
     <AnimatedPage className="space-y-6">
-
       <ArticleFormPlaceholder 
         initialData={article} 
         categories={categories} 
-        regions={regions} 
+        regions={regions}
+        badges={badges}
       />
     </AnimatedPage>
   );

@@ -1,5 +1,4 @@
-import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
-import { cookies } from "next/headers";
+import { supabaseAdmin } from "@repo/api";
 import type { ArticleWithRelations } from "../types";
 
 export interface GetArticlesOptions {
@@ -22,7 +21,8 @@ export async function getArticles(options: GetArticlesOptions = {}) {
       *,
       category:categories(id, name, slug),
       region:regions(id, name, slug),
-      author:profiles!articles_author_id_fkey(id, full_name)
+      author:profiles!articles_author_id_fkey(id, full_name),
+      article_badges(badge_id, badge:badges(id, name, slug, color))
     `, { count: 'exact' });
 
   if (role === "publisher" && userId) {
@@ -65,25 +65,17 @@ export async function getArticles(options: GetArticlesOptions = {}) {
 }
 
 export async function getArticleById(id: number, authorId: string | null = null) {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const query = supabase
+  const { data, error } = await supabaseAdmin
     .from("articles")
     .select(`
       *,
       category:categories(id, name, slug),
       region:regions(id, name, slug),
-      author:profiles!articles_author_id_fkey(id, full_name)
+      author:profiles!articles_author_id_fkey(id, full_name),
+      article_badges(badge_id, badge:badges(id, name, slug, color))
     `)
     .eq("id", id)
     .single();
-
-  const { data, error } = await query;
 
   if (error) {
     console.error("Error fetching article:", error.message);

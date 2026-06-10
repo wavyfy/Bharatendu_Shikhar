@@ -76,9 +76,10 @@ export function RegionsTable({ regions }: RegionsTableProps) {
   }
 
   return (
-    <div className="overflow-x-auto border border-gray-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 m-4 sm:m-6 shadow-sm">
-      <table className="w-full text-sm text-left">
-        <thead className="text-xs text-gray-500 dark:text-slate-300 uppercase bg-slate-200 dark:bg-slate-700/80 border-b border-slate-300 dark:border-slate-600">
+    <div className="w-full min-w-full p-5">
+      <div className="overflow-x-auto rounded-xl border border-outline-variant">
+        <table className="w-full text-sm text-left">
+        <thead className="bg-surface-container-high border-b border-outline-variant text-on-surface-variant uppercase text-xs font-bold tracking-wider">
           <tr>
             <th className="px-6 py-3 font-medium">Name</th>
             <th className="px-6 py-3 font-medium">Slug</th>
@@ -87,9 +88,9 @@ export function RegionsTable({ regions }: RegionsTableProps) {
             <th className="px-6 py-3 font-medium text-right">Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-slate-50 dark:bg-slate-800/50">
+        <tbody className="divide-y divide-outline-variant bg-surface">
           {regions.map((region) => (
-            <tr key={region.id} className="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+            <tr key={region.id} className="hover:bg-surface-container-low transition-colors">
               <td className="px-6 py-4 font-medium text-gray-900 dark:text-slate-100">{region.name}</td>
               <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-mono text-xs">{region.slug}</td>
               <td className="px-6 py-4">
@@ -128,6 +129,7 @@ export function RegionsTable({ regions }: RegionsTableProps) {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

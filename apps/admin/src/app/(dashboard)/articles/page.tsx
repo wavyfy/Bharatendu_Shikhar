@@ -73,7 +73,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
           <ArticleFilters categories={categories} regions={regions} />
         </div>
 
-        <div className="px-5 py-3 border-b border-surface-variant">
+        <div className="px-5 pt-3">
           <span className="cms-card-label">All Articles ({count})</span>
         </div>
 
@@ -81,7 +81,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
           <ArticlesTable articles={articles} />
         </div>
 
-        <div className="px-5 py-3 border-t border-surface-variant bg-surface">
+        <div className="px-5 pb-3 bg-surface">
           <Pagination currentPage={page} totalPages={totalPages} />
         </div>
       </div>

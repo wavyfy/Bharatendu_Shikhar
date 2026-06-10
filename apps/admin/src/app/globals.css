@@ -68,6 +68,22 @@
   --color-foreground: var(--color-on-surface);
 }
 
+.dark {
+  --color-background: #0f1115;
+  --color-surface: #16181d;
+  --color-surface-container-lowest: #0a0b0e;
+  --color-surface-container-low: #1a1c23;
+  --color-surface-container: #1e2028;
+  --color-surface-container-high: #252830;
+  --color-surface-container-highest: #2c303a;
+  --color-surface-variant: #22252b;
+  --color-on-surface: #e2e4e9;
+  --color-on-surface-variant: #9ca3af;
+  --color-outline: #4b5563;
+  --color-outline-variant: #272a32;
+  --color-primary-fixed: #ffb4ab;
+}
+
 /* Material Symbols base style */
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
@@ -138,12 +154,12 @@ body {
   line-height: 40px;
   letter-spacing: -0.02em;
   font-weight: 700;
-  color: #181b23;
+  color: var(--color-on-surface);
 }
 
 /* Page subtitle */
 .page-subtitle {
-  color: #414754;
+  color: var(--color-on-surface-variant);
   font-size: 1rem;
   line-height: 1.5rem;
   margin-top: 0.5rem;
@@ -182,13 +198,13 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #ffffff;
-  color: #181b23;
+  background: var(--color-surface);
+  color: var(--color-on-surface);
   font-size: 0.875rem;
   font-weight: 500;
   padding: 0.625rem 1.25rem;
   border-radius: 0.5rem;
-  border: 1px solid #c1c6d7;
+  border: 1px solid var(--color-outline-variant);
   transition: all 0.15s ease;
   white-space: nowrap;
   cursor: pointer;
@@ -205,18 +221,18 @@ body {
 
 /* Table card wrapper */
 .cms-card {
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 0.75rem;
-  border: 1px solid #e0e2ed;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  border: 1px solid var(--color-outline-variant);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   overflow: hidden;
 }
 
 /* Card header bar */
 .cms-card-header {
   padding: 0.875rem 1.25rem;
-  border-bottom: 1px solid #e0e2ed;
-  background: #faf9ff;
+  border-bottom: 1px solid var(--color-outline-variant);
+  background: var(--color-surface-container-high);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -230,7 +246,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #414754;
+  color: var(--color-on-surface-variant);
 }
 
 /* Stitch-style search input */
@@ -251,7 +267,7 @@ body {
 .cms-search-input:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 2px var(--color-primary-fixed);
-  background: #ffffff;
+  background: var(--color-surface);
 }
 
 /* Search wrapper (icon + input) */

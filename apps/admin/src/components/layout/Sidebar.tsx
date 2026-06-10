@@ -32,6 +32,12 @@ const NAV_ITEMS = [
     icon: "public",
   },
   {
+    label: "Badges",
+    href: "/badges",
+    section: "badges",
+    icon: "label",
+  },
+  {
     label: "Publishers",
     href: "/publishers",
     section: "publishers",

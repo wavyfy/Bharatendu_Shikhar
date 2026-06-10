@@ -15,7 +15,7 @@ export function LoginForm() {
   const [state, formAction, isPending] = useActionState(loginAction, { error: undefined });
 
   return (
-    <div className="min-h-screen bg-white flex">
+    <div className="min-h-screen bg-surface flex">
       {/* Left side: Cover Image / Mockup */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-slate-900 overflow-hidden border-r border-slate-800 m-5 rounded-3xl">
         <div className="absolute inset-0 w-[120%] h-[120%]">
@@ -29,7 +29,7 @@ export function LoginForm() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="w-20 h-20 bg-white flex items-center justify-center rounded-2xl shadow-xl shadow-black/50 mb-8 relative overflow-hidden p-2 border border-slate-800">
+            <div className="w-20 h-20 bg-surface flex items-center justify-center rounded-2xl shadow-xl shadow-black/50 mb-8 relative overflow-hidden p-2 border border-slate-800">
               <Image 
                 src={bsLogo} 
                 alt="Bharatendu Shikhar Logo" 
@@ -49,8 +49,8 @@ export function LoginForm() {
       </div>
 
       {/* Right side: Form */}
-      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24 bg-slate-50 lg:bg-white">
-        <div className="mx-auto w-full max-w-sm lg:max-w-md bg-white border border-slate-200 shadow-lg shadow-slate-300/70 rounded-3xl p-6 sm:p-10">
+      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24 bg-surface lg:bg-surface-container-lowest">
+        <div className="mx-auto w-full max-w-sm lg:max-w-md bg-surface border border-slate-200 shadow-lg shadow-slate-300/70 rounded-3xl p-6 sm:p-10">
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -58,7 +58,7 @@ export function LoginForm() {
           >
             {/* Mobile logo (hidden on desktop where cover has the logo) */}
             <div className="lg:hidden flex justify-center mb-8">
-               <div className="w-16 h-16 bg-white flex items-center justify-center rounded-2xl shadow-lg shadow-black/10 relative overflow-hidden p-1">
+               <div className="w-16 h-16 bg-surface flex items-center justify-center rounded-2xl shadow-lg shadow-black/10 relative overflow-hidden p-1">
                  <Image src={bsLogo} alt="BS Logo" fill sizes="64px" className="object-contain scale-110" />
                </div>
             </div>
@@ -86,7 +86,7 @@ export function LoginForm() {
                   placeholder="name@example.com"
                   icon={<Mail className="h-4 w-4 text-slate-400" />}
                   required
-                  className="bg-white"
+                  className="bg-surface"
                 />
               </div>
 
@@ -107,7 +107,7 @@ export function LoginForm() {
                   placeholder="••••••••"
                   icon={<LockKeyhole className="h-4 w-4 text-slate-400" />}
                   required
-                  className="bg-white"
+                  className="bg-surface"
                 />
               </div>
 

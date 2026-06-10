@@ -15,9 +15,9 @@ const VARIANTS: Record<Variant, string> = {
   primary:
     "btn-primary-gradient text-white hover:text-white disabled:opacity-50 shadow-sm border border-transparent",
   secondary:
-    "border border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500 text-[#111] dark:text-slate-200 bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600",
+    "border border-outline-variant hover:border-primary text-on-surface bg-surface hover:bg-surface-container-low hover:text-primary",
   ghost:
-    "text-gray-600 dark:text-slate-400 hover:text-[#111] dark:hover:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-700",
+    "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-lowest",
 };
 
 const SIZES: Record<Size, string> = {

@@ -44,7 +44,7 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
   };
 
   return (
-    <div className="flex flex-col border-b border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-t-lg">
+    <div className="flex flex-col w-full">
       <div className="flex items-center gap-6 px-4 pt-4">
         <button
           onClick={() => setFilter("status", "")}
@@ -72,7 +72,7 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
         </button>
       </div>
       
-      <div className="flex flex-col sm:flex-row gap-3 p-4 bg-gray-50/50 dark:bg-slate-700/30">
+      <div className="flex flex-col sm:flex-row gap-3 p-4">
         <div className="flex-1">
           <SearchInput placeholder="Search articles..." />
         </div>

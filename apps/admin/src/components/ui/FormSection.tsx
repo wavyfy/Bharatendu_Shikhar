@@ -8,16 +8,18 @@ interface FormSectionProps {
 
 export function FormSection({ title, description, children }: FormSectionProps) {
   return (
-    <div className="flex flex-col rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm overflow-hidden m-4 sm:m-6">
-      <div className="border-b border-slate-300 dark:border-slate-600 bg-slate-200 dark:bg-slate-700/80 px-6 py-5">
-        <h2 className="text-base font-semibold leading-tight text-slate-900 dark:text-slate-100">{title}</h2>
-        {description && (
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{description}</p>
-        )}
+    <div className="cms-card m-4 sm:m-6 shadow-md">
+      <div className="cms-card-header bg-surface-container-high px-6 py-4">
+        <div>
+          <h2 className="text-lg font-bold leading-tight text-on-surface tracking-wide">{title}</h2>
+          {description && (
+            <p className="mt-1.5 text-sm text-slate-400 font-medium">{description}</p>
+          )}
+        </div>
       </div>
 
-      <div className="px-6 py-6 bg-slate-50 dark:bg-slate-800/50">
-        <div className="flex flex-col gap-y-6">
+      <div className="p-6 bg-surface-container-lowest">
+        <div className="flex flex-col gap-y-7">
           {children}
         </div>
       </div>

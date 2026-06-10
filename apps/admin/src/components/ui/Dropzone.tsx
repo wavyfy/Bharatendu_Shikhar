@@ -82,9 +82,9 @@ export function Dropzone({
   return (
     <div
       className={cn(
-        "relative flex w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed bg-slate-50 transition-colors duration-200 hover:bg-slate-100",
+        "relative flex w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed bg-surface-container-low transition-colors duration-200 hover:bg-slate-100",
         isDragging ? "border-slate-400 bg-slate-100" : "border-slate-200",
-        value && "border-slate-300 bg-white cursor-default hover:bg-white",
+        value && "border-slate-300 bg-surface cursor-default hover:bg-surface",
         className
       )}
       onDragOver={handleDragOver}
@@ -112,7 +112,7 @@ export function Dropzone({
               transition={{ duration: 0.15 }}
               className="flex w-full flex-col items-center gap-2"
             >
-              <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 shadow-sm">
+              <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-surface px-4 py-2 shadow-sm">
                 <span className="max-w-[200px] truncate text-sm font-medium text-slate-900">
                   {getDisplayName()}
                 </span>

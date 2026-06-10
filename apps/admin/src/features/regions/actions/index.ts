@@ -48,6 +48,7 @@ export async function createRegionAction(input: CreateRegionInput) {
       .insert({
         name: validatedData.name,
         slug,
+        is_active: validatedData.is_active ?? true,
       } as never)
       .select("id")
       .single();

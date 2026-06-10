@@ -32,7 +32,7 @@ export function EmptyState({
   icon = DEFAULT_ICON,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-6 text-center border border-dashed border-gray-300 rounded-lg bg-white">
+    <div className="flex flex-col items-center justify-center py-16 px-6 text-center border border-dashed border-gray-300 rounded-lg bg-surface">
       <div className="mb-3">{icon}</div>
       <h3 className="text-sm font-semibold text-gray-700 mb-1">{title}</h3>
       {description && (

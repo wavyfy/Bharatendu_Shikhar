@@ -60,15 +60,15 @@ function InfoIcon() {
 
 const VARIANT_STYLES: Record<ToastVariant, { container: string; icon: React.ReactNode }> = {
   success: {
-    container: "bg-white border-l-4 border-green-500 text-gray-800",
+    container: "bg-surface border-l-4 border-green-500 text-gray-800",
     icon: <span className="text-green-600"><CheckIcon /></span>,
   },
   error: {
-    container: "bg-white border-l-4 border-red-500 text-gray-800",
+    container: "bg-surface border-l-4 border-red-500 text-gray-800",
     icon: <span className="text-red-600"><XCircleIcon /></span>,
   },
   info: {
-    container: "bg-white border-l-4 border-blue-500 text-gray-800",
+    container: "bg-surface border-l-4 border-blue-500 text-gray-800",
     icon: <span className="text-blue-600"><InfoIcon /></span>,
   },
 };

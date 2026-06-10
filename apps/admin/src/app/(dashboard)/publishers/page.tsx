@@ -36,19 +36,27 @@ export default async function PublishersPage({ searchParams }: PageProps) {
       </div>
 
       {/* Stats overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
-          { label: "Total Publishers", value: count, icon: "business", color: "#0058c3" },
-          { label: "Active", value: activeCount, icon: "check_circle", color: "#059669" },
-          { label: "Showing", value: publishers.length, icon: "list", color: "#0058c3" },
-        ].map(({ label, value, icon, color }) => (
-          <div key={label} className="cms-card p-5 flex flex-col gap-1 relative overflow-hidden">
-            <div className="absolute -right-4 -top-4 w-24 h-24 rounded-full blur-2xl" style={{ background: `${color}18` }} />
-            <span className="text-sm font-medium text-on-surface-variant flex items-center gap-2">
-              <span className="material-symbols-outlined text-[16px]" style={{ color }}>{icon}</span>
-              {label}
-            </span>
-            <span className="page-title mt-1" style={{ fontSize: "28px", lineHeight: "36px" }}>{value}</span>
+          { label: "Total Publishers", value: count, icon: "business", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+          { label: "Active", value: activeCount, icon: "check_circle", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+          { label: "Showing", value: publishers.length, icon: "list", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+        ].map(({ label, value, icon, cardBg, iconBg }) => (
+          <div
+            key={label}
+            className={`rounded-2xl p-5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 shadow-md ${cardBg}`}
+          >
+            <div className="flex justify-between items-start mb-4">
+              <span className="text-sm font-semibold opacity-90">{label}</span>
+              <span
+                className={`material-symbols-outlined text-base p-2 rounded-xl backdrop-blur-sm ${iconBg}`}
+              >
+                {icon}
+              </span>
+            </div>
+            <div className="font-bold tracking-tight" style={{ fontSize: "32px", lineHeight: "36px" }}>
+              {value}
+            </div>
           </div>
         ))}
       </div>
@@ -59,7 +67,7 @@ export default async function PublishersPage({ searchParams }: PageProps) {
           <PublisherFilters currentStatus={status} />
         </div>
 
-        <div className="px-5 py-3 border-b border-surface-variant">
+        <div className="px-5 pt-3">
           <span className="cms-card-label">All Publishers ({count})</span>
         </div>
 
@@ -67,7 +75,7 @@ export default async function PublishersPage({ searchParams }: PageProps) {
           <PublishersTable publishers={publishers} />
         </div>
 
-        <div className="px-5 py-3 border-t border-surface-variant bg-surface">
+        <div className="px-5 pb-3 bg-surface">
           <Pagination currentPage={page} totalPages={totalPages} />
         </div>
       </div>

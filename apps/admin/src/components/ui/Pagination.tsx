@@ -22,8 +22,8 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
   };
 
   return (
-    <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-lg">
-      <span className="text-sm text-gray-700">
+    <div className="flex items-center justify-between px-6 py-4 border-t border-outline-variant bg-surface rounded-b-lg">
+      <span className="text-sm text-on-surface-variant">
         Page {currentPage} of {totalPages}
       </span>
       <div className="space-x-2 flex">

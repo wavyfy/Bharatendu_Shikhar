@@ -75,7 +75,7 @@ export default async function PreviewArticlePage({ params }: PreviewArticlePageP
         </Link>
       </div>
 
-      <article className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
+      <article className="bg-surface rounded-xl shadow-sm border border-outline-variant overflow-hidden">
         {article.featured_image ? (
           <div className="relative w-full aspect-video bg-gray-100 dark:bg-slate-700/50">
             <Image
@@ -116,7 +116,7 @@ export default async function PreviewArticlePage({ params }: PreviewArticlePageP
           </div>
 
           {article.excerpt && (
-            <p className="text-lg text-gray-600 dark:text-slate-300 font-medium leading-relaxed border-l-4 border-gray-200 dark:border-slate-700 pl-4">
+            <p className="text-lg text-gray-600 dark:text-slate-300 font-medium leading-relaxed border-l-4 border-outline-variant pl-4">
               {article.excerpt}
             </p>
           )}
