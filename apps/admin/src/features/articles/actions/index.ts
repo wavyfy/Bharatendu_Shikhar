@@ -20,8 +20,6 @@ async function getAuth() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Unauthorized");
 
-  // Fetch role bypassing RLS using admin client to be safe (or rely on user query if RLS is fine)
-  // For mutations, we should verify the role.
   const { supabaseAdmin } = await import("@repo/api");
   const { data } = await supabaseAdmin
     .from("profiles")
@@ -34,19 +32,47 @@ async function getAuth() {
   return { supabase, user, role };
 }
 
+/**
+ * Resolve the "live" badge ID by slug. Returns null if not found.
+ */
+async function resolveLiveBadgeId(): Promise<number | null> {
+  const { supabaseAdmin } = await import("@repo/api");
+  const { data } = await supabaseAdmin
+    .from("badges")
+    .select("id")
+    .eq("slug", "live")
+    .single();
+  return (data as { id: number } | null)?.id ?? null;
+}
+
+/**
+ * Ensure the "Live" badge is included in badgeIds when is_live = true.
+ * Does NOT remove it when is_live = false (editorial choice to keep/remove manually).
+ */
+async function ensureLiveBadge(badgeIds: number[], isLive: boolean): Promise<number[]> {
+  if (!isLive) return badgeIds;
+  const liveBadgeId = await resolveLiveBadgeId();
+  if (liveBadgeId === null) return badgeIds;
+  if (badgeIds.includes(liveBadgeId)) return badgeIds;
+  return [...badgeIds, liveBadgeId];
+}
+
 export async function createArticleAction(input: CreateArticleInput, badgeIds: number[] = []) {
   try {
     const { supabase, user } = await getAuth();
-    
+
     // Validate
     const validationResult = createArticleSchema.safeParse(input);
     if (!validationResult.success) {
       return { success: false, error: validationResult.error.issues[0]?.message || "Invalid form data" };
     }
     const validatedData = validationResult.data;
-    
+
     // Generate slug
     const slug = generateSlug(validatedData.title);
+
+    // Auto-assign Live badge when is_live is enabled
+    const resolvedBadgeIds = await ensureLiveBadge(badgeIds, validatedData.is_live ?? false);
 
     const { data, error } = await supabase
       .from("articles")
@@ -63,11 +89,11 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
     const inserted = data as { id: number } | null;
 
     // Sync badges
-    if (inserted?.id && badgeIds.length > 0) {
+    if (inserted?.id && resolvedBadgeIds.length > 0) {
       const { error: badgeError } = await supabase
         .from("article_badges")
         .insert(
-          badgeIds.map((badge_id) => ({ article_id: inserted.id, badge_id })) as never
+          resolvedBadgeIds.map((badge_id) => ({ article_id: inserted.id, badge_id })) as never
         );
       if (badgeError) console.error("Badge sync error:", badgeError.message);
     }
@@ -84,7 +110,7 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
 export async function updateArticleAction(id: number, input: UpdateArticleInput, badgeIds?: number[]) {
   try {
     const { supabase, user, role } = await getAuth();
-    
+
     // Validate
     const validationResult = updateArticleSchema.safeParse(input);
     if (!validationResult.success) {
@@ -116,8 +142,8 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput,
 
     // Cleanup old image if changed
     if (
-      validatedData.featured_image && 
-      existing.featured_image && 
+      validatedData.featured_image &&
+      existing.featured_image &&
       validatedData.featured_image !== existing.featured_image
     ) {
       await deleteFileAction(existing.featured_image, "articles").catch(console.error);
@@ -130,14 +156,18 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput,
 
     if (error) throw error;
 
-    // Sync badges if provided
+    // Sync badges if provided, auto-injecting Live badge when is_live = true
     if (badgeIds !== undefined) {
+      const resolvedBadgeIds = await ensureLiveBadge(
+        badgeIds,
+        (validatedData.is_live ?? existing.is_live) ?? false
+      );
       await supabase.from("article_badges").delete().eq("article_id", id);
-      if (badgeIds.length > 0) {
+      if (resolvedBadgeIds.length > 0) {
         const { error: badgeError } = await supabase
           .from("article_badges")
           .insert(
-            badgeIds.map((badge_id) => ({ article_id: id, badge_id })) as never
+            resolvedBadgeIds.map((badge_id) => ({ article_id: id, badge_id })) as never
           );
         if (badgeError) console.error("Badge sync error:", badgeError.message);
       }
@@ -145,6 +175,7 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput,
 
     revalidatePath("/articles");
     revalidatePath(`/articles/${id}`);
+    revalidatePath(`/articles/${id}/edit`);
     return { success: true };
   } catch (error: unknown) {
     console.error("Update article error:", error);

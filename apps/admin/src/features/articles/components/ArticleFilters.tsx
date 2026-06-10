@@ -22,6 +22,7 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
   const currentStatus = searchParams.get("status") || "";
   const currentCategoryId = searchParams.get("category_id") || "";
   const currentRegionId = searchParams.get("region_id") || "";
+  const currentIsLive = searchParams.get("is_live") || "";
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -47,10 +48,18 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
     <div className="flex flex-col w-full">
       <div className="flex items-center gap-6 px-4 pt-4">
         <button
-          onClick={() => setFilter("status", "")}
           className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-            currentStatus === "" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+            currentStatus === "" && currentIsLive === "" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
           }`}
+          onClick={() => {
+            startTransition(() => {
+              const params = new URLSearchParams(searchParams.toString());
+              params.delete("status");
+              params.delete("is_live");
+              params.set("page", "1");
+              router.push("?" + params.toString());
+            });
+          }}
         >
           All
         </button>
@@ -69,6 +78,33 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
           }`}
         >
           Drafts
+        </button>
+        {/* Live tab */}
+        <button
+          className={`pb-3 text-sm font-medium border-b-2 transition-colors flex items-center gap-1.5 ${
+            currentIsLive === "true" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+          }`}
+          onClick={() => {
+            startTransition(() => {
+              const params = new URLSearchParams(searchParams.toString());
+              if (currentIsLive === "true") {
+                params.delete("is_live");
+              } else {
+                params.set("is_live", "true");
+                params.delete("status");
+              }
+              params.set("page", "1");
+              router.push("?" + params.toString());
+            });
+          }}
+        >
+          {currentIsLive === "true" && (
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+            </span>
+          )}
+          Live
         </button>
       </div>
       
@@ -101,7 +137,7 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
             />
           </div>
           
-          {(currentSearch || currentStatus || currentCategoryId || currentRegionId) && (
+          {(currentSearch || currentStatus || currentCategoryId || currentRegionId || currentIsLive) && (
             <Button 
               variant="ghost" 
               onClick={() => {

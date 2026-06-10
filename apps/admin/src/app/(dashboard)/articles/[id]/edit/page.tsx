@@ -19,7 +19,7 @@ interface EditArticlePageProps {
 export default async function EditArticlePage({ params }: EditArticlePageProps) {
   const resolvedParams = await params;
   const articleId = parseInt(resolvedParams.id, 10);
-  
+
   if (isNaN(articleId)) {
     redirect("/articles");
   }
@@ -34,15 +34,15 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
-  
-  let role = "publisher"; 
+
+  let role = "publisher";
   const { supabaseAdmin } = await import("@repo/api");
   const { data } = await supabaseAdmin
     .from("profiles")
     .select("role")
     .eq("id", user.id)
     .single();
-    
+
   if ((data as { role?: string } | null)?.role === "admin") {
     role = "admin";
   }
@@ -57,15 +57,14 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
   ]);
 
   if (!article) {
-    // Article not found or access denied
     redirect("/articles");
   }
 
   return (
     <AnimatedPage className="space-y-6">
-      <ArticleFormPlaceholder 
-        initialData={article} 
-        categories={categories} 
+      <ArticleFormPlaceholder
+        initialData={article}
+        categories={categories}
         regions={regions}
         badges={badges}
       />

@@ -15,6 +15,7 @@ import { Select } from "@/components/ui/Select";
 import { BadgeMultiSelect } from "@/components/ui/BadgeMultiSelect";
 import { PageContainer } from "@/components/ui/PageContainer";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { LiveUpdatesSection } from "./LiveUpdatesSection";
 import { motion } from "framer-motion";
 
 interface ArticleFormProps {
@@ -36,9 +37,24 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
   const [status, setStatus] = useState<string>(initialData?.status || "draft");
   const [categoryId, setCategoryId] = useState<string>(initialData?.category_id?.toString() || "");
   const [regionId, setRegionId] = useState<string>(initialData?.region_id?.toString() || "");
+  const [isLive, setIsLive] = useState<boolean>(initialData?.is_live ?? false);
   const [selectedBadgeIds, setSelectedBadgeIds] = useState<number[]>(
     initialData?.article_badges?.map((ab) => ab.badge_id) ?? []
   );
+
+  // Find Live badge from available badges list (by slug)
+  const liveBadge = badges.find((b) => b.slug === "live");
+
+  /**
+   * When toggling is_live ON: auto-add the Live badge if not already selected.
+   * When toggling is_live OFF: do not forcibly remove it (editor's choice).
+   */
+  function handleIsLiveToggle(checked: boolean) {
+    setIsLive(checked);
+    if (checked && liveBadge && !selectedBadgeIds.includes(liveBadge.id)) {
+      setSelectedBadgeIds((prev) => [...prev, liveBadge.id]);
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -53,6 +69,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
       title,
       content,
       status: status as "draft" | "published",
+      is_live: isLive,
       excerpt: excerpt || null,
       category_id: categoryId ? parseInt(categoryId, 10) : null,
       region_id: regionId ? parseInt(regionId, 10) : null,
@@ -98,6 +115,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
 
         <fieldset disabled={loading} className="group-disabled:opacity-70 transition-opacity">
           
+          {/* ─── Content ─────────────────────────────────────────────── */}
           <FormSection title="Content" description="The main content of the article.">
             <div className="flex flex-col gap-1.5">
               <label htmlFor="title" className="text-sm font-medium text-slate-700">
@@ -135,6 +153,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
             </div>
           </FormSection>
 
+          {/* ─── Organization ────────────────────────────────────────── */}
           <FormSection title="Organization" description="Categorize and set visibility.">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col gap-1.5">
@@ -201,8 +220,62 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
             </div>
           </FormSection>
 
+          {/* ─── Live Article Toggle ──────────────────────────────────── */}
+          <FormSection
+            title="Live Article"
+            description="Enable for continuously updated stories: elections, breaking news, sports events, disasters."
+          >
+            <label
+              htmlFor="is-live-toggle"
+              className="flex items-start gap-4 cursor-pointer select-none"
+            >
+              {/* Toggle switch */}
+              <div className="relative mt-0.5 shrink-0">
+                <input
+                  id="is-live-toggle"
+                  type="checkbox"
+                  checked={isLive}
+                  onChange={(e) => handleIsLiveToggle(e.target.checked)}
+                  className="sr-only"
+                />
+                <div
+                  className={`
+                    w-11 h-6 rounded-full transition-colors duration-200
+                    ${isLive ? "bg-red-500" : "bg-outline-variant"}
+                  `}
+                />
+                <div
+                  className={`
+                    absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm
+                    transition-transform duration-200
+                    ${isLive ? "translate-x-5" : "translate-x-0"}
+                  `}
+                />
+              </div>
+
+              {/* Label text */}
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-semibold text-on-surface flex items-center gap-2">
+                  {isLive && (
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                    </span>
+                  )}
+                  {isLive ? "Live Article enabled" : "Enable Live Article"}
+                </span>
+                <span className="text-xs text-slate-400">
+                  {isLive
+                    ? "Live updates timeline will appear below. The \"Live\" badge has been auto-selected."
+                    : "Turning this on enables the live updates timeline and auto-selects the Live badge."}
+                </span>
+              </div>
+            </label>
+          </FormSection>
+
         </fieldset>
 
+        {/* ─── Submit ──────────────────────────────────────────────── */}
         <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 mt-8">
           <Button
             type="button"
@@ -217,6 +290,38 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
           </Button>
         </div>
       </motion.form>
+
+      {/* ─── Hint: toggle is ON locally but not saved yet ───────────────── */}
+      {isEditing && initialData && isLive && !initialData.is_live && (
+        <div className="max-w-4xl mx-auto pb-12 -mt-6">
+          <div className="cms-card m-4 sm:m-6 shadow-md">
+            <div className="p-6 flex items-center gap-3 text-sm text-on-surface-variant bg-surface-container-lowest rounded-xl">
+              <svg className="w-5 h-5 shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+              <p>
+                Click <strong className="text-on-surface">Save Changes</strong> to enable Live Article — you can then manage timeline updates from the articles list.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── Hint for create mode ─────────────────────────────────────── */}
+      {!isEditing && isLive && (
+        <div className="max-w-4xl mx-auto pb-12 -mt-6">
+          <div className="cms-card m-4 sm:m-6 shadow-md">
+            <div className="p-6 flex items-center gap-3 text-sm text-on-surface-variant bg-surface-container-lowest rounded-xl">
+              <svg className="w-5 h-5 shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+              <p>
+                Save the article first — you can then manage the <strong className="text-on-surface">Live Updates</strong> timeline from the articles list.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </PageContainer>
   );
 }

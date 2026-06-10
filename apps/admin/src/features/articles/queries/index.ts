@@ -10,10 +10,11 @@ export interface GetArticlesOptions {
   status?: string;
   categoryId?: number;
   regionId?: number;
+  isLive?: boolean;
 }
 
 export async function getArticles(options: GetArticlesOptions = {}) {
-  const { page = 1, limit = 10, role = "publisher", userId, search, status, categoryId, regionId } = options;
+  const { page = 1, limit = 10, role = "publisher", userId, search, status, categoryId, regionId, isLive } = options;
 
   let query = supabaseAdmin
     .from("articles")
@@ -43,6 +44,10 @@ export async function getArticles(options: GetArticlesOptions = {}) {
   
   if (regionId) {
     query = query.eq("region_id", regionId);
+  }
+
+  if (isLive === true) {
+    query = query.eq("is_live", true);
   }
 
   const from = (page - 1) * limit;

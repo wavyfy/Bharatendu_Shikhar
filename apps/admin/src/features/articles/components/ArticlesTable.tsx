@@ -9,7 +9,7 @@ import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ActionMenu } from "@/components/ui/ActionMenu";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { Pencil, Eye, Trash2, Globe, Archive } from "lucide-react";
+import { Pencil, Eye, Trash2, Globe, Archive, Radio } from "lucide-react";
 
 interface ArticlesTableProps {
   articles: ArticleWithRelations[];
@@ -111,6 +111,16 @@ export function ArticlesTable({ articles }: ArticlesTableProps) {
                       href: `/articles/${article.id}/edit`,
                       disabled: isPending,
                     },
+                    ...(article.is_live
+                      ? [
+                          {
+                            label: "Live Timeline",
+                            icon: <Radio strokeWidth={1.5} className="text-red-500" />,
+                            href: `/articles/${article.id}/live-updates`,
+                            disabled: isPending,
+                          },
+                        ]
+                      : []),
                     {
                       label: article.status === "draft" ? "Publish" : "Unpublish",
                       icon: article.status === "draft" ? <Globe strokeWidth={1.5} /> : <Archive strokeWidth={1.5} />,

@@ -12,7 +12,7 @@ import { AnimatedPage } from "@/components/ui/AnimatedPage";
 export const metadata = { title: "Articles | Bharatendu Shikhar Admin" };
 
 interface PageProps {
-  searchParams: Promise<{ page?: string; search?: string; status?: string; category_id?: string; region_id?: string }>;
+  searchParams: Promise<{ page?: string; search?: string; status?: string; category_id?: string; region_id?: string; is_live?: string }>;
 }
 
 export default async function ArticlesPage({ searchParams }: PageProps) {
@@ -22,6 +22,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   const status = params?.status || "";
   const categoryId = params?.category_id ? parseInt(params.category_id, 10) : undefined;
   const regionId = params?.region_id ? parseInt(params.region_id, 10) : undefined;
+  const isLive = params?.is_live === "true" ? true : undefined;
 
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
@@ -48,7 +49,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   const userId = role === "admin" ? undefined : user?.id;
 
   const [{ articles, count, totalPages }, { categories }, { regions }] = await Promise.all([
-    getArticles({ page, limit: 10, role, userId, search, status, categoryId, regionId }),
+    getArticles({ page, limit: 10, role, userId, search, status, categoryId, regionId, isLive }),
     getCategories({ limit: 100 }),
     getRegions({ limit: 100 }),
   ]);

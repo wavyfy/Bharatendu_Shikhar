@@ -32,6 +32,7 @@ export interface ArticleRow {
   content: string | null;
   featured_image: string | null;
   status: ArticleStatus;
+  is_live: boolean;
   category_id: number | null;
   region_id: number | null;
   author_id: string; // uuid
@@ -48,8 +49,24 @@ export interface ArticleWithRelations extends ArticleRow {
     full_name: string | null;
   } | null;
   article_badges?: { badge_id: number; badge: BadgeRow }[];
+  live_updates?: LiveUpdateRow[];
 }
 
 export type ArticleInsert = Omit<ArticleRow, "id" | "created_at" | "updated_at">;
 
 export type ArticleUpdate = Partial<ArticleInsert>;
+
+// ─── Live Updates ─────────────────────────────────────────────────────────────
+
+export interface LiveUpdateRow {
+  id: number;
+  article_id: number;
+  headline: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string; // uuid
+}
+
+export type LiveUpdateInsert = Omit<LiveUpdateRow, "id" | "created_at" | "updated_at">;
+export type LiveUpdateUpdate = Partial<Pick<LiveUpdateRow, "headline" | "content">>;
