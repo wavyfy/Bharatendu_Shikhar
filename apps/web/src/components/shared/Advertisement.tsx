@@ -7,7 +7,7 @@ export function Advertisement({
 }) {
   return (
     <div
-      className={`bg-gray-300 border border-gray-300 flex items-center justify-center text-gray-400 font-bold tracking-[0.2em] ${
+      className={`bg-gray-300 border border-gray-100 dark:bg-news-card dark:border-news-border flex items-center justify-center text-gray-400 dark:text-news-text-muted font-bold tracking-[0.2em] ${
         orientation === "horizontal"
           ? "w-full min-h-[100px] text-xl"
           : "w-full h-[600px] text-sm"

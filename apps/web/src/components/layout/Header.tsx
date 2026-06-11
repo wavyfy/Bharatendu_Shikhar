@@ -1,10 +1,10 @@
-import { Menu, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 export function Header() {
   return (
-    <header className="py-6 px-4 max-w-[1400px] mx-auto">
+    <header className="hidden lg:block py-6 px-4 max-w-[1400px] mx-auto">
       <div className="flex justify-between items-center">
-        <div className="w-48 text-sm text-gray-700 space-y-1">
+        <div className="w-48 text-sm text-gray-700 dark:text-news-text-secondary space-y-1">
           <p>Monday, May 11, 2026</p>
           <p>Today&apos;s Paper</p>
         </div>
@@ -20,16 +20,13 @@ export function Header() {
             <path d="M30 20 L25 28 L32 25 L38 32 Z" fill="white"/>
             <path d="M70 10 L63 22 L72 18 L78 25 Z" fill="white"/>
           </svg>
-          <h1 className="text-5xl md:text-6xl font-playfair font-black tracking-tight uppercase">
+          <h1 className="text-5xl md:text-6xl font-playfair font-black tracking-tight">
             Bharatendu Shikhar
           </h1>
         </div>
 
         <div className="w-48 flex justify-end items-center gap-6">
-          <button className="flex items-center gap-2 hover:text-red-600 transition-colors">
-            <Menu size={20} strokeWidth={1.5} /> <span className="text-sm font-medium">Menu</span>
-          </button>
-          <button className="flex items-center gap-2 hover:text-red-600 transition-colors">
+          <button className="flex items-center gap-2 hover:text-red-600 dark:hover:text-news-accent transition-colors ml-auto text-black dark:text-news-text">
             <Search size={20} strokeWidth={1.5} /> <span className="text-sm font-medium">Search</span>
           </button>
         </div>

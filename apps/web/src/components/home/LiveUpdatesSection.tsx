@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArticleWithAuthor } from "@/utils/mapArticleData";
+import { ArticleMeta } from "../shared/ArticleMeta";
 
 function getImageUrl(path: string | null): string | null {
   if (!path) return null;
@@ -9,26 +10,19 @@ function getImageUrl(path: string | null): string | null {
 
 export function LiveUpdatesSection({ article }: { article?: ArticleWithAuthor }) {
   if (!article) return null;
-
-  const dateStr = new Date(article.published_at || article.created_at || new Date()).toLocaleDateString("en-US", { month: "short", day: "numeric" });
-
   return (
-    <article className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-      <div className={article.featured_image ? "md:col-span-7" : "md:col-span-12"}>
-        <div className="flex gap-4 items-center mb-4">
-          <span className="text-red-600 font-black text-xs tracking-widest uppercase">LIVE</span>
-          <span className="text-red-600 text-sm font-bold">{dateStr}</span>
-        </div>
-        <h3 className="font-playfair font-bold text-3xl leading-tight mb-8 pr-4">
+    <article className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className={`order-2 lg:order-1 flex flex-col h-full ${article.featured_image ? "lg:col-span-7" : "lg:col-span-12"}`}>
+        <h3 className="font-playfair font-bold text-[29px] leading-tight mb-4 pr-4 line-clamp-4">
           {article.title}
         </h3>
-        <a href="#" className="text-sm text-gray-500 hover:text-black font-bold transition-colors">
-          See More Updates
-        </a>
+        <div className="mt-auto">
+          <ArticleMeta article={article} />
+        </div>
       </div>
       {article.featured_image && (
-        <div className="md:col-span-5">
-          <div className="relative w-full aspect-video bg-gray-100">
+        <div className="order-1 lg:order-2 lg:col-span-5 flex flex-col h-full justify-center">
+          <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card">
             <Image
               src={getImageUrl(article.featured_image)!}
               alt={article.title}

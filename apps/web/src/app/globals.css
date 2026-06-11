@@ -1,26 +1,85 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
+  --news-bg: #ffffff;
+  --news-card: #f3f4f6;
+  --news-border: #d1d5db;
+  --news-text: #000000;
+  --news-text-secondary: #374151;
+  --news-text-muted: #6b7280;
+  --news-accent: #dc2626;
+}
+
+.dark {
+  --background: #050505;
+  --foreground: #ffffff;
+  --news-bg: #050505;
+  --news-card: #111111;
+  --news-border: #2A2A2A;
+  --news-text: #FFFFFF;
+  --news-text-secondary: #B0B0B0;
+  --news-text-muted: #808080;
+  --news-accent: #FF1A1A;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-news-bg: var(--news-bg);
+  --color-news-card: var(--news-card);
+  --color-news-border: var(--news-border);
+  --color-news-text: var(--news-text);
+  --color-news-text-secondary: var(--news-text-secondary);
+  --color-news-text-muted: var(--news-text-muted);
+  --color-news-accent: var(--news-accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes marquee-ltr {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-ltr {
+  animation: marquee-ltr 60s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+/* Hide Google Translate toolbar */
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+div#goog-gt- {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+.skiptranslate {
+  display: none !important;
+}
+
+/* Fix Devanagari glyph clipping when Google Translate wraps text in <font> tags.
+   Devanagari glyphs have larger vertical metrics than Latin. Increasing line-height
+   gives each glyph more room within the line box so overflow:hidden doesn't clip them.
+   Applied ONLY when translated (.translated-ltr) so English layout stays tight. */
+.translated-ltr h1, 
+.translated-ltr h2, 
+.translated-ltr h3, 
+.translated-ltr h4, 
+.translated-ltr h5, 
+.translated-ltr h6 {
+  line-height: 1.6 !important;
 }

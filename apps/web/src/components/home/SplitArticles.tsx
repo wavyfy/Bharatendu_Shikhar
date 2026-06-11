@@ -1,34 +1,29 @@
-import { ArticleWithAuthor } from "@/utils/mapArticleData";
+import { ArticleWithAuthor} from "@/utils/mapArticleData";
 
-function calculateReadTime(content: string): string {
-  if (!content) return "1 MIN READ";
-  const words = content.trim().split(/\s+/).length;
-  const minutes = Math.ceil(words / 200);
-  return `${minutes} MIN READ`;
-}
+import { ArticleMeta } from "../shared/ArticleMeta";
 
 export function SplitArticles({ articles }: { articles: ArticleWithAuthor[] }) {
   const leftArticle = articles[0];
   const rightArticle = articles[1];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
-      <article className="pr-8">
-        <h3 className="font-playfair font-bold text-xl leading-tight mb-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0">
+      <article className="lg:pr-8 flex flex-col h-full border-b lg:border-b-0 border-gray-300 dark:border-news-border pb-6 lg:pb-0">
+        <h3 className="font-playfair font-bold text-[19px] leading-tight mb-2 line-clamp-3">
           {leftArticle ? leftArticle.title : "More News Coming Soon"}
         </h3>
-        <p className="text-[9px] text-gray-500 font-bold tracking-widest uppercase mt-6">
-          {leftArticle ? calculateReadTime(leftArticle.content) : ""}
-        </p>
+        <div className="mt-auto pt-4">
+          {leftArticle && <ArticleMeta article={leftArticle} />}
+        </div>
       </article>
       
-      <article className="pl-8 border-l border-gray-300">
-        <h3 className="font-playfair font-bold text-xl leading-tight mb-4">
+      <article className="lg:pl-8 lg:border-l-2 border-gray-300 dark:border-news-border flex flex-col h-full pt-2 lg:pt-0">
+        <h3 className="font-playfair font-bold text-[19px] leading-tight mb-2 line-clamp-3">
           {rightArticle ? rightArticle.title : "More News Coming Soon"}
         </h3>
-        <p className="text-[9px] text-gray-500 font-bold tracking-widest uppercase mt-6">
-          {rightArticle ? calculateReadTime(rightArticle.content) : ""}
-        </p>
+        <div className="mt-auto pt-4">
+          {rightArticle && <ArticleMeta article={rightArticle} />}
+        </div>
       </article>
     </div>
   );

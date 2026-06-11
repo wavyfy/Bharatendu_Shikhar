@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { TopBar } from "@/components/layout/TopBar";
 import { Header } from "@/components/layout/Header";
 import { Navbar } from "@/components/layout/Navbar";
@@ -5,32 +6,46 @@ import { Ticker } from "@/components/home/Ticker";
 import { Advertisement } from "@/components/shared/Advertisement";
 import { TopicSection } from "@/components/home/TopicSection";
 import { ExpandableSectionLayout } from "@/components/home/ExpandableSectionLayout";
-import { HorizontalArticleSlider } from "@/components/home/HorizontalArticleSlider";
-import { fetchHomepageData, fetchNavbarData, fetchBottomSlidersData } from "@/utils/fetchData";
+import { fetchDynamicPageData, fetchNavbarData } from "@/utils/fetchData";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
-export default async function Home() {
-  const { topArticles, categorySections } = await fetchHomepageData();
+export default async function DynamicRoutePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
+
+  const pageData = await fetchDynamicPageData(slug);
+  
+  if (!pageData) {
+    notFound();
+  }
+
+  const { topArticles, categorySections, pageTitle } = pageData;
   const { regions, categories } = await fetchNavbarData();
-  const { regionSliderItems, categorySliderItems } = await fetchBottomSlidersData();
 
   return (
     <div className="min-h-screen bg-news-bg text-news-text font-sans">
-
       <TopBar />
       <Header />
       <Navbar categories={categorySections} topArticles={topArticles} navRegions={regions} navCategories={categories} />
       <Ticker articles={topArticles} />
 
-      <div className="max-w-[1700px] mx-auto px-4 flex gap-6 mb-8 items-start">
+      <div className="max-w-[1700px] mx-auto px-4 flex gap-6 mb-20 items-start">
         {/* Left Sticky Ad */}
         <div className="hidden xl:block w-[160px] shrink-0 sticky top-4">
           <Advertisement orientation="vertical" />
         </div>
 
         <div className="flex-1 min-w-0 flex flex-col">
-          <main style={{ zoom: 0.95 }}>
+          <div className="py-6 mb-2 border-b-2 border-red-600">
+            <h1 className="text-4xl font-playfair font-bold uppercase tracking-wider">{pageTitle}</h1>
+          </div>
+          
+          <main className="mt-6">
             <ExpandableSectionLayout articles={topArticles} />
           </main>
 
@@ -40,18 +55,16 @@ export default async function Home() {
           </div>
 
           {/* Dynamic Topic Sections */}
-          <div style={{ zoom: 0.95 }}>
-            {categorySections.map((topic, index) => (
-              <div key={topic.id}>
-                {index > 0 && (
-                  <div className="my-12">
-                    <Advertisement orientation="horizontal" />
-                  </div>
-                )}
-                <TopicSection data={topic} />
-              </div>
-            ))}
-          </div>
+          {categorySections.map((topic, index) => (
+            <div key={topic.id}>
+              {index > 0 && (
+                <div className="my-12">
+                  <Advertisement orientation="horizontal" />
+                </div>
+              )}
+              <TopicSection data={topic} />
+            </div>
+          ))}
         </div>
 
         {/* Right Sticky Ad */}
@@ -59,13 +72,6 @@ export default async function Home() {
           <Advertisement orientation="vertical" />
         </div>
       </div>
-
-      {/* Bottom Sliders (Outside sticky ad container) */}
-      <div className="max-w-[1400px] mx-auto px-4 mb-20 mt-12 flex flex-col gap-0" style={{ zoom: 0.95 }}>
-        <HorizontalArticleSlider title="GET MORE ABOUT INDIAN CITIES" items={regionSliderItems} />
-        <HorizontalArticleSlider title="GLOBAL NEWS" items={categorySliderItems} />
-      </div>
-
     </div>
   );
 }
