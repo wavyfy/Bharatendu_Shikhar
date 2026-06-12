@@ -13,7 +13,7 @@ export function Footer({ logoUrl }: { logoUrl?: string | null }) {
               alt="Bharatendu Shikhar Logo" 
               width={240} 
               height={60} 
-              className="object-contain object-left"
+              className="w-auto h-[60px] object-contain object-left"
             />
           ) : (
             <h2 className="text-3xl font-bold uppercase tracking-tight">BHARATENDU SHIKHAR</h2>

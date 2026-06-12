@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import type { CategoryRow } from "@/features/categories/types";
 import type { RegionRow } from "@/features/regions/types";
 import type { ArticleWithRelations, BadgeRow } from "../types";
-import { createArticleAction, updateArticleAction } from "../actions";
+import { createArticleAction, updateArticleAction, sendPushNotificationAction } from "../actions";
 import { uploadImageAction, deleteFileAction } from "@/features/storage/actions";
 import { RichEditor } from "@/components/ui/RichEditor";
 import { FormSection } from "@/components/ui/FormSection";
@@ -33,7 +33,6 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [, startTransition] = useTransition();
 
   const isEditing = !!initialData;
   const [content, setContent] = useState(initialData?.content || "");
@@ -46,6 +45,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
   );
   const [featuredImage, setFeaturedImage] = useState<string>(initialData?.featured_image || "");
   const [isUploading, setIsUploading] = useState(false);
+  const [sendPushNotification, setSendPushNotification] = useState(false);
 
   // Find Live badge from available badges list (by slug)
   const liveBadge = badges.find((b) => b.slug === "live");
@@ -106,22 +106,50 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
       featured_image: featuredImage || null,
     };
 
-    startTransition(async () => {
+    try {
       const result = isEditing && initialData
         ? await updateArticleAction(initialData.id, payload, selectedBadgeIds)
         : await createArticleAction(payload, selectedBadgeIds);
 
       if (result.success) {
         toast.success(isEditing ? "Article updated." : "Article created.");
+
+        // Send push notification if requested and article is published
+        if (sendPushNotification && payload.status === "published") {
+          const articleId = isEditing && initialData ? initialData.id : (result as { articleId?: number }).articleId;
+          const articleSlug = isEditing && initialData ? initialData.slug : payload.title;
+          if (articleId) {
+            try {
+              const pushResult = await sendPushNotificationAction({
+                articleId,
+                articleSlug: articleSlug ?? "",
+                title: payload.title,
+                body: payload.excerpt ?? "Tap to read the full article.",
+              });
+              if (pushResult.success) {
+                toast.success(`Push notification sent to ${pushResult.sent} device(s).`);
+              } else {
+                toast.error(`Push notification failed: ${pushResult.error ?? "Unknown error"}`);
+              }
+            } catch {
+              toast.error("Push notification failed unexpectedly.");
+            }
+          }
+        }
+
         router.push("/articles");
-        router.refresh();
       } else {
         const msg = result.error ?? "Something went wrong.";
         setError(msg);
         toast.error(msg);
-        setLoading(false);
       }
-    });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Something went wrong.";
+      setError(msg);
+      toast.error(msg);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -314,6 +342,54 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
                   {isLive
                     ? "Live updates timeline will appear below. The \"Live\" badge has been auto-selected."
                     : "Turning this on enables the live updates timeline and auto-selects the Live badge."}
+                </span>
+              </div>
+            </label>
+          </FormSection>
+
+          {/* ─── Push Notifications ───────────────────────────────────── */}
+          <FormSection
+            title="Push Notifications"
+            description="Send a push notification to all registered app users when this article is published."
+          >
+            <label
+              htmlFor="push-notification-toggle"
+              className={`flex items-start gap-4 cursor-pointer select-none ${status !== "published" ? "opacity-50 pointer-events-none" : ""}`}
+            >
+              {/* Toggle switch */}
+              <div className="relative mt-0.5 shrink-0">
+                <input
+                  id="push-notification-toggle"
+                  type="checkbox"
+                  checked={sendPushNotification}
+                  onChange={(e) => setSendPushNotification(e.target.checked)}
+                  disabled={status !== "published"}
+                  className="sr-only"
+                />
+                <div
+                  className={`
+                    w-11 h-6 rounded-full transition-colors duration-200
+                    ${sendPushNotification ? "bg-primary" : "bg-outline-variant"}
+                  `}
+                />
+                <div
+                  className={`
+                    absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm
+                    transition-transform duration-200
+                    ${sendPushNotification ? "translate-x-5" : "translate-x-0"}
+                  `}
+                />
+              </div>
+
+              {/* Label text */}
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-semibold text-on-surface">
+                  {sendPushNotification ? "Notification will be sent" : "Send push notification"}
+                </span>
+                <span className="text-xs text-slate-400">
+                  {status !== "published"
+                    ? "Only available when status is set to Published."
+                    : "Notifies all registered app users about this article immediately on save."}
                 </span>
               </div>
             </label>

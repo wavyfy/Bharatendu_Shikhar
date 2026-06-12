@@ -4,13 +4,13 @@ import { Advertisement } from "@/components/shared/Advertisement";
 import { TopicSection } from "@/components/home/TopicSection";
 import { ExpandableSectionLayout } from "@/components/home/ExpandableSectionLayout";
 import { HorizontalArticleSlider } from "@/components/home/HorizontalArticleSlider";
-import { fetchHomepageData, fetchNavbarData, fetchBottomSlidersData } from "@/utils/fetchData";
+import { fetchHomepageData, fetchBottomSlidersData } from "@/utils/fetchData";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
 export default async function Home() {
   const { topArticles, categorySections } = await fetchHomepageData();
-  const { regions, categories } = await fetchNavbarData();
+
   const { regionSliderItems, categorySliderItems } = await fetchBottomSlidersData();
 
   return (

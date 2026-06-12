@@ -4,7 +4,7 @@ import { Ticker } from "@/components/home/Ticker";
 import { Advertisement } from "@/components/shared/Advertisement";
 import { TopicSection } from "@/components/home/TopicSection";
 import { ExpandableSectionLayout } from "@/components/home/ExpandableSectionLayout";
-import { fetchDynamicPageData, fetchNavbarData } from "@/utils/fetchData";
+import { fetchDynamicPageData} from "@/utils/fetchData";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -23,7 +23,7 @@ export default async function DynamicRoutePage({
   }
 
   const { topArticles, categorySections, pageTitle } = pageData;
-  const { regions, categories } = await fetchNavbarData();
+
 
   return (
     <div className="bg-news-bg text-news-text font-sans">

@@ -53,7 +53,7 @@ body {
 }
 
 .animate-marquee-ltr {
-  animation: marquee-ltr 60s linear infinite;
+  animation: marquee-ltr 200s linear infinite;
   display: flex;
   width: max-content;
 }

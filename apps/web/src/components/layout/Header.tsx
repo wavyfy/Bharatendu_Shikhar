@@ -19,7 +19,7 @@ export function Header({ logoUrl }: { logoUrl?: string | null }) {
               alt="Bharatendu Shikhar Logo" 
               width={550} 
               height={100} 
-              className="object-contain object-left"
+              className="w-auto h-[100px] object-contain object-left"
             />
           ) : (
             <div className="flex items-center gap-6">

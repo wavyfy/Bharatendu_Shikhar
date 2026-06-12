@@ -178,10 +178,10 @@ export function Navbar({
           {logoUrl ? (
             <Image 
               src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
-              alt="Bharatendu Shikhar Logo" 
+              alt="Bhartendu Shikhar Logo" 
               width={200} 
               height={40} 
-              className="object-contain"
+              className="w-auto h-[40px] object-contain"
             />
           ) : (
             <div className="flex items-center gap-3">
@@ -196,7 +196,7 @@ export function Navbar({
                 <path d="M70 10 L63 22 L72 18 L78 25 Z" fill="white"/>
               </svg>
               <span className="font-playfair font-black tracking-tight uppercase text-[22px]">
-                BHARATENDU SHIKHAR
+                BHARTENDU SHIKHAR
               </span>
             </div>
           )}

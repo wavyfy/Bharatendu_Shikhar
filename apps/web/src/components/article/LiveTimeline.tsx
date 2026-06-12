@@ -18,7 +18,7 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
       <div className="absolute left-[7px] top-3 bottom-0 w-[2px] bg-black dark:bg-gray-400" />
 
       <div className="flex flex-col gap-10">
-        {sortedUpdates.map((update, index) => (
+        {sortedUpdates.map((update) => (
           <div key={update.id} className="relative pl-8 md:pl-12">
             {/* Timeline Dot */}
             <div className="absolute left-0 top-2 w-4 h-4 rounded-full bg-black dark:bg-gray-400" />

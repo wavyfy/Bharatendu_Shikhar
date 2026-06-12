@@ -7,6 +7,8 @@ import { createArticleSchema, updateArticleSchema, type CreateArticleInput, type
 import { generateSlug } from "../utils/slug";
 import { getArticleById } from "../queries";
 import { deleteFileAction } from "../../storage/actions";
+import { sendExpoPushNotifications } from "@/lib/notifications/expoPush";
+
 
 // Helper to get authenticated user and client
 async function getAuth() {
@@ -215,4 +217,64 @@ export async function deleteArticleAction(id: number) {
 
 export async function publishArticleAction(id: number, status: "draft" | "published") {
   return updateArticleAction(id, { status });
+}
+
+/**
+ * Send an Expo push notification for the given article to all registered device tokens.
+ * Invalid/unregistered tokens are automatically removed from the device_tokens table.
+ */
+export async function sendPushNotificationAction(params: {
+  articleId: number;
+  articleSlug: string;
+  title: string;
+  body: string;
+}) {
+  try {
+    await getAuth(); // Ensure caller is authenticated
+
+    const { supabaseAdmin } = await import("@repo/api");
+
+    // Fetch all device tokens
+    const { data: rows, error } = await supabaseAdmin
+      .from("device_tokens")
+      .select("token");
+
+    if (error) throw new Error(`Failed to fetch device tokens: ${error.message}`);
+
+    const tokens: string[] = (rows ?? []).map((r: { token: string }) => r.token).filter(Boolean);
+
+    if (tokens.length === 0) {
+      console.log("[sendPushNotification] No device tokens registered.");
+      return { success: true, sent: 0, failed: 0 };
+    }
+
+    const result = await sendExpoPushNotifications(tokens, {
+      title: params.title,
+      body: params.body || "Tap to read the full article.",
+      data: {
+        article_id: params.articleId,
+        article_slug: params.articleSlug,
+      },
+    });
+
+    // Clean up invalid tokens
+    if (result.invalidTokens.length > 0) {
+      const { error: deleteError } = await supabaseAdmin
+        .from("device_tokens")
+        .delete()
+        .in("token", result.invalidTokens);
+
+      if (deleteError) {
+        console.error("[sendPushNotification] Failed to remove invalid tokens:", deleteError.message);
+      } else {
+        console.log(`[sendPushNotification] Removed ${result.invalidTokens.length} invalid token(s).`);
+      }
+    }
+
+    return { success: true, sent: result.sent, failed: result.failed };
+  } catch (error: unknown) {
+    console.error("[sendPushNotification] Error:", error);
+    const message = error instanceof Error ? error.message : "Failed to send push notification";
+    return { success: false, sent: 0, failed: 0, error: message };
+  }
 }
