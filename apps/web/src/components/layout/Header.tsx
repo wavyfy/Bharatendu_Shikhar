@@ -1,11 +1,12 @@
 import { Search } from "lucide-react";
+import { CurrentDate } from "./CurrentDate";
 
 export function Header() {
   return (
-    <header className="hidden lg:block py-6 px-4 max-w-[1400px] mx-auto">
+    <header className="hidden lg:block py-6 px-4 w-full max-w-[1400px] mx-auto">
       <div className="flex justify-between items-center">
         <div className="w-48 text-sm text-gray-700 dark:text-news-text-secondary space-y-1">
-          <p>Monday, May 11, 2026</p>
+          <p><CurrentDate /></p>
           <p>Today&apos;s Paper</p>
         </div>
         
@@ -20,7 +21,7 @@ export function Header() {
             <path d="M30 20 L25 28 L32 25 L38 32 Z" fill="white"/>
             <path d="M70 10 L63 22 L72 18 L78 25 Z" fill="white"/>
           </svg>
-          <h1 className="text-5xl md:text-6xl font-playfair font-black tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-playfair font-semibold tracking-tight">
             Bharatendu Shikhar
           </h1>
         </div>

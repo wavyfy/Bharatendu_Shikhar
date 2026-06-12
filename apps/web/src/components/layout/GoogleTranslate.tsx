@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
-import { useState } from "react";
+import { useEffect, useCallback, useSyncExternalStore } from "react";
 import { Languages } from "lucide-react";
 
 declare global {
@@ -31,12 +30,18 @@ function readLang(): "en" | "hi" {
   return parts[parts.length - 1] === "hi" ? "hi" : "en";
 }
 
+// useSyncExternalStore: React-approved way to read external data (cookies).
+// No setState in effects. Server snapshot always "en" → no hydration mismatch.
+function useLang(): "en" | "hi" {
+  return useSyncExternalStore(
+    () => () => {}, // no subscribe needed — cookie only changes on page reload
+    () => readLang(), // client snapshot
+    () => "en"       // server snapshot
+  );
+}
+
 export function GoogleTranslateButton() {
-  // Lazy initializer runs once on client — no effect needed for state sync
-  const [lang] = useState<"en" | "hi">(() => {
-    if (typeof window === "undefined") return "en";
-    return readLang();
-  });
+  const lang = useLang();
 
   useEffect(() => {
     // Inject hidden widget div
@@ -102,11 +107,7 @@ export function GoogleTranslateButton() {
 
 // Hook for mobile settings panel
 export function useTranslateToggle() {
-  // Lazy initializer — reads cookie at mount, no effect needed
-  const [lang] = useState<"en" | "hi">(() => {
-    if (typeof window === "undefined") return "en";
-    return readLang();
-  });
+  const lang = useLang();
 
   const toggle = useCallback(() => {
     if (lang === "en") {

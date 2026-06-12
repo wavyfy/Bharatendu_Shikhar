@@ -17,6 +17,8 @@ import { Select } from "@/components/ui/Select";
 import { Dropzone } from "@/components/ui/Dropzone";
 import { motion } from "framer-motion";
 
+const PDF_MAX_BYTES = 50 * 1024 * 1024; // 50 MB
+
 interface EpaperFormProps {
   initialData?: EpaperWithRelations;
   regions: RegionRow[];
@@ -82,8 +84,8 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
       return;
     }
 
-    if (file.size > 50 * 1024 * 1024) {
-      setError("File exceeds 50MB limit");
+    if (file.size > PDF_MAX_BYTES) {
+      setError("File exceeds 50 MB limit.");
       return;
     }
 
@@ -226,7 +228,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
                   />
                   <Dropzone
                     label="Click or drag to upload PDF"
-                    helperText="PDF up to 50MB"
+                    helperText="PDF only · Max 50 MB"
                     onClick={() => {
                       if (!isUploading) {
                         fileInputRef.current?.click();

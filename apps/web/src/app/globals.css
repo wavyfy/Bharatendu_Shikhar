@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -82,4 +83,53 @@ body {
 .translated-ltr h5, 
 .translated-ltr h6 {
   line-height: 1.6 !important;
+}
+
+/* Fallback Typography Styles for Rich Editor Content */
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.625em;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.625em;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.prose li p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.prose h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+.prose h3 {
+  font-size: 1.25em;
+  font-weight: 700;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+}
+.prose blockquote {
+  font-style: italic;
+  border-left-width: 4px;
+  border-left-color: #e5e7eb;
+  padding-left: 1em;
+  margin-top: 1.6em;
+  margin-bottom: 1.6em;
+}
+.dark .prose blockquote {
+  border-left-color: #374151;
 }

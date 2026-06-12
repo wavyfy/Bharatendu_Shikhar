@@ -46,6 +46,7 @@ export async function loginAction(
     .single();
 
   if (profileError || !profile) {
+    console.error("Admin login profileError:", profileError, "Profile:", profile);
     await supabase.auth.signOut();
     return { error: "Account not found. Contact your administrator." };
   }

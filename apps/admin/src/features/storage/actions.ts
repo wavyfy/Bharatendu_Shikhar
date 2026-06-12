@@ -25,7 +25,7 @@ export async function uploadImageAction(formData: FormData) {
     const bucket = formData.get("bucket") as string || "articles";
     
     if (!file) throw new Error("No file provided");
-    if (file.size > 5 * 1024 * 1024) throw new Error("File exceeds 5MB limit");
+    if (file.size > 2 * 1024 * 1024) throw new Error("File exceeds 2MB limit");
     
     const validTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
     if (!validTypes.includes(file.type)) {
@@ -172,13 +172,13 @@ export async function cleanupOrphanedFilesAction(bucket = "articles") {
     if (bucket === "articles") {
       const { data: articles } = await supabase.from("articles").select("featured_image").not("featured_image", "is", null);
       usedFileNames = (articles || []).map(a => {
-        const parts = ((a as any).featured_image as string).split("/");
+        const parts = ((a as { featured_image: string }).featured_image).split("/");
         return parts.pop() || "";
       });
     } else if (bucket === "epapers") {
       const { data: epapers } = await supabase.from("epapers").select("pdf_url, thumbnail_url");
-      const pdfs = (epapers || []).filter(e => (e as any).pdf_url).map(e => ((e as any).pdf_url as string).split("/").pop() || "");
-      const thumbs = (epapers || []).filter(e => (e as any).thumbnail_url).map(e => ((e as any).thumbnail_url as string).split("/").pop() || "");
+      const pdfs = (epapers || []).filter(e => (e as { pdf_url?: string }).pdf_url).map(e => ((e as { pdf_url: string }).pdf_url).split("/").pop() || "");
+      const thumbs = (epapers || []).filter(e => (e as { thumbnail_url?: string }).thumbnail_url).map(e => ((e as { thumbnail_url: string }).thumbnail_url).split("/").pop() || "");
       usedFileNames = [...pdfs, ...thumbs];
     } else {
       throw new Error("Unsupported bucket for automated cleanup");

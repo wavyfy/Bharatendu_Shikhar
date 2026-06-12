@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArticleWithAuthor } from "@/utils/mapArticleData";
 import { ArticleMeta } from "./ArticleMeta";
 
@@ -17,11 +18,12 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
       <div className="flex flex-row lg:flex-col gap-6 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
         {articles.map((article, index) => (
         <div key={article.id} className="min-w-[85vw] lg:min-w-0 snap-center lg:snap-none">
-          <article className="flex gap-4 items-start">
-            <div className="flex-1 min-w-0 pr-2">
-              <h4 className="font-playfair font-bold text-[19px] leading-tight mb-2 line-clamp-3">
-                {article.title}
-              </h4>
+          <Link href={`/article/${article.slug}`} className="block group/article hover:opacity-90 transition-opacity">
+            <article className="flex gap-4 items-start">
+              <div className="flex-1 min-w-0 pr-2">
+                <h4 className="font-playfair font-bold text-[19px] leading-tight mb-2 line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+                  {article.title}
+                </h4>
               <ArticleMeta article={article} />
             </div>
             {article.featured_image && (
@@ -37,7 +39,8 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
                 </div>
               </div>
             )}
-          </article>
+            </article>
+          </Link>
           {index < articles.length - 1 && (
             <div className="hidden lg:block h-px w-full bg-gray-300 dark:bg-news-border my-4"></div>
           )}

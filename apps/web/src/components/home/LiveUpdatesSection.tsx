@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArticleWithAuthor } from "@/utils/mapArticleData";
 import { ArticleMeta } from "../shared/ArticleMeta";
 
@@ -11,11 +12,12 @@ function getImageUrl(path: string | null): string | null {
 export function LiveUpdatesSection({ article }: { article?: ArticleWithAuthor }) {
   if (!article) return null;
   return (
-    <article className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      <div className={`order-2 lg:order-1 flex flex-col h-full ${article.featured_image ? "lg:col-span-7" : "lg:col-span-12"}`}>
-        <h3 className="font-playfair font-bold text-[29px] leading-tight mb-4 pr-4 line-clamp-4">
-          {article.title}
-        </h3>
+    <Link href={`/article/${article.slug}`} className="block group/article hover:opacity-90 transition-opacity">
+      <article className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className={`order-2 lg:order-1 flex flex-col h-full ${article.featured_image ? "lg:col-span-7" : "lg:col-span-12"}`}>
+          <h3 className="font-playfair font-bold text-[29px] leading-tight mb-4 pr-4 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+            {article.title}
+          </h3>
         <div className="mt-auto">
           <ArticleMeta article={article} />
         </div>
@@ -33,6 +35,7 @@ export function LiveUpdatesSection({ article }: { article?: ArticleWithAuthor })
           </div>
         </div>
       )}
-    </article>
+      </article>
+    </Link>
   );
 }

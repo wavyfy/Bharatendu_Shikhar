@@ -266,7 +266,7 @@ export function Navbar({
       )}
 
       {/* Desktop Nav */}
-      <nav className="hidden lg:block max-w-[1400px] mx-auto px-4 mb-2 relative z-100" onMouseLeave={() => setActiveMenu(null)}>
+      <nav className="hidden lg:block w-full max-w-[1400px] mx-auto px-4 mb-2 relative z-100" onMouseLeave={() => setActiveMenu(null)}>
         <div className="flex justify-between items-center text-sm font-medium">
           <div className="flex gap-8 items-center h-full">
             {visibleLinks.map((link) => (
@@ -319,7 +319,7 @@ export function Navbar({
         {renderMegaMenu()}
       </nav>
       
-      <div className="hidden lg:block max-w-[1400px] mx-auto px-4">
+      <div className="hidden lg:block w-full max-w-[1400px] mx-auto px-4">
         <div className="h-[2px] w-full bg-gray-400 dark:bg-news-border mb-6"></div>
       </div>
     </>

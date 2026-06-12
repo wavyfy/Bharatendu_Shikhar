@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@repo/api";
+import { supabase } from "@repo/api";
 import Image from "next/image";
 
 function getImageUrl(path: string | null): string | null {
@@ -8,7 +8,7 @@ function getImageUrl(path: string | null): string | null {
 }
 
 export default async function EPaperPage() {
-  const { data: epapers } = await supabaseAdmin
+  const { data: epapers } = await supabase
     .from("epapers")
     .select("*, regions(name)")
     .order("published_at", { ascending: false });

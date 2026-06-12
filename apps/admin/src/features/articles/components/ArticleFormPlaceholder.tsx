@@ -8,15 +8,18 @@ import type { CategoryRow } from "@/features/categories/types";
 import type { RegionRow } from "@/features/regions/types";
 import type { ArticleWithRelations, BadgeRow } from "../types";
 import { createArticleAction, updateArticleAction } from "../actions";
+import { uploadImageAction, deleteFileAction } from "@/features/storage/actions";
 import { RichEditor } from "@/components/ui/RichEditor";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { BadgeMultiSelect } from "@/components/ui/BadgeMultiSelect";
+import { Dropzone } from "@/components/ui/Dropzone";
 import { PageContainer } from "@/components/ui/PageContainer";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { LiveUpdatesSection } from "./LiveUpdatesSection";
 import { motion } from "framer-motion";
+
+const IMAGE_MAX_BYTES = 2 * 1024 * 1024; // 2 MB
 
 interface ArticleFormProps {
   initialData?: ArticleWithRelations;
@@ -41,6 +44,8 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
   const [selectedBadgeIds, setSelectedBadgeIds] = useState<number[]>(
     initialData?.article_badges?.map((ab) => ab.badge_id) ?? []
   );
+  const [featuredImage, setFeaturedImage] = useState<string>(initialData?.featured_image || "");
+  const [isUploading, setIsUploading] = useState(false);
 
   // Find Live badge from available badges list (by slug)
   const liveBadge = badges.find((b) => b.slug === "live");
@@ -54,6 +59,31 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
     if (checked && liveBadge && !selectedBadgeIds.includes(liveBadge.id)) {
       setSelectedBadgeIds((prev) => [...prev, liveBadge.id]);
     }
+  }
+
+  async function handleImageSelect(file: File) {
+    if (file.size > IMAGE_MAX_BYTES) {
+      toast.error("Image exceeds 2 MB limit.");
+      return;
+    }
+    setIsUploading(true);
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("bucket", "articles");
+    const result = await uploadImageAction(fd);
+    setIsUploading(false);
+    if (result.success && result.url) {
+      setFeaturedImage(result.url);
+    } else {
+      toast.error(result.error || "Image upload failed.");
+    }
+  }
+
+  async function handleImageClear() {
+    if (featuredImage && featuredImage !== initialData?.featured_image) {
+      await deleteFileAction(featuredImage, "articles").catch(console.error);
+    }
+    setFeaturedImage("");
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -73,6 +103,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
       excerpt: excerpt || null,
       category_id: categoryId ? parseInt(categoryId, 10) : null,
       region_id: regionId ? parseInt(regionId, 10) : null,
+      featured_image: featuredImage || null,
     };
 
     startTransition(async () => {
@@ -113,7 +144,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
           </div>
         )}
 
-        <fieldset disabled={loading} className="group-disabled:opacity-70 transition-opacity">
+        <fieldset disabled={loading || isUploading} className="group-disabled:opacity-70 transition-opacity">
           
           {/* ─── Content ─────────────────────────────────────────────── */}
           <FormSection title="Content" description="The main content of the article.">
@@ -151,6 +182,21 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
               </label>
               <RichEditor value={content} onChange={setContent} />
             </div>
+          </FormSection>
+
+          {/* ─── Featured Image ───────────────────────────────────────── */}
+          <FormSection title="Featured Image" description="Shown as the article thumbnail and hero image.">
+            <Dropzone
+              label={isUploading ? "Uploading..." : "Click or drag to upload image"}
+              helperText="JPG, PNG, WEBP · Max 2 MB"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              value={featuredImage || null}
+              onFileSelect={handleImageSelect}
+              onFileClear={handleImageClear}
+            />
+            {featuredImage && (
+              <p className="mt-2 text-xs text-slate-500 truncate">Saved: {featuredImage.split("/").pop()}</p>
+            )}
           </FormSection>
 
           {/* ─── Organization ────────────────────────────────────────── */}

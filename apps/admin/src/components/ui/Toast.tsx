@@ -1,6 +1,8 @@
 "use client";
 
-import { createContext, useCallback, useContext, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useRef, useState, useMemo } from "react";
+import { CheckCircle2, XCircle, Info, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -32,44 +34,20 @@ export function useToast() {
   return ctx.toast;
 }
 
-// ─── Icons ──────────────────────────────────────────────────────────────────
-
-function CheckIcon() {
-  return (
-    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-    </svg>
-  );
-}
-
-function XCircleIcon() {
-  return (
-    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-    </svg>
-  );
-}
-
-function InfoIcon() {
-  return (
-    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-    </svg>
-  );
-}
+// ─── Styles & Icons ─────────────────────────────────────────────────────────
 
 const VARIANT_STYLES: Record<ToastVariant, { container: string; icon: React.ReactNode }> = {
   success: {
     container: "bg-surface border-l-4 border-green-500 text-gray-800",
-    icon: <span className="text-green-600"><CheckIcon /></span>,
+    icon: <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" strokeWidth={2.5} />,
   },
   error: {
     container: "bg-surface border-l-4 border-red-500 text-gray-800",
-    icon: <span className="text-red-600"><XCircleIcon /></span>,
+    icon: <XCircle className="w-5 h-5 text-red-600 shrink-0" strokeWidth={2.5} />,
   },
   info: {
     container: "bg-surface border-l-4 border-blue-500 text-gray-800",
-    icon: <span className="text-blue-600"><InfoIcon /></span>,
+    icon: <Info className="w-5 h-5 text-blue-600 shrink-0" strokeWidth={2.5} />,
   },
 };
 
@@ -84,22 +62,24 @@ function ToastItem({
 }) {
   const { container, icon } = VARIANT_STYLES[toast.variant];
   return (
-    <div
-      className={`flex items-start gap-3 px-4 py-3 rounded-md shadow-md text-sm min-w-[260px] max-w-sm ${container}`}
+    <motion.div
+      initial={{ opacity: 0, y: -20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+      layout
+      className={`pointer-events-auto flex items-start gap-3 px-4 py-3 rounded-md shadow-lg text-sm min-w-[280px] max-w-sm ${container}`}
       role="alert"
     >
-      {icon}
-      <span className="flex-1 leading-snug">{toast.message}</span>
+      <div className="pt-0.5">{icon}</div>
+      <span className="flex-1 leading-relaxed font-medium text-slate-700">{toast.message}</span>
       <button
         onClick={() => onDismiss(toast.id)}
-        className="text-gray-400 hover:text-gray-600 transition-colors mt-0.5 shrink-0"
+        className="text-gray-400 hover:text-gray-600 transition-colors shrink-0 pt-0.5 ml-2"
         aria-label="Dismiss"
       >
-        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
+        <X className="w-4 h-4" strokeWidth={2.5} />
       </button>
-    </div>
+    </motion.div>
   );
 }
 
@@ -124,11 +104,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     [dismiss]
   );
 
-  const toast = {
+  const toast = useMemo(() => ({
     success: (m: string) => add(m, "success"),
     error: (m: string) => add(m, "error"),
     info: (m: string) => add(m, "info"),
-  };
+  }), [add]);
 
   return (
     <ToastContext.Provider value={{ toast }}>
@@ -137,11 +117,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       <div
         aria-live="polite"
         aria-atomic="false"
-        className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 items-end"
+        className="fixed top-5 right-5 z-9999 flex flex-col gap-3 items-end pointer-events-none"
       >
-        {toasts.map((t) => (
-          <ToastItem key={t.id} toast={t} onDismiss={dismiss} />
-        ))}
+        <AnimatePresence mode="popLayout">
+          {toasts.map((t) => (
+            <ToastItem key={t.id} toast={t} onDismiss={dismiss} />
+          ))}
+        </AnimatePresence>
       </div>
     </ToastContext.Provider>
   );

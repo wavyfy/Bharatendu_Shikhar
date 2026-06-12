@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useToast } from "@/components/ui/Toast";
-import { Spinner } from "@/components/ui/Spinner";
+import { RichEditor } from "@/components/ui/RichEditor";
 import { createLiveUpdateAction, updateLiveUpdateAction } from "../actions/liveUpdates";
 import type { LiveUpdateRow } from "../types";
 
@@ -54,7 +54,7 @@ export function LiveUpdateModal({ articleId, editingUpdate, onClose }: LiveUpdat
       />
 
       {/* Dialog */}
-      <div className="relative bg-surface rounded-xl shadow-2xl w-full max-w-lg border border-outline-variant overflow-hidden">
+      <div className="relative bg-surface rounded-xl shadow-2xl w-full max-w-4xl border border-outline-variant overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant bg-surface-container-high">
           <h2
@@ -113,15 +113,20 @@ export function LiveUpdateModal({ articleId, editingUpdate, onClose }: LiveUpdat
             <label htmlFor="lu-content" className="text-sm font-medium text-on-surface">
               Content <span className="text-red-500">*</span>
             </label>
-            <textarea
-              id="lu-content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={4}
-              required
-              disabled={isPending}
-              placeholder="Full details of this update..."
-              className="flex w-full rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-sm text-on-surface placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-800 transition-shadow duration-150 resize-none"
+            <div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+              <RichEditor
+                value={content}
+                onChange={setContent}
+              />
+            </div>
+            {/* Hidden input to enforce required validation natively */}
+            <input 
+              type="text" 
+              tabIndex={-1} 
+              className="absolute opacity-0 w-0 h-0" 
+              value={content.replace(/<[^>]*>?/gm, '').trim()} 
+              onChange={() => {}} 
+              required 
             />
           </div>
 

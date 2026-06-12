@@ -1,6 +1,4 @@
-import { TopBar } from "@/components/layout/TopBar";
-import { Header } from "@/components/layout/Header";
-import { Navbar } from "@/components/layout/Navbar";
+
 import { Ticker } from "@/components/home/Ticker";
 import { Advertisement } from "@/components/shared/Advertisement";
 import { TopicSection } from "@/components/home/TopicSection";
@@ -16,11 +14,7 @@ export default async function Home() {
   const { regionSliderItems, categorySliderItems } = await fetchBottomSlidersData();
 
   return (
-    <div className="min-h-screen bg-news-bg text-news-text font-sans">
-
-      <TopBar />
-      <Header />
-      <Navbar categories={categorySections} topArticles={topArticles} navRegions={regions} navCategories={categories} />
+    <div className="bg-news-bg text-news-text font-sans">
       <Ticker articles={topArticles} />
 
       <div className="max-w-[1700px] mx-auto px-4 flex gap-6 mb-8 items-start">
