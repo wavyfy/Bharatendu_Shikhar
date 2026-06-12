@@ -1,5 +1,4 @@
-import { createSupabaseServerClient } from "@repo/api";
-import { cookies } from "next/headers";
+import { supabaseAdmin } from "@repo/api";
 import Image from "next/image";
 
 function getImageUrl(path: string | null): string | null {
@@ -9,16 +8,7 @@ function getImageUrl(path: string | null): string | null {
 }
 
 export default async function EPaperPage() {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get(name) {
-      return cookieStore.get(name)?.value;
-    },
-    set() {},
-    remove() {},
-  });
-
-  const { data: epapers } = await supabase
+  const { data: epapers } = await supabaseAdmin
     .from("epapers")
     .select("*, regions(name)")
     .order("published_at", { ascending: false });

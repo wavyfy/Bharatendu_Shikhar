@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Sun, Moon, Monitor } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 
 export function MobileThemeToggle() {
   const [mounted, setMounted] = useState(false);
@@ -20,7 +20,6 @@ export function MobileThemeToggle() {
   const options = [
     { value: "light", label: "Light", icon: Sun },
     { value: "dark", label: "Dark", icon: Moon },
-    { value: "system", label: "System", icon: Monitor },
   ];
 
   return (
