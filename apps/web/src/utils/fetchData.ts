@@ -69,6 +69,20 @@ export async function fetchNavbarData() {
   };
 }
 
+export async function fetchSettings() {
+  const { data, error } = await supabase
+    .from("settings")
+    .select("*")
+    .eq("id", 1)
+    .single();
+
+  if (error) {
+    console.error("Supabase fetchSettings error:", error);
+  }
+
+  return data;
+}
+
 export async function fetchDynamicPageData(slug: string) {
   const { data: regionMatches } = await supabase
     .from("regions")

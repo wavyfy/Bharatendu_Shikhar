@@ -10,7 +10,6 @@ import {
   updateSeoAction,
   updateSocialAction,
   updateContactAction,
-  updateHomepageAction,
   updateMaintenanceAction,
 } from "../actions";
 
@@ -99,15 +98,6 @@ function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
               type="text"
               required
               defaultValue={settings?.site_name ?? "Bharatendu Shikhar"}
-              className={inputCls}
-            />
-          </Field>
-          <Field label="Tagline">
-            <input
-              name="site_tagline"
-              type="text"
-              defaultValue={settings?.site_tagline ?? ""}
-              placeholder="A short tagline..."
               className={inputCls}
             />
           </Field>
@@ -338,73 +328,6 @@ function ContactSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Section: Homepage ────────────────────────────────────────────────────────
-
-function HomepageSection({ settings }: { settings: SettingsRow | null }) {
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
-  const toast = useToast();
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError(null);
-    const fd = new FormData(e.currentTarget);
-    startTransition(async () => {
-      const res = await updateHomepageAction({
-        hero_title: (fd.get("hero_title") as string) || null,
-        hero_subtitle: (fd.get("hero_subtitle") as string) || null,
-        featured_articles_count: Number(fd.get("featured_articles_count")) || 6,
-      });
-      if (res.success) {
-        toast.success("Homepage Settings saved.");
-      } else {
-        const msg = res.error ?? "Unknown error";
-        setError(msg);
-        toast.error(msg);
-      }
-    });
-  }
-
-  return (
-    <Card>
-      <CardHeader>Homepage Settings</CardHeader>
-      <CardBody>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Field label="Hero Title">
-            <input
-              name="hero_title"
-              type="text"
-              defaultValue={settings?.hero_title ?? ""}
-              placeholder="Latest News & Updates"
-              className={inputCls}
-            />
-          </Field>
-          <Field label="Hero Subtitle">
-            <textarea
-              name="hero_subtitle"
-              rows={2}
-              defaultValue={settings?.hero_subtitle ?? ""}
-              placeholder="Your trusted source for news..."
-              className={inputCls}
-            />
-          </Field>
-          <Field label="Featured Articles Count" hint="Number of articles on homepage (1–20)">
-            <input
-              name="featured_articles_count"
-              type="number"
-              min={1}
-              max={20}
-              defaultValue={settings?.featured_articles_count ?? 6}
-              className={inputCls}
-            />
-          </Field>
-          <SectionFooter isPending={isPending} error={error} />
-        </form>
-      </CardBody>
-    </Card>
-  );
-}
-
 // ─── Section: Maintenance ─────────────────────────────────────────────────────
 
 function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
@@ -490,7 +413,6 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
     { id: "seo", label: "SEO" },
     { id: "social", label: "Social Media" },
     { id: "contact", label: "Contact" },
-    { id: "homepage", label: "Homepage" },
     { id: "maintenance", label: "Maintenance" },
   ];
 
@@ -528,7 +450,6 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
           {activeTab === "seo" && <SeoSection settings={settings} />}
           {activeTab === "social" && <SocialSection settings={settings} />}
           {activeTab === "contact" && <ContactSection settings={settings} />}
-          {activeTab === "homepage" && <HomepageSection settings={settings} />}
           {activeTab === "maintenance" && <MaintenanceSection settings={settings} />}
         </div>
       </div>

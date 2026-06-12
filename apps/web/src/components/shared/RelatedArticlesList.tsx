@@ -15,7 +15,7 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
   return (
     <div className="flex flex-col">
       <h2 className="font-playfair font-bold text-[19px] text-black dark:text-news-text mb-6 text-center border-b-2 border-gray-300 dark:border-news-border pb-2">Related News</h2>
-      <div className="flex flex-row lg:flex-col gap-6 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
+      <div className="flex flex-row lg:flex-col gap-6 lg:gap-0 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
         {articles.map((article, index) => (
         <div key={article.id} className="min-w-[85vw] lg:min-w-0 snap-center lg:snap-none">
           <Link href={`/article/${article.slug}`} className="block group/article hover:opacity-90 transition-opacity">
@@ -42,7 +42,7 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
             </article>
           </Link>
           {index < articles.length - 1 && (
-            <div className="hidden lg:block h-px w-full bg-gray-300 dark:bg-news-border my-4"></div>
+            <div className="hidden lg:block h-[2px] w-full bg-gray-300 dark:bg-news-border my-8"></div>
           )}
         </div>
       ))}

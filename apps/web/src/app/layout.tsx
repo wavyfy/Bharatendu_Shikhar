@@ -17,10 +17,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Web",
-  description: "Web App",
-};
+import { fetchSettings } from "@/utils/fetchData";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchSettings();
+  
+  return {
+    title: settings?.meta_title || "Web",
+    description: settings?.meta_description || "Web App",
+    icons: {
+      icon: settings?.favicon_url 
+        ? (settings.favicon_url.startsWith("http") ? settings.favicon_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${settings.favicon_url}`)
+        : "/favicon.ico",
+    }
+  };
+}
 
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -31,6 +42,7 @@ export default async function RootLayout({
 }>) {
   const { regions, categories } = await fetchNavbarData();
   const { topArticles, categorySections } = await fetchHomepageData();
+  const settings = await fetchSettings();
 
   return (
     <html
@@ -42,12 +54,12 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           <div className="flex flex-col min-h-screen">
             <TopBar />
-            <Header />
-            <Navbar categories={categorySections} topArticles={topArticles} navRegions={regions} navCategories={categories} />
+            <Header logoUrl={settings?.site_logo_url} />
+            <Navbar categories={categorySections} topArticles={topArticles} navRegions={regions} navCategories={categories} logoUrl={settings?.site_logo_url} />
             <div className="flex-1">
               {children}
             </div>
-            <Footer />
+            <Footer logoUrl={settings?.site_logo_url} />
           </div>
         </ThemeProvider>
       </body>

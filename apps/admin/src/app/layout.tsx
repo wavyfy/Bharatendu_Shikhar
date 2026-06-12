@@ -30,10 +30,21 @@ const plusJakarta = Plus_Jakarta_Sans({
   weight: ["600", "700"],
 });
 
-export const metadata: Metadata = {
-  title: "Bharatendu Shikhar Admin",
-  description: "CMS Portal",
-};
+import { supabaseAdmin } from "@repo/api";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: settings } = await supabaseAdmin.from("settings").select("meta_title, meta_description, favicon_url").eq("id", 1).single();
+  
+  return {
+    title: settings?.meta_title || "Bharatendu Shikhar Admin",
+    description: settings?.meta_description || "CMS Portal",
+    icons: {
+      icon: settings?.favicon_url 
+        ? (settings.favicon_url.startsWith("http") ? settings.favicon_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${settings.favicon_url}`)
+        : "/favicon.ico",
+    }
+  };
+}
 
 import { ToastProvider } from "@/components/ui/Toast";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";

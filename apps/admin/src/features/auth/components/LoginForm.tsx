@@ -11,7 +11,7 @@ import Image from "next/image";
 import bsLogo from "../../../../public/images/bs_logo.png";
 import { DashboardMockup } from "./DashboardMockup";
 
-export function LoginForm() {
+export function LoginForm({ logoUrl }: { logoUrl?: string | null }) {
   const [state, formAction, isPending] = useActionState(loginAction, { error: undefined });
 
   return (
@@ -29,13 +29,13 @@ export function LoginForm() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="w-20 h-20 bg-surface flex items-center justify-center rounded-2xl shadow-xl shadow-black/50 mb-8 relative overflow-hidden p-2 border border-slate-800">
+            <div className="w-50 h-15 bg-surface flex items-center justify-center rounded-2xl shadow-xl shadow-black/50 mb-8 relative overflow-hidden p-2 border border-slate-800">
               <Image 
-                src={bsLogo} 
+                src={logoUrl ? (logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`) : bsLogo} 
                 alt="Bharatendu Shikhar Logo" 
                 fill
-                sizes="80px"
-                className="object-contain scale-110" 
+                sizes="100px"
+                className="object-contain scale-90" 
               />
             </div>
             <h1 className="text-4xl lg:text-5xl font-bold font-sans tracking-tight mb-4 leading-tight drop-shadow-md">
@@ -59,7 +59,7 @@ export function LoginForm() {
             {/* Mobile logo (hidden on desktop where cover has the logo) */}
             <div className="lg:hidden flex justify-center mb-8">
                <div className="w-16 h-16 bg-surface flex items-center justify-center rounded-2xl shadow-lg shadow-black/10 relative overflow-hidden p-1">
-                 <Image src={bsLogo} alt="BS Logo" fill sizes="64px" className="object-contain scale-110" />
+                 <Image src={logoUrl ? (logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`) : bsLogo} alt="BS Logo" fill sizes="64px" className="object-contain scale-110" />
                </div>
             </div>
 

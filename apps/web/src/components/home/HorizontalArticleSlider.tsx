@@ -58,7 +58,7 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
   if (!items || items.length === 0) return null;
 
   return (
-    <div className="py-6 border-b-2 border-gray-300 dark:border-news-border">
+    <div className="py-8 border-b-2 border-gray-300 dark:border-news-border">
       <h2 className="font-playfair font-bold text-lg mb-4 uppercase tracking-wide">
         {title}
       </h2>

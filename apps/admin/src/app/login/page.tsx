@@ -23,5 +23,8 @@ export default async function LoginPage() {
     redirect("/");
   }
 
-  return <LoginForm />;
+  const { supabaseAdmin } = await import("@repo/api");
+  const { data: settings } = await supabaseAdmin.from("settings").select("site_logo_url").eq("id", 1).single();
+
+  return <LoginForm logoUrl={settings?.site_logo_url} />;
 }

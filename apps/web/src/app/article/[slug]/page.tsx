@@ -77,7 +77,7 @@ export default async function ArticlePage({
 
           {/* Live Timeline (Only for LIVE articles) */}
           {article.is_live && article.article_live_updates && article.article_live_updates.length > 0 && (
-            <div className="mt-8 border-t border-gray-200 dark:border-gray-800 pt-8">
+            <div className="mt-8 border-t-2 border-gray-300 dark:border-gray-800 pt-8">
               <LiveTimeline updates={article.article_live_updates} />
             </div>
           )}

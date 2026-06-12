@@ -9,18 +9,20 @@ interface DashboardShellProps {
   children: React.ReactNode;
   displayName: string;
   role: UserRole;
+  logoUrl?: string | null;
 }
 
 export function DashboardShell({
   children,
   displayName,
   role,
+  logoUrl,
 }: DashboardShellProps) {
   return (
     <ToastProvider>
       <ConfirmProvider>
         <div className="h-screen overflow-hidden bg-surface text-on-surface flex flex-col">
-          <Topbar displayName={displayName} role={role} />
+          <Topbar displayName={displayName} role={role} logoUrl={logoUrl} />
 
           <div className="flex flex-1 overflow-hidden min-h-0">
             <Sidebar role={role} />

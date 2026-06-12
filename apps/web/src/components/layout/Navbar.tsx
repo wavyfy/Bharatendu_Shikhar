@@ -19,12 +19,14 @@ export function Navbar({
   categories = [],
   topArticles = [],
   navRegions = [],
-  navCategories = []
+  navCategories = [],
+  logoUrl
 }: { 
   categories?: TopicCategoryData[],
   topArticles?: ArticleWithAuthor[],
   navRegions?: { name: string, slug: string }[],
-  navCategories?: { name: string, slug: string }[]
+  navCategories?: { name: string, slug: string }[],
+  logoUrl?: string | null
 }) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [lastActiveMenu, setLastActiveMenu] = useState<string | null>(null);
@@ -172,20 +174,32 @@ export function Navbar({
         <button onClick={() => setIsMobileMenuOpen(true)}>
           <Menu size={28} strokeWidth={1.5} />
         </button>
-        <Link href="/" className="flex items-center gap-3">
-          <svg width="45" height="27" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="40" r="20" fill="#FF8C00"/>
-            <path d="M50 10 L50 0 M20 20 L10 10 M80 20 L90 10" stroke="#FF8C00" strokeWidth="2"/>
-            <path d="M30 15 L25 5 M70 15 L75 5 M40 12 L38 2 M60 12 L62 2" stroke="#FF8C00" strokeWidth="1.5"/>
-            <path d="M0 60 L30 20 L50 40 L70 10 L100 60 Z" fill="#808080"/>
-            <path d="M30 20 L40 35 L50 40 L40 50 Z" fill="#A0A0A0"/>
-            <path d="M70 10 L60 30 L50 40 L65 50 Z" fill="#909090"/>
-            <path d="M30 20 L25 28 L32 25 L38 32 Z" fill="white"/>
-            <path d="M70 10 L63 22 L72 18 L78 25 Z" fill="white"/>
-          </svg>
-          <span className="font-playfair font-black tracking-tight uppercase text-[22px]">
-            BHARATENDU SHIKHAR
-          </span>
+        <Link href="/" className="flex items-center">
+          {logoUrl ? (
+            <Image 
+              src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
+              alt="Bharatendu Shikhar Logo" 
+              width={200} 
+              height={40} 
+              className="object-contain"
+            />
+          ) : (
+            <div className="flex items-center gap-3">
+              <svg width="45" height="27" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="40" r="20" fill="#FF8C00"/>
+                <path d="M50 10 L50 0 M20 20 L10 10 M80 20 L90 10" stroke="#FF8C00" strokeWidth="2"/>
+                <path d="M30 15 L25 5 M70 15 L75 5 M40 12 L38 2 M60 12 L62 2" stroke="#FF8C00" strokeWidth="1.5"/>
+                <path d="M0 60 L30 20 L50 40 L70 10 L100 60 Z" fill="#808080"/>
+                <path d="M30 20 L40 35 L50 40 L40 50 Z" fill="#A0A0A0"/>
+                <path d="M70 10 L60 30 L50 40 L65 50 Z" fill="#909090"/>
+                <path d="M30 20 L25 28 L32 25 L38 32 Z" fill="white"/>
+                <path d="M70 10 L63 22 L72 18 L78 25 Z" fill="white"/>
+              </svg>
+              <span className="font-playfair font-black tracking-tight uppercase text-[22px]">
+                BHARATENDU SHIKHAR
+              </span>
+            </div>
+          )}
         </Link>
         <div className="w-7"></div>
       </div>
@@ -320,7 +334,7 @@ export function Navbar({
       </nav>
       
       <div className="hidden lg:block w-full max-w-[1400px] mx-auto px-4">
-        <div className="h-[2px] w-full bg-gray-400 dark:bg-news-border mb-6"></div>
+        <div className="h-[2px] w-full bg-gray-400 dark:bg-news-border mb-2"></div>
       </div>
     </>
   );

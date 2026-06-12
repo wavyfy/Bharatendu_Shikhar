@@ -46,8 +46,11 @@ export default async function DashboardLayout({
 
   if (!session) redirect("/login");
 
+  const { supabaseAdmin } = await import("@repo/api");
+  const { data: settings } = await supabaseAdmin.from("settings").select("site_logo_url").eq("id", 1).single();
+
   return (
-    <DashboardShell role={session.role} displayName={session.displayName}>
+    <DashboardShell role={session.role} displayName={session.displayName} logoUrl={settings?.site_logo_url}>
       {children}
     </DashboardShell>
   );

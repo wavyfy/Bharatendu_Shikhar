@@ -1,12 +1,23 @@
 import Link from "next/link";
+import Image from "next/image";
 
-export function Footer() {
+export function Footer({ logoUrl }: { logoUrl?: string | null }) {
   return (
     <footer className="bg-white dark:bg-news-card text-black dark:text-news-text border-t border-gray-200 dark:border-news-border pt-16 pb-8 mt-auto">
       <div className="max-w-[1400px] mx-auto px-4">
         
         <div className="mb-10">
-          <h2 className="text-3xl font-bold uppercase tracking-tight">BHARATENDU SHIKHAR</h2>
+          {logoUrl ? (
+            <Image 
+              src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
+              alt="Bharatendu Shikhar Logo" 
+              width={240} 
+              height={60} 
+              className="object-contain object-left"
+            />
+          ) : (
+            <h2 className="text-3xl font-bold uppercase tracking-tight">BHARATENDU SHIKHAR</h2>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12">

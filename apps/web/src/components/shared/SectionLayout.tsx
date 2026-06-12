@@ -15,7 +15,7 @@ export function SectionLayout({
       </div>
       
       {/* Right Column (4 cols) */}
-      <div className="md:col-span-4 pl-4 md:border-l border-gray-300">
+      <div className="md:col-span-4 pl-4 md:border-l-2 border-gray-300">
         {rightContent}
       </div>
     </section>

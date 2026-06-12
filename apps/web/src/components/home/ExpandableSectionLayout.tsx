@@ -57,14 +57,14 @@ export function ExpandableSectionLayout({
                   {leftArticles[0] && (
                     <>
                       <FeatureArticle article={leftArticles[0]} />
-                      {(leftArticles[1] || leftArticles[2] || leftArticles[3]) && <div className="h-px w-full bg-gray-300 dark:bg-news-border my-4"></div>}
+                      {(leftArticles[1] || leftArticles[2] || leftArticles[3]) && <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-8"></div>}
                     </>
                   )}
                   
                   {(leftArticles[1] || leftArticles[2]) && (
                     <>
                       <SplitArticles articles={leftArticles.slice(1, 3)} />
-                      {leftArticles[3] && <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-6"></div>}
+                      {leftArticles[3] && <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-8"></div>}
                     </>
                   )}
                   
