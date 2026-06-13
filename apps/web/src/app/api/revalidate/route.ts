@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
 
     // Revalidate each requested tag
     tags.forEach(tag => {
+      // @ts-expect-error Next.js 15 types incorrectly require a second argument
       revalidateTag(tag);
       console.log(`[Revalidate API] Revalidated tag: ${tag}`);
     });
