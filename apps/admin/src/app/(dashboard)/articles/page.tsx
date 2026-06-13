@@ -1,6 +1,5 @@
+import { getSessionUser } from "@/utils/session";
 import Link from "next/link";
-import { cookies } from "next/headers";
-import { createSupabaseServerClient } from "@repo/api";
 import { getArticles } from "@/features/articles/queries";
 import { getCategories } from "@/features/categories/queries";
 import { getRegions } from "@/features/regions/queries";
@@ -24,27 +23,9 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   const regionId = params?.region_id ? parseInt(params.region_id, 10) : undefined;
   const isLive = params?.is_live === "true" ? true : undefined;
 
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const { data: { user } } = await supabase.auth.getUser();
-
-  let role = "publisher";
-  if (user) {
-    const { supabaseAdmin } = await import("@repo/api");
-    const { data } = await supabaseAdmin
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single();
-    if ((data as unknown as { role?: string })?.role === "admin") {
-      role = "admin";
-    }
-  }
+  const session = await getSessionUser();
+  const user = session?.user;
+  const role = session?.role || "publisher";
 
   const userId = role === "admin" ? undefined : user?.id;
 

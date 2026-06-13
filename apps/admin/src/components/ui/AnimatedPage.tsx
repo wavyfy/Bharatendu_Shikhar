@@ -8,7 +8,7 @@ export function AnimatedPage({ children, className }: { children: ReactNode, cla
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
       className={className}
     >
       {children}

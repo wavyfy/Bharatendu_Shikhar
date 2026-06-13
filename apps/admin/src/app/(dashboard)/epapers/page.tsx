@@ -1,6 +1,5 @@
+import { getSessionUser } from "@/utils/session";
 import Link from "next/link";
-import { cookies } from "next/headers";
-import { createSupabaseServerClient } from "@repo/api";
 import { getEpapers } from "@/features/epapers/queries";
 import { EpapersTable } from "@/features/epapers/components/EpapersTable";
 import { SearchInput } from "@/components/ui/SearchInput";
@@ -18,27 +17,9 @@ export default async function EPapersPage({ searchParams }: PageProps) {
   const page = params?.page ? parseInt(params.page, 10) : 1;
   const search = params?.search || "";
 
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const { data: { user } } = await supabase.auth.getUser();
-
-  let role = "publisher";
-  if (user) {
-    const { supabaseAdmin } = await import("@repo/api");
-    const { data } = await supabaseAdmin
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single();
-    if ((data as unknown as { role?: string })?.role === "admin") {
-      role = "admin";
-    }
-  }
+  const session = await getSessionUser();
+  const user = session?.user;
+  const role = session?.role || "publisher";
 
   const userId = role === "admin" ? undefined : user?.id;
 

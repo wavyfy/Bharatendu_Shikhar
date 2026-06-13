@@ -1,6 +1,6 @@
+import { getSessionUser } from "@/utils/session";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
+import { supabaseAdmin } from "@repo/api";
 import { getSettings } from "@/features/settings/queries";
 import { SettingsForm } from "@/features/settings/components/SettingsForm";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
@@ -8,25 +8,8 @@ import { AnimatedPage } from "@/components/ui/AnimatedPage";
 export const metadata = { title: "Settings | Bharatendu Shikhar Admin" };
 
 async function verifyAdminOrRedirect() {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
-
-  const { data: profile } = await supabaseAdmin
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-
-  if (!profile || (profile as { role: string }).role !== "admin") {
-    redirect("/");
-  }
+  const session = await getSessionUser();
+  if (!session || session.role !== "admin") redirect("/");
 }
 
 export default async function SettingsPage() {

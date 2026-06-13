@@ -1,8 +1,7 @@
+import { getSessionUser } from "@/utils/session";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import Image from "next/image";
-import { createSupabaseServerClient } from "@repo/api";
 import { getArticleById } from "@/features/articles/queries";
 import { Button } from "@/components/ui/Button";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
@@ -24,27 +23,10 @@ export default async function PreviewArticlePage({ params }: PreviewArticlePageP
   }
 
   // Get user role to enforce permissions
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const { data: { user } } = await supabase.auth.getUser();
+  const session = await getSessionUser();
+  const user = session?.user;
   if (!user) redirect("/login");
-  
-  let role = "publisher"; 
-  const { supabaseAdmin } = await import("@repo/api");
-  const { data } = await supabaseAdmin
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-    
-  if ((data as unknown as { role?: string })?.role === "admin") {
-    role = "admin";
-  }
+  const role = session?.role || "publisher";
 
   const authorId = role === "admin" ? null : user.id;
 
