@@ -54,7 +54,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   let epapersQuery = supabase.from("epapers").select("*", { count: "exact", head: true });
 
   let recentArticlesQuery = supabaseAdmin.from("articles").select("id, title, status, created_at, author_id, author:profiles!articles_author_id_fkey(full_name)").order("created_at", { ascending: false }).limit(5);
-  let recentEpapersQuery = supabase.from("epapers").select("id, title, published_at, created_at, pdf_url").order("created_at", { ascending: false }).limit(5);
+  let recentEpapersQuery = supabase.from("epapers").select("id, title, published_at, created_at, pdf_url").order("created_at", { ascending: false }).limit(4);
 
   if (!isAdmin) {
     articlesQuery = articlesQuery.eq("author_id", user.id);

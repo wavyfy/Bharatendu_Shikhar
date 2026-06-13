@@ -15,6 +15,7 @@ export function TopicSection({ data }: { data: TopicCategoryData }) {
     <ExpandableSectionLayout 
       articles={data.articles}
       headerNode={<CategoryHeader title={data.title} slug={data.slug} links={data.links} />}
+      initialVisibleChunks={1}
     />
   );
 }

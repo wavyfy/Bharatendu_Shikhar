@@ -7,11 +7,27 @@ function getImageUrl(path: string | null): string | null {
   return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${path}`;
 }
 
-export default async function EPaperPage() {
-  const { data: epapers } = await supabase
+import Link from "next/link";
+
+export default async function EPaperPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const params = await searchParams;
+  const page = params?.page ? parseInt(params.page, 10) : 1;
+  const limit = 12;
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+
+  const { data: settings } = await supabase.from("settings").select("site_logo_url, site_logo_dark_url").eq("id", 1).single();
+  const { data: epapers, count } = await supabase
     .from("epapers")
-    .select("*, regions(name)")
-    .order("published_at", { ascending: false });
+    .select("*, regions(name)", { count: 'exact' })
+    .order("published_at", { ascending: false })
+    .range(from, to);
+
+  const totalPages = count ? Math.ceil(count / limit) : 0;
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-news-bg py-10">
@@ -28,19 +44,47 @@ export default async function EPaperPage() {
                 href={getImageUrl(paper.pdf_url) || "#"} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:shadow-xl transition-shadow duration-300 rounded overflow-hidden flex flex-col"
+                className="group bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:shadow-lg hover:translate-y-[-2px] transition-all duration-300 rounded overflow-hidden flex flex-col"
               >
-                <div className="relative w-full aspect-3/4 bg-gray-100 dark:bg-news-bg overflow-hidden border-b border-gray-200 dark:border-news-border">
+                <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card overflow-hidden border-b border-gray-200 dark:border-news-border">
                   {paper.thumbnail_url ? (
                     <Image
                       src={getImageUrl(paper.thumbnail_url)!}
                       alt={paper.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover transition-transform duration-500 ease-out"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-400">
-                      No Preview
+                    <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-news-card p-8">
+                      {settings?.site_logo_url || settings?.site_logo_dark_url ? (
+                        <>
+                          {settings?.site_logo_url && (
+                            <div className={`relative w-full h-1/2 ${settings.site_logo_dark_url ? 'dark:hidden' : ''}`}>
+                              <Image
+                                src={getImageUrl(settings.site_logo_url)!}
+                                alt="Default Cover"
+                                fill
+                                className="object-contain"
+                              />
+                            </div>
+                          )}
+                          {settings?.site_logo_dark_url && (
+                            <div className={`relative w-full h-1/2 ${settings.site_logo_url ? 'hidden dark:block' : ''}`}>
+                              <Image
+                                src={getImageUrl(settings.site_logo_dark_url)!}
+                                alt="Default Cover (Dark)"
+                                fill
+                                className="object-contain"
+                              />
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <div className="flex flex-col items-center text-gray-400">
+                          <span className="material-symbols-outlined text-4xl mb-2">picture_as_pdf</span>
+                          <span className="text-sm font-medium">No Preview</span>
+                        </div>
+                      )}
                     </div>
                   )}
                   {paper.regions && (
@@ -69,6 +113,40 @@ export default async function EPaperPage() {
             </div>
           )}
         </div>
+
+        {totalPages > 1 && (
+          <div className="mt-12 flex items-center justify-center gap-4">
+            {page > 1 ? (
+              <Link 
+                href={`/epaper?page=${page - 1}`}
+                className="px-4 py-2 border border-gray-300 dark:border-news-border rounded hover:bg-gray-100 dark:hover:bg-news-card transition-colors dark:text-news-text"
+              >
+                Previous
+              </Link>
+            ) : (
+              <button disabled className="px-4 py-2 border border-gray-200 dark:border-news-border rounded text-gray-400 dark:text-gray-600 cursor-not-allowed">
+                Previous
+              </button>
+            )}
+            
+            <span className="text-sm text-gray-600 dark:text-news-text-muted font-medium">
+              Page {page} of {totalPages}
+            </span>
+
+            {page < totalPages ? (
+              <Link 
+                href={`/epaper?page=${page + 1}`}
+                className="px-4 py-2 border border-gray-300 dark:border-news-border rounded hover:bg-gray-100 dark:hover:bg-news-card transition-colors dark:text-news-text"
+              >
+                Next
+              </Link>
+            ) : (
+              <button disabled className="px-4 py-2 border border-gray-200 dark:border-news-border rounded text-gray-400 dark:text-gray-600 cursor-not-allowed">
+                Next
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </main>
   );

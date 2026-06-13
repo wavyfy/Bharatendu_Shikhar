@@ -5,7 +5,9 @@ import { Advertisement } from "@/components/shared/Advertisement";
 import { ArticleMeta } from "@/components/shared/ArticleMeta";
 import { Ticker } from "@/components/home/Ticker";
 import { LiveTimeline } from "@/components/article/LiveTimeline";
-import { fetchArticleBySlug, fetchHomepageData } from "@/utils/fetchData";
+import { fetchArticleBySlug, fetchHomepageData, fetchRelatedArticles } from "@/utils/fetchData";
+import { DoubleRowRelatedSlider } from "@/components/article/DoubleRowRelatedSlider";
+import type { SliderItem } from "@/components/home/HorizontalArticleSlider";
 import type { ArticleWithAuthor } from "@/utils/mapArticleData";
 
 export const revalidate = 60;
@@ -25,6 +27,26 @@ export default async function ArticlePage({
   }
 
   const { topArticles } = await fetchHomepageData();
+
+  const { categoryArticles, regionArticles } = await fetchRelatedArticles(
+    article.categories?.id,
+    article.regions?.id,
+    article.id
+  );
+
+  const categorySliderItems: SliderItem[] = categoryArticles.map(art => ({
+    id: art.id.toString(),
+    label: article.categories?.name || "Related Topic",
+    slug: article.categories?.slug || "",
+    article: art
+  }));
+
+  const regionSliderItems: SliderItem[] = regionArticles.map(art => ({
+    id: art.id.toString(),
+    label: article.regions?.name || "Related Region",
+    slug: article.regions?.slug || "",
+    article: art
+  }));
 
   return (
     <div className="bg-news-bg text-news-text font-sans">
@@ -59,13 +81,13 @@ export default async function ArticlePage({
 
             {/* Article Excerpt / Lead Paragraph */}
           {article.excerpt && (
-            <p className="text-lg md:text-[22px] leading-relaxed text-gray-800 dark:text-gray-300 font-medium mb-1">
+            <p className="text-lg md:text-[18px] leading-relaxed text-gray-800 dark:text-gray-300 font-medium mb-1">
               {article.excerpt}
             </p>
           )}
 
           {/* Article Meta (Date, Read Time, Source, Badge) */}
-          <div className="w-full flex justify-end mb-8 mt-2">
+          <div className="w-full block mb-10 mt-4">
             <ArticleMeta article={article as unknown as ArticleWithAuthor} />
           </div>
 
@@ -88,6 +110,18 @@ export default async function ArticlePage({
           <Advertisement orientation="vertical" />
         </div>
       </main>
+
+      {/* Related Article Sliders Section */}
+      {(categorySliderItems.length > 0 || regionSliderItems.length > 0) && (
+        <div className="max-w-[1400px] mx-auto px-4 pb-20 w-full">
+          <DoubleRowRelatedSlider 
+            topTitle={article.categories?.name || "Topic"}
+            topItems={categorySliderItems}
+            bottomTitle={article.regions?.name || "Region"}
+            bottomItems={regionSliderItems}
+          />
+        </div>
+      )}
     </div>
   );
 }

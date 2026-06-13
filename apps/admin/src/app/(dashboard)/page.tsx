@@ -1,5 +1,6 @@
 import { getDashboardStats } from "@/features/analytics/queries";
 import Link from "next/link";
+import Image from "next/image";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 
 export const metadata = {
@@ -8,6 +9,15 @@ export const metadata = {
 
 export default async function DashboardPage() {
   const stats = await getDashboardStats();
+
+  const { supabaseAdmin } = await import("@repo/api");
+  const { data: settings } = await supabaseAdmin.from("settings").select("site_logo_url").eq("id", 1).single();
+  
+  const getImageUrl = (path: string | null) => {
+    if (!path) return null;
+    if (path.startsWith("http")) return path;
+    return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${path}`;
+  };
 
   const BASE_STATS = [
     { label: "Total Articles", value: stats.totalArticles, icon: "description", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
@@ -67,7 +77,7 @@ export default async function DashboardPage() {
               View All
             </Link>
           </div>
-          <div className="divide-y divide-surface-variant">
+          <div className="divide-y divide-surface-variant flex-1 flex flex-col">
             {stats.recentArticles.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">
                 <span className="material-symbols-outlined text-5xl text-outline-variant mb-3">article</span>
@@ -75,29 +85,40 @@ export default async function DashboardPage() {
                 <p className="text-xs text-outline mt-0.5">Create your first article to get started</p>
               </div>
             ) : (
-              stats.recentArticles.map((article) => (
-                <Link
-                  key={article.id}
-                  href="/articles"
-                  className="px-5 py-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group"
-                >
-                  <div>
-                    <h3 className="text-sm font-medium text-on-surface group-hover:text-primary transition-colors">{article.title}</h3>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <p className="text-xs text-on-surface-variant">
-                        {new Date(article.created_at).toLocaleDateString()}
-                      </p>
-                      {article.author?.full_name && (
-                        <>
-                          <span className="text-outline-variant">•</span>
-                          <p className="text-xs text-on-surface-variant">{article.author.full_name}</p>
-                        </>
-                      )}
+              <>
+                {stats.recentArticles.map((article) => (
+                  <Link
+                    key={article.id}
+                    href="/articles"
+                    className="px-5 py-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group"
+                  >
+                    <div>
+                      <h3 className="text-sm font-medium text-on-surface group-hover:text-primary transition-colors">{article.title}</h3>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <p className="text-xs text-on-surface-variant">
+                          {new Date(article.created_at).toLocaleDateString()}
+                        </p>
+                        {article.author?.full_name && (
+                          <>
+                            <span className="text-outline-variant">•</span>
+                            <p className="text-xs text-on-surface-variant">{article.author.full_name}</p>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <StatusBadge variant={article.status} />
-                </Link>
-              ))
+                    <StatusBadge variant={article.status} />
+                  </Link>
+                ))}
+                <div className="p-4 flex justify-center border-t border-surface-variant mt-auto">
+                  <Link
+                    href="/articles/new"
+                    className="btn-cms-secondary w-full justify-center"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">post_add</span>
+                    Create Article
+                  </Link>
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -120,33 +141,49 @@ export default async function DashboardPage() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-3 p-4">
+            <div className="divide-y divide-surface-variant flex-1 flex flex-col">
               {stats.recentEpapers.map((epaper) => (
                 <a
                   key={epaper.id}
                   href={epaper.pdf_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border border-surface-variant rounded-lg p-3 hover:border-primary/50 transition-colors cursor-pointer group block"
+                  className="px-5 py-4 flex items-center gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group"
                 >
-                  <div className="aspect-3/4 bg-surface-variant rounded-md mb-2 flex items-center justify-center overflow-hidden">
-                    <span className="material-symbols-outlined text-4xl text-red-500/70 group-hover:scale-110 transition-transform group-hover:text-red-600">
-                      picture_as_pdf
-                    </span>
+                  <div className="w-14 h-14 bg-surface-variant rounded flex shrink-0 items-center justify-center overflow-hidden p-2 relative">
+                    {settings?.site_logo_url ? (
+                      <Image
+                        src={getImageUrl(settings.site_logo_url)!} 
+                        alt="Logo" 
+                        fill
+                        className="object-contain p-2" 
+                      />
+                    ) : (
+                      <span className="material-symbols-outlined text-2xl text-red-500/70">
+                        picture_as_pdf
+                      </span>
+                    )}
                   </div>
-                  <h3 className="text-sm font-medium text-on-surface truncate">{epaper.title}</h3>
-                  <p className="text-xs text-on-surface-variant mt-0.5">
-                    {new Date(epaper.created_at).toLocaleDateString()}
-                  </p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-[10px] uppercase font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">E-Paper</span>
+                    </div>
+                    <h3 className="text-sm font-medium text-on-surface truncate group-hover:text-primary transition-colors">{epaper.title}</h3>
+                    <p className="text-xs text-on-surface-variant mt-0.5">
+                      {new Date(epaper.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
                 </a>
               ))}
-              <Link
-                href="/epapers/new"
-                className="border border-dashed border-outline-variant rounded-lg p-3 flex flex-col items-center justify-center hover:bg-surface-container-low transition-colors cursor-pointer text-on-surface-variant hover:text-primary"
-              >
-                <span className="material-symbols-outlined text-2xl mb-1">upload_file</span>
-                <span className="text-xs font-medium">Upload New</span>
-              </Link>
+              <div className="p-4 flex justify-center border-t border-surface-variant mt-auto">
+                <Link
+                  href="/epapers/new"
+                  className="btn-cms-secondary w-full justify-center"
+                >
+                  <span className="material-symbols-outlined text-[18px]">upload_file</span>
+                  Upload New
+                </Link>
+              </div>
             </div>
           )}
         </div>

@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -372,6 +372,7 @@ export type Database = {
           notify_email: string | null
           notify_on_new_article: boolean
           og_image_url: string | null
+          site_logo_dark_url: string | null
           site_logo_url: string | null
           site_name: string
           site_tagline: string | null
@@ -399,6 +400,7 @@ export type Database = {
           notify_email?: string | null
           notify_on_new_article?: boolean
           og_image_url?: string | null
+          site_logo_dark_url?: string | null
           site_logo_url?: string | null
           site_name?: string
           site_tagline?: string | null
@@ -426,6 +428,7 @@ export type Database = {
           notify_email?: string | null
           notify_on_new_article?: boolean
           og_image_url?: string | null
+          site_logo_dark_url?: string | null
           site_logo_url?: string | null
           site_name?: string
           site_tagline?: string | null

@@ -4,6 +4,7 @@ export type SettingsRow = {
   site_name: string;
   site_tagline: string | null;
   site_logo_url: string | null;
+  site_logo_dark_url: string | null;
   favicon_url: string | null;
   // SEO
   meta_title: string | null;

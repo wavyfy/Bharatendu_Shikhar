@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+::selection {
+  background-color: var(--news-accent);
+  color: white;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #000000;
@@ -45,6 +50,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  @apply transition-colors duration-300 ease-in-out;
 }
 
 @keyframes marquee-ltr {
@@ -130,6 +136,8 @@ body {
   margin-top: 1.6em;
   margin-bottom: 1.6em;
 }
+
 .dark .prose blockquote {
   border-left-color: #374151;
 }
+

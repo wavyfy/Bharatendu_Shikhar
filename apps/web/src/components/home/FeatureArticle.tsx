@@ -13,8 +13,8 @@ export function FeatureArticle({ article }: { article?: ArticleWithAuthor }) {
   if (!article) return null;
 
   return (
-    <Link href={`/article/${article.slug}`} className="block group/article">
-      <article className="grid grid-cols-1 lg:grid-cols-12 gap-8 hover:opacity-90 transition-opacity">
+    <Link href={`/article/${article.slug}`} className="block group/article hover:translate-y-[-2px] transition-all duration-300 rounded-[2px] overflow-hidden">
+      <article className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className={`order-2 lg:order-1 flex flex-col h-full ${article.featured_image ? 'lg:col-span-6' : 'lg:col-span-12'}`}>
           <h2 className="font-playfair text-[23px] lg:text-[35px] font-bold leading-[1.15] mb-4 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
             {article.title}
@@ -34,7 +34,7 @@ export function FeatureArticle({ article }: { article?: ArticleWithAuthor }) {
               alt={article.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
+              className="object-cover transition-transform duration-500 ease-out"
             />
           </div>
         </div>

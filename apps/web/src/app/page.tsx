@@ -55,11 +55,10 @@ export default async function Home() {
       </div>
 
       {/* Bottom Sliders (Outside sticky ad container) */}
-      <div className="max-w-[1400px] mx-auto px-4 mb-20 mt-12 flex flex-col gap-0" style={{ zoom: 0.95 }}>
-        <HorizontalArticleSlider title="GET MORE ABOUT INDIAN CITIES" items={regionSliderItems} />
+      <div className="max-w-[1400px] mx-auto px-0 mb-0 mt-4 flex flex-col gap-0 shadow-sm" style={{ zoom: 1 }}>
+        <HorizontalArticleSlider title="UTTARAKHAND REGIONS" items={regionSliderItems} />
         <HorizontalArticleSlider title="GLOBAL NEWS" items={categorySliderItems} />
       </div>
-
     </div>
   );
 }

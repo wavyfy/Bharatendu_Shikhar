@@ -75,6 +75,7 @@ function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
         site_name: fd.get("site_name") as string,
         site_tagline: (fd.get("site_tagline") as string) || null,
         site_logo_url: (fd.get("site_logo_url") as string) || null,
+        site_logo_dark_url: (fd.get("site_logo_dark_url") as string) || null,
         favicon_url: (fd.get("favicon_url") as string) || null,
       });
       if (res.success) {
@@ -101,11 +102,20 @@ function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
               className={inputCls}
             />
           </Field>
-          <Field label="Logo URL" hint="Full URL to SVG or PNG logo">
+          <Field label="Light Logo URL" hint="Full URL to SVG or PNG logo for light mode">
             <input
               name="site_logo_url"
               type="url"
               defaultValue={settings?.site_logo_url ?? ""}
+              placeholder="https://..."
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Dark Logo URL" hint="Full URL to SVG or PNG logo for dark mode">
+            <input
+              name="site_logo_dark_url"
+              type="url"
+              defaultValue={settings?.site_logo_dark_url ?? ""}
               placeholder="https://..."
               className={inputCls}
             />
@@ -368,7 +378,7 @@ function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
               value="true"
               checked={active}
               onChange={(e) => setActive(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#CC2200] focus:ring-[#CC2200]"
+              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#CC2200] focus:ring-[#CC2200] self-center"
             />
             <div>
               <label htmlFor="maintenance_mode" className="text-sm font-medium text-gray-700">
@@ -380,7 +390,7 @@ function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
             </div>
           </div>
           {active && (
-            <Field label="Maintenance Message">
+            <Field label="Maintenance Message (Optional)">
               <textarea
                 name="maintenance_message"
                 rows={2}

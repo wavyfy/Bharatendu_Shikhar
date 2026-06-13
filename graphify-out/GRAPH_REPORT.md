@@ -1,16 +1,16 @@
-# Graph Report - Bharatendu_Shikhar  (2026-06-11)
+# Graph Report - Bharatendu_Shikhar  (2026-06-13)
 
 ## Corpus Check
-- 178 files · ~57,266 words
+- 200 files · ~66,718 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 981 nodes · 1898 edges · 62 communities (54 shown, 8 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 1064 nodes · 2126 edges · 63 communities (54 shown, 9 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9c6bf5be`
+- Built from commit: `884217a2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -88,18 +88,18 @@
 10. `RegionRow` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `LoginPage()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
-  apps/admin/src/app/login/page.tsx → packages/api/src/supabase/server.ts
 - `middleware()` --calls--> `createSupabaseMiddlewareClient()`  [EXTRACTED]
   apps/admin/src/middleware.ts → packages/api/src/supabase/middleware.ts
 - `getSessionUser()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
   apps/admin/src/app/(dashboard)/layout.tsx → packages/api/src/supabase/server.ts
+- `ArticlesPage()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
+  apps/admin/src/app/(dashboard)/articles/page.tsx → packages/api/src/supabase/server.ts
 - `EditArticlePage()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
   apps/admin/src/app/(dashboard)/articles/[id]/edit/page.tsx → packages/api/src/supabase/server.ts
-- `LiveUpdatesPage()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
-  apps/admin/src/app/(dashboard)/articles/[id]/live-updates/page.tsx → packages/api/src/supabase/server.ts
+- `NewBadgePage()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
+  apps/admin/src/app/(dashboard)/badges/new/page.tsx → packages/api/src/supabase/server.ts
 
-## Communities (62 total, 8 thin omitted)
+## Communities (63 total, 9 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
@@ -118,16 +118,16 @@ Cohesion: 0.11
 Nodes (17): author, description, devDependencies, turbo, typescript, keywords, license, main (+9 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.08
-Nodes (24): dependencies, lucide-react, next, react, react-dom, @repo/api, @supabase/supabase-js, devDependencies (+16 more)
+Cohesion: 0.07
+Nodes (27): dependencies, framer-motion, lucide-react, next, next-themes, react, react-dom, @repo/api (+19 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.05
 Nodes (37): computedHash, skillPath, source, sourceType, computedHash, skillPath, source, sourceType (+29 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.22
-Nodes (6): geistMono, geistSans, metadata, geistMono, geistSans, metadata
+Cohesion: 0.14
+Nodes (15): geistMono, geistSans, metadata, geistMono, geistSans, generateMetadata(), metadata, RootLayout() (+7 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.14
@@ -138,8 +138,8 @@ Cohesion: 0.40
 Nodes (4): code:bash (npm run dev), Deploy on Vercel, Getting Started, Learn More
 
 ### Community 9 - "Community 9"
-Cohesion: 0.09
-Nodes (25): Home(), TOPIC_CATEGORIES, calculateReadTime(), FeatureArticle(), getImageUrl(), getImageUrl(), LiveUpdatesSection(), calculateReadTime() (+17 more)
+Cohesion: 0.22
+Nodes (9): ExpandableSectionLayout(), getImageUrl(), LiveUpdatesSection(), TopicSection(), Advertisement(), CategoryHeader(), RelatedArticle, RelatedArticlesList() (+1 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.15
@@ -203,7 +203,7 @@ Nodes (4): Auto-Clarity, Boundaries, Examples, Rules
 
 ### Community 31 - "Community 31"
 Cohesion: 0.06
-Nodes (34): dependencies, clsx, framer-motion, lucide-react, next, next-themes, nextjs-toploader, react (+26 more)
+Nodes (35): dependencies, clsx, expo-server-sdk, framer-motion, lucide-react, next, next-themes, nextjs-toploader (+27 more)
 
 ### Community 32 - "Community 32"
 Cohesion: 0.10
@@ -226,101 +226,97 @@ Cohesion: 0.40
 Nodes (4): compilerOptions, types, extends, include
 
 ### Community 37 - "Community 37"
-Cohesion: 0.20
-Nodes (9): cn(), BadgeMultiSelect(), BadgeMultiSelectProps, Dropzone(), DropzoneProps, Select(), SelectOption, SelectProps (+1 more)
+Cohesion: 0.14
+Nodes (16): loginAction(), LoginState, logoutAction(), metadata, NAV_ITEMS, Home(), DashboardLayout(), getSessionUser() (+8 more)
 
 ### Community 38 - "Community 38"
-Cohesion: 0.09
-Nodes (34): createArticleAction(), createCategoryAction(), createRegionAction(), deleteArticleAction(), deleteCategoryAction(), deleteRegionAction(), ensureLiveBadge(), getAuth() (+26 more)
+Cohesion: 0.07
+Nodes (39): createBadgeAction(), createCategoryAction(), createRegionAction(), deleteBadgeAction(), deleteCategoryAction(), deleteRegionAction(), toggleCategoryActiveAction(), toggleRegionActiveAction() (+31 more)
 
 ### Community 42 - "Community 42"
-Cohesion: 0.05
-Nodes (44): loginAction(), LoginState, logoutAction(), inter, playfair, plusJakarta, metadata, NAV_ITEMS (+36 more)
+Cohesion: 0.08
+Nodes (24): inter, playfair, plusJakarta, geistMono, geistSans, metadata, DashboardShellProps, NAV_ITEMS (+16 more)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.12
-Nodes (28): metadata, PageProps, metadata, PageProps, metadata, STATS, metadata, PageProps (+20 more)
+Cohesion: 0.06
+Nodes (56): metadata, PageProps, metadata, PageProps, ArticleFilters(), ArticlesTable(), BadgesTable(), CategoriesTable() (+48 more)
 
 ### Community 46 - "Community 46"
-Cohesion: 0.25
-Nodes (6): metadata, metadata, RegionFormPlaceholder(), EditRegionPage(), EditRegionPageProps, NewRegionPage()
+Cohesion: 0.10
+Nodes (19): metadata, metadata, metadata, metadata, metadata, metadata, metadata, BadgeFormPlaceholder() (+11 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.30
-Nodes (12): createEpaperAction(), deleteEpaperAction(), epaperSchema, getAuth(), updateEpaperAction(), cleanupOrphanedFilesAction(), deleteFileAction(), deleteImageAction() (+4 more)
+Cohesion: 0.10
+Nodes (31): createArticleAction(), deleteArticleAction(), ensureLiveBadge(), getAuth(), publishArticleAction(), resolveLiveBadgeId(), sendPushNotificationAction(), updateArticleAction() (+23 more)
 
 ### Community 48 - "Community 48"
-Cohesion: 0.14
-Nodes (18): metadata, metadata, PublisherForm(), PublisherFormProps, EditPublisherPage(), Props, createPublisherAction(), togglePublisherActiveAction() (+10 more)
+Cohesion: 0.15
+Nodes (15): metadata, PublisherForm(), PublisherFormProps, EditPublisherPage(), Props, createPublisherAction(), togglePublisherActiveAction(), updatePublisherAction() (+7 more)
 
 ### Community 49 - "Community 49"
-Cohesion: 0.10
-Nodes (22): BadgeRow, ArticleFilters(), ArticleFiltersProps, CategoriesTableProps, EpaperFormProps, EpapersTableProps, ArticleInsert, ArticleRow (+14 more)
+Cohesion: 0.05
+Nodes (59): BadgeRow, ArticleFiltersProps, ArticleFormProps, BadgeFormProps, PRESET_COLORS, CategoriesTableProps, CategoryFormProps, EpaperFormProps (+51 more)
 
 ### Community 50 - "Community 50"
-Cohesion: 0.11
-Nodes (28): metadata, PageProps, ArticleFormProps, ArticlesTable(), ArticlesTableProps, BadgesTable(), BadgesTableProps, CategoriesTable() (+20 more)
+Cohesion: 0.15
+Nodes (12): SearchContext, SearchContextType, SearchProvider(), useSearch(), CurrentDate(), useTranslateToggle(), Header(), MobileThemeToggle() (+4 more)
 
 ### Community 51 - "Community 51"
 Cohesion: 0.09
-Nodes (36): updateContactAction(), updateHomepageAction(), updateMaintenanceAction(), updateNotificationsAction(), updateSeoAction(), updateSiteInfoAction(), updateSocialAction(), upsertSettings() (+28 more)
+Nodes (37): updateContactAction(), updateHomepageAction(), updateMaintenanceAction(), updateNotificationsAction(), updateSeoAction(), updateSiteInfoAction(), updateSocialAction(), upsertSettings() (+29 more)
 
 ### Community 52 - "Community 52"
-Cohesion: 0.13
-Nodes (20): LiveUpdatesPage(), LiveUpdatesPageProps, metadata, getLiveUpdatesByArticleId(), supabase, supabaseAdmin, supabase, createSupabaseMiddlewareClient() (+12 more)
+Cohesion: 0.10
+Nodes (21): DashboardStats, getDashboardStats(), LiveTimeline(), LiveUpdate, DashboardPage(), supabase, supabaseAdmin, supabase (+13 more)
 
 ### Community 53 - "Community 53"
-Cohesion: 0.13
-Nodes (20): createBadgeAction(), deleteBadgeAction(), updateBadgeAction(), metadata, getAdminAuth(), BadgeRow, BadgeFormPlaceholder(), BadgeFormProps (+12 more)
+Cohesion: 0.21
+Nodes (13): calculateReadTime(), FeatureArticle(), getImageUrl(), calculateReadTime(), SplitArticles(), ArticleMeta(), calculateReadTime(), ArticleRow (+5 more)
 
 ### Community 54 - "Community 54"
-Cohesion: 0.16
-Nodes (15): metadata, CategoryFormPlaceholder(), CategoryFormProps, RegionFormProps, NewCategoryPage(), FormSection(), FormSectionProps, Input (+7 more)
+Cohesion: 0.24
+Nodes (11): NotFound(), Home(), ArticlePage(), DynamicRoutePage(), fetchArticleBySlug(), fetchBottomSlidersData(), fetchDynamicPageData(), fetchHomepageData() (+3 more)
 
 ### Community 55 - "Community 55"
-Cohesion: 0.15
-Nodes (18): metadata, metadata, metadata, ArticlesPage(), EpaperForm(), EditEpaperPage(), PageProps, EPapersPage() (+10 more)
+Cohesion: 0.17
+Nodes (16): metadata, EditEpaperPage(), PageProps, EPapersPage(), LiveUpdatesPage(), metadata, PreviewArticlePage(), PreviewArticlePageProps (+8 more)
 
 ### Community 56 - "Community 56"
-Cohesion: 0.18
-Nodes (16): createLiveUpdateAction(), deleteLiveUpdateAction(), getAuth(), updateLiveUpdateAction(), verifyArticleAccess(), LiveUpdateModal(), LiveUpdateModalProps, LiveUpdatesSectionProps (+8 more)
+Cohesion: 0.36
+Nodes (9): createLiveUpdateAction(), deleteLiveUpdateAction(), getAuth(), updateLiveUpdateAction(), verifyArticleAccess(), CreateLiveUpdateInput, createLiveUpdateSchema, UpdateLiveUpdateInput (+1 more)
 
 ### Community 57 - "Community 57"
-Cohesion: 0.15
-Nodes (16): metadata, metadata, BadgesPage(), CategoriesPage(), ArticleFormPlaceholder(), EditArticlePage(), EditArticlePageProps, NewArticlePage() (+8 more)
+Cohesion: 0.14
+Nodes (19): metadata, metadata, metadata, ArticlesPage(), BadgesPage(), metadata, PageProps, CategoriesPage() (+11 more)
 
 ### Community 58 - "Community 58"
-Cohesion: 0.20
-Nodes (5): Toast, ToastContext, ToastContextValue, ToastVariant, VARIANT_STYLES
+Cohesion: 0.31
+Nodes (5): DoubleRowRelatedSlider(), HorizontalArticleSlider(), SliderItem, Ticker(), ArticleWithAuthor
 
 ### Community 59 - "Community 59"
-Cohesion: 0.40
-Nodes (4): PublisherFilters(), PublisherFiltersProps, SearchInput(), SearchInputProps
+Cohesion: 0.29
+Nodes (6): getCookie(), GoogleTranslateButton(), readLang(), useLang(), Window, ThemeToggle()
 
 ### Community 60 - "Community 60"
-Cohesion: 0.50
-Nodes (4): metadata, EditCategoryPage(), EditCategoryPageProps, getCategoryById()
-
-### Community 61 - "Community 61"
-Cohesion: 0.50
-Nodes (3): DashboardStats, getDashboardStats(), DashboardPage()
+Cohesion: 0.38
+Nodes (4): DashboardMockup(), LoginForm(), LoginPage(), metadata
 
 ## Knowledge Gaps
-- **426 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+421 more)
+- **439 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+434 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createSupabaseServerClient()` connect `Community 55` to `Community 38`, `Community 9`, `Community 42`, `Community 44`, `Community 46`, `Community 47`, `Community 48`, `Community 51`, `Community 52`, `Community 53`, `Community 54`, `Community 56`, `Community 57`, `Community 60`, `Community 61`?**
-  _High betweenness centrality (0.055) - this node is a cross-community bridge._
-- **Why does `Button()` connect `Community 44` to `Community 42`, `Community 47`, `Community 48`, `Community 49`, `Community 50`, `Community 51`, `Community 52`, `Community 53`, `Community 54`, `Community 56`, `Community 57`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
-- **Why does `useToast()` connect `Community 51` to `Community 46`, `Community 47`, `Community 48`, `Community 50`, `Community 53`, `Community 54`, `Community 55`, `Community 56`, `Community 57`, `Community 58`?**
-  _High betweenness centrality (0.013) - this node is a cross-community bridge._
+- **Why does `createSupabaseServerClient()` connect `Community 55` to `Community 37`, `Community 38`, `Community 44`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 52`, `Community 54`, `Community 56`, `Community 57`, `Community 60`?**
+  _High betweenness centrality (0.060) - this node is a cross-community bridge._
+- **Why does `fetchHomepageData()` connect `Community 54` to `Community 6`, `Community 9`, `Community 53`, `Community 55`, `Community 58`?**
+  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+- **Why does `Button()` connect `Community 44` to `Community 38`, `Community 42`, `Community 47`, `Community 49`, `Community 51`, `Community 55`, `Community 60`?**
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `packageManager` to the rest of the system?**
-  _435 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _448 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

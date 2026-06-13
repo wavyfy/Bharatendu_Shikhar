@@ -17,9 +17,12 @@ export function Topbar({ displayName, role, logoUrl }: TopbarProps) {
   return (
     <header className="h-16 sticky top-0 bg-surface/80 backdrop-blur-md border-b border-outline-variant flex items-center px-6 justify-between shrink-0 z-30 shadow-sm">
       {/* Brand title — left side, offset for mobile hamburger */}
-      <div className="pl-10 lg:pl-0 flex items-center gap-3">
+      <button 
+        onClick={() => window.location.reload()}
+        className="pl-10 lg:pl-0 flex items-center gap-3 hover:opacity-80 transition-opacity focus:outline-none"
+      >
         {logoUrl && (
-          <div className="relative h-12 w-48">
+          <div className="relative h-12 w-48 cursor-pointer">
             <Image 
               src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
               alt="Logo" 
@@ -31,7 +34,7 @@ export function Topbar({ displayName, role, logoUrl }: TopbarProps) {
         )}
         {!logoUrl && (
           <div
-            className="font-bold text-primary leading-tight"
+            className="font-bold text-primary leading-tight cursor-pointer"
             style={{ fontFamily: "Plus Jakarta Sans, system-ui, sans-serif", fontSize: "17px", letterSpacing: "-0.01em" }}
           >
             Bharatendu Shikhar
@@ -40,7 +43,7 @@ export function Topbar({ displayName, role, logoUrl }: TopbarProps) {
         <div className="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant border-l border-outline-variant pl-3 ml-1 hidden sm:block">
           CMS Portal
         </div>
-      </div>
+      </button>
 
       {/* Right — user info + dropdown only */}
       <div className="flex items-center gap-3">

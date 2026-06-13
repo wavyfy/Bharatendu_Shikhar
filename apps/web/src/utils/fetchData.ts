@@ -2,34 +2,64 @@ import { supabase } from "@repo/api";
 import { mapToTopicCategory, ArticleWithAuthor } from "./mapArticleData";
 import { TopicCategoryData } from "@/components/home/TopicSection";
 
+function getTodayDateRange() {
+  const now = new Date();
+  const startOfDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const endOfDay = new Date(startOfDay);
+  endOfDay.setUTCHours(23, 59, 59, 999);
+  return { startOfDayISO: startOfDay.toISOString(), endOfDayISO: endOfDay.toISOString() };
+}
+
+function getRecentDateRange(days = 3) {
+  const now = new Date();
+  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - days + 1));
+  const endOfDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  endOfDay.setUTCHours(23, 59, 59, 999);
+  return { startISO: start.toISOString(), endISO: endOfDay.toISOString() };
+}
+
 export async function fetchHomepageData() {
-  // 1. Fetch Top/Mixed Articles
-  const { data: topArticlesData } = await supabase
-    .from("articles")
-    .select(`*`)
-    .eq("status", "published")
-    .order("published_at", { ascending: false })
-    .limit(20);
+  const { startISO, endISO } = getRecentDateRange();
 
-  // 2. Fetch Active Categories
-  const { data: categoriesData } = await supabase
-    .from("categories")
-    .select("*")
-    .eq("is_active", true);
+  // 1 & 2. Fetch Top/Mixed Articles and Active Categories in parallel
+  const [topArticlesResponse, categoriesResponse] = await Promise.all([
+    supabase
+      .from("articles")
+      .select(`*`)
+      .eq("status", "published")
+      .gte("published_at", startISO)
+      .lte("published_at", endISO)
+      .order("published_at", { ascending: false })
+      .limit(200),
+    supabase
+      .from("categories")
+      .select("*")
+      .eq("is_active", true),
+  ]);
 
-  // 3. Fetch articles for each category
+  const topArticlesData = topArticlesResponse.data;
+  const categoriesData = categoriesResponse.data;
+
+  // 3. Fetch articles for each category in parallel
   const categorySections: TopicCategoryData[] = [];
 
   if (categoriesData) {
-    for (const category of categoriesData) {
+    const categoryPromises = categoriesData.map(async (category) => {
       const { data: catArticles } = await supabase
         .from("articles")
         .select(`*`)
         .eq("status", "published")
         .eq("category_id", category.id)
+        .gte("published_at", startISO)
+        .lte("published_at", endISO)
         .order("published_at", { ascending: false })
         .limit(10);
+      return { category, catArticles };
+    });
 
+    const results = await Promise.all(categoryPromises);
+
+    for (const { category, catArticles } of results) {
       if (catArticles && catArticles.length > 0) {
         const mapped = mapToTopicCategory(
           category.id.toString(),
@@ -52,20 +82,22 @@ export async function fetchHomepageData() {
 }
 
 export async function fetchNavbarData() {
-  const { data: regions } = await supabase
-    .from("regions")
-    .select("*")
-    .eq("is_active", true)
-    .order("id", { ascending: true });
-  const { data: categories } = await supabase
-    .from("categories")
-    .select("*")
-    .eq("is_active", true)
-    .order("id", { ascending: true });
+  const [regionsResponse, categoriesResponse] = await Promise.all([
+    supabase
+      .from("regions")
+      .select("*")
+      .eq("is_active", true)
+      .order("id", { ascending: true }),
+    supabase
+      .from("categories")
+      .select("*")
+      .eq("is_active", true)
+      .order("id", { ascending: true }),
+  ]);
 
   return {
-    regions: regions || [],
-    categories: categories || [],
+    regions: regionsResponse.data || [],
+    categories: categoriesResponse.data || [],
   };
 }
 
@@ -84,17 +116,15 @@ export async function fetchSettings() {
 }
 
 export async function fetchDynamicPageData(slug: string) {
-  const { data: regionMatches } = await supabase
-    .from("regions")
-    .select("*")
-    .eq("slug", slug.toLowerCase());
-  const { data: categoryMatches } = await supabase
-    .from("categories")
-    .select("*")
-    .eq("slug", slug.toLowerCase());
+  const { startOfDayISO, endOfDayISO } = getTodayDateRange();
 
-  const region = regionMatches?.[0];
-  const category = categoryMatches?.[0];
+  const [regionMatchesResponse, categoryMatchesResponse] = await Promise.all([
+    supabase.from("regions").select("*").eq("slug", slug.toLowerCase()),
+    supabase.from("categories").select("*").eq("slug", slug.toLowerCase()),
+  ]);
+
+  const region = regionMatchesResponse.data?.[0];
+  const category = categoryMatchesResponse.data?.[0];
 
   if (!region && !category) {
     return null;
@@ -104,30 +134,38 @@ export async function fetchDynamicPageData(slug: string) {
   let topArticlesData: ArticleWithAuthor[] = [];
 
   if (region) {
-    const { data } = await supabase
-      .from("articles")
-      .select(`*`)
-      .eq("status", "published")
-      .eq("region_id", region.id)
-      .order("published_at", { ascending: false })
-      .limit(20);
-    topArticlesData = (data as ArticleWithAuthor[]) || [];
+    const [topArticlesResponse, categoriesResponse] = await Promise.all([
+      supabase
+        .from("articles")
+        .select(`*`)
+        .eq("status", "published")
+        .eq("region_id", region.id)
+        .order("published_at", { ascending: false })
+        .limit(200),
+      supabase.from("categories").select("*").eq("is_active", true),
+    ]);
 
-    const { data: categoriesData } = await supabase
-      .from("categories")
-      .select("*")
-      .eq("is_active", true);
+    topArticlesData = (topArticlesResponse.data as ArticleWithAuthor[]) || [];
+    const categoriesData = categoriesResponse.data;
+
     if (categoriesData) {
-      for (const cat of categoriesData) {
+      const categoryPromises = categoriesData.map(async (cat) => {
         const { data: catArticles } = await supabase
           .from("articles")
           .select(`*`)
           .eq("status", "published")
           .eq("region_id", region.id)
           .eq("category_id", cat.id)
+          .gte("published_at", startOfDayISO)
+          .lte("published_at", endOfDayISO)
           .order("published_at", { ascending: false })
           .limit(10);
+        return { cat, catArticles };
+      });
 
+      const results = await Promise.all(categoryPromises);
+
+      for (const { cat, catArticles } of results) {
         if (catArticles && catArticles.length > 0) {
           const mapped = mapToTopicCategory(
             cat.id.toString(),
@@ -141,30 +179,38 @@ export async function fetchDynamicPageData(slug: string) {
       }
     }
   } else if (category) {
-    const { data } = await supabase
-      .from("articles")
-      .select(`*`)
-      .eq("status", "published")
-      .eq("category_id", category.id)
-      .order("published_at", { ascending: false })
-      .limit(20);
-    topArticlesData = (data as ArticleWithAuthor[]) || [];
+    const [topArticlesResponse, regionsResponse] = await Promise.all([
+      supabase
+        .from("articles")
+        .select(`*`)
+        .eq("status", "published")
+        .eq("category_id", category.id)
+        .order("published_at", { ascending: false })
+        .limit(200),
+      supabase.from("regions").select("*").eq("is_active", true),
+    ]);
 
-    const { data: regionsData } = await supabase
-      .from("regions")
-      .select("*")
-      .eq("is_active", true);
+    topArticlesData = (topArticlesResponse.data as ArticleWithAuthor[]) || [];
+    const regionsData = regionsResponse.data;
+
     if (regionsData) {
-      for (const reg of regionsData) {
+      const regionPromises = regionsData.map(async (reg) => {
         const { data: regArticles } = await supabase
           .from("articles")
           .select(`*`)
           .eq("status", "published")
           .eq("category_id", category.id)
           .eq("region_id", reg.id)
+          .gte("published_at", startOfDayISO)
+          .lte("published_at", endOfDayISO)
           .order("published_at", { ascending: false })
           .limit(10);
+        return { reg, regArticles };
+      });
 
+      const results = await Promise.all(regionPromises);
+
+      for (const { reg, regArticles } of results) {
         if (regArticles && regArticles.length > 0) {
           const mapped = mapToTopicCategory(
             reg.id.toString(),
@@ -187,27 +233,35 @@ export async function fetchDynamicPageData(slug: string) {
 }
 
 export async function fetchBottomSlidersData() {
-  const { data: regions } = await supabase
-    .from("regions")
-    .select("*")
-    .eq("is_active", true);
-  const { data: categories } = await supabase
-    .from("categories")
-    .select("*")
-    .eq("is_active", true);
+  const { startOfDayISO, endOfDayISO } = getTodayDateRange();
+
+  const [regionsResponse, categoriesResponse] = await Promise.all([
+    supabase.from("regions").select("*").eq("is_active", true),
+    supabase.from("categories").select("*").eq("is_active", true),
+  ]);
+
+  const regions = regionsResponse.data;
+  const categories = categoriesResponse.data;
 
   const regionSliderItems = [];
   if (regions) {
-    for (const region of regions) {
+    const regionPromises = regions.map(async (region) => {
       const { data: latestArticle } = await supabase
         .from("articles")
         .select(`*`)
         .eq("status", "published")
         .eq("region_id", region.id)
+        .gte("published_at", startOfDayISO)
+        .lte("published_at", endOfDayISO)
         .order("published_at", { ascending: false })
         .limit(1)
         .single();
+      return { region, latestArticle };
+    });
 
+    const results = await Promise.all(regionPromises);
+
+    for (const { region, latestArticle } of results) {
       if (latestArticle) {
         regionSliderItems.push({
           id: `region-${region.id}`,
@@ -221,16 +275,23 @@ export async function fetchBottomSlidersData() {
 
   const categorySliderItems = [];
   if (categories) {
-    for (const category of categories) {
+    const categoryPromises = categories.map(async (category) => {
       const { data: latestArticle } = await supabase
         .from("articles")
         .select(`*`)
         .eq("status", "published")
         .eq("category_id", category.id)
+        .gte("published_at", startOfDayISO)
+        .lte("published_at", endOfDayISO)
         .order("published_at", { ascending: false })
         .limit(1)
         .single();
+      return { category, latestArticle };
+    });
 
+    const results = await Promise.all(categoryPromises);
+
+    for (const { category, latestArticle } of results) {
       if (latestArticle) {
         categorySliderItems.push({
           id: `cat-${category.id}`,
@@ -266,4 +327,35 @@ export async function fetchArticleBySlug(slug: string) {
   }
 
   return data;
+}
+
+export async function fetchRelatedArticles(categoryId?: number | null, regionId?: number | null, excludeArticleId?: number) {
+  let categoryArticles: ArticleWithAuthor[] = [];
+  let regionArticles: ArticleWithAuthor[] = [];
+
+  if (categoryId) {
+    const { data } = await supabase
+      .from("articles")
+      .select(`*`)
+      .eq("status", "published")
+      .eq("category_id", categoryId)
+      .neq("id", excludeArticleId || -1)
+      .order("published_at", { ascending: false })
+      .limit(10);
+    categoryArticles = (data as ArticleWithAuthor[]) || [];
+  }
+
+  if (regionId) {
+    const { data } = await supabase
+      .from("articles")
+      .select(`*`)
+      .eq("status", "published")
+      .eq("region_id", regionId)
+      .neq("id", excludeArticleId || -1)
+      .order("published_at", { ascending: false })
+      .limit(10);
+    regionArticles = (data as ArticleWithAuthor[]) || [];
+  }
+
+  return { categoryArticles, regionArticles };
 }

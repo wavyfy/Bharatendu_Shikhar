@@ -6,6 +6,7 @@ export const siteInfoSchema = z.object({
   site_name: z.string().min(1, "Site name is required").max(100),
   site_tagline: z.string().max(200).optional().nullable(),
   site_logo_url: urlOrEmpty,
+  site_logo_dark_url: urlOrEmpty,
   favicon_url: urlOrEmpty,
 });
 

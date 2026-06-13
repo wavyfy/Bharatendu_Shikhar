@@ -34,15 +34,32 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { SearchProvider } from "@/context/SearchContext";
+import { SearchModal } from "@/components/shared/SearchModal";
+import { BackToTop } from "@/components/shared/BackToTop";
+
+import { MaintenanceScreen } from "@/components/shared/MaintenanceScreen";
+import { MaintenanceListener } from "@/components/shared/MaintenanceListener";
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await fetchSettings();
+
+  if (settings?.maintenance_mode) {
+    return (
+      <MaintenanceScreen 
+        settings={settings} 
+        geistSansVariable={geistSans.variable} 
+        geistMonoVariable={geistMono.variable} 
+      />
+    );
+  }
+
   const { regions, categories } = await fetchNavbarData();
   const { topArticles, categorySections } = await fetchHomepageData();
-  const settings = await fetchSettings();
 
   return (
     <html
@@ -51,16 +68,29 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col bg-news-bg text-news-text dark:bg-news-bg dark:text-news-text">
+        <MaintenanceListener currentMaintenanceMode={false} />
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
-          <div className="flex flex-col min-h-screen">
-            <TopBar />
-            <Header logoUrl={settings?.site_logo_url} />
-            <Navbar categories={categorySections} topArticles={topArticles} navRegions={regions} navCategories={categories} logoUrl={settings?.site_logo_url} />
-            <div className="flex-1">
-              {children}
+          <SearchProvider>
+            <div className="flex flex-col min-h-screen">
+              <div className="flex flex-col flex-1 bg-white dark:bg-news-bg relative z-10">
+                <TopBar />
+                <Header logoUrl={settings?.site_logo_url} logoDarkUrl={settings?.site_logo_dark_url} />
+                <Navbar categories={categorySections} topArticles={topArticles} navRegions={regions} navCategories={categories} logoUrl={settings?.site_logo_url} logoDarkUrl={settings?.site_logo_dark_url} />
+                <div className="flex-1">
+                  {children}
+                </div>
+              </div>
+              <Footer 
+                logoUrl={settings?.site_logo_url} 
+                logoDarkUrl={settings?.site_logo_dark_url} 
+                categories={categories}
+                regions={regions}
+                settings={settings}
+              />
             </div>
-            <Footer logoUrl={settings?.site_logo_url} />
-          </div>
+            <SearchModal />
+            <BackToTop />
+          </SearchProvider>
         </ThemeProvider>
       </body>
     </html>

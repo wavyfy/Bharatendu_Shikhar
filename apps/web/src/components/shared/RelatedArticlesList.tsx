@@ -15,34 +15,38 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
   return (
     <div className="flex flex-col">
       <h2 className="font-playfair font-bold text-[19px] text-black dark:text-news-text mb-6 text-center border-b-2 border-gray-300 dark:border-news-border pb-2">Related News</h2>
-      <div className="flex flex-row lg:flex-col gap-6 lg:gap-0 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
+      <div className="flex flex-row lg:flex-col gap-4 lg:gap-0 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
         {articles.map((article, index) => (
         <div key={article.id} className="min-w-[85vw] lg:min-w-0 snap-center lg:snap-none">
-          <Link href={`/article/${article.slug}`} className="block group/article hover:opacity-90 transition-opacity">
-            <article className="flex gap-4 items-start">
-              <div className="flex-1 min-w-0 pr-2">
-                <h4 className="font-playfair font-bold text-[19px] leading-tight mb-2 line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
-                  {article.title}
-                </h4>
-              <ArticleMeta article={article} />
-            </div>
-            {article.featured_image && (
-              <div className="w-[120px] shrink-0">
-                <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card">
-                  <Image
-                    src={getImageUrl(article.featured_image)!}
-                    alt={article.title}
-                    fill
-                    sizes="120px"
-                    className="object-cover"
-                  />
+          <Link href={`/article/${article.slug}`} className="block group/article hover:translate-y-[-2px] transition-all duration-300">
+            <article className="flex flex-col">
+              <div className="flex flex-row gap-5 items-start">
+                <div className="flex-1 min-w-0 pr-0">
+                  <h4 className="font-playfair font-bold text-[19px] leading-tight mb-2 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+                    {article.title}
+                  </h4>
                 </div>
+                {article.featured_image && (
+                  <div className="w-[120px] shrink-0">
+                    <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card">
+                      <Image
+                        src={getImageUrl(article.featured_image)!}
+                        alt={article.title}
+                        fill
+                        sizes="120px"
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+              <div className="mt-2">
+                <ArticleMeta article={article} />
+              </div>
             </article>
           </Link>
           {index < articles.length - 1 && (
-            <div className="hidden lg:block h-[2px] w-full bg-gray-300 dark:bg-news-border my-8"></div>
+            <div className="hidden lg:block h-[2px] w-full bg-gray-300 dark:bg-news-border my-4"></div>
           )}
         </div>
       ))}

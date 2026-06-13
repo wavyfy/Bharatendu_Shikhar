@@ -96,11 +96,25 @@ export function GoogleTranslateButton() {
   return (
     <button
       onClick={toggle}
-      className="flex items-center gap-2 bg-gray-200 dark:bg-[#1A1A1A] hover:bg-gray-300 dark:hover:bg-[#2A2A2A] rounded-full px-3 py-1.5 text-xs font-bold transition-colors text-black dark:text-news-text"
+      className="group flex items-center bg-gray-300 dark:bg-[#1A1A1A] hover:bg-gray-300 dark:hover:bg-[#2A2A2A] rounded-full px-3 py-1 text-[12px] font-bold transition-colors duration-300 text-black dark:text-news-text"
       title={lang === "en" ? "Switch to Hindi" : "Switch to English"}
     >
-      <Languages size={14} />
-      {lang === "en" ? "हिंदी" : "English"}
+      <Languages size={14} className="shrink-0 transition-transform duration-500 group-hover:rotate-180" />
+      
+      <div 
+        className={`overflow-hidden transition-all duration-500 ease-out ml-2 h-[20px] ${
+          lang === "en" ? "w-[36px] group-hover:w-[110px]" : "w-[54px] group-hover:w-[130px]"
+        }`}
+      >
+        <div className="flex flex-col transition-transform duration-500 group-hover:translate-y-[-20px]">
+          <span className="whitespace-nowrap leading-[20px] transition-opacity duration-500 opacity-100 group-hover:opacity-0">
+            {lang === "en" ? "हिंदी" : "English"}
+          </span>
+          <span className="whitespace-nowrap leading-[20px] transition-opacity duration-500 opacity-0 group-hover:opacity-100">
+            {lang === "en" ? "हिंदी में बदलें" : "Switch to English"}
+          </span>
+        </div>
+      </div>
     </button>
   );
 }

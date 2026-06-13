@@ -13,14 +13,14 @@ export function ArticleMeta({ article }: { article: ArticleWithAuthor }) {
   const readTime = calculateReadTime(article.content);
 
   return (
-    <div className="flex flex-wrap items-center gap-2 mt-4 text-[10px] text-gray-500 dark:text-news-text-muted font-bold tracking-widest uppercase">
-      {badge && <span className="text-red-600 dark:text-news-accent font-black">{badge}</span>}
-      {badge && <span className="text-gray-300 dark:text-news-border">&bull;</span>}
+    <div className="flex items-center justify-start gap-3 w-full text-[11px] text-gray-500 dark:text-news-text-muted font-bold tracking-widest uppercase whitespace-nowrap">
+      {badge && <span className="text-white dark:text-news-accent font-black border px-1 rounded bg-red-500">{badge}</span>}
       
-      <span>{dateStr}</span>
-      <span className="text-gray-300 dark:text-news-border">&bull;</span>
-      
-      <span>{readTime}</span>
+      <div className="flex items-center gap-2 shrink-0">
+        <span>{dateStr}</span>
+        <span className="text-gray-300 dark:text-news-border">&bull;</span>
+        <span>{readTime}</span>
+      </div>
     </div>
   );
 }

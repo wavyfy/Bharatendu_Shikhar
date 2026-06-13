@@ -78,7 +78,7 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
                 <Link href={`/${item.slug}`} className="block mb-2 font-bold text-[14px] hover:text-red-600 dark:hover:text-news-accent transition-colors">
                   {item.label}
                 </Link>
-                <Link href={`/article/${item.article.slug}`} className="group/article block" draggable={false}>
+                <Link href={`/article/${item.article.slug}`} className="group/article block hover:translate-y-[-2px] transition-all duration-300" draggable={false}>
                   <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card mb-3 overflow-hidden">
                     {item.article.featured_image && (
                       <Image
@@ -87,7 +87,7 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
                         fill
                         sizes="220px"
                         draggable={false}
-                        className="object-cover group-hover/article:scale-105 transition-transform duration-500 pointer-events-none"
+                        className="object-cover transition-transform duration-500 ease-out pointer-events-none"
                       />
                     )}
                   </div>
