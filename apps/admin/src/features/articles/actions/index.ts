@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { revalidateWeb } from "@/utils/revalidateWeb";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@repo/api";
 import { createArticleSchema, updateArticleSchema, type CreateArticleInput, type UpdateArticleInput } from "../schemas";
@@ -101,6 +102,7 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
     }
 
     revalidatePath("/articles");
+    revalidateWeb(["articles", "categories", "regions"]);
     return { success: true, articleId: inserted?.id };
   } catch (error: unknown) {
     console.error("Create article error:", error);
@@ -178,6 +180,7 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput,
     revalidatePath("/articles");
     revalidatePath(`/articles/${id}`);
     revalidatePath(`/articles/${id}/edit`);
+    revalidateWeb(["articles", "categories", "regions"]);
     return { success: true };
   } catch (error: unknown) {
     console.error("Update article error:", error);
@@ -207,6 +210,7 @@ export async function deleteArticleAction(id: number) {
     }
 
     revalidatePath("/articles");
+    revalidateWeb(["articles", "categories", "regions"]);
     return { success: true };
   } catch (error: unknown) {
     console.error("Delete article error:", error);

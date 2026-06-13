@@ -385,11 +385,11 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
 
 
 // --- Cached Exports ---
-export const fetchTickerArticles = unstable_cache(_fetchTickerArticles, ["fetchTickerArticles"], { revalidate: 60 });
-export const fetchHomepageData = unstable_cache(_fetchHomepageData, ["fetchHomepageData"], { revalidate: 60 });
-export const fetchNavbarData = unstable_cache(_fetchNavbarData, ["fetchNavbarData"], { revalidate: 60 });
-export const fetchSettings = unstable_cache(_fetchSettings, ["fetchSettings"], { revalidate: 60 });
-export const fetchDynamicPageData = unstable_cache(_fetchDynamicPageData, ["fetchDynamicPageData"], { revalidate: 60 });
-export const fetchBottomSlidersData = unstable_cache(_fetchBottomSlidersData, ["fetchBottomSlidersData"], { revalidate: 60 });
-export const fetchArticleBySlug = unstable_cache(_fetchArticleBySlug, ["fetchArticleBySlug"], { revalidate: 60 });
-export const fetchRelatedArticles = unstable_cache(_fetchRelatedArticles, ["fetchRelatedArticles"], { revalidate: 60 });
+export const fetchTickerArticles = unstable_cache(_fetchTickerArticles, ["fetchTickerArticles"], { revalidate: 60, tags: ["articles"] });
+export const fetchHomepageData = unstable_cache(_fetchHomepageData, ["fetchHomepageData"], { revalidate: 60, tags: ["articles", "categories"] });
+export const fetchNavbarData = unstable_cache(_fetchNavbarData, ["fetchNavbarData"], { revalidate: 60, tags: ["categories", "regions"] });
+export const fetchSettings = unstable_cache(_fetchSettings, ["fetchSettings"], { revalidate: 60, tags: ["settings"] });
+export const fetchDynamicPageData = unstable_cache(_fetchDynamicPageData, ["fetchDynamicPageData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchBottomSlidersData = unstable_cache(_fetchBottomSlidersData, ["fetchBottomSlidersData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchArticleBySlug = unstable_cache(_fetchArticleBySlug, ["fetchArticleBySlug"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchRelatedArticles = unstable_cache(_fetchRelatedArticles, ["fetchRelatedArticles"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
