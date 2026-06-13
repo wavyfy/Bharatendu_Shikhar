@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { supabase } from "@repo/api";
 import { mapToTopicCategory, ArticleWithAuthor } from "./mapArticleData";
 import { TopicCategoryData } from "@/components/home/TopicSection";
@@ -18,7 +19,21 @@ function getRecentDateRange(days = 3) {
   return { startISO: start.toISOString(), endISO: endOfDay.toISOString() };
 }
 
-export async function fetchHomepageData() {
+async function _fetchTickerArticles() {
+  const { startISO, endISO } = getRecentDateRange();
+  const { data } = await supabase
+    .from("articles")
+    .select(`*`)
+    .eq("status", "published")
+    .gte("published_at", startISO)
+    .lte("published_at", endISO)
+    .order("published_at", { ascending: false })
+    .limit(200);
+
+  return (data as ArticleWithAuthor[]) || [];
+}
+
+async function _fetchHomepageData() {
   const { startISO, endISO } = getRecentDateRange();
 
   // 1 & 2. Fetch Top/Mixed Articles and Active Categories in parallel
@@ -81,7 +96,7 @@ export async function fetchHomepageData() {
   };
 }
 
-export async function fetchNavbarData() {
+async function _fetchNavbarData() {
   const [regionsResponse, categoriesResponse] = await Promise.all([
     supabase
       .from("regions")
@@ -101,7 +116,7 @@ export async function fetchNavbarData() {
   };
 }
 
-export async function fetchSettings() {
+async function _fetchSettings() {
   const { data, error } = await supabase
     .from("settings")
     .select("*")
@@ -115,7 +130,7 @@ export async function fetchSettings() {
   return data;
 }
 
-export async function fetchDynamicPageData(slug: string) {
+async function _fetchDynamicPageData(slug: string) {
   const { startOfDayISO, endOfDayISO } = getTodayDateRange();
 
   const [regionMatchesResponse, categoryMatchesResponse] = await Promise.all([
@@ -232,7 +247,7 @@ export async function fetchDynamicPageData(slug: string) {
   };
 }
 
-export async function fetchBottomSlidersData() {
+async function _fetchBottomSlidersData() {
   const { startOfDayISO, endOfDayISO } = getTodayDateRange();
 
   const [regionsResponse, categoriesResponse] = await Promise.all([
@@ -309,7 +324,7 @@ export async function fetchBottomSlidersData() {
   };
 }
 
-export async function fetchArticleBySlug(slug: string) {
+async function _fetchArticleBySlug(slug: string) {
   const { data, error } = await supabase
     .from("articles")
     .select(`
@@ -329,33 +344,52 @@ export async function fetchArticleBySlug(slug: string) {
   return data;
 }
 
-export async function fetchRelatedArticles(categoryId?: number | null, regionId?: number | null, excludeArticleId?: number) {
+async function _fetchRelatedArticles(categoryId?: number | null, regionId?: number | null, excludeArticleId?: number) {
   let categoryArticles: ArticleWithAuthor[] = [];
   let regionArticles: ArticleWithAuthor[] = [];
 
+  const promises = [];
+
   if (categoryId) {
-    const { data } = await supabase
-      .from("articles")
-      .select(`*`)
-      .eq("status", "published")
-      .eq("category_id", categoryId)
-      .neq("id", excludeArticleId || -1)
-      .order("published_at", { ascending: false })
-      .limit(10);
-    categoryArticles = (data as ArticleWithAuthor[]) || [];
+    promises.push(
+      supabase
+        .from("articles")
+        .select(`*`)
+        .eq("status", "published")
+        .eq("category_id", categoryId)
+        .neq("id", excludeArticleId || -1)
+        .order("published_at", { ascending: false })
+        .limit(10)
+        .then(({ data }) => { categoryArticles = (data as ArticleWithAuthor[]) || []; })
+    );
   }
 
   if (regionId) {
-    const { data } = await supabase
-      .from("articles")
-      .select(`*`)
-      .eq("status", "published")
-      .eq("region_id", regionId)
-      .neq("id", excludeArticleId || -1)
-      .order("published_at", { ascending: false })
-      .limit(10);
-    regionArticles = (data as ArticleWithAuthor[]) || [];
+    promises.push(
+      supabase
+        .from("articles")
+        .select(`*`)
+        .eq("status", "published")
+        .eq("region_id", regionId)
+        .neq("id", excludeArticleId || -1)
+        .order("published_at", { ascending: false })
+        .limit(10)
+        .then(({ data }) => { regionArticles = (data as ArticleWithAuthor[]) || []; })
+    );
   }
+
+  await Promise.all(promises);
 
   return { categoryArticles, regionArticles };
 }
+
+
+// --- Cached Exports ---
+export const fetchTickerArticles = unstable_cache(_fetchTickerArticles, ["fetchTickerArticles"], { revalidate: 60 });
+export const fetchHomepageData = unstable_cache(_fetchHomepageData, ["fetchHomepageData"], { revalidate: 60 });
+export const fetchNavbarData = unstable_cache(_fetchNavbarData, ["fetchNavbarData"], { revalidate: 60 });
+export const fetchSettings = unstable_cache(_fetchSettings, ["fetchSettings"], { revalidate: 60 });
+export const fetchDynamicPageData = unstable_cache(_fetchDynamicPageData, ["fetchDynamicPageData"], { revalidate: 60 });
+export const fetchBottomSlidersData = unstable_cache(_fetchBottomSlidersData, ["fetchBottomSlidersData"], { revalidate: 60 });
+export const fetchArticleBySlug = unstable_cache(_fetchArticleBySlug, ["fetchArticleBySlug"], { revalidate: 60 });
+export const fetchRelatedArticles = unstable_cache(_fetchRelatedArticles, ["fetchRelatedArticles"], { revalidate: 60 });

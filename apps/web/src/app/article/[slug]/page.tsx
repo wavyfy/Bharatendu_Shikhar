@@ -5,7 +5,7 @@ import { Advertisement } from "@/components/shared/Advertisement";
 import { ArticleMeta } from "@/components/shared/ArticleMeta";
 import { Ticker } from "@/components/home/Ticker";
 import { LiveTimeline } from "@/components/article/LiveTimeline";
-import { fetchArticleBySlug, fetchHomepageData, fetchRelatedArticles } from "@/utils/fetchData";
+import { fetchArticleBySlug, fetchTickerArticles, fetchRelatedArticles } from "@/utils/fetchData";
 import { DoubleRowRelatedSlider } from "@/components/article/DoubleRowRelatedSlider";
 import type { SliderItem } from "@/components/home/HorizontalArticleSlider";
 import type { ArticleWithAuthor } from "@/utils/mapArticleData";
@@ -20,13 +20,14 @@ export default async function ArticlePage({
   const resolvedParams = await params;
   const { slug } = resolvedParams;
 
-  const article = await fetchArticleBySlug(slug);
+  const [article, topArticles] = await Promise.all([
+    fetchArticleBySlug(slug),
+    fetchTickerArticles()
+  ]);
 
   if (!article) {
     notFound();
   }
-
-  const { topArticles } = await fetchHomepageData();
 
   const { categoryArticles, regionArticles } = await fetchRelatedArticles(
     article.categories?.id,

@@ -40,6 +40,30 @@ function useLang(): "en" | "hi" {
   );
 }
 
+function clearGoogleTranslateCookies() {
+  if (typeof window === "undefined") return;
+  const domain = window.location.hostname;
+  const parts = domain.split(".");
+  
+  const domainsToClear = [
+    "", // no domain
+    domain, // exact
+    `.${domain}`, // leading dot
+  ];
+
+  // Try clearing base domain if on a subdomain (e.g., www.example.com -> .example.com)
+  if (parts.length > 2) {
+    const baseDomain = parts.slice(-2).join("."); // Last 2 parts, usually works for com
+    domainsToClear.push(baseDomain);
+    domainsToClear.push(`.${baseDomain}`);
+  }
+
+  domainsToClear.forEach((d) => {
+    const domainStr = d ? `domain=${d};` : "";
+    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ${domainStr} path=/`;
+  });
+}
+
 export function GoogleTranslateButton() {
   const lang = useLang();
 
@@ -86,8 +110,7 @@ export function GoogleTranslateButton() {
   }, []);
 
   const switchToEnglish = useCallback(() => {
-    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}; path=/`;
+    clearGoogleTranslateCookies();
     window.location.reload();
   }, []);
 
@@ -128,8 +151,7 @@ export function useTranslateToggle() {
       document.cookie = `googtrans=/en/hi; path=/`;
       document.cookie = `googtrans=/en/hi; domain=${window.location.hostname}; path=/`;
     } else {
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}; path=/`;
+      clearGoogleTranslateCookies();
     }
     window.location.reload();
   }, [lang]);
