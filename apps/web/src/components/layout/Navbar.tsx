@@ -44,11 +44,14 @@ export function Navbar({
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      document.body.classList.add("menu-open");
     } else {
       document.body.style.overflow = "";
+      document.body.classList.remove("menu-open");
     }
     return () => {
       document.body.style.overflow = "";
+      document.body.classList.remove("menu-open");
     };
   }, [isMobileMenuOpen]);
 
@@ -252,93 +255,112 @@ export function Navbar({
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="lg:hidden fixed inset-0 z-100 bg-white dark:bg-news-bg flex flex-col h-dvh shadow-2xl"
           >
-            {!isSettingsOpen ? (
-              <>
-                <div className="p-5 pb-2">
-                  <button onClick={() => setIsMobileMenuOpen(false)}>
-                    <X size={28} strokeWidth={1.5} />
-                  </button>
-                </div>
-                <div className="px-5 pb-6">
-                  <button 
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setTimeout(() => openSearch(), 50);
-                    }}
-                    className="group relative flex items-center w-full bg-gray-100 dark:bg-news-bg hover:bg-gray-200 dark:hover:bg-[#1A1A1A] border border-gray-200 dark:border-news-border rounded-full h-[46px] text-gray-500 dark:text-news-text-muted hover:text-black dark:hover:text-white transition-colors overflow-hidden"
-                  >
-                    <span className="ml-5 text-[15px] font-medium tracking-wide">Search Articles...</span>
-                    <div className="absolute right-[3px] top-[3px] bottom-[3px] w-[40px] bg-white dark:bg-news-card rounded-full flex items-center justify-center shadow-sm">
-                      <Search size={18} strokeWidth={2.5} className="text-gray-600 dark:text-news-text transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
-                    </div>
-                  </button>
-                </div>
-                
-                <div className="flex-1 overflow-y-auto px-5">
-                   <Link href="/election" onClick={() => setIsMobileMenuOpen(false)} className="block text-red-600 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border">ELECTIONS</Link>
-                   <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Home</Link>
-                   <Link href="/politics" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Politics</Link>
-                   <Link href="/entertainment" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Entertainment</Link>
-                   <Link href="/sports" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Sports</Link>
-                   
-                   <div className="border-b border-black dark:border-news-border">
-                     <button onClick={() => setIsRegionsOpen(!isRegionsOpen)} className="w-full py-4 flex justify-between items-center font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">
-                       Regions
-                       <ChevronDown size={20} strokeWidth={1.5} className={`transition-transform duration-300 ${isRegionsOpen ? 'rotate-180' : ''}`} />
-                     </button>
-                     <AnimatePresence>
-                       {isRegionsOpen && (
-                         <motion.div 
-                           initial={{ height: 0, opacity: 0 }}
-                           animate={{ height: "auto", opacity: 1 }}
-                           exit={{ height: 0, opacity: 0 }}
-                           transition={{ duration: 0.2 }}
-                           className="flex flex-col pb-2 overflow-hidden"
-                         >
-                           {navRegions.map((region, idx) => (
-                             <Link key={region.slug} href={`/${region.slug}`} onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 px-2 text-gray-600 dark:text-news-text-secondary border-b border-gray-300 dark:border-news-border hover:text-black dark:hover:text-white transition-colors ${idx === navRegions.length - 1 ? 'border-b-0' : ''}`}>
-                               {region.name}
-                             </Link>
-                           ))}
-                         </motion.div>
-                       )}
-                     </AnimatePresence>
-                   </div>
-                </div>
-
-                <div className="bg-gray-200 dark:bg-news-card p-5 mt-auto">
-                  <button onClick={() => setIsSettingsOpen(true)} className="flex items-center justify-end w-full gap-3 text-[15px] font-medium dark:text-news-text hover:text-red-600 transition-colors">
-                    Settings <Settings size={20} />
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="p-5 pb-6">
-                  <button onClick={() => setIsSettingsOpen(false)}>
-                    <X size={28} strokeWidth={2.5} />
-                  </button>
-                </div>
-                <div className="px-5">
-                  <h2 className="text-red-600 text-2xl font-bold border-b border-black dark:border-news-border pb-4 mb-2">Settings</h2>
-                  <div className="flex justify-between items-center py-5 border-b border-gray-300 dark:border-news-border">
-                    <span className="font-medium text-[16px] dark:text-news-text">Theme</span>
-                    <MobileThemeToggle />
-                  </div>
-                  <div className="flex justify-between items-center py-5 border-b border-gray-300 dark:border-news-border">
-                    <span className="font-medium text-[16px] dark:text-news-text">Language</span>
-                    <button 
-                      onClick={toggleTranslate}
-                      className="group flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-red-700 transition-colors"
-                      aria-label="Toggle language"
-                    >
-                      <Globe size={16} className="transition-transform duration-500 group-hover:rotate-180" />
-                      <span>{translateLang === "en" ? "हिंदी" : "English"}</span>
+            <AnimatePresence mode="wait">
+              {!isSettingsOpen ? (
+                <motion.div
+                  key="menu-content"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-col h-full"
+                >
+                  <div className="p-5 pb-2">
+                    <button onClick={() => setIsMobileMenuOpen(false)}>
+                      <X size={28} strokeWidth={1.5} />
                     </button>
                   </div>
-                </div>
-              </>
-            )}
+                  <div className="px-5 pb-6">
+                    <button 
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setTimeout(() => openSearch(), 50);
+                      }}
+                      className="group relative flex items-center w-full bg-gray-100 dark:bg-news-bg hover:bg-gray-200 dark:hover:bg-[#1A1A1A] border border-gray-200 dark:border-news-border rounded-full h-[46px] text-gray-500 dark:text-news-text-muted hover:text-black dark:hover:text-white transition-colors overflow-hidden"
+                    >
+                      <span className="ml-5 text-[15px] font-medium tracking-wide">Search Articles...</span>
+                      <div className="absolute right-[3px] top-[3px] bottom-[3px] w-[40px] bg-white dark:bg-news-card rounded-full flex items-center justify-center shadow-sm">
+                        <Search size={18} strokeWidth={2.5} className="text-gray-600 dark:text-news-text transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
+                      </div>
+                    </button>
+                  </div>
+                  
+                  <div className="flex-1 overflow-y-auto px-5">
+                     <Link href="/election" onClick={() => setIsMobileMenuOpen(false)} className="block text-red-600 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border">ELECTIONS</Link>
+                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Home</Link>
+                     <Link href="/politics" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Politics</Link>
+                     <Link href="/entertainment" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Entertainment</Link>
+                     <Link href="/sports" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Sports</Link>
+                     
+                     <div className="border-b border-black dark:border-news-border">
+                       <button onClick={() => setIsRegionsOpen(!isRegionsOpen)} className="w-full py-4 flex justify-between items-center font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">
+                         Regions
+                         <ChevronDown size={20} strokeWidth={1.5} className={`transition-transform duration-300 ${isRegionsOpen ? 'rotate-180' : ''}`} />
+                       </button>
+                       <AnimatePresence>
+                         {isRegionsOpen && (
+                           <motion.div 
+                             initial={{ height: 0, opacity: 0 }}
+                             animate={{ height: "auto", opacity: 1 }}
+                             exit={{ height: 0, opacity: 0 }}
+                             transition={{ duration: 0.2 }}
+                             className="flex flex-col pb-2 overflow-hidden"
+                           >
+                             {navRegions.map((region, idx) => (
+                               <Link key={region.slug} href={`/${region.slug}`} onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 px-2 text-gray-600 dark:text-news-text-secondary border-b border-gray-300 dark:border-news-border hover:text-black dark:hover:text-white transition-colors ${idx === navRegions.length - 1 ? 'border-b-0' : ''}`}>
+                                 {region.name}
+                               </Link>
+                             ))}
+                           </motion.div>
+                         )}
+                       </AnimatePresence>
+                     </div>
+                  </div>
+  
+                  <div className="bg-gray-200 dark:bg-news-card p-5 mt-auto flex flex-col gap-4">
+                    <button onClick={() => setIsSettingsOpen(true)} className="flex items-center justify-end w-full gap-3 text-[15px] font-medium dark:text-news-text hover:text-red-600 transition-colors">
+                      Settings <Settings size={20} />
+                    </button>
+                    <Link href="/app" onClick={() => setIsMobileMenuOpen(false)} className="bg-red-600 text-white rounded-full py-3 flex items-center justify-center font-bold tracking-wider text-[15px] hover:bg-red-700 transition-colors">
+                      Get The App
+                    </Link>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="settings-content"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-col h-full"
+                >
+                  <div className="p-5 pb-6">
+                    <button onClick={() => setIsSettingsOpen(false)}>
+                      <X size={28} strokeWidth={2.5} />
+                    </button>
+                  </div>
+                  <div className="px-5">
+                    <h2 className="text-red-600 text-2xl font-bold border-b border-black dark:border-news-border pb-4 mb-2">Settings</h2>
+                    <div className="flex justify-between items-center py-5 border-b border-gray-300 dark:border-news-border">
+                      <span className="font-medium text-[16px] dark:text-news-text">Theme</span>
+                      <MobileThemeToggle />
+                    </div>
+                    <div className="flex justify-between items-center py-5 border-b border-gray-300 dark:border-news-border">
+                      <span className="font-medium text-[16px] dark:text-news-text">Language</span>
+                      <button 
+                        onClick={toggleTranslate}
+                        className="group flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-red-700 transition-colors"
+                        aria-label="Toggle language"
+                      >
+                        <Globe size={16} className="transition-transform duration-500 group-hover:rotate-180" />
+                        <span>{translateLang === "en" ? "हिंदी" : "English"}</span>
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>

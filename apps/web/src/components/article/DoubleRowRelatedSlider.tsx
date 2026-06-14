@@ -74,14 +74,14 @@ export function DoubleRowRelatedSlider({
   );
 
   return (
-    <div className="py-6 relative border-t-2 border-gray-300 dark:border-news-border mt-12">
+    <div className="py-6 relative border-t-2 border-gray-300 dark:border-news-border mt-6">
       
       {/* Header & Controls */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="font-playfair font-bold text-xl uppercase tracking-wide">
           Related Articles
         </h2>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <button onClick={() => scroll('left')} className="p-2 bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:bg-gray-50 rounded-full transition-colors" aria-label="Scroll left">
             <ChevronLeft size={18} />
           </button>

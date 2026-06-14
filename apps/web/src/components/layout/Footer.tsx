@@ -29,10 +29,10 @@ export function Footer({
   } | null
 }) {
   return (
-    <footer className="w-full bg-white dark:bg-news-card text-black dark:text-news-text pb-4 mt-auto">
-          <div className="max-w-[1200px] mx-auto px-0">
+    <footer className="w-full bg-white dark:bg-news-card text-black dark:text-news-text pb-24 lg:pb-4 mt-auto border-t-2 border-gray-200 dark:border-news-border">
+      <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
         
-        <div className="mb-10 w-full border-b-2 border-gray-200 dark:border-news-border py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="mb-4 w-full border-b-2 border-gray-200 dark:border-news-border py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-left outline-none hover:opacity-80 transition-opacity"
@@ -46,7 +46,7 @@ export function Footer({
                       alt="Bharatendu Shikhar Logo" 
                       width={240} 
                       height={60} 
-                      className="w-auto h-[60px] object-contain object-left"
+                      className="w-auto h-8 md:h-[60px] object-contain object-left"
                       style={{ width: "auto" }}
                     />
                   </div>
@@ -58,7 +58,7 @@ export function Footer({
                       alt="Bharatendu Shikhar Logo (Dark)" 
                       width={240} 
                       height={60} 
-                      className="w-auto h-[60px] object-contain object-left"
+                      className="w-auto h-8 md:h-[60px] object-contain object-left"
                       style={{ width: "auto" }}
                     />
                   </div>
@@ -114,7 +114,7 @@ export function Footer({
             )}
 
             {/* Quick Links */}
-            <div className="flex flex-col gap-4 md:pl-2">
+            <div className="hidden md:flex flex-col gap-4 md:pl-2">
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
                 Quick Links
               </h3>
@@ -214,11 +214,11 @@ export function Footer({
           </div>
 
           {/* Bottom Buttons */}
-          <div className="flex flex-row justify-end items-center gap-3 w-full lg:w-auto">
-            <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center flex-1 lg:flex-none">
+          <div className="flex flex-col sm:flex-row justify-end items-center gap-3 w-full lg:w-auto">
+            <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto">
               Read ePaper
             </Link>
-            <Link href="/app" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center flex-1 lg:flex-none">
+            <Link href="/app" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto">
               Get the App
             </Link>
           </div>

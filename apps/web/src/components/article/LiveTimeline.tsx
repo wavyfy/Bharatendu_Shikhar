@@ -13,11 +13,17 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
   );
 
   return (
-    <div className="mt-12 relative">
-      {/* Vertical Timeline Line */}
-      <div className="absolute left-[7px] top-3 bottom-0 w-[2px] bg-black dark:bg-gray-400" />
+    <div className="mt-0">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-3.5 h-3.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
+        <h2 className="text-2xl md:text-3xl font-black uppercase tracking-wider text-black dark:text-white">Live Updates</h2>
+      </div>
+      
+      <div className="relative">
+        {/* Vertical Timeline Line */}
+        <div className="absolute left-[7px] top-3 bottom-0 w-[2px] bg-black dark:bg-gray-400" />
 
-      <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-10">
         {sortedUpdates.map((update) => (
           <div key={update.id} className="relative pl-8 md:pl-12">
             {/* Timeline Dot */}
@@ -43,6 +49,7 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
             </div>
           </div>
         ))}
+        </div>
       </div>
     </div>
   );

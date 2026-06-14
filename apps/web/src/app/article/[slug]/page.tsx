@@ -83,7 +83,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
 
   return (
     <article className="flex-1 min-w-0 flex flex-col animate-in fade-in duration-300">
-      <div className="flex flex-col lg:grid lg:grid-cols-13 gap-8">
+      <div className="flex flex-col lg:grid lg:grid-cols-13 gap-0 md:gap-6">
         <div className="lg:col-span-9 flex flex-col min-w-0">
           {/* Category / Region Tags */}
           {tags.length > 0 && (
@@ -96,7 +96,6 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
               ))}
             </div>
           )}
-
           {/* Article Title */}
           <h1 className="text-2xl md:text-4xl leading-[1.15] font-playfair font-bold tracking-tight text-black dark:text-white mb-3">
             {article.title}
@@ -124,8 +123,8 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
 
           {/* Article Excerpt / Lead Paragraph */}
           {article.excerpt && (
-            <div className="pl-4 border-l-4 border-red-500 mb-6">
-              <p className="text-xl md:text-[18px] leading-relaxed text-gray-600 dark:text-gray-400 font-medium">
+            <div className="pl-4 border-l-4 border-red-500">
+              <p className="text-lg italic md:text-[18px] leading-relaxed text-gray-700 dark:text-gray-400 font-medium">
                 {article.excerpt}
               </p>
             </div>
@@ -147,7 +146,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
 
         {/* Related News Sidebar */}
         {relatedArticles.length > 0 && (
-          <div className="lg:col-span-4 lg:pl-5 border-t-2 lg:border-t-0 lg:border-l-2 border-gray-300 dark:border-news-border mt-8 pt-8 lg:mt-0 lg:pt-0">
+          <div className="lg:col-span-4 lg:pl-5 border-t-2 lg:border-t-0 lg:border-l-2 border-gray-300 dark:border-news-border mt-4 pt-4 lg:mt-0 lg:pt-0">
             <div className="sticky top-4 overflow-y-auto max-h-[calc(100vh-2rem)] pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
               <RelatedArticlesList articles={relatedArticles as unknown as ArticleWithAuthor[]} />
             </div>
@@ -189,7 +188,7 @@ async function RelatedSection({ paramsPromise }: { paramsPromise: Promise<{ slug
   }
 
   return (
-    <div className="max-w-[1400px] mx-auto px-4 pb-20 w-full animate-in fade-in duration-300">
+    <div className="max-w-[1400px] mx-auto px-4 pb-4 w-full animate-in fade-in duration-300">
       <DoubleRowRelatedSlider
         topTitle={article.categories?.name || "Topic"}
         topItems={categorySliderItems}
@@ -211,8 +210,7 @@ export default function ArticlePage({
       <Suspense fallback={<TickerSkeleton />}>
         <TickerSection />
       </Suspense>
-
-      <main className="max-w-[1700px] mx-auto px-4 flex justify-between gap-6 mb-20 items-start mt-8 w-full">
+      <main className="max-w-[1700px] mx-auto px-4 flex justify-between gap-4 mb-2 items-start mt-4 w-full">
         {/* Left Sticky Ad */}
         <div className="hidden xl:block w-[160px] shrink-0 sticky top-4">
           <Advertisement orientation="vertical" />

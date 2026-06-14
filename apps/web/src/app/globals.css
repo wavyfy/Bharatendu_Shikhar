@@ -142,3 +142,6 @@ body {
   border-left-color: #374151;
 }
 
+body.menu-open .floating-nav {
+  display: none !important;
+}

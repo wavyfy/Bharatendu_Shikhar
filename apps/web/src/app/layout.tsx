@@ -37,6 +37,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { SearchProvider } from "@/context/SearchContext";
 import { SearchModal } from "@/components/shared/SearchModal";
 import { BackToTop } from "@/components/shared/BackToTop";
+import { FloatingNav } from "@/components/shared/FloatingNav";
 
 import { MaintenanceScreen } from "@/components/shared/MaintenanceScreen";
 import { MaintenanceListener } from "@/components/shared/MaintenanceListener";
@@ -90,6 +91,7 @@ export default async function RootLayout({
             </div>
             <SearchModal />
             <BackToTop />
+            <FloatingNav />
           </SearchProvider>
         </ThemeProvider>
       </body>

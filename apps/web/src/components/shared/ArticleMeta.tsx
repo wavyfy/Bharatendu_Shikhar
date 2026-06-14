@@ -14,17 +14,22 @@ export function ArticleMeta({ article, isArticlePage, alignRight }: { article: A
 
   return (
     <div className={`flex items-center gap-3 w-full text-[11px] text-gray-500 dark:text-news-text-muted font-bold tracking-widest uppercase whitespace-nowrap overflow-hidden text-ellipsis ${alignRight ? 'justify-end' : 'justify-start'}`}>
-      <div className="flex items-center gap-2">
-        {badges.map((b, i) => (
-          <span 
-            key={i} 
-            className="text-white font-black border px-1 rounded shadow-sm"
-            style={{ backgroundColor: b.color || '#EF4444', borderColor: b.color || '#EF4444' }}
-          >
-            {b.name}
-          </span>
-        ))}
-      </div>
+      {badges.length > 0 && (
+        <>
+          <div className="flex items-center gap-2">
+            {badges.map((b, i) => (
+              <span 
+                key={i} 
+                className="text-white font-black border px-1 rounded shadow-sm"
+                style={{ backgroundColor: b.color || '#EF4444', borderColor: b.color || '#EF4444' }}
+              >
+                {b.name}
+              </span>
+            ))}
+          </div>
+          <span className="text-gray-300 dark:text-news-border">&bull;</span>
+        </>
+      )}
       
       <div className="flex items-center gap-2 shrink-0">
         <span>{dateStr}</span>
