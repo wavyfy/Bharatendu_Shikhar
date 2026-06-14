@@ -3,6 +3,12 @@ import { supabase } from "@repo/api";
 import Image from "next/image";
 import Link from "next/link";
 import { EpaperSkeleton } from "@/components/skeletons/EpaperSkeletons";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "E-Papers",
+  description: "Browse and read our latest digital e-papers online.",
+};
 
 function getImageUrl(path: string | null): string | null {
   if (!path) return null;

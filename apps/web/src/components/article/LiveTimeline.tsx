@@ -21,10 +21,10 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
         {sortedUpdates.map((update) => (
           <div key={update.id} className="relative pl-8 md:pl-12">
             {/* Timeline Dot */}
-            <div className="absolute left-0 top-2 w-4 h-4 rounded-full bg-black dark:bg-gray-400" />
+            <div className="absolute left-0 top-2 w-4 h-4 rounded-full bg-black dark:bg-gray-300" />
 
            {/* Date Button (styled like ePaper button) */}
-              <div className="border border-red-600 text-red-600 rounded-full px-5 py-1.5 text-xs font-medium inline-block mb-4">
+              <div className=" bg-red-600 text-white rounded-full px-5 py-1.5 text-xs font-medium inline-block mb-4 -ml-2 md:-ml-6">
                 {new Date(update.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} at {new Date(update.created_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
               </div>
 

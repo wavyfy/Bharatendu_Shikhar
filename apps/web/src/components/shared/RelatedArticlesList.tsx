@@ -27,13 +27,13 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
                   </h4>
                 </div>
                 {article.featured_image && (
-                  <div className="w-[120px] shrink-0">
+                  <div className="w-[90px] sm:w-[110px] shrink-0">
                     <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card">
                       <Image
                         src={getImageUrl(article.featured_image)!}
                         alt={article.title}
                         fill
-                        sizes="120px"
+                        sizes="90px"
                         className="object-cover"
                       />
                     </div>

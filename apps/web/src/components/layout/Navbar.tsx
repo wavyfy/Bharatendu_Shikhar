@@ -409,7 +409,7 @@ export function Navbar({
       </nav>
       
       <div className="hidden lg:block w-full max-w-[1400px] mx-auto px-4">
-        <div className="h-[2px] w-full bg-gray-400 dark:bg-news-border mb-2"></div>
+        <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border mb-1"></div>
       </div>
     </>
   );

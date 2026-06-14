@@ -8,8 +8,37 @@ import { ExpandableSectionLayout } from "@/components/home/ExpandableSectionLayo
 import { fetchDynamicPageData, fetchTickerArticles } from "@/utils/fetchData";
 import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
 import { CategoryPageSkeleton } from "@/components/skeletons/CategorySkeletons";
+import type { Metadata } from "next";
 
 export const revalidate = 60; // Revalidate every 60 seconds
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params;
+  const pageData = await fetchDynamicPageData(slug);
+  
+  if (!pageData) {
+    return {
+      title: "Category Not Found",
+    };
+  }
+
+  return {
+    title: pageData.pageTitle,
+    description: `Latest news, articles, and updates for ${pageData.pageTitle}.`,
+    openGraph: {
+      title: pageData.pageTitle,
+      description: `Latest news, articles, and updates for ${pageData.pageTitle}.`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: pageData.pageTitle,
+      description: `Latest news, articles, and updates for ${pageData.pageTitle}.`,
+    },
+  };
+}
 
 async function TickerSection() {
   const topArticles = await fetchTickerArticles();

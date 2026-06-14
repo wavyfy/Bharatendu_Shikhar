@@ -1,6 +1,6 @@
 export function DashboardMockup() {
   return (
-    <div className="w-full h-full bg-slate-950 text-slate-100 flex flex-col font-sans overflow-hidden select-none pointer-events-none scale-[0.85] origin-top-left opacity-100">
+    <div className="w-full h-full bg-slate-950 text-slate-100 flex flex-col font-sans overflow-hidden select-none pointer-events-none">
       {/* Top Header */}
       <div className="flex items-center justify-between px-6 py-3 bg-slate-900 border-b border-slate-800">
         <div className="flex flex-col">
@@ -63,8 +63,12 @@ export function DashboardMockup() {
               <div key={i} className="bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-800 flex flex-col justify-between h-24">
                 <div className="flex justify-between items-start">
                   <span className="text-xs text-slate-400 font-medium">{stat.label}</span>
-                  <div className={`w-6 h-6 rounded-md flex items-center justify-center ${stat.icon}`}>
-                    <div className="w-3 h-3 rounded-sm border border-current opacity-70" />
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${stat.icon}`}>
+                    <div className="flex items-end gap-0.5 h-3">
+                      <div className="w-1 h-1.5 bg-current opacity-70 rounded-sm" />
+                      <div className="w-1 h-3 bg-current opacity-70 rounded-sm" />
+                      <div className="w-1 h-2 bg-current opacity-70 rounded-sm" />
+                    </div>
                   </div>
                 </div>
                 <div className="text-2xl font-bold text-slate-100">{stat.val}</div>

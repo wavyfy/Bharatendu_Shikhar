@@ -29,7 +29,7 @@ export function Footer({
   } | null
 }) {
   return (
-    <footer className="w-full bg-white dark:bg-news-card text-black dark:text-news-text border-t-2 border-gray-300 dark:border-news-border pt-4 pb-4 mt-auto">
+    <footer className="w-full bg-white dark:bg-news-card text-black dark:text-news-text pb-4 mt-auto">
           <div className="max-w-[1200px] mx-auto px-0">
         
         <div className="mb-10 w-full border-b-2 border-gray-200 dark:border-news-border py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -81,7 +81,7 @@ export function Footer({
             {categories && categories.length > 0 && (
               <div className="flex flex-col gap-4 md:border-r-2 border-gray-200 dark:border-news-border md:pr-8">
                 <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-600 rounded-full"></span>
+
                   Categories
                 </h3>
                 <div className="flex flex-col gap-3">
@@ -99,7 +99,7 @@ export function Footer({
             {regions && regions.length > 0 && (
               <div className="flex flex-col gap-4 md:border-r-2 border-gray-200 dark:border-news-border md:pr-8">
                 <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-600 rounded-full"></span>
+
                   Regions
                 </h3>
                 <div className="flex flex-col gap-3">
@@ -116,7 +116,6 @@ export function Footer({
             {/* Quick Links */}
             <div className="flex flex-col gap-4 md:pl-2">
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
-                <span className="w-2 h-2 bg-red-600 rounded-full"></span>
                 Quick Links
               </h3>
               <div className="flex flex-col gap-3">
@@ -139,7 +138,6 @@ export function Footer({
             {/* Contact */}
             <div className="mb-10">
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-5 flex items-center gap-2">
-                <span className="w-2 h-2 bg-red-600 rounded-full"></span>
                 Contact Us
               </h3>
               <div className="flex flex-col gap-4 text-[14px] text-gray-600 dark:text-news-text-secondary">
@@ -167,7 +165,6 @@ export function Footer({
             {/* Follow Us */}
             <div>
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-5 flex items-center gap-2">
-                <span className="w-2 h-2 bg-red-600 rounded-full"></span>
                 Follow Us
               </h3>
               <div className="flex flex-wrap gap-3">

@@ -13,7 +13,7 @@ async function DashboardContent() {
   const stats = await getDashboardStats();
 
   const { supabaseAdmin } = await import("@repo/api");
-  const { data: settings } = await supabaseAdmin.from("settings").select("site_logo_url").eq("id", 1).single();
+  const { data: settings } = await supabaseAdmin.from("settings").select("site_logo_url, site_logo_dark_url").eq("id", 1).single();
   
   const getImageUrl = (path: string | null) => {
     if (!path) return null;
@@ -147,13 +147,25 @@ async function DashboardContent() {
                   className="px-5 py-4 flex items-center gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group"
                 >
                   <div className="w-14 h-14 bg-surface-variant rounded flex shrink-0 items-center justify-center overflow-hidden p-2 relative">
-                    {settings?.site_logo_url ? (
-                      <Image
-                        src={getImageUrl(settings.site_logo_url)!} 
-                        alt="Logo" 
-                        fill
-                        className="object-contain p-2" 
-                      />
+                    {settings?.site_logo_url || settings?.site_logo_dark_url ? (
+                      <>
+                        {settings.site_logo_url && (
+                          <Image
+                            src={getImageUrl(settings.site_logo_url)!} 
+                            alt="Logo" 
+                            fill
+                            className={`object-contain p-2 ${settings.site_logo_dark_url ? 'dark:hidden' : ''}`} 
+                          />
+                        )}
+                        {settings.site_logo_dark_url && (
+                          <Image
+                            src={getImageUrl(settings.site_logo_dark_url)!} 
+                            alt="Dark Logo" 
+                            fill
+                            className={`object-contain p-2 hidden ${settings.site_logo_dark_url ? 'dark:block' : ''}`} 
+                          />
+                        )}
+                      </>
                     ) : (
                       <span className="material-symbols-outlined text-2xl text-red-500/70">
                         picture_as_pdf

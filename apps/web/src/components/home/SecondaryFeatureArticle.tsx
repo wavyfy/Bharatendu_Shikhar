@@ -9,7 +9,7 @@ function getImageUrl(path: string | null): string | null {
   return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${path}`;
 }
 
-export function LiveUpdatesSection({ article }: { article?: ArticleWithAuthor }) {
+export function SecondaryFeatureArticle({ article }: { article?: ArticleWithAuthor }) {
   if (!article) return null;
   return (
     <Link href={`/article/${article.slug}`} className="block group/article hover:opacity-90 transition-opacity">
@@ -18,19 +18,24 @@ export function LiveUpdatesSection({ article }: { article?: ArticleWithAuthor })
           <h3 className="font-playfair font-bold text-[29px] leading-tight mb-4 pr-4 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
             {article.title}
           </h3>
+          {article.excerpt && (
+            <p className="text-gray-600 dark:text-gray-400 text-[17px] leading-relaxed mb-6 pr-4 line-clamp-3">
+              {article.excerpt}
+            </p>
+          )}
         <div className="mt-auto">
           <ArticleMeta article={article} />
         </div>
       </div>
       {article.featured_image && (
-        <div className="order-1 lg:order-2 lg:col-span-5 flex flex-col h-full justify-center">
-          <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card">
+        <div className="order-1 lg:order-2 lg:col-span-5 flex flex-col h-full justify-stretch">
+          <div className="relative w-full aspect-video lg:aspect-auto lg:h-full bg-gray-100 dark:bg-news-card rounded-[2px] overflow-hidden">
             <Image
               src={getImageUrl(article.featured_image)!}
               alt={article.title}
               fill
               sizes="(max-width: 768px) 100vw, 30vw"
-              className="object-cover"
+              className="object-cover transition-transform duration-500 group-hover/article:scale-105"
             />
           </div>
         </div>

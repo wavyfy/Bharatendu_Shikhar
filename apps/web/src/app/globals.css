@@ -17,7 +17,7 @@
 
 
 ::selection {
-  background-color: var(--news-text);
+  background-color: var(--news-accent);
   color: white;
 }
 
