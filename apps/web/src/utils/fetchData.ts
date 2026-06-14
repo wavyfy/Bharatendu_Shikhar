@@ -19,6 +19,16 @@ function getRecentDateRange(days = 3) {
   return { startISO: start.toISOString(), endISO: endOfDay.toISOString() };
 }
 
+async function fetchInBatches<T, R>(items: T[], batchSize: number, fetcher: (item: T) => Promise<R>): Promise<R[]> {
+  const results: R[] = [];
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize);
+    const batchResults = await Promise.all(batch.map(fetcher));
+    results.push(...batchResults);
+  }
+  return results;
+}
+
 async function _fetchTickerArticles() {
   const { startISO, endISO } = getRecentDateRange();
   const { data } = await supabase
@@ -59,7 +69,7 @@ async function _fetchHomepageData() {
   const categorySections: TopicCategoryData[] = [];
 
   if (categoriesData) {
-    const categoryPromises = categoriesData.map(async (category) => {
+    const results = await fetchInBatches(categoriesData, 5, async (category) => {
       const { data: catArticles } = await supabase
         .from("articles")
         .select(`*, article_badges(badge:badges(id, name, slug, color))`)
@@ -71,8 +81,6 @@ async function _fetchHomepageData() {
         .limit(10);
       return { category, catArticles };
     });
-
-    const results = await Promise.all(categoryPromises);
 
     for (const { category, catArticles } of results) {
       if (catArticles && catArticles.length > 0) {
@@ -164,7 +172,7 @@ async function _fetchDynamicPageData(slug: string) {
     const categoriesData = categoriesResponse.data;
 
     if (categoriesData) {
-      const categoryPromises = categoriesData.map(async (cat) => {
+      const results = await fetchInBatches(categoriesData, 5, async (cat) => {
         const { data: catArticles } = await supabase
           .from("articles")
           .select(`*, article_badges(badge:badges(id, name, slug, color))`)
@@ -177,8 +185,6 @@ async function _fetchDynamicPageData(slug: string) {
           .limit(10);
         return { cat, catArticles };
       });
-
-      const results = await Promise.all(categoryPromises);
 
       for (const { cat, catArticles } of results) {
         if (catArticles && catArticles.length > 0) {
@@ -209,7 +215,7 @@ async function _fetchDynamicPageData(slug: string) {
     const regionsData = regionsResponse.data;
 
     if (regionsData) {
-      const regionPromises = regionsData.map(async (reg) => {
+      const results = await fetchInBatches(regionsData, 5, async (reg) => {
         const { data: regArticles } = await supabase
           .from("articles")
           .select(`*, article_badges(badge:badges(id, name, slug, color))`)
@@ -222,8 +228,6 @@ async function _fetchDynamicPageData(slug: string) {
           .limit(10);
         return { reg, regArticles };
       });
-
-      const results = await Promise.all(regionPromises);
 
       for (const { reg, regArticles } of results) {
         if (regArticles && regArticles.length > 0) {
@@ -259,7 +263,7 @@ async function _fetchBottomSlidersData() {
 
   const regionSliderItems = [];
   if (regions) {
-    const regionPromises = regions.map(async (region) => {
+    const results = await fetchInBatches(regions, 5, async (region) => {
       const { data: latestArticle } = await supabase
         .from("articles")
         .select(`*, article_badges(badge:badges(id, name, slug, color))`)
@@ -270,8 +274,6 @@ async function _fetchBottomSlidersData() {
         .single();
       return { region, latestArticle };
     });
-
-    const results = await Promise.all(regionPromises);
 
     for (const { region, latestArticle } of results) {
       if (latestArticle) {
@@ -287,7 +289,7 @@ async function _fetchBottomSlidersData() {
 
   const categorySliderItems = [];
   if (categories) {
-    const categoryPromises = categories.map(async (category) => {
+    const results = await fetchInBatches(categories, 5, async (category) => {
       const { data: latestArticle } = await supabase
         .from("articles")
         .select(`*, article_badges(badge:badges(id, name, slug, color))`)
@@ -298,8 +300,6 @@ async function _fetchBottomSlidersData() {
         .single();
       return { category, latestArticle };
     });
-
-    const results = await Promise.all(categoryPromises);
 
     for (const { category, latestArticle } of results) {
       if (latestArticle) {
@@ -381,11 +381,13 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
 
 
 // --- Cached Exports ---
-export const fetchTickerArticles = unstable_cache(_fetchTickerArticles, ["fetchTickerArticles"], { revalidate: 60, tags: ["articles"] });
-export const fetchHomepageData = unstable_cache(_fetchHomepageData, ["fetchHomepageData"], { revalidate: 60, tags: ["articles", "categories"] });
-export const fetchNavbarData = unstable_cache(_fetchNavbarData, ["fetchNavbarData"], { revalidate: 60, tags: ["categories", "regions"] });
-export const fetchSettings = unstable_cache(_fetchSettings, ["fetchSettings"], { revalidate: 60, tags: ["settings"] });
-export const fetchDynamicPageData = unstable_cache(_fetchDynamicPageData, ["fetchDynamicPageData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchBottomSlidersData = unstable_cache(_fetchBottomSlidersData, ["fetchBottomSlidersData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchArticleBySlug = unstable_cache(_fetchArticleBySlug, ["fetchArticleBySlug"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchRelatedArticles = unstable_cache(_fetchRelatedArticles, ["fetchRelatedArticles"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+const IS_DEV = process.env.NODE_ENV === "development";
+
+export const fetchTickerArticles = IS_DEV ? _fetchTickerArticles : unstable_cache(_fetchTickerArticles, ["fetchTickerArticles"], { revalidate: 60, tags: ["articles"] });
+export const fetchHomepageData = IS_DEV ? _fetchHomepageData : unstable_cache(_fetchHomepageData, ["fetchHomepageData"], { revalidate: 60, tags: ["articles", "categories"] });
+export const fetchNavbarData = IS_DEV ? _fetchNavbarData : unstable_cache(_fetchNavbarData, ["fetchNavbarData"], { revalidate: 60, tags: ["categories", "regions"] });
+export const fetchSettings = IS_DEV ? _fetchSettings : unstable_cache(_fetchSettings, ["fetchSettings"], { revalidate: 60, tags: ["settings"] });
+export const fetchDynamicPageData = IS_DEV ? _fetchDynamicPageData : unstable_cache(_fetchDynamicPageData, ["fetchDynamicPageData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchBottomSlidersData = IS_DEV ? _fetchBottomSlidersData : unstable_cache(_fetchBottomSlidersData, ["fetchBottomSlidersData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchArticleBySlug = IS_DEV ? _fetchArticleBySlug : unstable_cache(_fetchArticleBySlug, ["fetchArticleBySlug"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchRelatedArticles = IS_DEV ? _fetchRelatedArticles : unstable_cache(_fetchRelatedArticles, ["fetchRelatedArticles"], { revalidate: 60, tags: ["articles", "categories", "regions"] });

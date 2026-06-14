@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import type { PublisherWithAuth } from "../types";
 import { togglePublisherActiveAction } from "../actions";
@@ -13,6 +13,9 @@ import { Pencil, Ban, CheckCircle } from "lucide-react";
 
 export function PublishersTable({ publishers }: { publishers: PublisherWithAuth[] }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams?.get("page") || "1", 10);
+  const serialStart = (currentPage - 1) * 10;
   const toast = useToast();
   const confirm = useConfirm();
   const [isPending, startTransition] = useTransition();
@@ -57,6 +60,7 @@ export function PublishersTable({ publishers }: { publishers: PublisherWithAuth[
         <table className="w-full text-sm text-left">
           <thead className="bg-surface-container-high border-b border-outline-variant text-on-surface-variant uppercase text-xs font-bold tracking-wider">
             <tr>
+              <th className="px-6 py-4 w-16">S.No.</th>
               <th className="px-6 py-4">Publisher</th>
               <th className="px-6 py-4">Status</th>
               <th className="px-6 py-4 text-center">Articles</th>
@@ -65,8 +69,9 @@ export function PublishersTable({ publishers }: { publishers: PublisherWithAuth[
             </tr>
           </thead>
           <tbody className="divide-y divide-outline-variant bg-surface">
-            {publishers.map((pub) => (
+            {publishers.map((pub, index) => (
               <tr key={pub.id} className="hover:bg-surface-container-low transition-colors">
+                <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-medium">{serialStart + index + 1}</td>
                 <td className="px-6 py-4">
                   <div className="font-medium text-gray-900 dark:text-slate-100">{pub.full_name}</div>
                   <div className="text-gray-500 dark:text-slate-400 text-xs mt-0.5">{pub.email}</div>

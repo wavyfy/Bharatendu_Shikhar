@@ -69,7 +69,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <NextTopLoader color="#0058c3" showSpinner={false} />
+        <NextTopLoader color="#C92121" showSpinner={false} />
         <ThemeProvider>
           <ToastProvider>
             {children}

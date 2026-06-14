@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { deleteBadgeAction } from "../actions";
 import type { BadgeRow } from "../types";
@@ -16,6 +16,9 @@ interface BadgesTableProps {
 
 export function BadgesTable({ badges }: BadgesTableProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams?.get("page") || "1", 10);
+  const serialStart = (currentPage - 1) * 10;
   const toast = useToast();
   const confirm = useConfirm();
   const [isPending, startTransition] = useTransition();
@@ -57,6 +60,7 @@ export function BadgesTable({ badges }: BadgesTableProps) {
         <table className="w-full text-sm text-left">
           <thead className="bg-surface-container-high border-b border-outline-variant text-on-surface-variant uppercase text-xs font-bold tracking-wider">
             <tr>
+              <th className="px-6 py-3 w-16 font-medium">S.No.</th>
               <th className="px-6 py-3 font-medium">Badge</th>
               <th className="px-6 py-3 font-medium">Slug</th>
               <th className="px-6 py-3 font-medium">Color</th>
@@ -65,11 +69,12 @@ export function BadgesTable({ badges }: BadgesTableProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-outline-variant bg-surface">
-            {badges.map((badge) => (
+            {badges.map((badge, index) => (
               <tr
                 key={badge.id}
                 className="hover:bg-surface-container-low transition-colors duration-150"
               >
+                <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-medium">{serialStart + index + 1}</td>
                 <td className="px-6 py-4">
                   <span
                     className="inline-flex items-center gap-2 px-2.5 py-1 rounded text-[11px] font-bold uppercase tracking-widest text-white"

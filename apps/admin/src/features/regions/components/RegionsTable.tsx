@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { deleteRegionAction, toggleRegionActiveAction } from "../actions";
 import type { RegionRow } from "../types";
@@ -17,6 +17,9 @@ interface RegionsTableProps {
 
 export function RegionsTable({ regions }: RegionsTableProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams?.get("page") || "1", 10);
+  const serialStart = (currentPage - 1) * 10;
   const toast = useToast();
   const confirm = useConfirm();
   const [isPending, startTransition] = useTransition();
@@ -81,6 +84,7 @@ export function RegionsTable({ regions }: RegionsTableProps) {
         <table className="w-full text-sm text-left">
         <thead className="bg-surface-container-high border-b border-outline-variant text-on-surface-variant uppercase text-xs font-bold tracking-wider">
           <tr>
+            <th className="px-6 py-3 w-16 font-medium">S.No.</th>
             <th className="px-6 py-3 font-medium">Name</th>
             <th className="px-6 py-3 font-medium">Slug</th>
             <th className="px-6 py-3 font-medium">Status</th>
@@ -89,8 +93,9 @@ export function RegionsTable({ regions }: RegionsTableProps) {
           </tr>
         </thead>
         <tbody className="divide-y divide-outline-variant bg-surface">
-          {regions.map((region) => (
+          {regions.map((region, index) => (
             <tr key={region.id} className="hover:bg-surface-container-low transition-colors">
+              <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-medium">{serialStart + index + 1}</td>
               <td className="px-6 py-4 font-medium text-gray-900 dark:text-slate-100">{region.name}</td>
               <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-mono text-xs">{region.slug}</td>
               <td className="px-6 py-4">

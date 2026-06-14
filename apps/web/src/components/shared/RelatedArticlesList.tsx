@@ -22,7 +22,7 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
             <article className="flex flex-col">
               <div className="flex flex-row gap-5 items-start">
                 <div className="flex-1 min-w-0 pr-0">
-                  <h4 className="font-playfair font-bold text-[19px] leading-tight mb-2 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+                  <h4 className="font-playfair font-bold text-[19px] leading-tight mb-2 line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
                     {article.title}
                   </h4>
                 </div>
@@ -40,7 +40,7 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
                   </div>
                 )}
               </div>
-              <div className="mt-2">
+              <div className="mt-3">
                 <ArticleMeta article={article} />
               </div>
             </article>

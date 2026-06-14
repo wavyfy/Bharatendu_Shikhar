@@ -31,7 +31,7 @@ export function DashboardShell({
 
             <main className="flex-1 overflow-auto bg-surface min-h-0 min-w-0">
               <PageTransition>
-                <div className="p-6 lg:p-8 max-w-[1440px] mx-auto w-full">
+                <div className="p-3 sm:p-6 lg:p-8 max-w-[1440px] mx-auto w-full">
                   {children}
                 </div>
               </PageTransition>

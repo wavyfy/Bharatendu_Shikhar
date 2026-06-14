@@ -5,6 +5,7 @@ type ArticleRow = Database["public"]["Tables"]["articles"]["Row"];
 export type ArticleWithAuthor = ArticleRow & {
   profiles?: { full_name?: string } | null;
   article_live_updates?: Database["public"]["Tables"]["article_live_updates"]["Row"][];
+  article_badges?: { badge?: { name: string; color: string | null } | null }[] | null;
 };
 
 export type TopicCategoryData = {

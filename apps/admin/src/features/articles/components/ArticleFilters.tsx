@@ -112,8 +112,8 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
         <div className="flex-1">
           <SearchInput placeholder="Search articles..." />
         </div>
-        <div className="flex gap-2 flex-wrap">
-          <div className="w-48">
+        <div className="flex gap-2 flex-wrap w-full sm:w-auto">
+          <div className="flex-1 sm:w-48 sm:flex-none min-w-[140px] sm:min-w-0">
             <Select
               value={currentCategoryId}
               onChange={(value) => setFilter("category_id", value)}
@@ -125,7 +125,7 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
             />
           </div>
           
-          <div className="w-48">
+          <div className="flex-1 sm:w-48 sm:flex-none min-w-[140px] sm:min-w-0">
             <Select
               value={currentRegionId}
               onChange={(value) => setFilter("region_id", value)}

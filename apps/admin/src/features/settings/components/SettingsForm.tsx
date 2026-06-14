@@ -34,7 +34,7 @@ function Field({
 }
 
 const inputCls =
-  "w-full border border-outline-variant rounded px-3 py-2 text-sm bg-surface-container-lowest dark:bg-surface-container-highest text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors";
+  "w-full border border-outline-variant rounded px-3 py-2 text-sm bg-surface-container-lowest dark:bg-surface-container-highest text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors scheme-light dark:scheme-dark";
 
 function SectionFooter({
   isPending,
@@ -98,6 +98,7 @@ function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
               name="site_name"
               type="text"
               required
+              placeholder="e.g. Bhartendu Shikhar"
               defaultValue={settings?.site_name ?? "Bharatendu Shikhar"}
               className={inputCls}
             />
@@ -174,6 +175,7 @@ function SeoSection({ settings }: { settings: SettingsRow | null }) {
               name="meta_title"
               type="text"
               maxLength={70}
+              placeholder="e.g. Latest News & Updates"
               defaultValue={settings?.meta_title ?? ""}
               className={inputCls}
             />
@@ -183,6 +185,7 @@ function SeoSection({ settings }: { settings: SettingsRow | null }) {
               name="meta_description"
               rows={3}
               maxLength={160}
+              placeholder="A short description of the site for search engines..."
               defaultValue={settings?.meta_description ?? ""}
               className={inputCls}
             />
@@ -452,7 +455,7 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
 
       {/* Form canvas */}
       <div className="flex-1 max-w-3xl">
-        <div className="cms-card p-6 md:p-8">
+        <div className="cms-card p-4 sm:p-6 md:p-8">
           <h2 className="cms-card-label mb-6">
             {tabs.find((t) => t.id === activeTab)?.label}
           </h2>

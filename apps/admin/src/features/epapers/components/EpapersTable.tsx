@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { deleteEpaperAction } from "../actions";
 import type { EpaperWithRelations } from "../types";
@@ -17,6 +17,9 @@ interface EpapersTableProps {
 
 export function EpapersTable({ epapers }: EpapersTableProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams?.get("page") || "1", 10);
+  const serialStart = (currentPage - 1) * 10;
   const toast = useToast();
   const confirm = useConfirm();
   const [isPending, startTransition] = useTransition();
@@ -59,6 +62,7 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
         <table className="w-full text-sm text-left">
           <thead className="bg-surface-container-high border-b border-outline-variant text-on-surface-variant uppercase text-xs font-bold tracking-wider">
             <tr>
+              <th className="px-6 py-3 w-16 font-medium">S.No.</th>
               <th className="px-6 py-3 font-medium">Title & Region</th>
               <th className="px-6 py-3 font-medium">Published Date</th>
               <th className="px-6 py-3 font-medium">Expiry Date</th>
@@ -67,12 +71,13 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-outline-variant bg-surface">
-          {epapers.map((epaper) => {
+          {epapers.map((epaper, index) => {
             const isExpired = epaper.expiry_date && new Date(epaper.expiry_date) < new Date();
             const isPublished = epaper.published_at && new Date(epaper.published_at) <= new Date();
 
             return (
               <tr key={epaper.id} className="hover:bg-surface-container-low transition-colors duration-150">
+                <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-medium">{serialStart + index + 1}</td>
                 <td className="px-6 py-4 font-medium text-on-surface">
                   <div className="truncate max-w-[250px]">{epaper.title}</div>
                   <div className="text-xs text-outline mt-1">

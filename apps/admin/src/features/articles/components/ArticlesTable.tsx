@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteArticleAction, publishArticleAction } from "../actions";
 import type { ArticleWithRelations } from "../types";
@@ -17,6 +17,9 @@ interface ArticlesTableProps {
 
 export function ArticlesTable({ articles }: ArticlesTableProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams?.get("page") || "1", 10);
+  const serialStart = (currentPage - 1) * 10;
   const toast = useToast();
   const confirm = useConfirm();
   const [isPending, startTransition] = useTransition();
@@ -74,6 +77,7 @@ export function ArticlesTable({ articles }: ArticlesTableProps) {
         <table className="w-full text-sm text-left">
           <thead className="bg-surface-container-high border-b border-outline-variant text-on-surface-variant uppercase text-xs font-bold tracking-wider">
             <tr>
+              <th className="px-6 py-3 w-16 font-medium">S.No.</th>
               <th className="px-6 py-3 font-medium">Title</th>
               <th className="px-6 py-3 font-medium">Status</th>
               <th className="px-6 py-3 font-medium">Author</th>
@@ -82,8 +86,9 @@ export function ArticlesTable({ articles }: ArticlesTableProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-outline-variant bg-surface">
-          {articles.map((article) => (
+          {articles.map((article, index) => (
             <tr key={article.id} className="hover:bg-surface-container-low transition-colors duration-150">
+              <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-medium">{serialStart + index + 1}</td>
               <td className="px-6 py-4 font-medium text-on-surface max-w-xs truncate">
                 {article.title}
               </td>

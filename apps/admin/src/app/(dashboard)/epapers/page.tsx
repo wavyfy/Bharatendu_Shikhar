@@ -30,7 +30,9 @@ async function EpapersContent({ searchParamsPromise }: { searchParamsPromise: Pa
   return (
     <div className="cms-card animate-in fade-in duration-300">
       <div className="cms-card-header flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <span className="cms-card-label">All E-Papers ({count})</span>
+        <div className="w-full sm:w-auto text-left">
+          <span className="cms-card-label">All E-Papers ({count})</span>
+        </div>
         <div className="w-full sm:max-w-md">
           <SearchInput placeholder="Search e-papers..." />
         </div>

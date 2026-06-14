@@ -96,6 +96,7 @@ export function Dropzone({
         type="file"
         ref={fileInputRef}
         onChange={handleFileChange}
+        onClick={(e) => e.stopPropagation()}
         accept={accept}
         className="hidden"
         {...props}

@@ -30,7 +30,6 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string>(initialData?.pdf_url || "");
   const [regionId, setRegionId] = useState(initialData?.region_id?.toString() || "");
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,8 +72,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
     });
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleFileUpload = async (file: File) => {
     if (!file) return;
 
     if (file.type !== "application/pdf") {
@@ -128,9 +126,6 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
       setIsUploading(false);
     }
     setPdfUrl("");
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
   
   const formatDateForInput = (isoString?: string | null) => {
@@ -212,22 +207,12 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
                       </div>
                     </div>
                   )}
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    className="hidden"
-                    onChange={handleFileUpload}
-                    ref={fileInputRef}
-                    disabled={isUploading}
-                  />
                   <Dropzone
                     label="Click or drag to upload PDF"
                     helperText="PDF only · Max 50 MB"
-                    onClick={() => {
-                      if (!isUploading) {
-                        fileInputRef.current?.click();
-                      }
-                    }}
+                    accept="application/pdf"
+                    disabled={isUploading}
+                    onFileSelect={handleFileUpload}
                   />
                 </div>
               )}

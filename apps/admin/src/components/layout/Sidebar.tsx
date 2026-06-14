@@ -91,7 +91,7 @@ export function Sidebar({ role }: SidebarProps) {
               }`}
             >
               <span
-                className={`material-symbols-outlined text-[20px] transition-transform duration-200 ${!active && "group-hover:scale-110 group-hover:rotate-3"}`}
+                className={`material-symbols-outlined text-[20px] w-6 flex items-center justify-center shrink-0 transition-transform duration-200 ${!active && "group-hover:scale-110 group-hover:rotate-3"}`}
                 style={active ? { fontVariationSettings: "'FILL' 1" } : undefined}
               >
                 {icon}
@@ -107,9 +107,9 @@ export function Sidebar({ role }: SidebarProps) {
         <Link
           href="/articles/new"
           onClick={() => setMobileOpen(false)}
-          className="btn-cms-primary justify-center group active:scale-[0.98] transition-all"
+          className="btn-cms-primary justify-center group active:scale-[0.98] transition-all "
         >
-          <span className="material-symbols-outlined text-[18px] transition-transform group-hover:rotate-90">add</span>
+          <span className="material-symbols-outlined text-[18px] w-5 flex items-center justify-center shrink-0 transition-transform group-hover:-translate-y-1">add</span>
           New Article
         </Link>
         <Link
@@ -117,7 +117,7 @@ export function Sidebar({ role }: SidebarProps) {
           onClick={() => setMobileOpen(false)}
           className="btn-cms-secondary justify-center group active:scale-[0.98] transition-all"
         >
-          <span className="material-symbols-outlined text-[18px] transition-transform group-hover:-translate-y-1">upload_file</span>
+          <span className="material-symbols-outlined text-[18px] w-5 flex items-center justify-center shrink-0 transition-transform group-hover:-translate-y-1">upload_file</span>
           Upload E-Paper
         </Link>
       </div>
