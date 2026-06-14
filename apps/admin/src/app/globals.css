@@ -2,6 +2,42 @@
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --background: #faf9ff;
+  --surface: #faf9ff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f2f3fe;
+  --surface-container: #ecedf8;
+  --surface-container-high: #e6e7f3;
+  --surface-container-highest: #e0e2ed;
+  --surface-variant: #e0e2ed;
+  --on-surface: #181b23;
+  --on-surface-variant: #414754;
+  --outline: #727786;
+  --outline-variant: #c1c6d7;
+  --primary-fixed: #ffdad6;
+}
+
+.dark {
+  /* Match Web Side Dark Mode */
+  --background: #050505;
+  --surface: #111111;
+  --surface-container-lowest: #000000;
+  --surface-container-low: #0a0a0a;
+  --surface-container: #111111;
+  --surface-container-high: #1a1a1a;
+  --surface-container-highest: #333333;
+  --surface-variant: #111111;
+  
+  --on-surface: #FFFFFF;
+  --on-surface-variant: #B0B0B0;
+  
+  --outline: #808080;
+  --outline-variant: #2A2A2A;
+  
+  --primary-fixed: #ffb4ab;
+}
+
 /* ── Stitch Design System Tokens ── */
 @theme inline {
   /* Fonts */
@@ -9,12 +45,30 @@
   --font-display: var(--font-plus-jakarta), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
 
+  /* Dynamic variables mapped to :root/.dark */
+  --color-background: var(--background);
+  --color-on-background: var(--on-surface);
+  --color-surface: var(--surface);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-variant: var(--surface-variant);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-primary-fixed: var(--primary-fixed);
+
+  /* Legacy compatibility */
+  --color-foreground: var(--on-surface);
+
   /* Stitch Color Palette (Material You - Red) */
   --color-primary: #ba1a1a;
   --color-on-primary: #ffffff;
   --color-primary-container: #ffdad6;
   --color-on-primary-container: #410002;
-  --color-primary-fixed: #ffdad6;
   --color-primary-fixed-dim: #ffb4ab;
   --color-on-primary-fixed: #410002;
   --color-on-primary-fixed-variant: #93000a;
@@ -43,45 +97,11 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
-  --color-surface: #faf9ff;
-  --color-on-surface: #181b23;
-  --color-surface-variant: #e0e2ed;
-  --color-on-surface-variant: #414754;
   --color-surface-dim: #d8d9e4;
   --color-surface-bright: #faf9ff;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f2f3fe;
-  --color-surface-container: #ecedf8;
-  --color-surface-container-high: #e6e7f3;
-  --color-surface-container-highest: #e0e2ed;
   --color-surface-tint: #0059c5;
   --color-inverse-surface: #2d3039;
   --color-inverse-on-surface: #eff0fb;
-
-  --color-background: #faf9ff;
-  --color-on-background: #181b23;
-
-  --color-outline: #727786;
-  --color-outline-variant: #c1c6d7;
-
-  /* Legacy compatibility */
-  --color-foreground: var(--color-on-surface);
-}
-
-.dark {
-  --color-background: #0f1115;
-  --color-surface: #16181d;
-  --color-surface-container-lowest: #0a0b0e;
-  --color-surface-container-low: #1a1c23;
-  --color-surface-container: #1e2028;
-  --color-surface-container-high: #252830;
-  --color-surface-container-highest: #2c303a;
-  --color-surface-variant: #22252b;
-  --color-on-surface: #e2e4e9;
-  --color-on-surface-variant: #9ca3af;
-  --color-outline: #4b5563;
-  --color-outline-variant: #272a32;
-  --color-primary-fixed: #ffb4ab;
 }
 
 /* Material Symbols base style */

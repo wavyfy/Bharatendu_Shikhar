@@ -27,5 +27,5 @@ export function CardBody({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={`p-6 bg-surface-container-lowest ${className}`}>{children}</div>;
+  return <div className={`p-6 bg-surface ${className}`}>{children}</div>;
 }

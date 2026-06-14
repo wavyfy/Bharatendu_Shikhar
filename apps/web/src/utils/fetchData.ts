@@ -23,7 +23,7 @@ async function _fetchTickerArticles() {
   const { startISO, endISO } = getRecentDateRange();
   const { data } = await supabase
     .from("articles")
-    .select(`*`)
+    .select(`*, article_badges(badge:badges(id, name, slug, color))`)
     .eq("status", "published")
     .gte("published_at", startISO)
     .lte("published_at", endISO)
@@ -40,7 +40,7 @@ async function _fetchHomepageData() {
   const [topArticlesResponse, categoriesResponse] = await Promise.all([
     supabase
       .from("articles")
-      .select(`*`)
+      .select(`*, article_badges(badge:badges(id, name, slug, color))`)
       .eq("status", "published")
       .gte("published_at", startISO)
       .lte("published_at", endISO)
@@ -62,7 +62,7 @@ async function _fetchHomepageData() {
     const categoryPromises = categoriesData.map(async (category) => {
       const { data: catArticles } = await supabase
         .from("articles")
-        .select(`*`)
+        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("category_id", category.id)
         .gte("published_at", startISO)
@@ -152,7 +152,7 @@ async function _fetchDynamicPageData(slug: string) {
     const [topArticlesResponse, categoriesResponse] = await Promise.all([
       supabase
         .from("articles")
-        .select(`*`)
+        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("region_id", region.id)
         .order("published_at", { ascending: false })
@@ -167,7 +167,7 @@ async function _fetchDynamicPageData(slug: string) {
       const categoryPromises = categoriesData.map(async (cat) => {
         const { data: catArticles } = await supabase
           .from("articles")
-          .select(`*`)
+          .select(`*, article_badges(badge:badges(id, name, slug, color))`)
           .eq("status", "published")
           .eq("region_id", region.id)
           .eq("category_id", cat.id)
@@ -197,7 +197,7 @@ async function _fetchDynamicPageData(slug: string) {
     const [topArticlesResponse, regionsResponse] = await Promise.all([
       supabase
         .from("articles")
-        .select(`*`)
+        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("category_id", category.id)
         .order("published_at", { ascending: false })
@@ -212,7 +212,7 @@ async function _fetchDynamicPageData(slug: string) {
       const regionPromises = regionsData.map(async (reg) => {
         const { data: regArticles } = await supabase
           .from("articles")
-          .select(`*`)
+          .select(`*, article_badges(badge:badges(id, name, slug, color))`)
           .eq("status", "published")
           .eq("category_id", category.id)
           .eq("region_id", reg.id)
@@ -248,7 +248,6 @@ async function _fetchDynamicPageData(slug: string) {
 }
 
 async function _fetchBottomSlidersData() {
-  const { startOfDayISO, endOfDayISO } = getTodayDateRange();
 
   const [regionsResponse, categoriesResponse] = await Promise.all([
     supabase.from("regions").select("*").eq("is_active", true),
@@ -263,11 +262,9 @@ async function _fetchBottomSlidersData() {
     const regionPromises = regions.map(async (region) => {
       const { data: latestArticle } = await supabase
         .from("articles")
-        .select(`*`)
+        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("region_id", region.id)
-        .gte("published_at", startOfDayISO)
-        .lte("published_at", endOfDayISO)
         .order("published_at", { ascending: false })
         .limit(1)
         .single();
@@ -293,11 +290,9 @@ async function _fetchBottomSlidersData() {
     const categoryPromises = categories.map(async (category) => {
       const { data: latestArticle } = await supabase
         .from("articles")
-        .select(`*`)
+        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("category_id", category.id)
-        .gte("published_at", startOfDayISO)
-        .lte("published_at", endOfDayISO)
         .order("published_at", { ascending: false })
         .limit(1)
         .single();
@@ -331,7 +326,8 @@ async function _fetchArticleBySlug(slug: string) {
       *,
       categories(id, name, slug),
       regions(id, name, slug),
-      article_live_updates(*)
+      article_live_updates(*),
+      article_badges(badge:badges(id, name, slug, color))
     `)
     .eq("slug", slug)
     .eq("status", "published")
@@ -354,7 +350,7 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
     promises.push(
       supabase
         .from("articles")
-        .select(`*`)
+        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("category_id", categoryId)
         .neq("id", excludeArticleId || -1)
@@ -368,7 +364,7 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
     promises.push(
       supabase
         .from("articles")
-        .select(`*`)
+        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("region_id", regionId)
         .neq("id", excludeArticleId || -1)

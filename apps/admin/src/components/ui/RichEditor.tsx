@@ -21,7 +21,7 @@ export function RichEditor({ value, onChange }: RichEditorProps) {
     },
     editorProps: {
       attributes: {
-        class: "prose prose-sm max-w-none focus:outline-none min-h-[300px] p-4 bg-surface",
+        class: "prose prose-sm dark:prose-invert max-w-none focus:outline-none min-h-[300px] p-4 bg-surface-container-lowest dark:bg-surface-container-highest",
       },
     },
   });
@@ -39,7 +39,7 @@ export function RichEditor({ value, onChange }: RichEditorProps) {
 
   return (
     <div className="border border-outline-variant rounded-md overflow-hidden flex flex-col focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 dark:focus-within:ring-offset-slate-800 transition-shadow duration-150">
-      <div className="flex flex-wrap items-center gap-1 p-2 border-b border-outline-variant bg-surface-container-low">
+      <div className="flex flex-wrap items-center gap-1 p-2 border-b border-outline-variant bg-surface-container-low dark:bg-surface-container-high">
         <Button
           type="button"
           variant="ghost"
@@ -107,7 +107,7 @@ export function RichEditor({ value, onChange }: RichEditorProps) {
           Quote
         </Button>
       </div>
-      <div className="flex-1 overflow-y-auto bg-surface-container-lowest text-on-surface min-h-[300px]">
+      <div className="flex-1 overflow-y-auto bg-surface-container-lowest dark:bg-surface-container-highest text-on-surface min-h-[300px]">
         <EditorContent editor={editor} />
       </div>
     </div>

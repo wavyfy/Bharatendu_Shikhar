@@ -15,8 +15,6 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { BadgeMultiSelect } from "@/components/ui/BadgeMultiSelect";
 import { Dropzone } from "@/components/ui/Dropzone";
-import { PageContainer } from "@/components/ui/PageContainer";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { motion } from "framer-motion";
 
 const IMAGE_MAX_BYTES = 2 * 1024 * 1024; // 2 MB
@@ -153,11 +151,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
   }
 
   return (
-    <PageContainer>
-      <PageHeader 
-        title={isEditing ? "Edit Article" : "Create Article"} 
-        description="Write and publish a new article."
-      />
+    <>
 
       <motion.form 
         onSubmit={handleSubmit} 
@@ -177,7 +171,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
           {/* ─── Content ─────────────────────────────────────────────── */}
           <FormSection title="Content" description="The main content of the article.">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="title" className="text-sm font-medium text-slate-700">
+              <label htmlFor="title" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                 Title <span className="text-red-500">*</span>
               </label>
               <Input
@@ -191,21 +185,21 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
             </div>
 
             <div className="flex flex-col gap-1.5 mt-6">
-              <label htmlFor="excerpt" className="text-sm font-medium text-slate-700">
+              <label htmlFor="excerpt" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                 Excerpt
               </label>
               <textarea
                 id="excerpt"
                 name="excerpt"
                 rows={3}
-                className="flex w-full rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-sm text-on-surface placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-800 transition-shadow duration-150"
+                className="flex w-full rounded-md border border-outline-variant bg-surface-container-lowest dark:bg-surface-container-highest px-3 py-2 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-surface transition-shadow duration-150"
                 placeholder="Brief summary of the article..."
                 defaultValue={initialData?.excerpt || ""}
               />
             </div>
 
             <div className="flex flex-col gap-1.5 mt-6">
-              <label className="text-sm font-medium text-slate-700">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
                 Body Content <span className="text-red-500">*</span>
               </label>
               <RichEditor value={content} onChange={setContent} />
@@ -231,7 +225,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
           <FormSection title="Organization" description="Categorize and set visibility.">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-slate-700">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Status <span className="text-red-500">*</span>
                 </label>
                 <input type="hidden" name="status" value={status} />
@@ -246,7 +240,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-slate-700">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Category
                 </label>
                 <input type="hidden" name="category_id" value={categoryId} />
@@ -262,7 +256,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
               </div>
 
               <div className="flex flex-col gap-1.5 md:col-span-2">
-                <label className="text-sm font-medium text-slate-700">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Region
                 </label>
                 <input type="hidden" name="region_id" value={regionId} />
@@ -278,7 +272,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
               </div>
 
               <div className="flex flex-col gap-1.5 md:col-span-2">
-                <label className="text-sm font-medium text-slate-700">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Badges
                 </label>
                 <BadgeMultiSelect
@@ -444,6 +438,6 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
           </div>
         </div>
       )}
-    </PageContainer>
+    </>
   );
 }

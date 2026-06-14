@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import { getSessionUser } from "@/utils/session";
 import { redirect } from "next/navigation";
-import { supabaseAdmin } from "@repo/api";
 import { getSettings } from "@/features/settings/queries";
 import { SettingsForm } from "@/features/settings/components/SettingsForm";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
+import { FormSkeleton } from "@/components/skeletons/FormSkeleton";
 
 export const metadata = { title: "Settings | Bharatendu Shikhar Admin" };
 
@@ -12,10 +13,18 @@ async function verifyAdminOrRedirect() {
   if (!session || session.role !== "admin") redirect("/");
 }
 
-export default async function SettingsPage() {
+async function SettingsContent() {
   await verifyAdminOrRedirect();
   const settings = await getSettings();
 
+  return (
+    <div className="animate-in fade-in duration-300">
+      <SettingsForm settings={settings} />
+    </div>
+  );
+}
+
+export default function SettingsPage() {
   return (
     <AnimatedPage className="space-y-6">
       <div>
@@ -23,8 +32,9 @@ export default async function SettingsPage() {
         <p className="page-subtitle">Manage global site configuration. Each section saves independently.</p>
       </div>
 
-      <SettingsForm settings={settings} />
+      <Suspense fallback={<FormSkeleton />}>
+        <SettingsContent />
+      </Suspense>
     </AnimatedPage>
   );
 }
-

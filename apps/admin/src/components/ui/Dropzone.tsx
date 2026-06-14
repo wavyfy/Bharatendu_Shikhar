@@ -82,9 +82,9 @@ export function Dropzone({
   return (
     <div
       className={cn(
-        "relative flex w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed bg-surface-container-low transition-colors duration-200 hover:bg-slate-100",
-        isDragging ? "border-slate-400 bg-slate-100" : "border-slate-200",
-        value && "border-slate-300 bg-surface cursor-default hover:bg-surface",
+        "relative flex w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed bg-surface-container-lowest dark:bg-surface-container-highest transition-colors duration-200 hover:bg-slate-100 dark:hover:bg-surface-container-high",
+        isDragging ? "border-slate-400 bg-slate-100 dark:bg-surface-container-high" : "border-slate-200 dark:border-outline-variant",
+        value && "border-slate-300 dark:border-outline-variant bg-surface dark:bg-surface cursor-default hover:bg-surface",
         className
       )}
       onDragOver={handleDragOver}
@@ -112,8 +112,8 @@ export function Dropzone({
               transition={{ duration: 0.15 }}
               className="flex w-full flex-col items-center gap-2"
             >
-              <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-surface px-4 py-2 shadow-sm">
-                <span className="max-w-[200px] truncate text-sm font-medium text-slate-900">
+              <div className="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-outline-variant bg-surface px-4 py-2 shadow-sm">
+                <span className="max-w-[200px] truncate text-sm font-medium text-slate-900 dark:text-slate-200">
                   {getDisplayName()}
                 </span>
                 <button
@@ -138,7 +138,7 @@ export function Dropzone({
                 className={cn("h-8 w-8 text-slate-400 transition-colors", isDragging && "text-slate-500")}
                 strokeWidth={1.5}
               />
-              <p className="text-sm font-medium text-slate-900">{label}</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-200">{label}</p>
               <p className="text-xs text-slate-500">{helperText}</p>
             </motion.div>
           )}

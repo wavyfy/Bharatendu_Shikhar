@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
-import { PageContainer } from "@/components/ui/PageContainer";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { motion } from "framer-motion";
 
 interface PublisherFormProps {
@@ -49,11 +47,7 @@ export function PublisherForm({ initialData }: PublisherFormProps) {
   }
 
   return (
-    <PageContainer>
-      <PageHeader 
-        title={isEditing ? "Edit Publisher" : "Create Publisher"} 
-        description="Manage publisher accounts and access."
-      />
+    <>
 
       <motion.form 
         onSubmit={handleSubmit} 
@@ -72,7 +66,7 @@ export function PublisherForm({ initialData }: PublisherFormProps) {
           <FormSection title="Publisher Details">
             <div className="grid grid-cols-1 gap-6">
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="full_name" className="text-sm font-medium text-slate-700">
+                <label htmlFor="full_name" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Full Name <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -86,7 +80,7 @@ export function PublisherForm({ initialData }: PublisherFormProps) {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Email Address <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -101,7 +95,7 @@ export function PublisherForm({ initialData }: PublisherFormProps) {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="password" className="text-sm font-medium text-slate-700">
+                <label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Password {isEditing ? "(Leave blank to keep current)" : <span className="text-red-500">*</span>}
                 </label>
                 <Input
@@ -131,6 +125,6 @@ export function PublisherForm({ initialData }: PublisherFormProps) {
           </Button>
         </div>
       </motion.form>
-    </PageContainer>
+    </>
   );
 }

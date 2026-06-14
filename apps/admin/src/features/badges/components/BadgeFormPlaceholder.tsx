@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
-import { PageContainer } from "@/components/ui/PageContainer";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { motion } from "framer-motion";
 
 interface BadgeFormProps {
@@ -32,6 +30,7 @@ export function BadgeFormPlaceholder({ initialData }: BadgeFormProps) {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [name, setName] = useState(initialData?.name ?? "");
   const [color, setColor] = useState(initialData?.color ?? "#CC2200");
   const [, startTransition] = useTransition();
 
@@ -64,11 +63,7 @@ export function BadgeFormPlaceholder({ initialData }: BadgeFormProps) {
   }
 
   return (
-    <PageContainer>
-      <PageHeader
-        title={isEditing ? "Edit Badge" : "Create Badge"}
-        description="Define a label to highlight article types."
-      />
+    <>
 
       <motion.form
         onSubmit={handleSubmit}
@@ -88,7 +83,7 @@ export function BadgeFormPlaceholder({ initialData }: BadgeFormProps) {
             <div className="flex flex-col gap-6">
               {/* Name */}
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="name" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                <label htmlFor="name" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Badge Name <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -98,62 +93,76 @@ export function BadgeFormPlaceholder({ initialData }: BadgeFormProps) {
                   required
                   minLength={2}
                   placeholder="e.g. Breaking News"
-                  defaultValue={initialData?.name}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
 
               {/* Color picker */}
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Color <span className="text-red-500">*</span>
-                </label>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                    Badge Color <span className="text-red-500">*</span>
+                  </label>
+                  <p className="text-xs text-slate-500">
+                    Pick a preset or enter a custom hex color.
+                  </p>
+                </div>
 
                 {/* Preset swatches */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3">
                   {PRESET_COLORS.map((c) => (
                     <button
                       key={c}
                       type="button"
                       onClick={() => setColor(c)}
                       title={c}
-                      className="w-8 h-8 rounded-full border-2 transition-all duration-150 hover:scale-110"
+                      className="w-8 h-8 rounded-full shadow-sm transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-surface-container"
                       style={{
                         backgroundColor: c,
-                        borderColor: color === c ? "white" : "transparent",
-                        outline: color === c ? `2px solid ${c}` : "none",
-                        outlineOffset: "2px",
+                        boxShadow: color === c ? `0 0 0 2px var(--surface-container-highest), 0 0 0 4px ${c}` : undefined,
                       }}
                     />
                   ))}
                 </div>
 
-                {/* Custom hex + native color picker */}
-                <div className="flex items-center gap-3 mt-1">
-                  <input
-                    type="color"
-                    value={color}
-                    onChange={(e) => setColor(e.target.value)}
-                    className="w-10 h-10 rounded cursor-pointer border border-outline-variant bg-transparent"
-                    title="Custom color"
-                  />
-                  <Input
-                    type="text"
-                    value={color}
-                    onChange={(e) => setColor(e.target.value)}
-                    placeholder="#000000"
-                    className="max-w-[140px] font-mono"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end mt-2">
+                  {/* Custom hex + native color picker */}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-medium text-slate-500 dark:text-slate-400">Custom Hex Color</label>
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-10 h-10 rounded-md overflow-hidden shadow-sm border border-outline-variant shrink-0">
+                        <input
+                          type="color"
+                          value={color}
+                          onChange={(e) => setColor(e.target.value)}
+                          className="absolute -top-2 -left-2 w-16 h-16 cursor-pointer"
+                          title="Custom color"
+                        />
+                      </div>
+                      <Input
+                        type="text"
+                        value={color}
+                        onChange={(e) => setColor(e.target.value)}
+                        placeholder="#000000"
+                        className="font-mono uppercase w-full"
+                      />
+                    </div>
+                  </div>
+
                   {/* Live preview */}
-                  <span
-                    className="inline-flex items-center px-3 py-1 rounded text-[11px] font-bold uppercase tracking-widest text-white"
-                    style={{ backgroundColor: color }}
-                  >
-                    {initialData?.name || "Preview"}
-                  </span>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-medium text-slate-500 dark:text-slate-400">Live Preview</label>
+                    <div className="flex items-center h-10 px-4 rounded-md border border-outline-variant bg-surface-container-low dark:bg-surface-container overflow-hidden">
+                      <span
+                        className="inline-flex items-center px-3 py-1 rounded text-[11px] font-black uppercase tracking-widest text-white shadow-sm max-w-full truncate"
+                        style={{ backgroundColor: color }}
+                      >
+                        {name || "PREVIEW"}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-xs text-slate-500">
-                  Pick a preset or enter a custom hex color.
-                </p>
               </div>
             </div>
           </FormSection>
@@ -173,6 +182,6 @@ export function BadgeFormPlaceholder({ initialData }: BadgeFormProps) {
           </Button>
         </div>
       </motion.form>
-    </PageContainer>
+    </>
   );
 }

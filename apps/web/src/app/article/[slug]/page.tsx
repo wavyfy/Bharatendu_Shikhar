@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
@@ -10,24 +11,79 @@ import { DoubleRowRelatedSlider } from "@/components/article/DoubleRowRelatedSli
 import type { SliderItem } from "@/components/home/HorizontalArticleSlider";
 import type { ArticleWithAuthor } from "@/utils/mapArticleData";
 
+import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
+import { ArticleSkeleton, RelatedArticlesSkeleton } from "@/components/skeletons/ArticleSkeletons";
+
 export const revalidate = 60;
 
-export default async function ArticlePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+async function TickerSection() {
+  const topArticles = await fetchTickerArticles();
+  return <Ticker articles={topArticles} />;
+}
 
-  const [article, topArticles] = await Promise.all([
-    fetchArticleBySlug(slug),
-    fetchTickerArticles()
-  ]);
+async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug: string }> }) {
+  const { slug } = await paramsPromise;
+  const article = await fetchArticleBySlug(slug);
 
   if (!article) {
     notFound();
   }
+
+  return (
+    <article className="flex-1 min-w-0 max-w-[900px] mx-auto flex flex-col animate-in fade-in duration-300">
+      {/* Article Title */}
+      <h1 className="text-3xl md:text-5xl leading-[1.15] font-playfair font-bold tracking-tight text-black dark:text-white mb-6">
+        {article.title}
+      </h1>
+
+      {/* Featured Image */}
+      {article.featured_image && (
+        <div className="w-full mb-3 flex flex-col">
+          <div className="relative w-full aspect-16/10 md:aspect-2/1 bg-gray-100 dark:bg-gray-800">
+            <Image
+              src={article.featured_image}
+              alt={article.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Article Excerpt / Lead Paragraph */}
+      {article.excerpt && (
+        <p className="text-lg md:text-[18px] leading-relaxed text-gray-800 dark:text-gray-300 font-medium mb-1">
+          {article.excerpt}
+        </p>
+      )}
+
+      {/* Article Meta (Date, Read Time, Source, Badge) */}
+      <div className="mt-8 mb-6 border-b border-gray-200 dark:border-news-border pb-6">
+        <ArticleMeta article={article as unknown as ArticleWithAuthor} isArticlePage={true} />
+      </div>
+
+      {/* Article Content */}
+      <div
+        className="w-full text-left prose prose-lg md:prose-[21px] max-w-none dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent hover:prose-a:text-red-700 prose-img:rounded-md"
+        dangerouslySetInnerHTML={{ __html: article.content }}
+      />
+
+      {/* Live Timeline (Only for LIVE articles) */}
+      {article.is_live && article.article_live_updates && article.article_live_updates.length > 0 && (
+        <div className="mt-8 border-t-2 border-gray-300 dark:border-gray-800 pt-8">
+          <LiveTimeline updates={article.article_live_updates} />
+        </div>
+      )}
+    </article>
+  );
+}
+
+async function RelatedSection({ paramsPromise }: { paramsPromise: Promise<{ slug: string }> }) {
+  const { slug } = await paramsPromise;
+  const article = await fetchArticleBySlug(slug);
+
+  if (!article) return null;
 
   const { categoryArticles, regionArticles } = await fetchRelatedArticles(
     article.categories?.id,
@@ -35,23 +91,46 @@ export default async function ArticlePage({
     article.id
   );
 
-  const categorySliderItems: SliderItem[] = categoryArticles.map(art => ({
+  const categorySliderItems: SliderItem[] = categoryArticles.map((art) => ({
     id: art.id.toString(),
     label: article.categories?.name || "Related Topic",
     slug: article.categories?.slug || "",
-    article: art
+    article: art,
   }));
 
-  const regionSliderItems: SliderItem[] = regionArticles.map(art => ({
+  const regionSliderItems: SliderItem[] = regionArticles.map((art) => ({
     id: art.id.toString(),
     label: article.regions?.name || "Related Region",
     slug: article.regions?.slug || "",
-    article: art
+    article: art,
   }));
 
+  if (categorySliderItems.length === 0 && regionSliderItems.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="max-w-[1400px] mx-auto px-4 pb-20 w-full animate-in fade-in duration-300">
+      <DoubleRowRelatedSlider
+        topTitle={article.categories?.name || "Topic"}
+        topItems={categorySliderItems}
+        bottomTitle={article.regions?.name || "Region"}
+        bottomItems={regionSliderItems}
+      />
+    </div>
+  );
+}
+
+export default function ArticlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   return (
     <div className="bg-news-bg text-news-text font-sans">
-      <Ticker articles={topArticles} />
+      <Suspense fallback={<TickerSkeleton />}>
+        <TickerSection />
+      </Suspense>
 
       <main className="max-w-[1400px] mx-auto px-4 flex justify-between gap-6 mb-20 items-start mt-8 w-full">
         {/* Left Sticky Ad */}
@@ -59,52 +138,9 @@ export default async function ArticlePage({
           <Advertisement orientation="vertical" />
         </div>
 
-        <article className="flex-1 min-w-0 max-w-[900px] mx-auto flex flex-col">
-          {/* Article Title */}
-          <h1 className="text-3xl md:text-5xl leading-[1.15] font-playfair font-bold tracking-tight text-black dark:text-white mb-6">
-            {article.title}
-          </h1>
-
-          {/* Featured Image */}
-          {article.featured_image && (
-            <div className="w-full mb-3 flex flex-col">
-              <div className="relative w-full aspect-16/10 md:aspect-2/1 bg-gray-100 dark:bg-gray-800">
-                <Image
-                  src={article.featured_image}
-                  alt={article.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </div>
-          )}
-
-            {/* Article Excerpt / Lead Paragraph */}
-          {article.excerpt && (
-            <p className="text-lg md:text-[18px] leading-relaxed text-gray-800 dark:text-gray-300 font-medium mb-1">
-              {article.excerpt}
-            </p>
-          )}
-
-          {/* Article Meta (Date, Read Time, Source, Badge) */}
-          <div className="w-full block mb-10 mt-4">
-            <ArticleMeta article={article as unknown as ArticleWithAuthor} />
-          </div>
-
-          {/* Article Content */}
-          <div
-            className="w-full text-left prose prose-lg md:prose-[21px] max-w-none dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent hover:prose-a:text-red-700 prose-img:rounded-md"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
-
-          {/* Live Timeline (Only for LIVE articles) */}
-          {article.is_live && article.article_live_updates && article.article_live_updates.length > 0 && (
-            <div className="mt-8 border-t-2 border-gray-300 dark:border-gray-800 pt-8">
-              <LiveTimeline updates={article.article_live_updates} />
-            </div>
-          )}
-        </article>
+        <Suspense fallback={<ArticleSkeleton />}>
+          <ArticleContent paramsPromise={params} />
+        </Suspense>
 
         {/* Right Sticky Ad */}
         <div className="hidden xl:block w-[160px] shrink-0 sticky top-4">
@@ -113,16 +149,9 @@ export default async function ArticlePage({
       </main>
 
       {/* Related Article Sliders Section */}
-      {(categorySliderItems.length > 0 || regionSliderItems.length > 0) && (
-        <div className="max-w-[1400px] mx-auto px-4 pb-20 w-full">
-          <DoubleRowRelatedSlider 
-            topTitle={article.categories?.name || "Topic"}
-            topItems={categorySliderItems}
-            bottomTitle={article.regions?.name || "Region"}
-            bottomItems={regionSliderItems}
-          />
-        </div>
-      )}
+      <Suspense fallback={<RelatedArticlesSkeleton />}>
+        <RelatedSection paramsPromise={params} />
+      </Suspense>
     </div>
   );
 }

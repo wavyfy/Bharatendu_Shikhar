@@ -75,7 +75,7 @@ export function BadgeMultiSelect({
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={cn(
-          "flex min-h-10 w-full flex-wrap items-center gap-1.5 rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-sm transition-shadow duration-150 text-left",
+          "flex min-h-10 w-full flex-wrap items-center gap-1.5 rounded-md border border-outline-variant bg-surface-container-lowest dark:bg-surface-container-highest px-3 py-2 text-sm transition-shadow duration-150 text-left",
           isOpen && "ring-2 ring-slate-400 dark:ring-slate-600 ring-offset-2 dark:ring-offset-slate-900",
           disabled && "cursor-not-allowed opacity-50"
         )}

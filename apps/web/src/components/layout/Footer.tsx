@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+
 
 export function Footer({ 
   logoUrl, 
@@ -28,26 +28,8 @@ export function Footer({
     [key: string]: unknown;
   } | null
 }) {
-  const [footerHeight, setFooterHeight] = useState(0);
-  const footerRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (footerRef.current) {
-      const resizeObserver = new ResizeObserver(() => {
-        if (footerRef.current) {
-          setFooterHeight(footerRef.current.offsetHeight);
-        }
-      });
-      resizeObserver.observe(footerRef.current);
-      return () => resizeObserver.disconnect();
-    }
-  }, []);
-
   return (
-    <>
-      <div style={{ height: footerHeight }} className="w-full relative z-0 pointer-events-none transition-[height] duration-500" />
-      <div className="fixed bottom-0 left-0 w-full -z-10 bg-white dark:bg-news-card text-black dark:text-news-text border-t-2 border-gray-300 dark:border-news-border pt-4 pb-4">
-        <footer ref={footerRef} className="w-full">
+    <footer className="w-full bg-white dark:bg-news-card text-black dark:text-news-text border-t-2 border-gray-300 dark:border-news-border pt-4 pb-4 mt-auto">
           <div className="max-w-[1200px] mx-auto px-0">
         
         <div className="mb-10 w-full border-b-2 border-gray-200 dark:border-news-border py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -246,8 +228,6 @@ export function Footer({
         </div>
 
           </div>
-        </footer>
-      </div>
-    </>
+    </footer>
   );
 }

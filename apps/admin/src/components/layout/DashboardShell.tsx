@@ -10,6 +10,7 @@ interface DashboardShellProps {
   displayName: string;
   role: UserRole;
   logoUrl?: string | null;
+  darkLogoUrl?: string | null;
 }
 
 export function DashboardShell({
@@ -17,12 +18,13 @@ export function DashboardShell({
   displayName,
   role,
   logoUrl,
+  darkLogoUrl,
 }: DashboardShellProps) {
   return (
     <ToastProvider>
       <ConfirmProvider>
         <div className="h-screen overflow-hidden bg-surface text-on-surface flex flex-col">
-          <Topbar displayName={displayName} role={role} logoUrl={logoUrl} />
+          <Topbar displayName={displayName} role={role} logoUrl={logoUrl} darkLogoUrl={darkLogoUrl} />
 
           <div className="flex flex-1 overflow-hidden min-h-0">
             <Sidebar role={role} />

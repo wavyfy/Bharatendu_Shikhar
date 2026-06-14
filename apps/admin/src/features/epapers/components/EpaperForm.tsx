@@ -10,8 +10,6 @@ import { createEpaperAction, updateEpaperAction } from "../actions";
 import { getSignedUploadUrlAction, deleteFileAction } from "@/features/storage/actions";
 import { supabase } from "@repo/api/src/supabase/client";
 import { FormSection } from "@/components/ui/FormSection";
-import { PageContainer } from "@/components/ui/PageContainer";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Dropzone } from "@/components/ui/Dropzone";
@@ -141,11 +139,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
   };
 
   return (
-    <PageContainer>
-      <PageHeader 
-        title={initialData ? "Edit E-Paper" : "Upload E-Paper"} 
-        description="Upload a PDF and configure publication dates."
-      />
+    <>
 
       <motion.form 
         onSubmit={handleSubmit} 
@@ -167,7 +161,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
             description="The PDF file and basic details."
           >
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="title" className="text-sm font-medium text-slate-700">
+              <label htmlFor="title" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                 E-Paper Title <span className="text-red-500">*</span>
               </label>
               <Input
@@ -181,7 +175,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
             </div>
 
             <div className="flex flex-col gap-1.5 mt-6">
-              <label className="text-sm font-medium text-slate-700">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
                 PDF File <span className="text-red-500">*</span>
               </label>
               {pdfUrl ? (
@@ -246,7 +240,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col gap-1.5 md:col-span-2">
-                <label className="text-sm font-medium text-slate-700">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Region
                 </label>
                 <input type="hidden" name="region_id" value={regionId} />
@@ -262,7 +256,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="published_at_date" className="text-sm font-medium text-slate-700">
+                <label htmlFor="published_at_date" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Publish Date
                 </label>
                 <Input
@@ -275,7 +269,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="expiry_date_input" className="text-sm font-medium text-slate-700">
+                <label htmlFor="expiry_date_input" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Expiry Date
                 </label>
                 <Input
@@ -309,6 +303,6 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
           </Button>
         </div>
       </motion.form>
-    </PageContainer>
+    </>
   );
 }

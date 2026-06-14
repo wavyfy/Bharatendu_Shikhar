@@ -18,7 +18,7 @@ export function FormSection({ title, description, children }: FormSectionProps) 
         </div>
       </div>
 
-      <div className="p-6 bg-surface-container-lowest">
+      <div className="p-6 bg-transparent">
         <div className="flex flex-col gap-y-7">
           {children}
         </div>

@@ -1,13 +1,15 @@
+import { Suspense } from "react";
 import { getDashboardStats } from "@/features/analytics/queries";
 import Link from "next/link";
 import Image from "next/image";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { DashboardSkeleton } from "@/components/skeletons/DashboardSkeleton";
 
 export const metadata = {
   title: "Dashboard | Bharatendu Shikhar Admin",
 };
 
-export default async function DashboardPage() {
+async function DashboardContent() {
   const stats = await getDashboardStats();
 
   const { supabaseAdmin } = await import("@repo/api");
@@ -39,12 +41,6 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Page header */}
-      <div>
-        <h1 className="page-title">Dashboard</h1>
-        <p className="page-subtitle">Overview of your content management activities.</p>
-      </div>
-
       {/* Stats bento grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {STATS.map(({ label, value, icon, cardBg, iconBg }) => (
@@ -189,5 +185,20 @@ export default async function DashboardPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <>
+      <div className="mb-8">
+        <h1 className="page-title">Dashboard</h1>
+        <p className="page-subtitle">Overview of your content management activities.</p>
+      </div>
+
+      <Suspense fallback={<DashboardSkeleton />}>
+        <DashboardContent />
+      </Suspense>
+    </>
   );
 }

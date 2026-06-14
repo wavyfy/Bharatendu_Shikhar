@@ -53,7 +53,7 @@ export function SearchInput({ placeholder = "Search...", className = "" }: Searc
         type="search"
         placeholder={placeholder}
         value={value}
-        className={`w-full pl-10 pr-10 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:border-red-600 focus:ring-1 focus:ring-red-600/30 text-sm bg-surface text-on-surface placeholder:text-slate-400 outline-none transition-all shadow-sm ${
+        className={`w-full pl-10 pr-10 py-2 border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary/30 text-sm bg-surface-container-lowest dark:bg-surface-container-highest text-on-surface placeholder:text-outline outline-none transition-all shadow-sm ${
           isPending ? "opacity-70" : ""
         } ${className}`}
         onChange={(e) => setValue(e.target.value)}

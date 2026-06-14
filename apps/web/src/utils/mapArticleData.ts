@@ -32,10 +32,27 @@ export function mapToTopicCategory(
   };
 }
 
-export function getArticleBadge(article: ArticleWithAuthor): string | null {
-  if (article.is_live) return "LIVE";
-  if (article.status && !['published', 'draft', 'archived'].includes(article.status.toLowerCase())) {
-    return article.status.toUpperCase();
+export function getArticleBadges(article: ArticleWithAuthor, isArticlePage: boolean = false): { name: string, color?: string }[] {
+  const badges: { name: string, color?: string }[] = [];
+
+  if (article.is_live) {
+    badges.push({ name: "LIVE", color: "#EF4444" });
   }
-  return null;
+
+  if (article.article_badges && Array.isArray(article.article_badges)) {
+    for (const ab of article.article_badges) {
+      if (ab.badge && ab.badge.name) {
+        if (!isArticlePage && ab.badge.name.toLowerCase() !== "breaking" && ab.badge.name.toLowerCase() !== "breaking news") {
+          continue;
+        }
+        badges.push({ name: ab.badge.name.toUpperCase(), color: ab.badge.color || undefined });
+      }
+    }
+  }
+
+  if (badges.length === 0 && article.status && !['published', 'draft', 'archived'].includes(article.status.toLowerCase())) {
+    badges.push({ name: article.status.toUpperCase(), color: "#6B7280" });
+  }
+
+  return badges;
 }

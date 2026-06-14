@@ -11,9 +11,10 @@ interface TopbarProps {
   displayName: string;
   role: UserRole;
   logoUrl?: string | null;
+  darkLogoUrl?: string | null;
 }
 
-export function Topbar({ displayName, role, logoUrl }: TopbarProps) {
+export function Topbar({ displayName, role, logoUrl, darkLogoUrl }: TopbarProps) {
   return (
     <header className="h-16 sticky top-0 bg-surface/80 backdrop-blur-md border-b border-outline-variant flex items-center px-6 justify-between shrink-0 z-30 shadow-sm">
       {/* Brand title — left side, offset for mobile hamburger */}
@@ -21,18 +22,29 @@ export function Topbar({ displayName, role, logoUrl }: TopbarProps) {
         onClick={() => window.location.reload()}
         className="pl-10 lg:pl-0 flex items-center gap-3 hover:opacity-80 transition-opacity focus:outline-none"
       >
-        {logoUrl && (
-          <div className="relative h-12 w-48 cursor-pointer">
-            <Image 
-              src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
-              alt="Logo" 
-              fill 
-              sizes="192px"
-              className="object-contain object-left" 
-            />
+        {(logoUrl || darkLogoUrl) && (
+          <div className="relative h-12 w-48 cursor-pointer flex items-center">
+            {logoUrl && (
+              <Image 
+                src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
+                alt="Logo" 
+                fill 
+                sizes="192px"
+                className={`object-contain object-left ${darkLogoUrl ? 'dark:hidden' : ''}`} 
+              />
+            )}
+            {darkLogoUrl && (
+              <Image 
+                src={darkLogoUrl.startsWith("http") ? darkLogoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${darkLogoUrl}`} 
+                alt="Logo (Dark)" 
+                fill 
+                sizes="192px"
+                className={`object-contain object-left ${logoUrl ? 'hidden dark:block' : ''}`} 
+              />
+            )}
           </div>
         )}
-        {!logoUrl && (
+        {(!logoUrl && !darkLogoUrl) && (
           <div
             className="font-bold text-primary leading-tight cursor-pointer"
             style={{ fontFamily: "Plus Jakarta Sans, system-ui, sans-serif", fontSize: "17px", letterSpacing: "-0.01em" }}

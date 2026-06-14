@@ -1,9 +1,12 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { getPublishers } from "@/features/publishers/queries";
 import { PublishersTable } from "@/features/publishers/components/PublishersTable";
 import { Pagination } from "@/components/ui/Pagination";
 import { PublisherFilters } from "@/features/publishers/components/PublisherFilters";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
+import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export const metadata = { title: "Publishers | Bharatendu Shikhar Admin" };
 
@@ -11,8 +14,21 @@ interface PageProps {
   searchParams: Promise<{ page?: string; search?: string; status?: string }>;
 }
 
-export default async function PublishersPage({ searchParams }: PageProps) {
-  const params = await searchParams;
+function PublishersSkeleton() {
+  return (
+    <div className="space-y-6 animate-in fade-in duration-300 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {[1, 2, 3].map((i) => (
+          <Skeleton key={i} className="h-32 w-full rounded-2xl" />
+        ))}
+      </div>
+      <TableSkeleton />
+    </div>
+  );
+}
+
+async function PublishersContent({ searchParamsPromise }: { searchParamsPromise: PageProps["searchParams"] }) {
+  const params = await searchParamsPromise;
   const page = params?.page ? parseInt(params.page, 10) : 1;
   const search = params?.search || "";
   const status = params?.status || "";
@@ -21,20 +37,7 @@ export default async function PublishersPage({ searchParams }: PageProps) {
   const activeCount = publishers.filter((p: { is_active?: boolean }) => p.is_active).length;
 
   return (
-    <AnimatedPage className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="page-title">Publishers</h1>
-          <p className="page-subtitle">
-            Manage publication networks, onboard regional partners, and monitor syndication statuses.
-          </p>
-        </div>
-        <Link href="/publishers/new" className="btn-cms-primary self-start sm:self-auto">
-          <span className="material-symbols-outlined text-[18px]">add</span>
-          Add Publisher
-        </Link>
-      </div>
-
+    <div className="space-y-6 animate-in fade-in duration-300">
       {/* Stats overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
@@ -79,6 +82,29 @@ export default async function PublishersPage({ searchParams }: PageProps) {
           <Pagination currentPage={page} totalPages={totalPages} />
         </div>
       </div>
+    </div>
+  );
+}
+
+export default function PublishersPage({ searchParams }: PageProps) {
+  return (
+    <AnimatedPage className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <h1 className="page-title">Publishers</h1>
+          <p className="page-subtitle">
+            Manage publication networks, onboard regional partners, and monitor syndication statuses.
+          </p>
+        </div>
+        <Link href="/publishers/new" className="btn-cms-primary self-start sm:self-auto">
+          <span className="material-symbols-outlined text-[18px]">add</span>
+          Add Publisher
+        </Link>
+      </div>
+
+      <Suspense fallback={<PublishersSkeleton />}>
+        <PublishersContent searchParamsPromise={searchParams} />
+      </Suspense>
     </AnimatedPage>
   );
 }

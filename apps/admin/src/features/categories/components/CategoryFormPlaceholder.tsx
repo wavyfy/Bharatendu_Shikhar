@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
-import { PageContainer } from "@/components/ui/PageContainer";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { motion } from "framer-motion";
 
 interface CategoryFormProps {
@@ -53,11 +51,7 @@ export function CategoryFormPlaceholder({ initialData }: CategoryFormProps) {
   }
 
   return (
-    <PageContainer>
-      <PageHeader 
-        title={isEditing ? "Edit Category" : "Create Category"} 
-        description="Organize your content with categories."
-      />
+    <>
 
       <motion.form 
         onSubmit={handleSubmit} 
@@ -76,7 +70,7 @@ export function CategoryFormPlaceholder({ initialData }: CategoryFormProps) {
           <FormSection title="Category Details">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                <label htmlFor="name" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Category Name <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -99,7 +93,7 @@ export function CategoryFormPlaceholder({ initialData }: CategoryFormProps) {
                   defaultChecked={isEditing ? initialData.is_active : true}
                   className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
                 />
-                <label htmlFor="is_active" className="text-sm font-medium text-slate-700">
+                <label htmlFor="is_active" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Active
                 </label>
                 <p className="text-xs text-slate-500 ml-2">
@@ -124,6 +118,6 @@ export function CategoryFormPlaceholder({ initialData }: CategoryFormProps) {
           </Button>
         </div>
       </motion.form>
-    </PageContainer>
+    </>
   );
 }

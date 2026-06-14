@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getSessionUser } from "@/utils/session";
 import Link from "next/link";
 import { getArticles } from "@/features/articles/queries";
@@ -7,6 +8,7 @@ import { ArticlesTable } from "@/features/articles/components/ArticlesTable";
 import { ArticleFilters } from "@/features/articles/components/ArticleFilters";
 import { Pagination } from "@/components/ui/Pagination";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
+import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
 
 export const metadata = { title: "Articles | Bharatendu Shikhar Admin" };
 
@@ -14,8 +16,8 @@ interface PageProps {
   searchParams: Promise<{ page?: string; search?: string; status?: string; category_id?: string; region_id?: string; is_live?: string }>;
 }
 
-export default async function ArticlesPage({ searchParams }: PageProps) {
-  const params = await searchParams;
+async function ArticlesContent({ searchParamsPromise }: { searchParamsPromise: PageProps["searchParams"] }) {
+  const params = await searchParamsPromise;
   const page = params?.page ? parseInt(params.page, 10) : 1;
   const search = params?.search || "";
   const status = params?.status || "";
@@ -36,6 +38,28 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   ]);
 
   return (
+    <div className="cms-card animate-in fade-in duration-300">
+      <div className="cms-card-header">
+        <ArticleFilters categories={categories} regions={regions} />
+      </div>
+
+      <div className="px-5 pt-3">
+        <span className="cms-card-label">All Articles ({count})</span>
+      </div>
+
+      <div className="overflow-x-auto custom-scrollbar">
+        <ArticlesTable articles={articles} />
+      </div>
+
+      <div className="px-5 pb-3 bg-surface">
+        <Pagination currentPage={page} totalPages={totalPages} />
+      </div>
+    </div>
+  );
+}
+
+export default function ArticlesPage({ searchParams }: PageProps) {
+  return (
     <AnimatedPage className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
@@ -50,23 +74,9 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
         </Link>
       </div>
 
-      <div className="cms-card">
-        <div className="cms-card-header">
-          <ArticleFilters categories={categories} regions={regions} />
-        </div>
-
-        <div className="px-5 pt-3">
-          <span className="cms-card-label">All Articles ({count})</span>
-        </div>
-
-        <div className="overflow-x-auto custom-scrollbar">
-          <ArticlesTable articles={articles} />
-        </div>
-
-        <div className="px-5 pb-3 bg-surface">
-          <Pagination currentPage={page} totalPages={totalPages} />
-        </div>
-      </div>
+      <Suspense fallback={<TableSkeleton />}>
+        <ArticlesContent searchParamsPromise={searchParams} />
+      </Suspense>
     </AnimatedPage>
   );
 }

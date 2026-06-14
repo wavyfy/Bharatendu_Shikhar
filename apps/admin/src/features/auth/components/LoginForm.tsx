@@ -74,7 +74,7 @@ export function LoginForm({ logoUrl }: { logoUrl?: string | null }) {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-slate-700 mb-1"
+                  className="block text-sm font-medium leading-6 text-slate-700 dark:text-slate-200 mb-1"
                 >
                   Email Address
                 </label>
@@ -94,7 +94,7 @@ export function LoginForm({ logoUrl }: { logoUrl?: string | null }) {
                 <div className="flex items-center justify-between mb-1">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-slate-700"
+                    className="block text-sm font-medium leading-6 text-slate-700 dark:text-slate-200"
                   >
                     Password
                   </label>

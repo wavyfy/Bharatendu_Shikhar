@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
-import { PageContainer } from "@/components/ui/PageContainer";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { motion } from "framer-motion";
 
 interface RegionFormProps {
@@ -53,11 +51,7 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
   }
 
   return (
-    <PageContainer>
-      <PageHeader 
-        title={isEditing ? "Edit Region" : "Create Region"} 
-        description="Manage geographical regions for e-papers."
-      />
+    <>
 
       <motion.form 
         onSubmit={handleSubmit} 
@@ -76,7 +70,7 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
           <FormSection title="Region Details">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                <label htmlFor="name" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Region Name <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -99,7 +93,7 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
                   defaultChecked={isEditing ? initialData.is_active : true}
                   className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary bg-primary"
                 />
-                <label htmlFor="is_active" className="text-sm font-medium text-slate-700">
+                <label htmlFor="is_active" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Active
                 </label>
                 <p className="text-xs text-slate-500 ml-2">
@@ -124,6 +118,6 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
           </Button>
         </div>
       </motion.form>
-    </PageContainer>
+    </>
   );
 }

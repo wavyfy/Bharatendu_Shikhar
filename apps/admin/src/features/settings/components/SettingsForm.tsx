@@ -26,15 +26,15 @@ function Field({
 }) {
   return (
     <div className="space-y-1">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className="block text-sm font-medium text-on-surface">{label}</label>
       {children}
-      {hint && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && <p className="text-xs text-on-surface-variant">{hint}</p>}
     </div>
   );
 }
 
 const inputCls =
-  "w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#CC2200] transition-colors";
+  "w-full border border-outline-variant rounded px-3 py-2 text-sm bg-surface-container-lowest dark:bg-surface-container-highest text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors";
 
 function SectionFooter({
   isPending,
@@ -44,9 +44,9 @@ function SectionFooter({
   error: string | null;
 }) {
   return (
-    <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
+    <div className="flex flex-col gap-3 pt-4 border-t border-outline-variant mt-4">
       {error && (
-        <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded px-3 py-2">
+        <p className="text-xs text-error bg-error-container border border-error/20 rounded px-3 py-2">
           {error}
         </p>
       )}
@@ -378,13 +378,13 @@ function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
               value="true"
               checked={active}
               onChange={(e) => setActive(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#CC2200] focus:ring-[#CC2200] self-center"
+              className="mt-0.5 h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary self-center bg-surface-container-lowest dark:bg-surface-container-highest"
             />
             <div>
-              <label htmlFor="maintenance_mode" className="text-sm font-medium text-gray-700">
+              <label htmlFor="maintenance_mode" className="text-sm font-medium text-on-surface">
                 Enable Maintenance Mode
               </label>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-on-surface-variant">
                 Puts the public site into maintenance. Admin panel stays accessible.
               </p>
             </div>

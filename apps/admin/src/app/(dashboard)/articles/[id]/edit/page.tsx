@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getSessionUser } from "@/utils/session";
 import { redirect } from "next/navigation";
 import { getArticleById } from "@/features/articles/queries";
@@ -6,6 +7,7 @@ import { getCategories } from "@/features/categories/queries";
 import { getRegions } from "@/features/regions/queries";
 import { getBadges } from "@/features/badges/queries";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
+import { ArticleEditorSkeleton } from "@/components/skeletons/ArticleEditorSkeleton";
 
 export const metadata = {
   title: "Edit Article | Bharatendu Shikhar",
@@ -15,8 +17,8 @@ interface EditArticlePageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function EditArticlePage({ params }: EditArticlePageProps) {
-  const resolvedParams = await params;
+async function EditArticleContent({ paramsPromise }: { paramsPromise: EditArticlePageProps["params"] }) {
+  const resolvedParams = await paramsPromise;
   const articleId = parseInt(resolvedParams.id, 10);
 
   if (isNaN(articleId)) {
@@ -43,13 +45,28 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
   }
 
   return (
-    <AnimatedPage className="space-y-6">
+    <div className="animate-in fade-in duration-300 w-full">
       <ArticleFormPlaceholder
         initialData={article}
         categories={categories}
         regions={regions}
         badges={badges}
       />
+    </div>
+  );
+}
+
+export default function EditArticlePage({ params }: EditArticlePageProps) {
+  return (
+    <AnimatedPage className="space-y-6">
+      <div className="mb-2">
+        <h1 className="page-title">Edit Article</h1>
+        <p className="page-subtitle">Update and manage article content and settings.</p>
+      </div>
+
+      <Suspense fallback={<ArticleEditorSkeleton />}>
+        <EditArticleContent paramsPromise={params} />
+      </Suspense>
     </AnimatedPage>
   );
 }

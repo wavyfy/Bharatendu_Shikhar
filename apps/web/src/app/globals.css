@@ -3,11 +3,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-::selection {
-  background-color: var(--news-accent);
-  color: white;
-}
-
 :root {
   --background: #ffffff;
   --foreground: #000000;
@@ -18,6 +13,12 @@
   --news-text-secondary: #374151;
   --news-text-muted: #6b7280;
   --news-accent: #dc2626;
+}
+
+
+::selection {
+  background-color: var(--news-text);
+  color: white;
 }
 
 .dark {

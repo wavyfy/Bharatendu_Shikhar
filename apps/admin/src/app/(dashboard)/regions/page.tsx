@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { getRegions } from "@/features/regions/queries";
 import { RegionsTable } from "@/features/regions/components/RegionsTable";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
+import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
 
 export const metadata = { title: "Regions | Bharatendu Shikhar Admin" };
 
@@ -9,8 +11,8 @@ interface PageProps {
   searchParams: Promise<{ page?: string }>;
 }
 
-export default async function RegionsPage({ searchParams }: PageProps) {
-  const params = await searchParams;
+async function RegionsContent({ searchParamsPromise }: { searchParamsPromise: PageProps["searchParams"] }) {
+  const params = await searchParamsPromise;
   const page = params?.page ? parseInt(params.page, 10) : 1;
 
   const { regions, count, totalPages } = await getRegions({
@@ -18,6 +20,44 @@ export default async function RegionsPage({ searchParams }: PageProps) {
     limit: 10,
   });
 
+  return (
+    <div className="cms-card animate-in fade-in duration-300">
+      <div className="cms-card-header">
+        <span className="cms-card-label">All Regions ({count})</span>
+      </div>
+
+      <div className="overflow-x-auto custom-scrollbar">
+        <RegionsTable regions={regions} />
+      </div>
+
+      {totalPages > 1 && (
+        <div className="px-5 pb-3 bg-surface flex items-center justify-between">
+          <span className="text-sm text-on-surface-variant">Page {page} of {totalPages}</span>
+          <div className="flex gap-1">
+            <Link
+              href={`/regions?page=${Math.max(1, page - 1)}`}
+              className={`px-3 py-1 rounded border border-outline-variant text-sm font-medium transition-colors ${
+                page <= 1 ? "opacity-40 pointer-events-none text-outline" : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
+              }`}
+            >
+              Previous
+            </Link>
+            <Link
+              href={`/regions?page=${Math.min(totalPages, page + 1)}`}
+              className={`px-3 py-1 rounded border border-outline-variant text-sm font-medium transition-colors ${
+                page >= totalPages ? "opacity-40 pointer-events-none text-outline" : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
+              }`}
+            >
+              Next
+            </Link>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function RegionsPage({ searchParams }: PageProps) {
   return (
     <AnimatedPage className="space-y-6">
       {/* Page header */}
@@ -32,40 +72,9 @@ export default async function RegionsPage({ searchParams }: PageProps) {
         </Link>
       </div>
 
-      {/* Table card */}
-      <div className="cms-card">
-        <div className="cms-card-header">
-          <span className="cms-card-label">All Regions ({count})</span>
-        </div>
-
-        <div className="overflow-x-auto custom-scrollbar">
-          <RegionsTable regions={regions} />
-        </div>
-
-        {totalPages > 1 && (
-          <div className="px-5 pb-3 bg-surface flex items-center justify-between">
-            <span className="text-sm text-on-surface-variant">Page {page} of {totalPages}</span>
-            <div className="flex gap-1">
-              <Link
-                href={`/regions?page=${Math.max(1, page - 1)}`}
-                className={`px-3 py-1 rounded border border-outline-variant text-sm font-medium transition-colors ${
-                  page <= 1 ? "opacity-40 pointer-events-none text-outline" : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-                }`}
-              >
-                Previous
-              </Link>
-              <Link
-                href={`/regions?page=${Math.min(totalPages, page + 1)}`}
-                className={`px-3 py-1 rounded border border-outline-variant text-sm font-medium transition-colors ${
-                  page >= totalPages ? "opacity-40 pointer-events-none text-outline" : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-                }`}
-              >
-                Next
-              </Link>
-            </div>
-          </div>
-        )}
-      </div>
+      <Suspense fallback={<TableSkeleton />}>
+        <RegionsContent searchParamsPromise={searchParams} />
+      </Suspense>
     </AnimatedPage>
   );
 }

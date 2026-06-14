@@ -65,7 +65,7 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
         ) : (
           <button
             type="button"
-            className="flex h-8 w-8 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100 hover:text-slate-900 focus:outline-none transition-all duration-200 active:scale-95"
+            className="flex h-8 w-8 items-center justify-center rounded-md text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface focus:outline-none transition-all duration-200 active:scale-95"
           >
             <MoreHorizontal className="h-5 w-5" />
           </button>
@@ -81,7 +81,7 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -4 }}
               transition={{ duration: 0.15 }}
-              className="fixed z-9999 w-56 origin-top-right rounded-lg border border-outline-variant bg-surface-container-lowest py-1 shadow-xl ring-1 ring-black/5 dark:ring-white/5"
+              className="fixed z-9999 w-56 origin-top-right rounded-lg border border-outline-variant bg-surface py-1 shadow-xl ring-1 ring-black/5 dark:ring-white/5"
               style={{ top: menuCoords.top, right: menuCoords.right }}
             >
               {/* Header slot — e.g. dark mode toggle */}
