@@ -47,6 +47,10 @@ export const maintenanceSchema = z.object({
   maintenance_message: z.string().max(500).optional().nullable(),
 });
 
+export const advertisementsSchema = z.object({
+  hide_all_ads: z.boolean().default(false),
+});
+
 // Combined full settings schema
 export const settingsSchema = siteInfoSchema
   .merge(seoSchema)
@@ -54,7 +58,8 @@ export const settingsSchema = siteInfoSchema
   .merge(contactSchema)
   .merge(notificationsSchema)
   .merge(homepageSchema)
-  .merge(maintenanceSchema);
+  .merge(maintenanceSchema)
+  .merge(advertisementsSchema);
 
 export type SettingsInput = z.infer<typeof settingsSchema>;
 export type SiteInfoInput = z.infer<typeof siteInfoSchema>;
@@ -64,3 +69,4 @@ export type ContactInput = z.infer<typeof contactSchema>;
 export type NotificationsInput = z.infer<typeof notificationsSchema>;
 export type HomepageInput = z.infer<typeof homepageSchema>;
 export type MaintenanceInput = z.infer<typeof maintenanceSchema>;
+export type AdvertisementsInput = z.infer<typeof advertisementsSchema>;

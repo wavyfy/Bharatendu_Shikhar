@@ -67,11 +67,11 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
           {/* Dialog box */}
           <div className="relative bg-surface rounded-lg shadow-xl w-full max-w-sm p-6 space-y-4">
             <div className="space-y-1.5">
-              <h2 id="confirm-title" className="text-base font-semibold text-gray-900">
+              <h2 id="confirm-title" className="text-base font-semibold text-on-surface">
                 {dialog.title}
               </h2>
               {dialog.description && (
-                <p className="text-sm text-gray-500">{dialog.description}</p>
+                <p className="text-sm text-on-surface-variant">{dialog.description}</p>
               )}
             </div>
             <div className="flex justify-end gap-3 pt-2">

@@ -141,9 +141,11 @@ async function _fetchSettings() {
 async function _fetchDynamicPageData(slug: string) {
   const { startOfDayISO, endOfDayISO } = getTodayDateRange();
 
+  const decodedSlug = decodeURIComponent(slug).toLowerCase();
+
   const [regionMatchesResponse, categoryMatchesResponse] = await Promise.all([
-    supabase.from("regions").select("*").eq("slug", slug.toLowerCase()),
-    supabase.from("categories").select("*").eq("slug", slug.toLowerCase()),
+    supabase.from("regions").select("*").eq("slug", decodedSlug),
+    supabase.from("categories").select("*").eq("slug", decodedSlug),
   ]);
 
   const region = regionMatchesResponse.data?.[0];
@@ -248,6 +250,8 @@ async function _fetchDynamicPageData(slug: string) {
     topArticles: topArticlesData,
     categorySections,
     pageTitle: region ? region.name : category!.name,
+    type: region ? "region" : "category",
+    id: region ? region.id : category!.id,
   };
 }
 

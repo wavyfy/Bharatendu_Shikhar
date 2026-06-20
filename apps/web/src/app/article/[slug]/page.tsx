@@ -11,6 +11,7 @@ import { DoubleRowRelatedSlider } from "@/components/article/DoubleRowRelatedSli
 import type { SliderItem } from "@/components/home/HorizontalArticleSlider";
 import type { ArticleWithAuthor } from "@/utils/mapArticleData";
 import { RelatedArticlesList } from "@/components/shared/RelatedArticlesList";
+import { RelativeTime } from "@/components/shared/RelativeTime";
 import type { Metadata, ResolvingMetadata } from "next";
 
 import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
@@ -97,7 +98,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
             </div>
           )}
           {/* Article Title */}
-          <h1 className="text-2xl md:text-4xl leading-[1.15] font-playfair font-bold tracking-tight text-black dark:text-white mb-3">
+          <h1 className="text-2xl md:text-4xl font-playfair font-bold text-black dark:text-white mb-3">
             {article.title}
           </h1>
 
@@ -135,6 +136,13 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
             className="w-full text-left prose prose-lg md:prose-[21px] max-w-none dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent hover:prose-a:text-red-700 prose-img:rounded-md"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
+
+          <div className="w-full flex justify-end mt-4">
+            <RelativeTime 
+              dateString={article.published_at || article.created_at || ""} 
+              className="text-sm font-medium text-gray-500 dark:text-gray-400"
+            />
+          </div>
 
           {/* Live Timeline (Only for LIVE articles) */}
           {article.is_live && article.article_live_updates && article.article_live_updates.length > 0 && (
@@ -213,7 +221,7 @@ export default function ArticlePage({
       <main className="max-w-[1700px] mx-auto px-4 flex justify-between gap-4 mb-2 items-start mt-4 w-full">
         {/* Left Sticky Ad */}
         <div className="hidden xl:block w-[160px] shrink-0 sticky top-4">
-          <Advertisement orientation="vertical" />
+          <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
         </div>
 
         <Suspense fallback={<ArticleSkeleton />}>
@@ -222,7 +230,7 @@ export default function ArticlePage({
 
         {/* Right Sticky Ad */}
         <div className="hidden xl:block w-[160px] shrink-0 sticky top-4">
-          <Advertisement orientation="vertical" />
+          <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
         </div>
       </main>
 

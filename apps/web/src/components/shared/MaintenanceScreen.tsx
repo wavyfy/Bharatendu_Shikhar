@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { MaintenanceListener } from "@/components/shared/MaintenanceListener";
+import { CommonListener } from "@/components/shared/CommonListener";
 
 export function MaintenanceScreen({
   settings,
@@ -10,6 +10,7 @@ export function MaintenanceScreen({
     site_logo_url?: string | null;
     site_logo_dark_url?: string | null;
     maintenance_message?: string | null;
+    hide_all_ads?: boolean | null;
     [key: string]: unknown;
   } | null;
   geistSansVariable: string;
@@ -19,12 +20,12 @@ export function MaintenanceScreen({
 
   return (
     <html
-      lang="en"
+      lang="hi"
       suppressHydrationWarning
       className={`${geistSansVariable} ${geistMonoVariable} h-full antialiased`}
     >
       <body className="min-h-full bg-[#FAFAFA] dark:bg-[#050505] text-[#111] dark:text-[#EAEAEA] flex flex-col items-center justify-center relative selection:bg-red-600/20 overflow-hidden texture-bg">
-        <MaintenanceListener currentMaintenanceMode={true} />
+        <CommonListener currentMaintenanceMode={true} currentHideAllAds={settings?.hide_all_ads ?? false} />
         <style>{`
           @keyframes gentle-breathe {
             0%, 100% { transform: scale(1); opacity: 1; }

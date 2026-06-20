@@ -156,3 +156,18 @@ export async function updateMaintenanceAction(input: MaintenanceInput) {
     return { success: false, error: e instanceof Error ? e.message : "Failed to save" };
   }
 }
+
+export async function updateAdvertisementsAction(input: import("../schemas").AdvertisementsInput) {
+  try {
+    await verifyAdmin();
+    const { advertisementsSchema } = await import("../schemas");
+    const result = advertisementsSchema.safeParse(input);
+    if (!result.success) {
+      return { success: false, error: result.error.issues[0]?.message || "Invalid data" };
+    }
+    await upsertSettings(result.data);
+    return { success: true };
+  } catch (e: unknown) {
+    return { success: false, error: e instanceof Error ? e.message : "Failed to save" };
+  }
+}

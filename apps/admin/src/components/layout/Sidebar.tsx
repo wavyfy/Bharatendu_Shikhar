@@ -50,6 +50,12 @@ const NAV_ITEMS = [
     icon: "newspaper",
   },
   {
+    label: "Advertisements",
+    href: "/advertisements",
+    section: "advertisements",
+    icon: "ads_click",
+  },
+  {
     label: "Settings",
     href: "/settings",
     section: "settings",

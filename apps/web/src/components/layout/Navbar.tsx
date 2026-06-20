@@ -4,6 +4,7 @@ import { ChevronDown, ChevronLeft, ChevronRight, Menu, X, Search, Settings, Glob
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TopicCategoryData } from "@/components/home/TopicSection";
 import type { ArticleWithAuthor } from "@/utils/mapArticleData";
@@ -59,17 +60,21 @@ export function Navbar({
     setLastActiveMenu(activeMenu);
   }
 
-  const dynamicLinks = [
-    ...navRegions.map(r => ({ name: r.name, slug: r.slug })),
-    ...navCategories.map(c => ({ name: c.name, slug: c.slug }))
-  ];
+  const pathname = usePathname();
 
   const VISIBLE_COUNT = 7;
+  const visibleRegions = navRegions.slice(0, VISIBLE_COUNT - 1);
+  const dropdownRegions = navRegions.slice(VISIBLE_COUNT - 1);
+
   const visibleLinks = [
     { name: "Home", slug: "" },
-    ...dynamicLinks.slice(0, VISIBLE_COUNT - 1)
+    ...visibleRegions.map(r => ({ name: r.name, slug: r.slug }))
   ];
-  const dropdownLinks = dynamicLinks.slice(VISIBLE_COUNT - 1);
+
+  const dropdownLinks = [
+    ...dropdownRegions.map(r => ({ name: r.name, slug: r.slug })),
+    ...navCategories.map(c => ({ name: c.name, slug: c.slug }))
+  ];
 
   const getArticlesForLink = (linkName: string) => {
     if (linkName === "Home") return topArticles;
@@ -286,11 +291,17 @@ export function Navbar({
                   </div>
                   
                   <div className="flex-1 overflow-y-auto px-5">
-                     <Link href="/election" onClick={() => setIsMobileMenuOpen(false)} className="block text-red-600 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border">ELECTIONS</Link>
-                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Home</Link>
-                     <Link href="/politics" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Politics</Link>
-                     <Link href="/entertainment" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Entertainment</Link>
-                     <Link href="/sports" onClick={() => setIsMobileMenuOpen(false)} className="block py-4 border-b border-gray-300 dark:border-news-border font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">Sports</Link>
+                     <Link href="/election" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center gap-2 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border ${pathname === '/election' ? 'text-red-700 dark:text-red-500' : 'text-red-600'}`}>
+                       <span className="relative flex h-2 w-2">
+                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                         <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                       </span>
+                       ELECTION
+                     </Link>
+                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Home</Link>
+                     <Link href="/politics" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/politics' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Politics</Link>
+                     <Link href="/entertainment" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/entertainment' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Entertainment</Link>
+                     <Link href="/sports" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/sports' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Sports</Link>
                      
                      <div className="border-b border-black dark:border-news-border">
                        <button onClick={() => setIsRegionsOpen(!isRegionsOpen)} className="w-full py-4 flex justify-between items-center font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">
@@ -306,11 +317,15 @@ export function Navbar({
                              transition={{ duration: 0.2 }}
                              className="flex flex-col pb-2 overflow-hidden"
                            >
-                             {navRegions.map((region, idx) => (
-                               <Link key={region.slug} href={`/${region.slug}`} onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 px-2 text-gray-600 dark:text-news-text-secondary border-b border-gray-300 dark:border-news-border hover:text-black dark:hover:text-white transition-colors ${idx === navRegions.length - 1 ? 'border-b-0' : ''}`}>
-                                 {region.name}
-                               </Link>
-                             ))}
+                             {navRegions.map((region, idx) => {
+                               const targetPath = `/${region.slug}`;
+                               const isCurrentPage = pathname === targetPath;
+                               return (
+                                 <Link key={region.slug} href={targetPath} onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 px-2 border-b border-gray-300 dark:border-news-border hover:text-black dark:hover:text-white transition-colors ${idx === navRegions.length - 1 ? 'border-b-0' : ''} ${isCurrentPage ? 'text-red-600 dark:text-news-accent font-medium' : 'text-gray-600 dark:text-news-text-secondary'}`}>
+                                   {region.name}
+                                 </Link>
+                               );
+                             })}
                            </motion.div>
                          )}
                        </AnimatePresence>
@@ -366,20 +381,41 @@ export function Navbar({
       </AnimatePresence>
 
       {/* Desktop Nav */}
-      <nav className="hidden lg:block w-full max-w-[1400px] mx-auto px-4 mb-2 relative z-100" onMouseLeave={() => setActiveMenu(null)}>
+      <nav className="hidden lg:block w-full max-w-[1400px] mx-auto px-4 mb-0 relative z-100" onMouseLeave={() => setActiveMenu(null)}>
         <div className="flex justify-between items-center text-sm font-medium">
-          <div className="flex gap-8 items-center h-full">
-            {visibleLinks.map((link) => (
-              <div 
-                key={link.name} 
-                className="h-full"
-                onMouseEnter={() => setActiveMenu(link.name === "Home" ? null : link.name)}
-              >
-                <Link href={link.slug === "" ? "/" : `/${link.slug}`} className={`flex items-center gap-[4px] py-4 transition-colors ${activeMenu === link.name ? 'text-red-600 dark:text-news-accent' : 'hover:text-red-600 dark:hover:text-news-accent'}`}>
-                  {link.name} {link.name !== "Home" && <ChevronDown size={14} strokeWidth={2.5} className={`transition-all duration-300 ${activeMenu === link.name ? '-rotate-180 text-red-600 dark:text-news-accent' : 'text-gray-400'}`}/>}
-                </Link>
-              </div>
-            ))}
+          <div className="flex gap-6 items-center h-full">
+            {visibleLinks.map((link) => {
+              const targetPath = link.slug === "" ? "/" : `/${link.slug}`;
+              const isCurrentPage = pathname === targetPath;
+              const isActiveOrHover = activeMenu === link.name || isCurrentPage;
+
+              return (
+                <div 
+                  key={link.name} 
+                  className="flex items-center h-full"
+                  onMouseEnter={() => setActiveMenu(link.name === "Home" ? null : link.name)}
+                >
+                  <Link href={targetPath} className={`flex items-center h-full gap-[4px] px-1 transition-colors ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'hover:text-red-600 dark:hover:text-news-accent'} ${isCurrentPage ? 'font-bold' : ''}`}>
+                    <span className="py-4 flex items-center">
+                      <span className="relative">
+                        {link.name}
+                        {isCurrentPage && (
+                          <motion.div 
+                            layoutId="desktopNavActiveIndicator"
+                            className="absolute -bottom-1 left-0 w-full h-[3px] bg-red-600 dark:bg-news-accent rounded-[2px]"
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                          />
+                        )}
+                      </span>
+                      {link.name !== "Home" && <ChevronDown size={18} strokeWidth={1.5} className={`ml-1 transition-all duration-300 ${activeMenu === link.name ? '-rotate-180 text-red-600 dark:text-news-accent' : (isCurrentPage ? 'text-red-600 dark:text-news-accent' : 'text-gray-400')}`}/>}
+                    </span>
+                  </Link>
+                  {link.name === "Home" && (
+                    <div className="ml-8 mr-[-10px] w-px h-4 bg-gray-300 dark:bg-news-border hidden lg:block" aria-hidden="true"></div>
+                  )}
+                </div>
+              );
+            })}
 
             {dropdownLinks.length > 0 && (
               <div 
@@ -401,17 +437,23 @@ export function Navbar({
                     >
                       <div className="w-full">
                         <div className="bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-xl py-2 flex flex-col rounded-[2px]">
-                          {dropdownLinks.map(link => (
-                            <div 
-                              key={link.name} 
-                              className="relative"
-                              onMouseEnter={() => setActiveMenu(link.name)}
-                            >
-                              <Link href={`/${link.slug}`} className="px-6 py-3 hover:bg-gray-50 dark:hover:bg-news-bg hover:text-red-600 dark:hover:text-news-accent transition-colors flex items-center justify-between dark:text-news-text group/dropdownLink">
-                                {link.name} <ChevronDown size={14} strokeWidth={2.5} className={`transition-all duration-300 ${activeMenu === link.name ? 'rotate-0 text-red-600 dark:text-news-accent' : '-rotate-90 text-gray-400'}`}/>
-                              </Link>
-                            </div>
-                          ))}
+                          {dropdownLinks.map(link => {
+                            const targetPath = `/${link.slug}`;
+                            const isCurrentPage = pathname === targetPath;
+                            const isActiveOrHover = activeMenu === link.name || isCurrentPage;
+                            
+                            return (
+                              <div 
+                                key={link.name} 
+                                className="relative"
+                                onMouseEnter={() => setActiveMenu(link.name)}
+                              >
+                                <Link href={targetPath} className={`px-6 py-3 hover:bg-gray-50 dark:hover:bg-news-bg transition-colors flex items-center justify-between group/dropdownLink ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'text-gray-700 dark:text-news-text'} ${isCurrentPage ? 'font-bold' : ''}`}>
+                                  {link.name} <ChevronDown size={14} strokeWidth={2.5} className={`transition-all duration-300 ${activeMenu === link.name ? 'rotate-0 text-red-600 dark:text-news-accent' : (isCurrentPage ? 'text-red-600 dark:text-news-accent' : '-rotate-90 text-gray-400')}`}/>
+                                </Link>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     </motion.div>

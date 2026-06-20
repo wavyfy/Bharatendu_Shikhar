@@ -58,7 +58,7 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
   if (!items || items.length === 0) return null;
 
   return (
-    <div className="py-8 border-b-2 border-gray-300 dark:border-news-border">
+    <div className="py-8 border-b-2 border-gray-300 dark:border-news-border mx-4">
       <h2 className="font-playfair font-bold text-lg mb-4 uppercase tracking-wide">
         {title}
       </h2>
@@ -103,7 +103,7 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
       </div>
 
       {items.length > 4 && (
-        <div className="flex justify-end mt-4 gap-2">
+        <div className="flex justify-end mt-4 mx-4  gap-2">
           <button 
             onClick={() => scroll('left')} 
             className="p-2 bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:bg-gray-50 dark:hover:bg-news-border rounded-full transition-colors"

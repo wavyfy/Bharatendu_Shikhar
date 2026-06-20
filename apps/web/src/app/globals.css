@@ -79,17 +79,29 @@ body {
   display: none !important;
 }
 
-/* Fix Devanagari glyph clipping when Google Translate wraps text in <font> tags.
-   Devanagari glyphs have larger vertical metrics than Latin. Increasing line-height
-   gives each glyph more room within the line box so overflow:hidden doesn't clip them.
-   Applied ONLY when translated (.translated-ltr) so English layout stays tight. */
-.translated-ltr h1, 
-.translated-ltr h2, 
-.translated-ltr h3, 
-.translated-ltr h4, 
-.translated-ltr h5, 
-.translated-ltr h6 {
+/* Fix Devanagari glyph clipping globally.
+   Hindi Devanagari glyphs need large line-height and some tracking to not clump. */
+h1, h2, h3, h4, h5, h6 {
   line-height: 1.6 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* English Translation Adjustments
+   English Latin characters don't need much vertical space. */
+html.translated-ltr h1, 
+html.translated-ltr h2, 
+html.translated-ltr h3, 
+html.translated-ltr h4, 
+html.translated-ltr h5, 
+html.translated-ltr h6,
+body.translated-ltr h1,
+body.translated-ltr h2,
+body.translated-ltr h3,
+body.translated-ltr h4,
+body.translated-ltr h5,
+body.translated-ltr h6 {
+  line-height: 1.2 !important;
+  letter-spacing: normal !important;
 }
 
 /* Fallback Typography Styles for Rich Editor Content */

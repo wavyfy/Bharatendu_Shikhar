@@ -416,6 +416,65 @@ function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
+// ─── Section: Advertisements ──────────────────────────────────────────────────
+
+function AdvertisementsSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+  const [active, setActive] = useState(settings?.hide_all_ads ?? false);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      // Must import dynamically or use top-level import
+      const { updateAdvertisementsAction } = await import("../actions");
+      const res = await updateAdvertisementsAction({
+        hide_all_ads: fd.get("hide_all_ads") === "true",
+      });
+      if (res.success) {
+        toast.success("Advertisements Settings saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>Global Advertisement Settings</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex items-start gap-3">
+            <input
+              id="hide_all_ads"
+              name="hide_all_ads"
+              type="checkbox"
+              value="true"
+              checked={active}
+              onChange={(e) => setActive(e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary self-center bg-surface-container-lowest dark:bg-surface-container-highest"
+            />
+            <div>
+              <label htmlFor="hide_all_ads" className="text-sm font-medium text-on-surface">
+                Disable & Hide All Ads Globally
+              </label>
+              <p className="text-xs text-on-surface-variant">
+                If checked, no advertisements will be shown on the public site, regardless of their individual status.
+              </p>
+            </div>
+          </div>
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
 // ─── Root Export ──────────────────────────────────────────────────────────────
 
 export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
@@ -426,6 +485,7 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
     { id: "seo", label: "SEO" },
     { id: "social", label: "Social Media" },
     { id: "contact", label: "Contact" },
+    { id: "advertisements", label: "Advertisements" },
     { id: "maintenance", label: "Maintenance" },
   ];
 
@@ -463,6 +523,7 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
           {activeTab === "seo" && <SeoSection settings={settings} />}
           {activeTab === "social" && <SocialSection settings={settings} />}
           {activeTab === "contact" && <ContactSection settings={settings} />}
+          {activeTab === "advertisements" && <AdvertisementsSection settings={settings} />}
           {activeTab === "maintenance" && <MaintenanceSection settings={settings} />}
         </div>
       </div>

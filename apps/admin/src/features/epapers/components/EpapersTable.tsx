@@ -66,6 +66,7 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
               <th className="px-6 py-3 font-medium">Title & Region</th>
               <th className="px-6 py-3 font-medium">Published Date</th>
               <th className="px-6 py-3 font-medium">Expiry Date</th>
+              <th className="px-6 py-3 font-medium">Status</th>
               <th className="px-6 py-3 font-medium">Author</th>
               <th className="px-6 py-3 font-medium text-right">Actions</th>
             </tr>
@@ -74,6 +75,10 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
           {epapers.map((epaper, index) => {
             const isExpired = epaper.expiry_date && new Date(epaper.expiry_date) < new Date();
             const isPublished = epaper.published_at && new Date(epaper.published_at) <= new Date();
+            
+            let statusVariant = "draft";
+            if (isExpired) statusVariant = "expired";
+            else if (isPublished) statusVariant = "published";
 
             return (
               <tr key={epaper.id} className="hover:bg-surface-container-low transition-colors duration-150">
@@ -85,30 +90,25 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="flex flex-col items-start gap-1">
-                    {epaper.published_at ? (
-                      <span className="text-on-surface-variant">
-                        {new Date(epaper.published_at).toLocaleDateString()}
-                      </span>
-                    ) : (
-                      <span className="text-outline-variant italic">Not set</span>
-                    )}
-                    <StatusBadge variant={isPublished ? 'published' : 'draft'} />
-                  </div>
+                  {epaper.published_at ? (
+                    <span className="text-on-surface-variant text-sm">
+                      {new Date(epaper.published_at).toLocaleDateString()}
+                    </span>
+                  ) : (
+                    <span className="text-outline-variant italic text-sm">Not set</span>
+                  )}
                 </td>
                 <td className="px-6 py-4">
                   {epaper.expiry_date ? (
-                    <div className="flex flex-col items-start gap-1">
-                      <span className={isExpired ? "text-red-500 line-through" : "text-on-surface-variant"}>
-                        {new Date(epaper.expiry_date).toLocaleDateString()}
-                      </span>
-                      {isExpired && (
-                        <StatusBadge variant="expired" />
-                      )}
-                    </div>
+                    <span className={isExpired ? "text-red-500 line-through text-sm" : "text-on-surface-variant text-sm"}>
+                      {new Date(epaper.expiry_date).toLocaleDateString()}
+                    </span>
                   ) : (
-                    <span className="text-outline-variant italic">Never</span>
+                    <span className="text-outline-variant italic text-sm">Never</span>
                   )}
+                </td>
+                <td className="px-6 py-4">
+                  <StatusBadge variant={statusVariant as any} />
                 </td>
                 <td className="px-6 py-4 text-outline">
                   {epaper.author?.full_name || "—"}

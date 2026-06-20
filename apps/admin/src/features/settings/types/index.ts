@@ -33,4 +33,6 @@ export type SettingsRow = {
   maintenance_message: string | null;
   // Timestamps
   updated_at: string;
+  // Advertisements
+  hide_all_ads: boolean;
 };

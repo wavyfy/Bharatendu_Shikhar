@@ -31,8 +31,8 @@ async function CategoriesSection() {
       {categorySections.map((topic, index) => (
         <div key={topic.id}>
           {index > 0 && (
-            <div className="my-12">
-              <Advertisement orientation="horizontal" />
+          <div className="my-6">
+              <Advertisement slotId={`category:${topic.id}`} orientation="horizontal" />
             </div>
           )}
           <TopicSection data={topic} />
@@ -61,8 +61,8 @@ export default function Home() {
 
       <div className="max-w-[1700px] mx-auto px-4 flex gap-6 mb-8 items-start">
         {/* Left Sticky Ad */}
-        <div className="hidden xl:block w-[160px] shrink-0 sticky top-4 mt-8">
-          <Advertisement orientation="vertical" />
+        <div className="hidden xl:block w-[160px] shrink-0 sticky top-15 mt-8">
+          <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
         </div>
 
         <div className="flex-1 min-w-0 flex flex-col mt-8">
@@ -73,8 +73,8 @@ export default function Home() {
           </main>
 
           {/* Full-width Horizontal Ad separator */}
-          <div className="my-12">
-            <Advertisement orientation="horizontal" />
+          <div className="my-6">
+            <Advertisement slotId="fixed:home_horizontal" orientation="horizontal" />
           </div>
 
           {/* Dynamic Topic Sections */}
@@ -86,8 +86,8 @@ export default function Home() {
         </div>
 
         {/* Right Sticky Ad */}
-        <div className="hidden xl:block w-[160px] shrink-0 sticky top-4 mt-8">
-          <Advertisement orientation="vertical" />
+        <div className="hidden xl:block w-[160px] shrink-0 sticky top-15 mt-8">
+          <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
         </div>
       </div>
 

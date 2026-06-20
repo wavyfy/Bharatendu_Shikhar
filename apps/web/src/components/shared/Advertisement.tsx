@@ -1,27 +1,46 @@
-export function Advertisement({
+import Image from "next/image";
+import Link from "next/link";
+import { fetchAdsForSlot } from "@/utils/fetchAdvertisements";
+
+export async function Advertisement({
+  slotId,
   orientation = "horizontal",
   className = "",
 }: {
+  slotId: string;
   orientation?: "horizontal" | "vertical";
   className?: string;
 }) {
-  return (
-    <div
-      className={`bg-gray-300 border border-gray-100 dark:bg-news-card dark:border-news-border flex items-center justify-center text-gray-400 dark:text-news-text-muted font-bold tracking-[0.2em] ${
-        orientation === "horizontal"
-          ? "w-full min-h-[100px] text-xl"
-          : "w-full h-[600px] text-sm"
-      } ${className}`}
-    >
-      <span
-        style={
-          orientation === "vertical"
-            ? { writingMode: "vertical-rl", transform: "rotate(180deg)" }
-            : {}
-        }
-      >
-        ADVERTISEMENT
-      </span>
+  const ad = await fetchAdsForSlot(slotId);
+
+  if (!ad) {
+    return null; 
+  }
+
+  const containerClass = `${
+    orientation === "horizontal"
+      ? "w-full"
+      : "w-full max-w-[160px] mx-auto"
+  } block ${className}`;
+
+  const adImage = (
+    <Image 
+      src={ad.image_url} 
+      alt={ad.title || "Advertisement"} 
+      width={0}
+      height={0}
+      sizes="100vw"
+      style={{ width: '100%', height: 'auto' }}
+    />
+  );
+
+  return ad.redirect_url ? (
+    <Link href={ad.redirect_url} target="_blank" rel="noopener noreferrer" className={containerClass}>
+      {adImage}
+    </Link>
+  ) : (
+    <div className={containerClass}>
+      {adImage}
     </div>
   );
 }

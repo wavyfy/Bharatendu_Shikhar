@@ -10,7 +10,7 @@ interface EmptyStateProps {
 
 const DEFAULT_ICON = (
   <svg
-    className="w-10 h-10 text-gray-300"
+    className="w-10 h-10"
     fill="none"
     stroke="currentColor"
     strokeWidth={1.5}
@@ -32,16 +32,16 @@ export function EmptyState({
   icon = DEFAULT_ICON,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-6 text-center border border-dashed border-gray-300 rounded-lg bg-surface">
-      <div className="mb-3">{icon}</div>
-      <h3 className="text-sm font-semibold text-gray-700 mb-1">{title}</h3>
+    <div className="flex flex-col items-center justify-center py-16 px-6 m-6 text-center border border-dashed border-outline-variant rounded-lg bg-surface">
+      <div className="mb-3 text-outline-variant">{icon}</div>
+      <h3 className="text-sm font-semibold text-on-surface mb-1">{title}</h3>
       {description && (
-        <p className="text-sm text-gray-500 max-w-xs">{description}</p>
+        <p className="text-sm text-on-surface-variant max-w-xs">{description}</p>
       )}
       {actionLabel && actionHref && (
         <Link
           href={actionHref}
-          className="mt-5 inline-flex items-center gap-1.5 bg-[#111] hover:bg-[#333] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+          className="mt-5 inline-flex items-center gap-1.5 bg-on-surface hover:opacity-90 text-surface px-4 py-2 rounded-md text-sm font-medium transition-colors"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

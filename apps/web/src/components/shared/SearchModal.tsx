@@ -25,7 +25,7 @@ export function SearchModal() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  
+
   const inputRef = useRef<HTMLInputElement>(null);
   const LIMIT = 10;
 
@@ -55,7 +55,9 @@ export function SearchModal() {
           .from("articles")
           .select("*, categories(id, name, slug)")
           .eq("status", "published")
-          .or(`title.ilike.%${debouncedQuery}%,excerpt.ilike.%${debouncedQuery}%,content.ilike.%${debouncedQuery}%`)
+          .or(
+            `title.ilike.%${debouncedQuery}%,excerpt.ilike.%${debouncedQuery}%,content.ilike.%${debouncedQuery}%`,
+          )
           .order("published_at", { ascending: false })
           .range(0, LIMIT - 1);
 
@@ -91,7 +93,9 @@ export function SearchModal() {
         .from("articles")
         .select("*, categories(id, name, slug)")
         .eq("status", "published")
-        .or(`title.ilike.%${debouncedQuery}%,excerpt.ilike.%${debouncedQuery}%,content.ilike.%${debouncedQuery}%`)
+        .or(
+          `title.ilike.%${debouncedQuery}%,excerpt.ilike.%${debouncedQuery}%,content.ilike.%${debouncedQuery}%`,
+        )
         .order("published_at", { ascending: false })
         .range(start, end);
 
@@ -100,7 +104,7 @@ export function SearchModal() {
       if (data) {
         setResults((prev) => {
           const newItems = (data as unknown as ArticleWithCategories[]).filter(
-            (item) => !prev.some((p) => p.id === item.id)
+            (item) => !prev.some((p) => p.id === item.id),
           );
           return [...prev, ...newItems];
         });
@@ -146,7 +150,7 @@ export function SearchModal() {
   return (
     <AnimatePresence>
       {isSearchOpen && (
-        <div className="fixed inset-0 z-200 flex items-start justify-center md:items-center pt-0 md:pt-0">
+        <div className="fixed inset-0 z-200 flex items-start justify-center md:items-center pt-4 md:pt-0">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -162,32 +166,38 @@ export function SearchModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative w-full h-full md:h-auto md:max-h-[85vh] md:max-w-3xl bg-white dark:bg-news-bg flex flex-col shadow-2xl md:rounded-2xl overflow-hidden"
+            className="relative w-[95%] h-[85vh] md:h-auto md:max-h-[85vh] md:max-w-3xl bg-white dark:bg-news-bg flex flex-col shadow-2xl rounded-2xl overflow-hidden"
           >
             {/* Search Header */}
-            <div className="flex items-center gap-4 p-4 border-b border-gray-200 dark:border-news-border focus-within:border-gray-400 dark:focus-within:border-gray-600 bg-white dark:bg-news-bg focus-within:bg-gray-50 dark:focus-within:bg-news-card transition-colors duration-300">
-              <Search className="text-gray-400 dark:text-news-text-muted shrink-0" size={24} />
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="Search articles..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 bg-transparent text-xl outline-none text-black dark:text-news-text placeholder:text-gray-400 dark:placeholder:text-news-text-muted"
-              />
-              {query && (
-                <button
-                  onClick={() => setQuery("")}
-                  className="text-gray-400 hover:text-black dark:hover:text-white p-1"
-                >
-                  <X size={20} />
-                </button>
-              )}
+            <div className="flex items-center gap-3 p-4 border-b border-gray-100 dark:border-news-border bg-white dark:bg-news-bg">
+              <div className="flex-1 flex items-center h-12 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-gray-800 rounded-full pl-5 pr-1.5 focus-within:border-gray-400 dark:focus-within:border-gray-600 transition-colors">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="Search Articles..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="flex-1 bg-transparent text-base outline-none text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                />
+                {query && (
+                  <button
+                    onClick={() => setQuery("")}
+                    className="text-gray-400 hover:text-black dark:hover:text-white p-2 mr-1 shrink-0"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
+                <div className="w-9 h-9 rounded-full bg-gray-100 dark:bg-[#1a1a1a] flex items-center justify-center shrink-0 hover:bg-gray-200 dark:hover:bg-[#2a2a2a] transition-colors cursor-pointer">
+                  <Search size={18} className="text-black dark:text-white" />
+                </div>
+              </div>
+
               <button
                 onClick={handleClose}
-                className="md:hidden text-black dark:text-white font-medium pl-2"
+                className="md:hidden text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white p-2 shrink-0"
+                aria-label="Close"
               >
-                Cancel
+                <X size={24} />
               </button>
             </div>
 
@@ -207,16 +217,17 @@ export function SearchModal() {
                 )}
 
                 {error && (
-                  <div className="text-center text-red-600 py-10">
-                    {error}
-                  </div>
+                  <div className="text-center text-red-600 py-10">{error}</div>
                 )}
 
-                {!isLoading && debouncedQuery.length >= 2 && results.length === 0 && !error && (
-                  <div className="text-center text-gray-500 py-10">
-                    No articles found for &quot;{debouncedQuery}&quot;
-                  </div>
-                )}
+                {!isLoading &&
+                  debouncedQuery.length >= 2 &&
+                  results.length === 0 &&
+                  !error && (
+                    <div className="text-center text-gray-500 py-10">
+                      No articles found for &quot;{debouncedQuery}&quot;
+                    </div>
+                  )}
 
                 {results.length > 0 && (
                   <div className="space-y-4">
@@ -238,7 +249,9 @@ export function SearchModal() {
                         <div className="flex items-center justify-between text-xs text-gray-500 dark:text-news-text-muted">
                           <span>
                             {article.published_at
-                              ? new Date(article.published_at).toLocaleDateString()
+                              ? new Date(
+                                  article.published_at,
+                                ).toLocaleDateString()
                               : ""}
                           </span>
                           {article.categories && (
@@ -261,7 +274,9 @@ export function SearchModal() {
                       disabled={isLoading}
                       className="bg-gray-200 dark:bg-news-border text-black dark:text-news-text px-6 py-2 rounded-full font-medium hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 inline-flex items-center gap-2"
                     >
-                      {isLoading && <Loader2 className="animate-spin" size={16} />}
+                      {isLoading && (
+                        <Loader2 className="animate-spin" size={16} />
+                      )}
                       {isLoading ? "Loading..." : "Load More"}
                     </motion.button>
                   </div>

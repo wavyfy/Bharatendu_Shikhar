@@ -40,7 +40,7 @@ import { BackToTop } from "@/components/shared/BackToTop";
 import { FloatingNav } from "@/components/shared/FloatingNav";
 
 import { MaintenanceScreen } from "@/components/shared/MaintenanceScreen";
-import { MaintenanceListener } from "@/components/shared/MaintenanceListener";
+import { CommonListener } from "@/components/shared/CommonListener";
 
 export default async function RootLayout({
   children,
@@ -64,12 +64,15 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang="hi"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col bg-news-bg text-news-text dark:bg-news-bg dark:text-news-text">
-        <MaintenanceListener currentMaintenanceMode={false} />
+        <CommonListener 
+          currentMaintenanceMode={false} 
+          currentHideAllAds={settings?.hide_all_ads ?? false}
+        />
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           <SearchProvider>
             <div className="flex flex-col min-h-screen">

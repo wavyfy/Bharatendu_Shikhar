@@ -56,8 +56,8 @@ async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slu
   const { topArticles, categorySections, pageTitle } = pageData;
 
   return (
-    <div className="flex-1 min-w-0 flex flex-col mt-8 animate-in fade-in duration-300">
-      <div className="py-6 mb-2 border-b-2 border-red-600">
+    <div className="flex-1 min-w-0 flex flex-col mt-5 animate-in fade-in duration-300">
+      <div className="pb-4 pt-2 mb-2 border-b-2 border-red-600">
         <h1 className="text-4xl font-playfair font-bold uppercase tracking-wider">{pageTitle}</h1>
       </div>
       
@@ -66,16 +66,16 @@ async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slu
       </main>
 
       {/* Full-width Horizontal Ad separator */}
-      <div className="mb-12 mt-12">
-        <Advertisement orientation="horizontal" />
+      <div className="my-6">
+        <Advertisement slotId={`${pageData.type}:${pageData.id}`} orientation="horizontal" />
       </div>
 
       {/* Dynamic Topic Sections */}
       {categorySections.map((topic, index) => (
         <div key={topic.id}>
           {index > 0 && (
-            <div className="my-12">
-              <Advertisement orientation="horizontal" />
+            <div className="my-6">
+              <Advertisement slotId={`category:${topic.id}`} orientation="horizontal" />
             </div>
           )}
           <TopicSection data={topic} />
@@ -99,7 +99,7 @@ export default function DynamicRoutePage({
       <div className="max-w-[1700px] mx-auto px-4 flex gap-6 mb-20 items-start">
         {/* Left Sticky Ad */}
         <div className="hidden xl:block w-[160px] shrink-0 sticky top-4 mt-8">
-          <Advertisement orientation="vertical" />
+          <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
         </div>
 
         <Suspense fallback={<CategoryPageSkeleton />}>
@@ -108,7 +108,7 @@ export default function DynamicRoutePage({
 
         {/* Right Sticky Ad */}
         <div className="hidden xl:block w-[160px] shrink-0 sticky top-4 mt-8">
-          <Advertisement orientation="vertical" />
+          <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
         </div>
       </div>
     </div>

@@ -38,15 +38,15 @@ export function useToast() {
 
 const VARIANT_STYLES: Record<ToastVariant, { container: string; icon: React.ReactNode }> = {
   success: {
-    container: "bg-surface border-l-4 border-green-500 text-gray-800",
+    container: "bg-surface border-l-4 border-green-500 text-on-surface",
     icon: <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" strokeWidth={2.5} />,
   },
   error: {
-    container: "bg-surface border-l-4 border-red-500 text-gray-800",
+    container: "bg-surface border-l-4 border-red-500 text-on-surface",
     icon: <XCircle className="w-5 h-5 text-red-600 shrink-0" strokeWidth={2.5} />,
   },
   info: {
-    container: "bg-surface border-l-4 border-blue-500 text-gray-800",
+    container: "bg-surface border-l-4 border-blue-500 text-on-surface",
     icon: <Info className="w-5 h-5 text-blue-600 shrink-0" strokeWidth={2.5} />,
   },
 };
@@ -71,10 +71,10 @@ function ToastItem({
       role="alert"
     >
       <div className="pt-0.5">{icon}</div>
-      <span className="flex-1 leading-relaxed font-medium text-slate-700">{toast.message}</span>
+      <span className="flex-1 leading-relaxed font-medium">{toast.message}</span>
       <button
         onClick={() => onDismiss(toast.id)}
-        className="text-gray-400 hover:text-gray-600 transition-colors shrink-0 pt-0.5 ml-2"
+        className="text-outline-variant hover:text-on-surface transition-colors shrink-0 pt-0.5 ml-2"
         aria-label="Dismiss"
       >
         <X className="w-4 h-4" strokeWidth={2.5} />

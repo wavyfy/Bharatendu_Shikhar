@@ -1,10 +1,12 @@
 "use client";
 
 import type { Database } from "@repo/api";
+import { RelativeTime } from "@/components/shared/RelativeTime";
 
 type LiveUpdate = Database["public"]["Tables"]["article_live_updates"]["Row"];
 
 export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
+
   if (!updates || updates.length === 0) return null;
 
   // Sort updates by created_at descending (newest first)
@@ -35,17 +37,19 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
               </div>
 
             {/* Content */}
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start w-full">
               <h2 className="text-2xl md:text-3xl font-bold font-playfair text-black dark:text-white leading-tight mb-3">
                 {update.headline}
               </h2>
 
-            
-
               <div
-                className="prose prose-lg md:prose-[21px] max-w-none dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent"
+                className="prose prose-lg md:prose-[21px] max-w-none w-full dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent"
                 dangerouslySetInnerHTML={{ __html: update.content }}
               />
+              
+              <div className="w-full flex justify-end mt-4">
+                <RelativeTime dateString={update.created_at} className="text-sm font-medium text-gray-500 dark:text-gray-400" />
+              </div>
             </div>
           </div>
         ))}

@@ -25,18 +25,18 @@ function getCookie(name: string): string {
 
 function readLang(): "en" | "hi" {
   const val = getCookie("googtrans");
-  if (!val) return "en";
+  if (!val) return "hi";
   const parts = val.split("/");
-  return parts[parts.length - 1] === "hi" ? "hi" : "en";
+  return parts[parts.length - 1] === "en" ? "en" : "hi";
 }
 
 // useSyncExternalStore: React-approved way to read external data (cookies).
-// No setState in effects. Server snapshot always "en" → no hydration mismatch.
+// No setState in effects. Server snapshot always "hi" → no hydration mismatch.
 function useLang(): "en" | "hi" {
   return useSyncExternalStore(
     () => () => {}, // no subscribe needed — cookie only changes on page reload
     () => readLang(), // client snapshot
-    () => "en"       // server snapshot
+    () => "hi"       // server snapshot
   );
 }
 
@@ -80,7 +80,7 @@ export function GoogleTranslateButton() {
     window.googleTranslateElementInit = () => {
       if (window.google?.translate?.TranslateElement) {
         new window.google.translate.TranslateElement(
-          { pageLanguage: "en", includedLanguages: "hi", autoDisplay: false },
+          { pageLanguage: "hi", includedLanguages: "en", autoDisplay: false },
           "google_translate_element"
         );
       }
@@ -103,38 +103,38 @@ export function GoogleTranslateButton() {
     }
   }, []);
 
-  const switchToHindi = useCallback(() => {
-    document.cookie = `googtrans=/en/hi; path=/`;
-    document.cookie = `googtrans=/en/hi; domain=${window.location.hostname}; path=/`;
+  const switchToEnglish = useCallback(() => {
+    document.cookie = `googtrans=/hi/en; path=/`;
+    document.cookie = `googtrans=/hi/en; domain=${window.location.hostname}; path=/`;
     window.location.reload();
   }, []);
 
-  const switchToEnglish = useCallback(() => {
+  const switchToHindi = useCallback(() => {
     clearGoogleTranslateCookies();
     window.location.reload();
   }, []);
 
-  const toggle = lang === "en" ? switchToHindi : switchToEnglish;
+  const toggle = lang === "hi" ? switchToEnglish : switchToHindi;
 
   return (
     <button
       onClick={toggle}
       className="group flex items-center bg-gray-300 dark:bg-[#1A1A1A] hover:bg-gray-300 dark:hover:bg-[#2A2A2A] rounded-full px-3 py-1 text-[12px] font-bold transition-colors duration-300 text-black dark:text-news-text"
-      title={lang === "en" ? "Switch to Hindi" : "Switch to English"}
+      title={lang === "hi" ? "Switch to English" : "Switch to Hindi"}
     >
       <Languages size={14} className="shrink-0 transition-transform duration-500 group-hover:rotate-180" />
       
       <div 
         className={`overflow-hidden transition-all duration-500 ease-out ml-2 h-[20px] ${
-          lang === "en" ? "w-[36px] group-hover:w-[110px]" : "w-[54px] group-hover:w-[130px]"
+          lang === "hi" ? "w-[54px] group-hover:w-[130px]" : "w-[36px] group-hover:w-[110px]"
         }`}
       >
         <div className="flex flex-col transition-transform duration-500 group-hover:translate-y-[-20px]">
           <span className="whitespace-nowrap leading-[20px] transition-opacity duration-500 opacity-100 group-hover:opacity-0">
-            {lang === "en" ? "हिंदी" : "English"}
+            {lang === "hi" ? "English" : "हिंदी"}
           </span>
           <span className="whitespace-nowrap leading-[20px] transition-opacity duration-500 opacity-0 group-hover:opacity-100">
-            {lang === "en" ? "हिंदी में बदलें" : "Switch to English"}
+            {lang === "hi" ? "Switch to English" : "हिंदी में बदलें"}
           </span>
         </div>
       </div>
@@ -147,9 +147,9 @@ export function useTranslateToggle() {
   const lang = useLang();
 
   const toggle = useCallback(() => {
-    if (lang === "en") {
-      document.cookie = `googtrans=/en/hi; path=/`;
-      document.cookie = `googtrans=/en/hi; domain=${window.location.hostname}; path=/`;
+    if (lang === "hi") {
+      document.cookie = `googtrans=/hi/en; path=/`;
+      document.cookie = `googtrans=/hi/en; domain=${window.location.hostname}; path=/`;
     } else {
       clearGoogleTranslateCookies();
     }
