@@ -291,7 +291,7 @@ export function Navbar({
                   </div>
                   
                   <div className="flex-1 overflow-y-auto px-5">
-                     <Link href="/election" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center gap-2 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border ${pathname === '/election' ? 'text-red-700 dark:text-red-500' : 'text-red-600'}`}>
+                     <Link href="/elections" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center gap-2 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border ${pathname === '/elections' ? 'text-red-700 dark:text-red-500' : 'text-red-600'}`}>
                        <span className="relative flex h-2 w-2">
                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
                          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
@@ -463,7 +463,7 @@ export function Navbar({
             )}
           </div>
           <div>
-            <Link href="/election" className="group text-red-600 font-bold uppercase tracking-widest py-4 inline-block relative overflow-hidden">
+            <Link href="/elections" className="group text-red-600 font-bold uppercase tracking-widest py-4 inline-block relative overflow-hidden">
               ELECTION
               <span className="absolute bottom-3 left-0 w-full h-[2px] bg-red-600 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
             </Link>

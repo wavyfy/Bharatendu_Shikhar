@@ -385,13 +385,14 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
 
 
 // --- Cached Exports ---
+import { cache } from "react";
 const IS_DEV = process.env.NODE_ENV === "development";
 
-export const fetchTickerArticles = IS_DEV ? _fetchTickerArticles : unstable_cache(_fetchTickerArticles, ["fetchTickerArticles"], { revalidate: 60, tags: ["articles"] });
-export const fetchHomepageData = IS_DEV ? _fetchHomepageData : unstable_cache(_fetchHomepageData, ["fetchHomepageData"], { revalidate: 60, tags: ["articles", "categories"] });
-export const fetchNavbarData = IS_DEV ? _fetchNavbarData : unstable_cache(_fetchNavbarData, ["fetchNavbarData"], { revalidate: 60, tags: ["categories", "regions"] });
-export const fetchSettings = IS_DEV ? _fetchSettings : unstable_cache(_fetchSettings, ["fetchSettings"], { revalidate: 60, tags: ["settings"] });
-export const fetchDynamicPageData = IS_DEV ? _fetchDynamicPageData : unstable_cache(_fetchDynamicPageData, ["fetchDynamicPageData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchBottomSlidersData = IS_DEV ? _fetchBottomSlidersData : unstable_cache(_fetchBottomSlidersData, ["fetchBottomSlidersData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchArticleBySlug = IS_DEV ? _fetchArticleBySlug : unstable_cache(_fetchArticleBySlug, ["fetchArticleBySlug"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchRelatedArticles = IS_DEV ? _fetchRelatedArticles : unstable_cache(_fetchRelatedArticles, ["fetchRelatedArticles"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchTickerArticles = IS_DEV ? cache(_fetchTickerArticles) : unstable_cache(cache(_fetchTickerArticles), ["fetchTickerArticles"], { revalidate: 60, tags: ["articles"] });
+export const fetchHomepageData = IS_DEV ? cache(_fetchHomepageData) : unstable_cache(cache(_fetchHomepageData), ["fetchHomepageData"], { revalidate: 60, tags: ["articles", "categories"] });
+export const fetchNavbarData = IS_DEV ? cache(_fetchNavbarData) : unstable_cache(cache(_fetchNavbarData), ["fetchNavbarData"], { revalidate: 60, tags: ["categories", "regions"] });
+export const fetchSettings = IS_DEV ? cache(_fetchSettings) : unstable_cache(cache(_fetchSettings), ["fetchSettings"], { revalidate: 60, tags: ["settings"] });
+export const fetchDynamicPageData = IS_DEV ? cache(_fetchDynamicPageData) : unstable_cache(cache(_fetchDynamicPageData), ["fetchDynamicPageData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchBottomSlidersData = IS_DEV ? cache(_fetchBottomSlidersData) : unstable_cache(cache(_fetchBottomSlidersData), ["fetchBottomSlidersData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchArticleBySlug = IS_DEV ? cache(_fetchArticleBySlug) : unstable_cache(cache(_fetchArticleBySlug), ["fetchArticleBySlug"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchRelatedArticles = IS_DEV ? cache(_fetchRelatedArticles) : unstable_cache(cache(_fetchRelatedArticles), ["fetchRelatedArticles"], { revalidate: 60, tags: ["articles", "categories", "regions"] });

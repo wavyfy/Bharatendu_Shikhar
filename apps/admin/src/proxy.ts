@@ -5,7 +5,7 @@ import { isValidRole } from "@/features/auth/utils/roles";
 const PUBLIC_PATHS = ["/login"];
 const ADMIN_PATHS = ["/users", "/publishers", "/settings", "/regions", "/categories"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const response = NextResponse.next();
   const { pathname } = request.nextUrl;
 
@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
     .eq("id", user.id)
     .single();
 
-  const profile = profileData as any;
+  const profile = profileData as { role: string; is_active: boolean } | null;
 
   if (profileError || !profile || profile.is_active === false || !isValidRole(profile.role)) {
     const loginUrl = new URL("/login", request.url);

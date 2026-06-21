@@ -56,6 +56,12 @@ const NAV_ITEMS = [
     icon: "ads_click",
   },
   {
+    label: "Elections",
+    href: "/elections",
+    section: "elections",
+    icon: "how_to_vote",
+  },
+  {
     label: "Settings",
     href: "/settings",
     section: "settings",

@@ -11,8 +11,9 @@ export const ROLE_PERMISSIONS: Record<UserRole, string[]> = {
     "epapers",
     "settings",
     "advertisements",
+    "elections",
   ],
-  publisher: ["dashboard", "articles", "epapers", "advertisements"],
+  publisher: ["dashboard", "articles", "epapers", "advertisements", "elections"],
 };
 
 export function hasPermission(role: UserRole, section: string): boolean {
