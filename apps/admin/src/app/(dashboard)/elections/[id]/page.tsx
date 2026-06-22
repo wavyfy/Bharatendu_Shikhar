@@ -4,6 +4,7 @@ import { AnimatedPage } from "@/components/ui/AnimatedPage";
 import { ElectionForm } from "@/features/elections/components/ElectionForm";
 import { GroupsList } from "@/features/elections/components/GroupsList";
 import { LiveUpdatesList } from "@/features/elections/components/LiveUpdatesList";
+import { ElectionTabs } from "@/features/elections/components/ElectionTabs";
 import { getElectionById, getElectionGroups, getElectionUpdates } from "@/features/elections/queries";
 import { getRegions } from "@/features/regions/queries";
 
@@ -30,39 +31,11 @@ async function ElectionDetailContent({ id }: { id: string }) {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Election Information */}
-      <section className="cms-card">
-        <div className="cms-card-header border-b border-outline-variant">
-          <h2 className="text-lg font-bold text-on-surface">Election Details</h2>
-        </div>
-        <div className="p-6">
-          <ElectionForm initialData={election} regions={regions} />
-        </div>
-      </section>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Groups Management */}
-        <section className="cms-card flex flex-col min-h-[400px]">
-          <div className="cms-card-header border-b border-outline-variant">
-            <h2 className="text-lg font-bold text-on-surface">Groups Management</h2>
-          </div>
-          <div className="p-0 flex-1">
-            <GroupsList electionId={id} groups={groups} />
-          </div>
-        </section>
-
-        {/* Live Updates */}
-        <section className="cms-card flex flex-col min-h-[400px]">
-          <div className="cms-card-header border-b border-outline-variant">
-            <h2 className="text-lg font-bold text-on-surface">Live Updates</h2>
-          </div>
-          <div className="p-0 flex-1">
-            <LiveUpdatesList electionId={id} updates={updates} />
-          </div>
-        </section>
-      </div>
-    </div>
+    <ElectionTabs 
+      electionForm={<ElectionForm initialData={election} regions={regions} />}
+      groupsList={<GroupsList electionId={id} groups={groups} />}
+      liveUpdatesList={<LiveUpdatesList electionId={id} updates={updates} />}
+    />
   );
 }
 

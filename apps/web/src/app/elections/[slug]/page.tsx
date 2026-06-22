@@ -3,6 +3,9 @@ import Image from "next/image";
 import { getElectionBySlug } from "@/utils/fetchElections";
 import { fetchRelatedArticles } from "@/utils/fetchData";
 import { ElectionResultsTabbed } from "@/features/elections/components/ElectionResultsTabbed";
+import { DialChart } from "@/features/elections/components/DialChart";
+import { UpdatesTimeline } from "@/features/elections/components/UpdatesTimeline";
+import { ChevronDown, ArrowRight, BarChart2, Radio, Calendar, Activity, User } from "lucide-react";
 
 interface Candidate {
   id: string;
@@ -70,14 +73,13 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
 
   // Summary statistics
   const totalGroups = sortedGroups.length;
-  const totalVotesCast = allCandidates.reduce((sum: number, c: Candidate) => sum + (c.votes || 0), 0);
+  const majority = Math.floor(totalGroups / 2) + 1;
   const declaredGroups = sortedGroups.filter((g: Group) => g.candidates.some(c => c.is_winner)).length;
   const pendingGroups = totalGroups - declaredGroups;
 
   // Party Standings Calculation
   interface PartyStanding {
     party_name: string;
-    party_symbol_url: string | null;
     won: number;
     leading: number;
     votes: number;
@@ -92,7 +94,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
     group.candidates.forEach((candidate: Candidate) => {
       const pName = candidate.party_name || "Independent";
       if (!partyMap.has(pName)) {
-        partyMap.set(pName, { party_name: pName, party_symbol_url: candidate.party_symbol_url || null, won: 0, leading: 0, votes: 0 });
+        partyMap.set(pName, { party_name: pName, won: 0, leading: 0, votes: 0 });
       }
       const pStats = partyMap.get(pName)!;
       pStats.votes += (candidate.votes || 0);
@@ -111,231 +113,168 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
     return b.votes - a.votes;
   });
 
+  // Top Party for Dial Chart
+  const topParty = partyStandings.length > 0 ? partyStandings[0] : null;
+  const leadingSeats = topParty ? topParty.won + topParty.leading : 0;
+  // Calculate trailing seats logic:
+  // Losing seats for top party = Declared Groups - (seats won by top party)
+  // Wait, if a group is declared, and top party didn't win, they lost it.
+  const losingSeats = topParty ? declaredGroups - topParty.won : 0;
+  
+  // To keep it simple and match the image (which has "Leading", "Losing", "Yet to win"):
+  const yetToWin = pendingGroups;
+  // Actually, "Leading" in dial could be top party leading + won
+  // "Losing" could be totalGroups - leadingSeats - yetToWin
+
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
-      {/* Hero Section */}
-      <div className="bg-card border border-border rounded-2xl overflow-hidden mb-12 shadow-sm">
-        {election.featured_image_url && (
-          <div className="w-full h-[300px] md:h-[400px] overflow-hidden bg-muted relative">
-            <Image 
-              src={election.featured_image_url} 
-              alt={election.title} 
-              fill
-              className="object-cover"
-              unoptimized
-            />
+    <div className="container mx-auto px-4 py-8 max-w-6xl font-sans">
+      
+      {/* 1. Header Box */}
+      <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm p-8 mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
+        <div>
+          <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-red-600 text-white mb-4">
+            State Election Updates
+          </span>
+          <h1 className="text-4xl font-bold text-foreground mb-2">{election.title}</h1>
+          {election.description && (
+            <p className="text-base text-red-500 max-w-2xl">{election.description}</p>
+          )}
+        </div>
+        {election.voting_date && (
+          <div className="text-base font-medium text-foreground whitespace-nowrap">
+            {new Date(election.voting_date).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
           </div>
         )}
-        <div className="p-6 md:p-10">
-          <div className="flex items-center gap-3 mb-4">
-            {election.status === "live" ? (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400">
-                <span className="w-2 h-2 rounded-full bg-red-500 mr-2 animate-pulse" />
-                LIVE ELECTION
-              </span>
-            ) : election.status === "upcoming" ? (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-                UPCOMING
-              </span>
-            ) : (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-                COMPLETED
-              </span>
-            )}
-            {election.region && (
-              <span className="text-sm text-muted-foreground font-semibold uppercase tracking-widest">{election.region.name}</span>
-            )}
+      </div>
+
+      {/* 2. Updates & Party Standings */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        
+        {/* Live Updates Timeline */}
+        <div className="lg:col-span-2">
+          <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm h-full overflow-hidden">
+            <div className="p-5 border-b border-gray-200 dark:border-gray-800">
+              <h2 className="text-base font-bold flex items-center gap-2">
+                <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs">Live</span>
+                <span className="text-foreground border-l border-gray-300 pl-3">Sensor Election Updates</span>
+              </h2>
+            </div>
+            <div className="p-0">
+              <UpdatesTimeline updates={election.updates} />
+            </div>
           </div>
-          <h1 className="text-3xl md:text-5xl font-black text-foreground mb-4 leading-tight">{election.title}</h1>
-          {election.description && (
-            <p className="text-lg text-muted-foreground max-w-3xl mb-6">{election.description}</p>
-          )}
-          <div className="flex flex-wrap gap-x-8 gap-y-4 text-sm font-medium text-foreground">
-            {election.voting_date && (
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-muted-foreground">calendar_month</span>
-                <span>Voting: {new Date(election.voting_date).toLocaleDateString(undefined, { dateStyle: 'long' })}</span>
-              </div>
-            )}
-            {election.result_date && (
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-muted-foreground">analytics</span>
-                <span>Results: {new Date(election.result_date).toLocaleDateString(undefined, { dateStyle: 'long' })}</span>
-              </div>
-            )}
+        </div>
+
+        {/* Party Standings Box */}
+        <div className="lg:col-span-1">
+          <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm p-6 h-full">
+            <div className="flex items-center gap-2 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold bg-red-600 text-white">
+                Party Standings
+              </span>
+              <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs font-bold">Live</span>
+            </div>
+            
+            <div className="flex justify-between text-xs font-bold text-foreground mb-4">
+              <span>Parties</span>
+              <span>Position</span>
+            </div>
+            
+            <div className="space-y-6">
+              {partyStandings.slice(0, 3).map((party, idx) => {
+                const positionText = idx === 0 ? "LEAD" : idx === 1 ? "SECOND" : "THIRD";
+                return (
+                  <div key={party.party_name} className="flex items-center justify-between">
+                    <div>
+                      <p className="font-bold text-sm text-foreground leading-tight mb-1">
+                        {party.party_name}
+                      </p>
+                      <p className="text-xs font-mono text-muted-foreground">{party.votes.toLocaleString()} VOTES</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-lg font-bold text-red-600 leading-none mb-1">{party.won + party.leading}</p>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-foreground">{positionText}</p>
+                    </div>
+                  </div>
+                );
+              })}
+              {partyStandings.length === 0 && (
+                <p className="text-xs text-muted-foreground italic">No data yet.</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Top Leaders Section */}
-      {topLeaders.length > 0 && (
-        <div className="mb-12">
-          <div className="flex items-center justify-between mb-6 border-b border-border pb-2">
-            <h2 className="text-xl font-bold text-foreground">Top Leaders</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {topLeaders.map((leader: Candidate, idx: number) => {
-              // Simple heuristic for leading: if they are the first in their group or have a winner flag
-              // Since we don't know exactly which group they are from without finding it, we can just assume 
-              // the top 4 overall are leading or we can find their group.
-              const group = sortedGroups.find((g: Group) => g.candidates.some(c => c.id === leader.id));
-              const isActuallyLeading = group?.candidates[0].id === leader.id && leader.votes! > 0;
-              const badgeStatus = leader.is_winner ? "WON" : isActuallyLeading ? "LEADING" : "TRAILING";
-              
-              return (
-                <div key={leader.id} className="bg-card border border-border rounded-xl p-4 shadow-sm flex flex-col justify-between h-full">
-                  <div className="flex gap-4 mb-4">
-                    <div className="w-16 h-16 shrink-0 relative rounded overflow-hidden bg-muted">
-                      {leader.photo_url ? (
-                        <Image src={leader.photo_url} alt={leader.candidate_name} fill className="object-cover" unoptimized />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="material-symbols-outlined text-muted-foreground">person</span>
-                        </div>
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-sm leading-tight mb-1">{leader.candidate_name}</h3>
-                      <p className="text-xs text-muted-foreground line-clamp-2">{leader.party_name || "Independent"}</p>
-                      <p className="text-xs font-mono font-bold text-foreground mt-1">{(leader.votes || 0).toLocaleString()} votes</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center mt-2 pt-3 border-t border-border">
-                    <span className={`inline-block px-2 py-1 text-[10px] font-bold rounded ${
-                      badgeStatus === "WON" ? "bg-green-100 text-green-700" :
-                      badgeStatus === "LEADING" ? "bg-red-600 text-white" :
-                      "bg-gray-100 text-gray-700"
-                    }`}>
-                      {badgeStatus}
-                    </span>
-                    <span className="text-[10px] font-semibold text-muted-foreground truncate max-w-[100px] text-right" title={group?.title}>
-                      in {group?.title}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      {/* 3. Top Leaders Section */}
+      <div className="mb-12 mt-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-base font-bold text-foreground">Top Leaders</h2>
         </div>
-      )}
-
-      {/* Main Content Split */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Left Column: Summary & Live Updates */}
-        <div className="lg:col-span-1 space-y-8">
-          
-          {/* Summary Box */}
-          <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-            <h2 className="text-xl font-bold mb-1">{election.title}</h2>
-            <p className="text-sm text-muted-foreground mb-6 pb-4 border-b border-border">Election Overview</p>
+        <div className="flex overflow-x-auto gap-4 custom-scrollbar snap-x pb-4">
+          {topLeaders.map((leader: Candidate) => {
+            const group = sortedGroups.find((g: Group) => g.candidates.some(c => c.id === leader.id));
+            const isActuallyLeading = group?.candidates[0].id === leader.id && leader.votes! > 0;
+            const badgeStatus = leader.is_winner ? "WON" : isActuallyLeading ? "LEADING" : "LOSING";
             
-            <div className="flex gap-8 mb-8">
-              <div>
-                <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Total Groups</p>
-                <p className="text-3xl font-black text-red-600">{totalGroups}</p>
-              </div>
-              <div>
-                <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Total Votes</p>
-                <p className="text-3xl font-black text-foreground">{totalVotesCast.toLocaleString()}</p>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center bg-muted/30 rounded-lg p-3 border border-border/50">
-              <div className="text-center px-2 border-r border-border/50 flex-1">
-                <p className="text-lg font-bold text-foreground mb-0">{declaredGroups}</p>
-                <div className="flex items-center justify-center gap-1">
-                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                  <p className="text-[10px] text-muted-foreground uppercase">Declared</p>
-                </div>
-              </div>
-              <div className="text-center px-2 flex-1">
-                <p className="text-lg font-bold text-foreground mb-0">{pendingGroups}</p>
-                <div className="flex items-center justify-center gap-1">
-                  <div className="w-2 h-2 rounded-full bg-gray-400"></div>
-                  <p className="text-[10px] text-muted-foreground uppercase">Pending</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Party Standings Box */}
-          {partyStandings.length > 0 && (
-            <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-              <h2 className="text-lg font-bold mb-4 border-b border-border pb-2 flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary">bar_chart</span>
-                Party Standings
-              </h2>
-              <div className="space-y-4">
-                {partyStandings.slice(0, 5).map((party, idx) => (
-                  <div key={party.party_name} className="flex items-center justify-between p-2 -mx-2 rounded hover:bg-muted/30 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="w-5 font-mono text-muted-foreground text-xs font-bold text-center">#{idx + 1}</div>
-                      {party.party_symbol_url ? (
-                        <Image src={party.party_symbol_url} alt="" width={24} height={24} className="object-contain" unoptimized />
-                      ) : (
-                        <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center shrink-0">
-                          <span className="text-[10px] font-bold text-muted-foreground">P</span>
-                        </div>
-                      )}
-                      <div>
-                        <p className="font-bold text-sm text-foreground leading-tight max-w-[120px] truncate" title={party.party_name}>
-                          {party.party_name}
-                        </p>
-                        <p className="text-[10px] font-mono text-muted-foreground">{party.votes.toLocaleString()} votes</p>
+            return (
+              <div key={leader.id} className="min-w-[260px] shrink-0 snap-start bg-card border border-gray-200 dark:border-gray-800 rounded-sm p-5 flex flex-col justify-between">
+                <div className="flex gap-4 mb-6">
+                  <div className="w-16 h-16 shrink-0 relative rounded-sm overflow-hidden bg-muted">
+                    {leader.photo_url ? (
+                      <Image src={leader.photo_url} alt={leader.candidate_name} fill className="object-cover" unoptimized />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-muted/50">
+                        <User className="w-8 h-8 text-gray-400" />
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3 text-center shrink-0">
-                      {party.won > 0 && (
-                        <div>
-                          <p className="text-sm font-black text-green-600 leading-none">{party.won}</p>
-                          <p className="text-[9px] uppercase tracking-widest text-muted-foreground mt-1">Won</p>
-                        </div>
-                      )}
-                      {party.leading > 0 && (
-                        <div>
-                          <p className="text-sm font-black text-red-500 leading-none">{party.leading}</p>
-                          <p className="text-[9px] uppercase tracking-widest text-muted-foreground mt-1">Lead</p>
-                        </div>
-                      )}
-                      {party.won === 0 && party.leading === 0 && (
-                        <div>
-                          <p className="text-sm font-black text-muted-foreground leading-none">-</p>
-                          <p className="text-[9px] uppercase tracking-widest text-muted-foreground mt-1">Total</p>
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
-                ))}
+                  <div className="pt-1">
+                    <h3 className="font-bold text-sm leading-tight mb-1.5 text-foreground">{leader.candidate_name}</h3>
+                    <p className="text-xs font-medium text-red-600 leading-snug">{leader.party_name || "Independent"}</p>
+                  </div>
+                </div>
+                <div>
+                  <span className={`inline-block px-3 py-1 text-xs font-bold rounded-sm ${
+                    badgeStatus === "WON" || badgeStatus === "LEADING" ? "bg-red-600 text-white" : "bg-red-600 text-white"
+                  }`}>
+                    {badgeStatus}
+                  </span>
+                </div>
               </div>
+            );
+          })}
+          {topLeaders.length === 0 && (
+            <div className="col-span-full p-8 text-center border border-gray-200 dark:border-gray-800 rounded-sm text-muted-foreground text-sm">
+              No leaders available yet.
             </div>
           )}
+        </div>
+      </div>
 
-          {/* Live Updates */}
-          <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-              <span className="material-symbols-outlined text-red-500">sensors</span>
-              Live Updates
-            </h2>
-            
-            {election.updates.length === 0 ? (
-              <p className="text-sm text-muted-foreground italic text-center">No live updates currently available.</p>
-            ) : (
-              <div className="relative border-l-2 border-muted ml-3 space-y-6 pl-5 pb-2">
-                {election.updates.map((update: Update, index: number) => (
-                  <div key={update.id} className="relative">
-                    <div className={`absolute w-2.5 h-2.5 rounded-full left-[-26px] top-1.5 ${index === 0 ? 'bg-red-500 animate-pulse ring-4 ring-red-500/20' : 'bg-primary'}`} />
-                    <div className="text-[10px] font-bold text-primary mb-1 uppercase tracking-wider">
-                      {new Date(update.created_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
-                    </div>
-                    <h4 className="font-bold text-sm text-foreground mb-1 leading-tight">{update.title}</h4>
-                    <p className="text-xs text-muted-foreground whitespace-pre-wrap">{update.content}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+      {/* 4. Main Content Split (Dial Chart & Tabs) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left Column: Dial Chart */}
+        <div className="lg:col-span-1">
+          <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm h-full flex flex-col">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-800">
+              <h2 className="text-base font-bold flex items-center gap-1 mb-1 text-foreground">
+                {election.region ? election.region.name : "Global"}
+                <ChevronDown className="w-5 h-5" />
+              </h2>
+              <p className="text-sm text-foreground">Election Result 2026</p>
+            </div>
+            <div className="p-0 flex-1">
+              <DialChart 
+                totalSeats={totalGroups} 
+                majority={majority}
+                leadingSeats={leadingSeats}
+                losingSeats={totalGroups - leadingSeats - yetToWin} // Approximate
+                yetToWin={yetToWin}
+              />
+            </div>
           </div>
-
         </div>
 
         {/* Right Column: Tabbed Results */}
@@ -345,34 +284,6 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
 
       </div>
 
-      {/* Related News */}
-      {regionArticles && regionArticles.length > 0 && (
-        <div className="mt-20 pt-10 border-t border-border">
-          <h2 className="text-2xl font-black mb-8 border-b-2 border-primary pb-2 inline-block">Related News</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {regionArticles.slice(0, 4).map((article: Article) => (
-              <a key={article.id} href={`/article/${article.slug}`} className="group flex flex-col gap-3">
-                {article.featured_image ? (
-                  <div className="aspect-4/3 w-full overflow-hidden bg-muted rounded-xl relative">
-                    <Image 
-                      src={article.featured_image.startsWith('http') ? article.featured_image : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${article.featured_image}`} 
-                      alt={article.title} 
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      unoptimized
-                    />
-                  </div>
-                ) : (
-                  <div className="aspect-4/3 w-full bg-muted rounded-xl" />
-                )}
-                <h3 className="font-playfair font-bold text-lg leading-tight group-hover:text-red-600 transition-colors line-clamp-3">
-                  {article.title}
-                </h3>
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Info } from "lucide-react";
 
 interface Candidate {
   id: string;
@@ -37,39 +38,42 @@ export function ElectionResultsTabbed({ groups }: ElectionResultsTabbedProps) {
   const activeGroup = groups.find(g => g.id === activeTab) || groups[0];
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
+    <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm h-full flex flex-col">
       {/* Tabs */}
-      <div className="flex overflow-x-auto border-b border-border custom-scrollbar">
-        {groups.map((group) => (
-          <button
-            key={group.id}
-            onClick={() => setActiveTab(group.id)}
-            className={`px-6 py-4 text-sm font-bold whitespace-nowrap transition-colors relative ${
-              activeTab === group.id
-                ? "text-white bg-red-600"
-                : "text-foreground hover:bg-muted"
-            }`}
-          >
-            {group.title}
-          </button>
-        ))}
+      <div className="flex overflow-x-auto custom-scrollbar px-2 pt-2 pb-1 items-center gap-2 border-b border-gray-200 dark:border-gray-800">
+        {groups.map((group) => {
+          const isActive = activeTab === group.id;
+          return (
+            <button
+              key={group.id}
+              onClick={() => setActiveTab(group.id)}
+              className={`text-[11px] whitespace-nowrap transition-colors px-3 py-1.5 rounded-full ${
+                isActive
+                  ? "bg-red-600 text-white font-bold"
+                  : "text-foreground font-medium hover:bg-muted"
+              }`}
+            >
+              {group.title}
+            </button>
+          );
+        })}
       </div>
 
       {/* Table Content */}
-      <div className="p-0">
+      <div className="p-0 flex-1 flex flex-col mt-2">
         {activeGroup.candidates.length === 0 ? (
           <div className="p-8 text-center text-muted-foreground italic">
             No candidates available in this group.
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto h-full">
             <table className="w-full text-left border-collapse">
-              <thead className="bg-muted/30">
-                <tr className="border-b border-border text-xs uppercase tracking-wider text-muted-foreground">
-                  <th className="px-6 py-4 font-bold">Party</th>
-                  <th className="px-6 py-4 font-bold">Candidate</th>
-                  <th className="px-6 py-4 font-bold text-right">Votes</th>
-                  <th className="px-6 py-4 font-bold text-right">Vote %</th>
+              <thead className="border-b border-gray-200 dark:border-gray-800">
+                <tr className="text-xs font-bold uppercase tracking-wider text-foreground bg-muted/20">
+                  <th className="px-6 py-3">Party</th>
+                  <th className="px-6 py-3">Candidate</th>
+                  <th className="px-6 py-3 text-center">Votes</th>
+                  <th className="px-6 py-3 text-center">Vote %</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
@@ -79,48 +83,31 @@ export function ElectionResultsTabbed({ groups }: ElectionResultsTabbedProps) {
                   const isLeading = index === 0 && candidate.votes! > 0; // Assuming sorted by votes
 
                   return (
-                    <tr key={candidate.id} className="hover:bg-muted/20 transition-colors">
+                    <tr key={candidate.id} className="hover:bg-muted/10 transition-colors">
                       {/* Party */}
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          {candidate.party_symbol_url && (
-                            <Image 
-                              src={candidate.party_symbol_url} 
-                              alt="" 
-                              width={24} 
-                              height={24} 
-                              className="object-contain" 
-                              unoptimized 
-                            />
-                          )}
-                          <span className="font-bold text-foreground">
-                            {candidate.party_name || "Independent"}
-                          </span>
-                        </div>
+                      <td className="px-6 py-3">
+                        <span className="font-medium text-xs text-foreground">
+                          {candidate.party_name || "Independent"}
+                        </span>
                       </td>
                       
                       {/* Candidate Name */}
-                      <td className="px-6 py-4">
-                        <div className="font-medium text-foreground">
+                      <td className="px-6 py-3">
+                        <div className="font-medium text-xs text-foreground">
                           {candidate.candidate_name}
-                          {candidate.is_winner && (
-                            <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700">WON</span>
-                          )}
                         </div>
                       </td>
 
                       {/* Votes */}
-                      <td className="px-6 py-4 text-right">
-                        <span className={`font-mono font-bold ${isLeading ? "text-red-600" : "text-foreground"}`}>
+                      <td className="px-6 py-3 text-center">
+                        <span className={`font-mono text-xs ${isLeading ? "text-red-600 font-bold" : "text-foreground font-medium"}`}>
                           {(candidate.votes || 0).toLocaleString()}
                         </span>
                       </td>
 
                       {/* Percentage */}
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-3">
-                          <span className="font-mono text-sm text-muted-foreground w-12">{percentage.toFixed(1)}%</span>
-                        </div>
+                      <td className="px-6 py-3 text-center">
+                        <span className="font-mono text-xs text-foreground font-medium">{percentage.toFixed(1)}%</span>
                       </td>
                     </tr>
                   );
@@ -129,6 +116,12 @@ export function ElectionResultsTabbed({ groups }: ElectionResultsTabbedProps) {
             </table>
           </div>
         )}
+      </div>
+      <div className="mt-auto border-t border-gray-200 dark:border-gray-800 p-3 bg-muted/10">
+        <p className="text-xs text-muted-foreground flex items-center gap-2 px-2">
+          <Info className="w-4 h-4" />
+          Figures indicate vote counts in the election results based on current counting
+        </p>
       </div>
     </div>
   );

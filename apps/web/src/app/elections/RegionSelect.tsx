@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 
 export function RegionSelect({ 
   regions, 
@@ -12,22 +13,25 @@ export function RegionSelect({
   const router = useRouter();
 
   return (
-    <select 
-      className="w-full md:w-48 p-2 text-sm border rounded-md bg-background text-foreground"
-      defaultValue={defaultRegionId}
-      onChange={(e) => {
-        const val = e.target.value;
-        if (val) {
-          router.push(`/elections?region=${val}`);
-        } else {
-          router.push(`/elections`);
-        }
-      }}
-    >
-      <option value="">All Regions</option>
-      {regions.map((r: { id: string | number; name: string }) => (
-        <option key={r.id} value={r.id}>{r.name}</option>
-      ))}
-    </select>
+    <div className="relative w-full md:w-48">
+      <select 
+        className="w-full px-4 py-2.5 text-sm font-medium border border-gray-200 dark:border-gray-800 rounded-sm bg-card text-foreground appearance-none cursor-pointer hover:border-gray-300 dark:hover:border-gray-700 transition-colors focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        defaultValue={defaultRegionId}
+        onChange={(e) => {
+          const val = e.target.value;
+          if (val) {
+            router.push(`/elections?region=${val}`);
+          } else {
+            router.push(`/elections`);
+          }
+        }}
+      >
+        <option value="">All Regions</option>
+        {regions.map((r: { id: string | number; name: string }) => (
+          <option key={r.id} value={r.id}>{r.name}</option>
+        ))}
+      </select>
+      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+    </div>
   );
 }

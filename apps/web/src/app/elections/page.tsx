@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Vote, Calendar, BarChart2 } from "lucide-react";
 import { getElections } from "@/utils/fetchElections";
 import { fetchNavbarData } from "@/utils/fetchData";
 
@@ -36,7 +37,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
   }
 
   const ElectionCard = ({ election }: { election: Election }) => (
-    <Link href={`/elections/${election.slug}`} className="flex flex-col border border-border rounded-xl overflow-hidden hover:shadow-md transition-shadow bg-card group">
+    <Link href={`/elections/${election.slug}`} className="flex flex-col border border-gray-200 dark:border-gray-800 rounded-sm overflow-hidden hover:shadow-md transition-shadow bg-card group">
       {election.featured_image_url ? (
         <div className="aspect-video w-full overflow-hidden bg-muted relative">
           <Image 
@@ -49,7 +50,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
         </div>
       ) : (
         <div className="aspect-video w-full bg-muted flex items-center justify-center">
-          <span className="material-symbols-outlined text-4xl text-muted-foreground/30">how_to_vote</span>
+          <Vote className="w-12 h-12 text-muted-foreground/30" />
         </div>
       )}
       <div className="p-4 flex flex-col flex-1">
@@ -76,16 +77,16 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
         {election.description && (
           <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{election.description}</p>
         )}
-        <div className="mt-auto pt-4 border-t border-border/50 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
+        <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
           {election.voting_date && (
-            <div className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-[14px]">calendar_today</span>
+            <div className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" />
               <span>Voting: {new Date(election.voting_date).toLocaleDateString()}</span>
             </div>
           )}
           {election.result_date && (
-            <div className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-[14px]">bar_chart</span>
+            <div className="flex items-center gap-1.5">
+              <BarChart2 className="w-3.5 h-3.5" />
               <span>Results: {new Date(election.result_date).toLocaleDateString()}</span>
             </div>
           )}
@@ -109,7 +110,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
       </div>
 
       {elections.length === 0 ? (
-        <div className="text-center py-20 bg-muted/30 rounded-xl border border-dashed">
+        <div className="text-center py-20 bg-muted/30 rounded-sm border border-dashed border-gray-200 dark:border-gray-800">
           <p className="text-muted-foreground">No elections found.</p>
         </div>
       ) : (
