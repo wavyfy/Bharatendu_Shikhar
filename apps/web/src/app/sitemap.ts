@@ -106,14 +106,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const { data: categories } = await supabase
     .from("categories")
-    .select("slug, updated_at")
+    .select("slug, created_at")
     .eq("is_active", true);
 
   if (categories) {
     for (const category of categories) {
       entries.push({
         url: `${siteUrl}/category/${category.slug}`,
-        lastModified: category.updated_at ? new Date(category.updated_at) : new Date(),
+        lastModified: category.created_at ? new Date(category.created_at) : new Date(),
         changeFrequency: "daily",
         priority: 0.7,
       });
@@ -122,14 +122,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const { data: regions } = await supabase
     .from("regions")
-    .select("slug, updated_at")
+    .select("slug, created_at")
     .eq("is_active", true);
 
   if (regions) {
     for (const region of regions) {
       entries.push({
         url: `${siteUrl}/region/${region.slug}`,
-        lastModified: region.updated_at ? new Date(region.updated_at) : new Date(),
+        lastModified: region.created_at ? new Date(region.created_at) : new Date(),
         changeFrequency: "daily",
         priority: 0.7,
       });

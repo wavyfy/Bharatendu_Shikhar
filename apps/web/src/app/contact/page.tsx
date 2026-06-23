@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { fetchSettings } from "@/utils/fetchData";
-import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import type { Metadata } from "next";
 import { getSiteUrl } from "@/utils/seo";
 import { LegalDialog } from "@/components/shared/LegalDialog";

@@ -91,7 +91,7 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: menuCoords.transformOrigin === "bottom right" ? 4 : -4 }}
               transition={{ duration: 0.15 }}
-              className="fixed z-[999] w-56 rounded-lg border border-outline-variant bg-surface py-1 shadow-xl ring-1 ring-black/5 dark:ring-white/5"
+              className="fixed z-999 w-56 rounded-lg border border-outline-variant bg-surface py-1 shadow-xl ring-1 ring-black/5 dark:ring-white/5"
               style={{
                 top: menuCoords.top !== undefined ? menuCoords.top : "auto",
                 bottom: menuCoords.bottom !== undefined ? menuCoords.bottom : "auto",

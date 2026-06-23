@@ -6,6 +6,10 @@ import { DialChart } from "@/components/elections/DialChart";
 import { UpdatesTimeline } from "@/components/elections/UpdatesTimeline";
 import { ChevronDown, User } from "lucide-react";
 
+import { fetchSettings } from "@/utils/fetchData";
+import { getSiteUrl } from "@/utils/seo";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
+
 interface Candidate {
   id: string;
   candidate_name: string;
@@ -21,12 +25,6 @@ interface Group {
   title: string;
   candidates: Candidate[];
 }
-
-
-
-import { fetchSettings } from "@/utils/fetchData";
-import { getSiteUrl } from "@/utils/seo";
-import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

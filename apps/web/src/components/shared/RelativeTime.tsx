@@ -22,17 +22,31 @@ function getRelativeTime(dateString: string) {
 }
 
 export function RelativeTime({ dateString, className }: { dateString: string; className?: string }) {
-  const [mounted, setMounted] = useState(false);
+  const [timeStr, setTimeStr] = useState<string>("");
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    // Initial update deferred to avoid synchronous setState warning
+    const initTimer = setTimeout(() => {
+      setTimeStr(getRelativeTime(dateString));
+    }, 0);
+    
+    // Update every minute
+    const interval = setInterval(() => {
+      setTimeStr(getRelativeTime(dateString));
+    }, 60000);
+    
+    return () => {
+      clearTimeout(initTimer);
+      clearInterval(interval);
+    };
+  }, [dateString]);
 
-  if (!mounted) return null;
+  // Prevent hydration mismatch by returning null until client-side calculation is done
+  if (!timeStr) return null;
 
   return (
     <span className={className}>
-      {getRelativeTime(dateString)}
+      {timeStr}
     </span>
   );
 }

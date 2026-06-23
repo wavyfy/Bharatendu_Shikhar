@@ -250,7 +250,7 @@ async function _fetchDynamicPageData(slug: string) {
     topArticles: topArticlesData,
     categorySections,
     pageTitle: region ? region.name : category!.name,
-    seoDescription: region ? region.seo_description : category!.seo_description,
+    seoDescription: ((region as Record<string, unknown>)?.seo_description as string) || ((category as Record<string, unknown>)?.seo_description as string) || "",
     type: region ? "region" : "category",
     id: region ? region.id : category!.id,
     slug: region ? region.slug : category!.slug,
