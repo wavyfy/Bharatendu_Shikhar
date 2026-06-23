@@ -5,10 +5,65 @@ import { Ticker } from "@/components/home/Ticker";
 import { Advertisement } from "@/components/shared/Advertisement";
 import { TopicSection } from "@/components/home/TopicSection";
 import { ExpandableSectionLayout } from "@/components/home/ExpandableSectionLayout";
-import { fetchDynamicPageData, fetchTickerArticles } from "@/utils/fetchData";
+import { fetchDynamicPageData, fetchTickerArticles, fetchSettings } from "@/utils/fetchData";
 import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
 import { CategoryPageSkeleton } from "@/components/skeletons/CategorySkeletons";
 import type { Metadata } from "next";
+import { getSiteUrl } from "@/utils/seo";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
+
+/** CollectionPage + ItemList structured data for category/region listing pages. */
+async function CollectionPageAndItemListSchema({
+  pageTitle,
+  displayDescription,
+  pageType,
+  slug,
+  topArticles,
+}: {
+  pageTitle: string;
+  displayDescription: string;
+  pageType: "category" | "region";
+  slug: string;
+  topArticles: { title: string | null; slug: string }[];
+}) {
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const pageUrl = `${siteUrl}/${pageType}/${slug}`;
+
+  const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": pageTitle,
+    "description": displayDescription,
+    "url": pageUrl,
+  };
+
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": pageTitle,
+    "url": pageUrl,
+    "itemListElement": topArticles.slice(0, 20).map((article, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": article.title,
+      "url": `${siteUrl}/article/${article.slug}`,
+    })),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+    </>
+  );
+}
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -17,6 +72,8 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await params;
   const pageData = await fetchDynamicPageData(slug);
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
   
   if (!pageData) {
     return {
@@ -24,18 +81,30 @@ export async function generateMetadata(
     };
   }
 
+  const urlType = pageData.type === "region" ? "region" : "category";
+
+  const fallbackDescription = pageData.type === "region"
+    ? `Latest ${pageData.pageTitle} news, local updates and regional coverage from Bharatendu Shikhar.`
+    : `Latest ${pageData.pageTitle} news, updates and breaking stories from Bharatendu Shikhar.`;
+
+  const metaDescription = pageData.seoDescription || fallbackDescription;
+
   return {
     title: pageData.pageTitle,
-    description: `Latest news, articles, and updates for ${pageData.pageTitle}.`,
+    description: metaDescription,
+    alternates: {
+      canonical: `${siteUrl}/${urlType}/${slug}`,
+    },
     openGraph: {
       title: pageData.pageTitle,
-      description: `Latest news, articles, and updates for ${pageData.pageTitle}.`,
+      description: metaDescription,
+      url: `${siteUrl}/${urlType}/${slug}`,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: pageData.pageTitle,
-      description: `Latest news, articles, and updates for ${pageData.pageTitle}.`,
+      description: metaDescription,
     },
   };
 }
@@ -48,17 +117,41 @@ async function TickerSection() {
 async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slug: string }> }) {
   const { slug } = await paramsPromise;
   const pageData = await fetchDynamicPageData(slug);
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
   
   if (!pageData) {
     notFound();
   }
 
-  const { topArticles, categorySections, pageTitle } = pageData;
+  const { topArticles, categorySections, pageTitle, seoDescription, type } = pageData;
+
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: pageTitle }
+  ];
+
+  const fallbackDescription = type === "region"
+    ? `Latest ${pageTitle} news, local updates and regional coverage from Bharatendu Shikhar.`
+    : `Latest ${pageTitle} news, updates and breaking stories from Bharatendu Shikhar.`;
+
+  const displayDescription = seoDescription || fallbackDescription;
 
   return (
     <div className="flex-1 min-w-0 flex flex-col mt-5 animate-in fade-in duration-300">
+      <CollectionPageAndItemListSchema
+        pageTitle={pageTitle}
+        displayDescription={displayDescription}
+        pageType={type as "category" | "region"}
+        slug={pageData.slug}
+        topArticles={topArticles}
+      />
+      <Breadcrumbs items={breadcrumbs} siteUrl={siteUrl} />
       <div className="pb-4 pt-2 mb-2 border-b-2 border-red-600">
         <h1 className="text-4xl font-playfair font-bold uppercase tracking-wider">{pageTitle}</h1>
+        <p className="mt-2 text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+          {displayDescription}
+        </p>
       </div>
       
       <main className="mt-6">

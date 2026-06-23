@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { Mail, LockKeyhole, ArrowRight, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
-import bsLogo from "../../../../public/images/bs_logo.png";
+
 import { DashboardMockup } from "./DashboardMockup";
 
 export function LoginForm({ logoUrl }: { logoUrl?: string | null }) {
@@ -32,13 +32,17 @@ export function LoginForm({ logoUrl }: { logoUrl?: string | null }) {
             transition={{ duration: 0.8 }}
             className="w-48 h-12 bg-white flex items-center justify-center rounded-full shadow-lg mb-12 relative overflow-hidden px-4"
           >
-            <Image 
-              src={logoUrl ? (logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`) : bsLogo} 
-              alt="Bharatendu Shikhar Logo" 
-              fill
-              sizes="192px"
-              className="object-contain p-2" 
-            />
+            {logoUrl ? (
+              <Image 
+                src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
+                alt="Bharatendu Shikhar Logo" 
+                fill
+                sizes="192px"
+                className="object-contain p-2" 
+              />
+            ) : (
+              <span className="font-bold text-xl text-slate-800">BS Admin</span>
+            )}
           </motion.div>
 
           <motion.div
@@ -115,7 +119,11 @@ export function LoginForm({ logoUrl }: { logoUrl?: string | null }) {
         {/* Mobile Navbar */}
         <div className="lg:hidden absolute top-0 left-0 right-0 p-5 sm:p-6 flex justify-between items-center z-20">
            <div className="w-36 h-10 bg-white flex items-center justify-center rounded-full shadow-sm relative overflow-hidden px-3">
-             <Image src={logoUrl ? (logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`) : bsLogo} alt="BS Logo" fill sizes="144px" className="object-contain p-1.5" />
+             {logoUrl ? (
+               <Image src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} alt="BS Logo" fill sizes="144px" className="object-contain p-1.5" />
+             ) : (
+               <span className="font-bold text-lg text-slate-800">BS Admin</span>
+             )}
            </div>
            <ThemeTogglePill />
         </div>

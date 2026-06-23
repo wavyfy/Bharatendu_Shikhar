@@ -40,11 +40,15 @@ async function getAuth() {
  */
 async function resolveLiveBadgeId(): Promise<number | null> {
   const { supabaseAdmin } = await import("@repo/api");
-  const { data } = await supabaseAdmin
+  const { data, error } = await supabaseAdmin
     .from("badges")
     .select("id")
     .eq("slug", "live")
-    .single();
+    .maybeSingle();
+  if (error) {
+    console.error("Error resolving live badge:", error.message);
+    return null;
+  }
   return (data as { id: number } | null)?.id ?? null;
 }
 
@@ -72,7 +76,10 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
     const validatedData = validationResult.data;
 
     // Generate slug
-    const slug = generateSlug(validatedData.title);
+    let slug = generateSlug(validatedData.title);
+    
+    // Ensure slug is unique by appending timestamp if we hit a conflict
+    // We will just try to insert, and if it fails with unique violation, we catch it below.
 
     // Auto-assign Live badge when is_live is enabled
     const resolvedBadgeIds = await ensureLiveBadge(badgeIds, validatedData.is_live ?? false);
@@ -104,9 +111,12 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
     revalidatePath("/articles");
     revalidateWeb(["articles", "categories", "regions"]);
     return { success: true, articleId: inserted?.id };
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error("Create article error:", error);
-    const message = error instanceof Error ? error.message : "Failed to create article";
+    let message = error?.message || "Failed to create article";
+    if (error?.code === '23505') { // Unique violation in Postgres
+      message = "An article with a similar title already exists. Please change the title slightly.";
+    }
     return { success: false, error: message };
   }
 }
@@ -182,9 +192,12 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput,
     revalidatePath(`/articles/${id}/edit`);
     revalidateWeb(["articles", "categories", "regions"]);
     return { success: true };
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error("Update article error:", error);
-    const message = error instanceof Error ? error.message : "Failed to update article";
+    let message = error?.message || "Failed to update article";
+    if (error?.code === '23505') {
+      message = "An article with a similar title already exists. Please change the title slightly.";
+    }
     return { success: false, error: message };
   }
 }

@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useToast } from "@/components/ui/Toast";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 import { createUpdateAction, deleteUpdateAction } from "../actions";
 
 interface LiveUpdatesListProps {
@@ -56,13 +57,12 @@ export function LiveUpdatesList({ electionId, updates }: LiveUpdatesListProps) {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar min-h-0">
+    <div className="flex flex-col">
+      <div className="overflow-y-auto p-4 space-y-4 custom-scrollbar max-h-[600px]">
         {isAdding && (
           <div className="p-4 border border-primary rounded-lg bg-primary/5 space-y-3 mb-4">
             <Input value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="Update Title (e.g., Counting begins)" />
-            <textarea 
-              className="cms-input resize-y w-full" 
+            <Textarea 
               rows={3} 
               value={newContent} 
               onChange={(e) => setNewContent(e.target.value)} 
@@ -105,7 +105,7 @@ export function LiveUpdatesList({ electionId, updates }: LiveUpdatesListProps) {
       </div>
 
       {!isAdding && (
-        <div className="p-4 border-t border-outline-variant bg-surface-container-lowest mt-auto">
+        <div className="p-4 border-t border-outline-variant bg-surface-container-lowest">
           <Button className="w-full" variant="secondary" onClick={() => setIsAdding(true)}>
             <span className="material-symbols-outlined text-[18px] mr-1">add</span>
             Post Live Update

@@ -25,6 +25,12 @@ export function Footer({
     instagram_url?: string | null;
     youtube_url?: string | null;
     linkedin_url?: string | null;
+    copyright_text?: string | null;
+    about_us?: string | null;
+    editorial_policy?: string | null;
+    correction_policy?: string | null;
+    terms_conditions?: string | null;
+    privacy_policy?: string | null;
     [key: string]: unknown;
   } | null
 }) {
@@ -113,20 +119,42 @@ export function Footer({
               </div>
             )}
 
-            {/* Quick Links */}
+            {/* Legal & Policies */}
             <div className="hidden md:flex flex-col gap-4 md:pl-2">
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
-                Quick Links
+                Legal & Policies
               </h3>
               <div className="flex flex-col gap-3">
-                <Link href="/" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
-                  <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
-                  <span className="group-hover:translate-x-1 transition-transform">Home Page</span>
-                </Link>
-                <Link href="/epaper" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
-                  <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
-                  <span className="group-hover:translate-x-1 transition-transform">Read ePaper</span>
-                </Link>
+                {settings?.about_us && (
+                  <Link href="/about" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
+                    <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
+                    <span className="group-hover:translate-x-1 transition-transform">About Us</span>
+                  </Link>
+                )}
+                {settings?.editorial_policy && (
+                  <Link href="/editorial-policy" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
+                    <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
+                    <span className="group-hover:translate-x-1 transition-transform">Editorial Policy</span>
+                  </Link>
+                )}
+                {settings?.correction_policy && (
+                  <Link href="/correction-policy" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
+                    <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
+                    <span className="group-hover:translate-x-1 transition-transform">Correction Policy</span>
+                  </Link>
+                )}
+                {settings?.terms_conditions && (
+                  <Link href="/terms" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
+                    <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
+                    <span className="group-hover:translate-x-1 transition-transform">Terms & Conditions</span>
+                  </Link>
+                )}
+                {settings?.privacy_policy && (
+                  <Link href="/privacy" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
+                    <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
+                    <span className="group-hover:translate-x-1 transition-transform">Privacy Policy</span>
+                  </Link>
+                )}
               </div>
             </div>
             
@@ -203,22 +231,18 @@ export function Footer({
         <div className="h-[2px] w-full bg-gray-200 dark:bg-news-border my-10"></div>
 
         {/* Bottom Content */}
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-6 w-full">
+        <div className="flex flex-col xl:flex-row justify-between items-center xl:items-start gap-6 w-full">
           {/* Copyright & T&C */}
-          <div className="text-[13px] text-gray-500 dark:text-news-text-muted flex flex-wrap lg:flex-nowrap justify-center lg:justify-start gap-3 md:gap-4 items-center whitespace-nowrap">
-            <span className="font-medium">&copy; {new Date().getFullYear()} Bharatendu Shikhar. All rights reserved.</span>
-            <span className="hidden md:inline text-gray-300 dark:text-news-border">|</span>
-            <Link href="/terms" className="hover:text-red-600 transition-colors font-medium">Terms & Conditions</Link>
-            <span className="hidden md:inline text-gray-300 dark:text-news-border">|</span>
-            <Link href="/privacy" className="hover:text-red-600 transition-colors font-medium">Privacy Policy</Link>
+          <div className="text-[13px] text-gray-500 dark:text-news-text-muted flex justify-center xl:justify-start items-center">
+            <span className="font-medium whitespace-nowrap">&copy; {new Date().getFullYear()} {settings?.copyright_text || "Bharatendu Shikhar. All rights reserved."}</span>
           </div>
 
           {/* Bottom Buttons */}
-          <div className="flex flex-col sm:flex-row justify-end items-center gap-3 w-full lg:w-auto">
-            <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row justify-center xl:justify-end items-center gap-3 w-full xl:w-auto shrink-0">
+            <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap">
               Read ePaper
             </Link>
-            <Link href="/app" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto">
+            <Link href="/app" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap">
               Get the App
             </Link>
           </div>

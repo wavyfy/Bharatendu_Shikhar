@@ -5,7 +5,8 @@
     "main": "src/index.ts",
     "dependencies": {
         "@supabase/ssr": "^0.10.3",
-        "@supabase/supabase-js": "^2.106.1"
+        "@supabase/supabase-js": "^2.106.1",
+        "isomorphic-dompurify": "^3.18.0"
     },
     "peerDependencies": {
         "next": ">=15.0.0"

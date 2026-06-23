@@ -1,11 +1,14 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getElectionBySlug } from "@/utils/fetchElections";
-import { fetchRelatedArticles } from "@/utils/fetchData";
-import { ElectionResultsTabbed } from "@/features/elections/components/ElectionResultsTabbed";
-import { DialChart } from "@/features/elections/components/DialChart";
-import { UpdatesTimeline } from "@/features/elections/components/UpdatesTimeline";
-import { ChevronDown, ArrowRight, BarChart2, Radio, Calendar, Activity, User } from "lucide-react";
+import { ElectionResultsTabbed } from "@/components/elections/ElectionResultsTabbed";
+import { DialChart } from "@/components/elections/DialChart";
+import { UpdatesTimeline } from "@/components/elections/UpdatesTimeline";
+import { ChevronDown, User } from "lucide-react";
+
+import { fetchSettings } from "@/utils/fetchData";
+import { getSiteUrl } from "@/utils/seo";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 interface Candidate {
   id: string;
@@ -23,28 +26,35 @@ interface Group {
   candidates: Candidate[];
 }
 
-interface Update {
-  id: string;
-  title: string;
-  content: string;
-  created_at: string;
-}
-
-interface Article {
-  id: string | number;
-  slug: string;
-  title: string;
-  featured_image?: string | null;
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const election = await getElectionBySlug(slug);
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
+
   if (!election) return { title: "Not Found | Bharatendu Shikhar" };
 
+  const title = election.title || settings?.meta_title || "Bharatendu Shikhar";
+  const description = election.description || settings?.meta_description || `Live updates and results for ${title}.`;
+
   return {
-    title: `${election.title} | Bharatendu Shikhar`,
-    description: election.description || `Live updates and results for ${election.title}.`,
+    title: `${title} | Bharatendu Shikhar`,
+    description,
+    alternates: {
+      canonical: `${siteUrl}/elections/${slug}`,
+    },
+    openGraph: {
+      title: `${title} | Bharatendu Shikhar`,
+      description,
+      url: `${siteUrl}/elections/${slug}`,
+      type: "website",
+      images: settings?.og_image_url ? [settings.og_image_url] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Bharatendu Shikhar`,
+      description,
+    },
   };
 }
 
@@ -56,9 +66,14 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
     notFound();
   }
 
-  const { regionArticles } = await fetchRelatedArticles(null, election.region_id);
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
 
-  // Data processing for the new layout
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "Elections", href: "/elections" },
+    { label: election.title }
+  ];  // Data processing for the new layout
   const sortedGroups = election.groups.map((group: Group) => ({
     ...group,
     candidates: [...group.candidates].sort((a, b) => (b.votes || 0) - (a.votes || 0))
@@ -119,7 +134,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
   // Calculate trailing seats logic:
   // Losing seats for top party = Declared Groups - (seats won by top party)
   // Wait, if a group is declared, and top party didn't win, they lost it.
-  const losingSeats = topParty ? declaredGroups - topParty.won : 0;
+
   
   // To keep it simple and match the image (which has "Leading", "Losing", "Yet to win"):
   const yetToWin = pendingGroups;
@@ -128,9 +143,9 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl font-sans">
-      
+      <Breadcrumbs items={breadcrumbs} siteUrl={siteUrl} />
       {/* 1. Header Box */}
-      <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm p-8 mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
+      <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-8 mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
         <div>
           <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-red-600 text-white mb-4">
             State Election Updates
@@ -152,8 +167,8 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
         
         {/* Live Updates Timeline */}
         <div className="lg:col-span-2">
-          <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm h-full overflow-hidden">
-            <div className="p-5 border-b border-gray-200 dark:border-gray-800">
+          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-full overflow-hidden">
+            <div className="p-5 border-b border-gray-200 dark:border-news-border">
               <h2 className="text-base font-bold flex items-center gap-2">
                 <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs">Live</span>
                 <span className="text-foreground border-l border-gray-300 pl-3">Sensor Election Updates</span>
@@ -167,8 +182,8 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
 
         {/* Party Standings Box */}
         <div className="lg:col-span-1">
-          <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm p-6 h-full">
-            <div className="flex items-center gap-2 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
+          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-6 h-full">
+            <div className="flex items-center gap-2 mb-6 border-b border-gray-200 dark:border-news-border pb-4">
               <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold bg-red-600 text-white">
                 Party Standings
               </span>
@@ -218,7 +233,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
             const badgeStatus = leader.is_winner ? "WON" : isActuallyLeading ? "LEADING" : "LOSING";
             
             return (
-              <div key={leader.id} className="min-w-[260px] shrink-0 snap-start bg-card border border-gray-200 dark:border-gray-800 rounded-sm p-5 flex flex-col justify-between">
+              <div key={leader.id} className="min-w-[260px] shrink-0 snap-start bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-5 flex flex-col justify-between">
                 <div className="flex gap-4 mb-6">
                   <div className="w-16 h-16 shrink-0 relative rounded-sm overflow-hidden bg-muted">
                     {leader.photo_url ? (
@@ -245,7 +260,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
             );
           })}
           {topLeaders.length === 0 && (
-            <div className="col-span-full p-8 text-center border border-gray-200 dark:border-gray-800 rounded-sm text-muted-foreground text-sm">
+            <div className="col-span-full p-8 text-center border-2 border-gray-200 dark:border-news-border rounded-sm text-muted-foreground text-sm">
               No leaders available yet.
             </div>
           )}
@@ -257,8 +272,8 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
         
         {/* Left Column: Dial Chart */}
         <div className="lg:col-span-1">
-          <div className="bg-card border border-gray-200 dark:border-gray-800 rounded-sm h-full flex flex-col">
-            <div className="p-6 border-b border-gray-200 dark:border-gray-800">
+          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-full flex flex-col">
+            <div className="p-6 border-b border-gray-200 dark:border-news-border">
               <h2 className="text-base font-bold flex items-center gap-1 mb-1 text-foreground">
                 {election.region ? election.region.name : "Global"}
                 <ChevronDown className="w-5 h-5" />

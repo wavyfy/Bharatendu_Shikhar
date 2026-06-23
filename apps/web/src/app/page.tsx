@@ -11,8 +11,64 @@ import {
   CategorySectionsSkeleton, 
   BottomSlidersSkeleton 
 } from "@/components/skeletons/HomeSkeletons";
+import { fetchSettings } from "@/utils/fetchData";
+import { getSiteUrl } from "@/utils/seo";
 
 export const revalidate = 60; // Revalidate every 60 seconds
+
+async function JsonLdSchema() {
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteName = settings?.site_name || "Bharatendu Shikhar";
+  const logoUrl = settings?.site_logo_url || "";
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": siteName,
+    "url": siteUrl,
+  };
+
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": siteName,
+    "url": siteUrl,
+    "logo": logoUrl,
+  };
+
+  // ItemList: latest published articles for search engine article ordering
+  const { topArticles } = await fetchHomepageData();
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": `Latest News — ${siteName}`,
+    "url": siteUrl,
+    "itemListElement": topArticles.slice(0, 20).map((article, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": article.title,
+      "url": `${siteUrl}/article/${article.slug}`,
+    })),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+    </>
+  );
+}
 
 async function TickerSection() {
   const { topArticles } = await fetchHomepageData();
@@ -55,6 +111,7 @@ async function BottomSlidersSection() {
 export default function Home() {
   return (
     <div className="bg-news-bg text-news-text font-sans">
+      <JsonLdSchema />
       <Suspense fallback={<TickerSkeleton />}>
         <TickerSection />
       </Suspense>

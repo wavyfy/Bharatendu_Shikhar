@@ -1,4 +1,9 @@
-export function UpdatesTimeline({ updates }: { updates: any[] }) {
+import { sanitize } from "@repo/api";
+import type { Database } from "@repo/api";
+
+type ElectionUpdate = Database["public"]["Tables"]["election_updates"]["Row"];
+
+export function UpdatesTimeline({ updates }: { updates: ElectionUpdate[] }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -6,9 +11,9 @@ export function UpdatesTimeline({ updates }: { updates: any[] }) {
   const previousUpdates = updates.filter(u => new Date(u.created_at) < today);
 
 
-  const renderChannel = (title: string, channelUpdates: any[]) => (
+  const renderChannel = (title: string, channelUpdates: ElectionUpdate[]) => (
     <div className="flex-1 min-w-0">
-      <h3 className="text-sm font-bold text-foreground mb-6 pb-2 border-b border-gray-200 dark:border-gray-800">{title}</h3>
+      <h3 className="text-sm font-bold text-foreground mb-6 pb-2 border-b border-gray-200 dark:border-news-border">{title}</h3>
       
       <div className="relative">
         {/* Vertical Timeline Line */}
@@ -36,7 +41,7 @@ export function UpdatesTimeline({ updates }: { updates: any[] }) {
                 )}
                 <div 
                   className="prose prose-sm max-w-none w-full dark:prose-invert prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-red-600 dark:prose-a:text-news-accent" 
-                  dangerouslySetInnerHTML={{ __html: update.content }} 
+                  dangerouslySetInnerHTML={{ __html: sanitize(update.content) }} 
                 />
               </div>
             </div>

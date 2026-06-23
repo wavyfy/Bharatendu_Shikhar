@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Switch } from "@/components/ui/Switch";
 import { motion } from "framer-motion";
 
 interface RegionFormProps {
@@ -31,7 +33,8 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name") as string;
     const is_active = formData.get("is_active") === "on";
-    const payload = { name, is_active };
+    const seo_description = formData.get("seo_description") as string | null;
+    const payload = { name, is_active, seo_description: seo_description || null };
 
     startTransition(async () => {
       const result = isEditing && initialData
@@ -85,20 +88,34 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
                 <p className="text-xs text-slate-500">Slug will be generated automatically.</p>
               </div>
 
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="seo_description" className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  SEO Description
+                </label>
+                <Textarea
+                  id="seo_description"
+                  name="seo_description"
+                  rows={3}
+                  placeholder="Enter SEO description for this region..."
+                  defaultValue={initialData?.seo_description || ""}
+                />
+                <p className="text-xs text-slate-500">Optional. Visible below the region title and used for search engines.</p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Switch
                   id="is_active"
                   name="is_active"
                   defaultChecked={isEditing ? initialData.is_active : true}
-                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary bg-primary"
                 />
-                <label htmlFor="is_active" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                  Active
-                </label>
-                <p className="text-xs text-slate-500 ml-2">
-                  (Inactive regions are hidden from content creation)
-                </p>
+                <div>
+                  <label htmlFor="is_active" className="text-sm font-medium text-slate-700 dark:text-slate-200 cursor-pointer">
+                    Active
+                  </label>
+                  <p className="text-xs text-slate-500">
+                    Inactive regions are hidden from content creation.
+                  </p>
+                </div>
               </div>
             </div>
           </FormSection>

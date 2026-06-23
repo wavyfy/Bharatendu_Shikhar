@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { BadgeMultiSelect } from "@/components/ui/BadgeMultiSelect";
 import { Dropzone } from "@/components/ui/Dropzone";
+import { Textarea } from "@/components/ui/Textarea";
+import { Switch } from "@/components/ui/Switch";
 import { motion } from "framer-motion";
 
 const IMAGE_MAX_BYTES = 2 * 1024 * 1024; // 2 MB
@@ -188,11 +190,10 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
               <label htmlFor="excerpt" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                 Excerpt
               </label>
-              <textarea
+              <Textarea
                 id="excerpt"
                 name="excerpt"
                 rows={3}
-                className="flex w-full rounded-md border border-outline-variant bg-surface-container-lowest dark:bg-surface-container-highest px-3 py-2 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-surface transition-shadow duration-150"
                 placeholder="Brief summary of the article..."
                 defaultValue={initialData?.excerpt || ""}
               />
@@ -293,31 +294,15 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
             title="Live Article"
             description="Enable for continuously updated stories: elections, breaking news, sports events, disasters."
           >
-            <label
-              htmlFor="is-live-toggle"
-              className="flex items-start gap-4 cursor-pointer select-none"
+            <div
+              className="flex items-start gap-4 select-none"
             >
               {/* Toggle switch */}
-              <div className="relative mt-0.5 shrink-0">
-                <input
+              <div className="mt-0.5 shrink-0">
+                <Switch
                   id="is-live-toggle"
-                  type="checkbox"
                   checked={isLive}
                   onChange={(e) => handleIsLiveToggle(e.target.checked)}
-                  className="sr-only"
-                />
-                <div
-                  className={`
-                    w-11 h-6 rounded-full transition-colors duration-200
-                    ${isLive ? "bg-red-500" : "bg-outline-variant"}
-                  `}
-                />
-                <div
-                  className={`
-                    absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm
-                    transition-transform duration-200
-                    ${isLive ? "translate-x-5" : "translate-x-0"}
-                  `}
                 />
               </div>
 
@@ -338,7 +323,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
                     : "Turning this on enables the live updates timeline and auto-selects the Live badge."}
                 </span>
               </div>
-            </label>
+            </div>
           </FormSection>
 
           {/* ─── Push Notifications ───────────────────────────────────── */}
@@ -346,32 +331,16 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
             title="Push Notifications"
             description="Send a push notification to all registered app users when this article is published."
           >
-            <label
-              htmlFor="push-notification-toggle"
-              className={`flex items-start gap-4 cursor-pointer select-none ${status !== "published" ? "opacity-50 pointer-events-none" : ""}`}
+            <div
+              className={`flex items-start gap-4 select-none ${status !== "published" ? "opacity-50 pointer-events-none" : ""}`}
             >
               {/* Toggle switch */}
-              <div className="relative mt-0.5 shrink-0">
-                <input
+              <div className="mt-0.5 shrink-0">
+                <Switch
                   id="push-notification-toggle"
-                  type="checkbox"
                   checked={sendPushNotification}
                   onChange={(e) => setSendPushNotification(e.target.checked)}
                   disabled={status !== "published"}
-                  className="sr-only"
-                />
-                <div
-                  className={`
-                    w-11 h-6 rounded-full transition-colors duration-200
-                    ${sendPushNotification ? "bg-primary" : "bg-outline-variant"}
-                  `}
-                />
-                <div
-                  className={`
-                    absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm
-                    transition-transform duration-200
-                    ${sendPushNotification ? "translate-x-5" : "translate-x-0"}
-                  `}
                 />
               </div>
 
@@ -386,7 +355,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
                     : "Notifies all registered app users about this article immediately on save."}
                 </span>
               </div>
-            </label>
+            </div>
           </FormSection>
 
         </fieldset>

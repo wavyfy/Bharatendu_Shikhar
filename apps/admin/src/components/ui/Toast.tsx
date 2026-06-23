@@ -1,12 +1,12 @@
 "use client";
 
 import { createContext, useCallback, useContext, useRef, useState, useMemo } from "react";
-import { CheckCircle2, XCircle, Info, X } from "lucide-react";
+import { CheckCircle2, XCircle, Info, X, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
-type ToastVariant = "success" | "error" | "info";
+type ToastVariant = "success" | "error" | "info" | "warning";
 
 interface Toast {
   id: string;
@@ -19,6 +19,7 @@ interface ToastContextValue {
     success: (message: string) => void;
     error: (message: string) => void;
     info: (message: string) => void;
+    warning: (message: string) => void;
   };
 }
 
@@ -48,6 +49,10 @@ const VARIANT_STYLES: Record<ToastVariant, { container: string; icon: React.Reac
   info: {
     container: "bg-surface border-l-4 border-blue-500 text-on-surface",
     icon: <Info className="w-5 h-5 text-blue-600 shrink-0" strokeWidth={2.5} />,
+  },
+  warning: {
+    container: "bg-surface border-l-4 border-orange-500 text-on-surface",
+    icon: <AlertTriangle className="w-5 h-5 text-orange-600 shrink-0" strokeWidth={2.5} />,
   },
 };
 
@@ -108,6 +113,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     success: (m: string) => add(m, "success"),
     error: (m: string) => add(m, "error"),
     info: (m: string) => add(m, "info"),
+    warning: (m: string) => add(m, "warning"),
   }), [add]);
 
   return (

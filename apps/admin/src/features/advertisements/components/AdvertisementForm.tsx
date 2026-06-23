@@ -16,6 +16,7 @@ import { supabase } from "@repo/api/src/supabase/client";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
 import { Dropzone } from "@/components/ui/Dropzone";
+import { Switch } from "@/components/ui/Switch";
 import { motion } from "framer-motion";
 import { AdSlot } from "../actions";
 
@@ -216,7 +217,11 @@ export function AdvertisementForm({ initialData }: AdvertisementFormProps) {
       }
 
       if (result.success) {
-        toast.success(initialData ? "Advertisement updated." : "Advertisement created.");
+        if (result.warning) {
+          toast.warning(result.warning);
+        } else {
+          toast.success(initialData ? "Advertisement updated." : "Advertisement created.");
+        }
         router.push("/advertisements");
         router.refresh();
       } else {
@@ -485,12 +490,10 @@ export function AdvertisementForm({ initialData }: AdvertisementFormProps) {
               </div>
 
               <div className="flex items-center gap-3 pt-2 md:col-span-2">
-                <input
-                  type="checkbox"
+                <Switch
                   id="is_active"
                   name="is_active"
                   defaultChecked={initialData?.is_active ?? true}
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                 />
                 <label htmlFor="is_active" className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Active (Manually enable or disable)

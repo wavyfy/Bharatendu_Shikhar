@@ -9,6 +9,8 @@ import { createElectionAction, updateElectionAction } from "../actions";
 import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { Textarea } from "@/components/ui/Textarea";
+import { Switch } from "@/components/ui/Switch";
 import { motion } from "framer-motion";
 
 interface ElectionFormProps {
@@ -97,11 +99,10 @@ export function ElectionForm({ initialData, regions }: ElectionFormProps) {
             <label htmlFor="description" className="text-sm font-medium text-slate-700 dark:text-slate-200">
               Description
             </label>
-            <textarea
+            <Textarea
               id="description"
               name="description"
               rows={3}
-              className="cms-input resize-y"
               defaultValue={initialData?.description}
               placeholder="Brief description about the election..."
             />
@@ -181,14 +182,12 @@ export function ElectionForm({ initialData, regions }: ElectionFormProps) {
             </div>
 
             <div className="flex items-center gap-3 mt-8">
-              <input
-                type="checkbox"
+              <Switch
                 id="is_published"
                 name="is_published"
                 defaultChecked={initialData?.is_published}
-                className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
               />
-              <label htmlFor="is_published" className="text-sm font-medium text-slate-700 dark:text-slate-200">
+              <label htmlFor="is_published" className="text-sm font-medium text-slate-700 dark:text-slate-200 cursor-pointer">
                 Published to public website
               </label>
             </div>

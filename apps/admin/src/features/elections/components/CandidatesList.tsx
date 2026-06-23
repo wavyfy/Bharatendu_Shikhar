@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useToast } from "@/components/ui/Toast";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { Switch } from "@/components/ui/Switch";
 import { createCandidateAction, updateCandidateAction, deleteCandidateAction } from "../actions";
 
 interface CandidatesListProps {
@@ -145,8 +146,8 @@ export function CandidatesList({ groupId, electionId, candidates }: CandidatesLi
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="new_is_winner" checked={newData.is_winner} onChange={(e) => setNewData({...newData, is_winner: e.target.checked})} className="w-4 h-4 rounded" />
-              <label htmlFor="new_is_winner" className="text-sm font-medium">Mark as Winner</label>
+              <Switch id="new_is_winner" checked={newData.is_winner} onChange={(e) => setNewData({...newData, is_winner: e.target.checked})} />
+              <label htmlFor="new_is_winner" className="text-sm font-medium cursor-pointer">Mark as Winner</label>
             </div>
           </div>
           <div className="flex gap-2 justify-end">
@@ -184,8 +185,8 @@ export function CandidatesList({ groupId, electionId, candidates }: CandidatesLi
                     <div className="flex flex-col gap-1 flex-1"><label className="text-[10px] uppercase text-slate-500 font-semibold tracking-wider">Sort Order</label><Input type="number" value={editData.sort_order} onChange={(e) => setEditData({...editData, sort_order: e.target.value})} placeholder="Sort" /></div>
                   </div>
                   <div className="flex items-center gap-2 pb-1">
-                    <input type="checkbox" id={`edit_winner_${c.id}`} checked={editData.is_winner} onChange={(e) => setEditData({...editData, is_winner: e.target.checked})} className="w-4 h-4 rounded" />
-                    <label htmlFor={`edit_winner_${c.id}`} className="text-sm font-medium">Winner</label>
+                    <Switch id={`edit_winner_${c.id}`} checked={editData.is_winner} onChange={(e) => setEditData({...editData, is_winner: e.target.checked})} />
+                    <label htmlFor={`edit_winner_${c.id}`} className="text-sm font-medium cursor-pointer">Winner</label>
                   </div>
                   <div className="flex gap-2">
                     <Button size="sm" className="flex-1" onClick={() => handleUpdate(c.id)} isLoading={isPending}>Save</Button>

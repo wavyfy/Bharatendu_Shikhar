@@ -18,6 +18,7 @@ import {
   type NotificationsInput,
   type HomepageInput,
   type MaintenanceInput,
+  type LegalInput,
 } from "../schemas";
 
 // ─── Auth Guard ─────────────────────────────────────────────────────────────
@@ -162,6 +163,21 @@ export async function updateAdvertisementsAction(input: import("../schemas").Adv
     await verifyAdmin();
     const { advertisementsSchema } = await import("../schemas");
     const result = advertisementsSchema.safeParse(input);
+    if (!result.success) {
+      return { success: false, error: result.error.issues[0]?.message || "Invalid data" };
+    }
+    await upsertSettings(result.data);
+    return { success: true };
+  } catch (e: unknown) {
+    return { success: false, error: e instanceof Error ? e.message : "Failed to save" };
+  }
+}
+
+export async function updateLegalAction(input: LegalInput) {
+  try {
+    await verifyAdmin();
+    const { legalSchema } = await import("../schemas");
+    const result = legalSchema.safeParse(input);
     if (!result.success) {
       return { success: false, error: result.error.issues[0]?.message || "Invalid data" };
     }

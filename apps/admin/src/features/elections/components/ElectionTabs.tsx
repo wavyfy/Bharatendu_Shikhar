@@ -64,24 +64,24 @@ export function ElectionTabs({ electionForm, groupsList, liveUpdatesList }: Elec
         )}
 
         {activeTab === "groups" && (
-          <section className="cms-card flex flex-col min-h-[400px]">
+          <section className="cms-card flex flex-col">
             <div className="cms-card-header border-b border-outline-variant">
               <h2 className="text-lg font-bold text-on-surface">Groups Management</h2>
               <p className="text-sm text-on-surface-variant">Create constituency groups and assign candidates to them.</p>
             </div>
-            <div className="p-0 flex-1">
+            <div className="p-0">
               {groupsList}
             </div>
           </section>
         )}
 
         {activeTab === "updates" && (
-          <section className="cms-card flex flex-col min-h-[400px]">
+          <section className="cms-card flex flex-col">
             <div className="cms-card-header border-b border-outline-variant">
               <h2 className="text-lg font-bold text-on-surface">Live Updates</h2>
               <p className="text-sm text-on-surface-variant">Post real-time news and progress updates for this election.</p>
             </div>
-            <div className="p-0 flex-1">
+            <div className="p-0">
               {liveUpdatesList}
             </div>
           </section>

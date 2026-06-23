@@ -250,8 +250,10 @@ async function _fetchDynamicPageData(slug: string) {
     topArticles: topArticlesData,
     categorySections,
     pageTitle: region ? region.name : category!.name,
+    seoDescription: ((region as Record<string, unknown>)?.seo_description as string) || ((category as Record<string, unknown>)?.seo_description as string) || "",
     type: region ? "region" : "category",
     id: region ? region.id : category!.id,
+    slug: region ? region.slug : category!.slug,
   };
 }
 
@@ -324,6 +326,9 @@ async function _fetchBottomSlidersData() {
 }
 
 async function _fetchArticleBySlug(slug: string) {
+  // Decode in case the slug arrived URL-encoded (e.g. Hindi characters)
+  const decodedSlug = decodeURIComponent(slug);
+
   const { data, error } = await supabase
     .from("articles")
     .select(`
@@ -333,9 +338,9 @@ async function _fetchArticleBySlug(slug: string) {
       article_live_updates(*),
       article_badges(badge:badges(id, name, slug, color))
     `)
-    .eq("slug", slug)
+    .eq("slug", decodedSlug)
     .eq("status", "published")
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error("Supabase fetchArticleBySlug error:", error);
@@ -345,42 +350,56 @@ async function _fetchArticleBySlug(slug: string) {
 }
 
 async function _fetchRelatedArticles(categoryId?: number | null, regionId?: number | null, excludeArticleId?: number) {
-  let categoryArticles: ArticleWithAuthor[] = [];
-  let regionArticles: ArticleWithAuthor[] = [];
+  const baseSelect = `*, article_badges(badge:badges(id, name, slug, color))`;
+  const excludeId = excludeArticleId || -1;
 
-  const promises = [];
+  // Fire all queries in parallel — skip queries that can't yield results
+  const [catRegData, catData, regData, fallbackData] = await Promise.all([
+    // 1. Same category + same region
+    (categoryId && regionId)
+      ? supabase.from("articles").select(baseSelect).eq("status", "published")
+          .eq("category_id", categoryId).eq("region_id", regionId)
+          .neq("id", excludeId).order("published_at", { ascending: false }).limit(8)
+          .then(r => r.data)
+      : Promise.resolve(null),
 
-  if (categoryId) {
-    promises.push(
-      supabase
-        .from("articles")
-        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
-        .eq("status", "published")
-        .eq("category_id", categoryId)
-        .neq("id", excludeArticleId || -1)
-        .order("published_at", { ascending: false })
-        .limit(10)
-        .then(({ data }) => { categoryArticles = (data as ArticleWithAuthor[]) || []; })
-    );
-  }
+    // 2. Same category
+    categoryId
+      ? supabase.from("articles").select(baseSelect).eq("status", "published")
+          .eq("category_id", categoryId)
+          .neq("id", excludeId).order("published_at", { ascending: false }).limit(8)
+          .then(r => r.data)
+      : Promise.resolve(null),
 
-  if (regionId) {
-    promises.push(
-      supabase
-        .from("articles")
-        .select(`*, article_badges(badge:badges(id, name, slug, color))`)
-        .eq("status", "published")
-        .eq("region_id", regionId)
-        .neq("id", excludeArticleId || -1)
-        .order("published_at", { ascending: false })
-        .limit(10)
-        .then(({ data }) => { regionArticles = (data as ArticleWithAuthor[]) || []; })
-    );
-  }
+    // 3. Same region
+    regionId
+      ? supabase.from("articles").select(baseSelect).eq("status", "published")
+          .eq("region_id", regionId)
+          .neq("id", excludeId).order("published_at", { ascending: false }).limit(8)
+          .then(r => r.data)
+      : Promise.resolve(null),
 
-  await Promise.all(promises);
+    // 4. Fallback latest
+    supabase.from("articles").select(baseSelect).eq("status", "published")
+      .neq("id", excludeId).order("published_at", { ascending: false }).limit(8)
+      .then(r => r.data),
+  ]);
 
-  return { categoryArticles, regionArticles };
+  // Merge in priority order, deduplicating by id
+  const relatedMap = new Map<number, ArticleWithAuthor>();
+  const addArticles = (articles: ArticleWithAuthor[] | null) => {
+    if (!articles) return;
+    for (const a of articles) {
+      if (!relatedMap.has(a.id)) relatedMap.set(a.id, a);
+    }
+  };
+
+  addArticles(catRegData as ArticleWithAuthor[] | null);
+  addArticles(catData as ArticleWithAuthor[] | null);
+  addArticles(regData as ArticleWithAuthor[] | null);
+  addArticles(fallbackData as ArticleWithAuthor[] | null);
+
+  return Array.from(relatedMap.values()).slice(0, 8);
 }
 
 

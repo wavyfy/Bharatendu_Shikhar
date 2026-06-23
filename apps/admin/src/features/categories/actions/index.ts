@@ -57,9 +57,10 @@ export async function createCategoryAction(input: CreateCategoryInput) {
 
     revalidatePath("/categories");
     return { success: true, categoryId: (data as { id: number })?.id };
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error("Create category error:", error);
-    const message = error instanceof Error ? error.message : "Failed to create category";
+    let message = error?.message || "Failed to create category";
+    if (error?.code === '23505') message = "A category with this name already exists.";
     return { success: false, error: message };
   }
 }
@@ -94,9 +95,10 @@ export async function updateCategoryAction(id: number, input: UpdateCategoryInpu
 
     revalidatePath("/categories");
     return { success: true };
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error("Update category error:", error);
-    const message = error instanceof Error ? error.message : "Failed to update category";
+    let message = error?.message || "Failed to update category";
+    if (error?.code === '23505') message = "A category with this name already exists.";
     return { success: false, error: message };
   }
 }

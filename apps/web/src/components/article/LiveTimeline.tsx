@@ -1,6 +1,7 @@
 "use client";
 
 import type { Database } from "@repo/api";
+import { sanitize } from "@repo/api";
 import { RelativeTime } from "@/components/shared/RelativeTime";
 
 type LiveUpdate = Database["public"]["Tables"]["article_live_updates"]["Row"];
@@ -44,7 +45,7 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
 
               <div
                 className="prose prose-lg md:prose-[21px] max-w-none w-full dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent"
-                dangerouslySetInnerHTML={{ __html: update.content }}
+                dangerouslySetInnerHTML={{ __html: sanitize(update.content) }}
               />
               
               <div className="w-full flex justify-end mt-4">

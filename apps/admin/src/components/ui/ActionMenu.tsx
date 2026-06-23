@@ -27,7 +27,7 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
   const [isOpen, setIsOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const menuRef = React.useRef<HTMLDivElement>(null);
-  const [menuCoords, setMenuCoords] = React.useState({ top: 0, right: 0 });
+  const [menuCoords, setMenuCoords] = React.useState<{ top?: number; bottom?: number; right: number; transformOrigin: string }>({ top: 0, right: 0, transformOrigin: "top right" });
 
   React.useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -46,14 +46,24 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
       document.addEventListener("mousedown", handleOutsideClick);
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        setMenuCoords({
-          top: rect.bottom + window.scrollY + 4,
-          right: document.documentElement.clientWidth - rect.right,
-        });
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const estimatedHeight = items.length * 40 + (headerSlot ? 50 : 10);
+        
+        const coords: any = { right: document.documentElement.clientWidth - rect.right };
+        
+        if (spaceBelow < estimatedHeight && rect.top > spaceBelow) {
+          coords.bottom = window.innerHeight - rect.top + 4;
+          coords.transformOrigin = "bottom right";
+        } else {
+          coords.top = rect.bottom + 4;
+          coords.transformOrigin = "top right";
+        }
+        
+        setMenuCoords(coords);
       }
     }
     return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, [isOpen]);
+  }, [isOpen, items.length, headerSlot]);
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -77,12 +87,17 @@ export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps
           {isOpen && (
             <motion.div
               ref={menuRef}
-              initial={{ opacity: 0, scale: 0.95, y: -4 }}
+              initial={{ opacity: 0, scale: 0.95, y: menuCoords.transformOrigin === "bottom right" ? 4 : -4 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -4 }}
+              exit={{ opacity: 0, scale: 0.95, y: menuCoords.transformOrigin === "bottom right" ? 4 : -4 }}
               transition={{ duration: 0.15 }}
-              className="fixed z-9999 w-56 origin-top-right rounded-lg border border-outline-variant bg-surface py-1 shadow-xl ring-1 ring-black/5 dark:ring-white/5"
-              style={{ top: menuCoords.top, right: menuCoords.right }}
+              className="fixed z-999 w-56 rounded-lg border border-outline-variant bg-surface py-1 shadow-xl ring-1 ring-black/5 dark:ring-white/5"
+              style={{
+                top: menuCoords.top !== undefined ? menuCoords.top : "auto",
+                bottom: menuCoords.bottom !== undefined ? menuCoords.bottom : "auto",
+                right: menuCoords.right,
+                transformOrigin: menuCoords.transformOrigin
+              }}
             >
               {/* Header slot — e.g. dark mode toggle */}
               {headerSlot && (

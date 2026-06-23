@@ -8,7 +8,13 @@ export const metadata = {
 };
 
 export default async function LoginPage() {
-  const cookieStore = await cookies();
+  const [cookieStore, settings] = await Promise.all([
+    cookies(),
+    import("@repo/api").then(({ supabaseAdmin }) =>
+      supabaseAdmin.from("settings").select("site_logo_url").eq("id", 1).single().then(res => res.data)
+    )
+  ]);
+
   const supabase = createSupabaseServerClient({
     get: (name) => cookieStore.get(name)?.value,
     set: () => {},
@@ -22,9 +28,6 @@ export default async function LoginPage() {
   if (user) {
     redirect("/");
   }
-
-  const { supabaseAdmin } = await import("@repo/api");
-  const { data: settings } = await supabaseAdmin.from("settings").select("site_logo_url").eq("id", 1).single();
 
   return <LoginForm logoUrl={settings?.site_logo_url} />;
 }

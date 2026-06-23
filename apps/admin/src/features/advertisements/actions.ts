@@ -4,6 +4,7 @@ import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { randomUUID } from "crypto";
+import { getSettings } from "@/features/settings/queries";
 
 async function getAuth() {
   const cookieStore = await cookies();
@@ -20,7 +21,7 @@ async function getAuth() {
 }
 
 export async function createAdvertisementAction(formData: FormData) {
-  const { supabase, user } = await getAuth();
+  const { user } = await getAuth();
 
   const title = formData.get("title") as string;
   const advertiser_name = formData.get("advertiser_name") as string;
@@ -33,7 +34,7 @@ export async function createAdvertisementAction(formData: FormData) {
 
   const slot_identifiers = formData.getAll("slot_identifiers") as string[];
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("advertisements")
     .insert({
       title,
@@ -71,11 +72,20 @@ export async function createAdvertisementAction(formData: FormData) {
   }
 
   revalidatePath("/advertisements");
-  return { success: true, data };
+  
+  let warning;
+  if (is_active) {
+    const settings = await getSettings();
+    if (settings?.hide_all_ads) {
+      warning = "Ad activated, but ads are currently disabled globally in Settings.";
+    }
+  }
+
+  return { success: true, data, warning };
 }
 
 export async function updateAdvertisementAction(id: string, formData: FormData) {
-  const { supabase } = await getAuth();
+  await getAuth();
   
   const title = formData.get("title") as string;
   const advertiser_name = formData.get("advertiser_name") as string;
@@ -88,7 +98,7 @@ export async function updateAdvertisementAction(id: string, formData: FormData) 
 
   const slot_identifiers = formData.getAll("slot_identifiers") as string[];
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("advertisements")
     .update({
       title,
@@ -129,12 +139,21 @@ export async function updateAdvertisementAction(id: string, formData: FormData) 
   }
 
   revalidatePath("/advertisements");
-  return { success: true, data };
+
+  let warning;
+  if (is_active) {
+    const settings = await getSettings();
+    if (settings?.hide_all_ads) {
+      warning = "Ad activated, but ads are currently disabled globally in Settings.";
+    }
+  }
+
+  return { success: true, data, warning };
 }
 
 export async function deleteAdvertisementAction(id: string) {
-  const { supabase } = await getAuth();
-  const { error } = await supabase.from("advertisements").delete().eq("id", id);
+  await getAuth();
+  const { error } = await supabaseAdmin.from("advertisements").delete().eq("id", id);
   if (error) {
     return { success: false, error: error.message };
   }
@@ -143,13 +162,22 @@ export async function deleteAdvertisementAction(id: string) {
 }
 
 export async function updateAdvertisementStatusAction(id: string, is_active: boolean) {
-  const { supabase } = await getAuth();
-  const { error } = await supabase.from("advertisements").update({ is_active }).eq("id", id);
+  await getAuth();
+  const { error } = await supabaseAdmin.from("advertisements").update({ is_active }).eq("id", id);
   if (error) {
     return { success: false, error: error.message };
   }
   revalidatePath("/advertisements");
-  return { success: true };
+
+  let warning;
+  if (is_active) {
+    const settings = await getSettings();
+    if (settings?.hide_all_ads) {
+      warning = "Ad activated, but ads are currently disabled globally in Settings.";
+    }
+  }
+
+  return { success: true, warning };
 }
 
 export async function getAdvertisementUploadUrlAction(fileExt: string) {

@@ -76,8 +76,8 @@ export function GroupsList({ electionId, groups }: GroupsListProps) {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar min-h-0">
+    <div className="flex flex-col">
+      <div className="overflow-y-auto p-4 space-y-3 custom-scrollbar max-h-[600px]">
         {groups.length === 0 && !isAdding ? (
           <div className="text-center py-8 text-on-surface-variant">
             <p>No groups created yet.</p>
@@ -153,7 +153,7 @@ export function GroupsList({ electionId, groups }: GroupsListProps) {
       </div>
 
       {!isAdding && (
-        <div className="p-4 border-t border-outline-variant bg-surface-container-lowest mt-auto">
+        <div className="p-4 border-t border-outline-variant bg-surface-container-lowest">
           <Button className="w-full" variant="secondary" onClick={() => setIsAdding(true)}>
             <span className="material-symbols-outlined text-[18px] mr-1">add</span>
             Add Group

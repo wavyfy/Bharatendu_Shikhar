@@ -11,7 +11,12 @@ import {
   updateSocialAction,
   updateContactAction,
   updateMaintenanceAction,
+  updateLegalAction,
 } from "../actions";
+import { RichEditor } from "@/components/ui/RichEditor";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Switch } from "@/components/ui/Switch";
 
 // ─── Shared primitives ────────────────────────────────────────────────────────
 
@@ -33,8 +38,7 @@ function Field({
   );
 }
 
-const inputCls =
-  "w-full border border-outline-variant rounded px-3 py-2 text-sm bg-surface-container-lowest dark:bg-surface-container-highest text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors scheme-light dark:scheme-dark";
+// Removed inputCls since we use Input component now
 
 function SectionFooter({
   isPending,
@@ -73,6 +77,7 @@ function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
     startTransition(async () => {
       const res = await updateSiteInfoAction({
         site_name: fd.get("site_name") as string,
+        site_url: fd.get("site_url") as string,
         site_tagline: (fd.get("site_tagline") as string) || null,
         site_logo_url: (fd.get("site_logo_url") as string) || null,
         site_logo_dark_url: (fd.get("site_logo_dark_url") as string) || null,
@@ -94,40 +99,45 @@ function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
       <CardBody>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Field label="Site Name *">
-            <input
+            <Input
               name="site_name"
               type="text"
               required
               placeholder="e.g. Bhartendu Shikhar"
               defaultValue={settings?.site_name ?? "Bharatendu Shikhar"}
-              className={inputCls}
+            />
+          </Field>
+          <Field label="Site URL *" hint="The canonical base URL for the site">
+            <Input
+              name="site_url"
+              type="url"
+              required
+              placeholder="https://www.bhartendushikhar.com"
+              defaultValue={settings?.site_url ?? ""}
             />
           </Field>
           <Field label="Light Logo URL" hint="Full URL to SVG or PNG logo for light mode">
-            <input
+            <Input
               name="site_logo_url"
               type="url"
               defaultValue={settings?.site_logo_url ?? ""}
               placeholder="https://..."
-              className={inputCls}
             />
           </Field>
           <Field label="Dark Logo URL" hint="Full URL to SVG or PNG logo for dark mode">
-            <input
+            <Input
               name="site_logo_dark_url"
               type="url"
               defaultValue={settings?.site_logo_dark_url ?? ""}
               placeholder="https://..."
-              className={inputCls}
             />
           </Field>
           <Field label="Favicon URL">
-            <input
+            <Input
               name="favicon_url"
               type="url"
               defaultValue={settings?.favicon_url ?? ""}
               placeholder="https://..."
-              className={inputCls}
             />
           </Field>
           <SectionFooter isPending={isPending} error={error} />
@@ -152,8 +162,7 @@ function SeoSection({ settings }: { settings: SettingsRow | null }) {
       const res = await updateSeoAction({
         meta_title: (fd.get("meta_title") as string) || null,
         meta_description: (fd.get("meta_description") as string) || null,
-        meta_keywords: (fd.get("meta_keywords") as string) || null,
-        og_image_url: (fd.get("og_image_url") as string) || null,
+        og_image_url: fd.get("og_image_url") as string,
       });
       if (res.success) {
         toast.success("SEO Defaults saved.");
@@ -170,42 +179,31 @@ function SeoSection({ settings }: { settings: SettingsRow | null }) {
       <CardHeader>SEO Defaults</CardHeader>
       <CardBody>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Field label="Default Meta Title" hint="Max 70 characters">
-            <input
+          <Field label="Default Meta Title" hint="Recommended: 50–60 characters">
+            <Input
               name="meta_title"
               type="text"
               maxLength={70}
               placeholder="e.g. Latest News & Updates"
               defaultValue={settings?.meta_title ?? ""}
-              className={inputCls}
             />
           </Field>
           <Field label="Default Meta Description" hint="Max 160 characters">
-            <textarea
+            <Textarea
               name="meta_description"
               rows={3}
               maxLength={160}
               placeholder="A short description of the site for search engines..."
               defaultValue={settings?.meta_description ?? ""}
-              className={inputCls}
             />
           </Field>
-          <Field label="Default Keywords" hint="Comma-separated">
-            <input
-              name="meta_keywords"
-              type="text"
-              defaultValue={settings?.meta_keywords ?? ""}
-              placeholder="news, india, hindi"
-              className={inputCls}
-            />
-          </Field>
-          <Field label="Open Graph Image URL">
-            <input
+          <Field label="Default OG Image *" hint="Recommended: 1200 × 630 px">
+            <Input
               name="og_image_url"
               type="url"
+              required
               defaultValue={settings?.og_image_url ?? ""}
               placeholder="https://..."
-              className={inputCls}
             />
           </Field>
           <SectionFooter isPending={isPending} error={error} />
@@ -259,12 +257,11 @@ function SocialSection({ settings }: { settings: SettingsRow | null }) {
         <form onSubmit={handleSubmit} className="space-y-4">
           {platforms.map((p) => (
             <Field key={p.name} label={p.label}>
-              <input
+              <Input
                 name={p.name}
                 type="url"
                 defaultValue={p.val ?? ""}
                 placeholder="https://..."
-                className={inputCls}
               />
             </Field>
           ))}
@@ -308,30 +305,27 @@ function ContactSection({ settings }: { settings: SettingsRow | null }) {
       <CardBody>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Field label="Contact Email">
-            <input
+            <Input
               name="contact_email"
               type="email"
               defaultValue={settings?.contact_email ?? ""}
               placeholder="contact@example.com"
-              className={inputCls}
             />
           </Field>
           <Field label="Phone Number">
-            <input
+            <Input
               name="contact_phone"
               type="tel"
               defaultValue={settings?.contact_phone ?? ""}
               placeholder="+91 XXXXX XXXXX"
-              className={inputCls}
             />
           </Field>
           <Field label="Address">
-            <textarea
+            <Textarea
               name="contact_address"
               rows={3}
               defaultValue={settings?.contact_address ?? ""}
               placeholder="Street, City, State, PIN"
-              className={inputCls}
             />
           </Field>
           <SectionFooter isPending={isPending} error={error} />
@@ -373,18 +367,16 @@ function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
       <CardHeader>Maintenance Mode</CardHeader>
       <CardBody>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex items-start gap-3">
-            <input
+          <div className="flex items-center gap-3">
+            <Switch
               id="maintenance_mode"
               name="maintenance_mode"
-              type="checkbox"
               value="true"
               checked={active}
               onChange={(e) => setActive(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary self-center bg-surface-container-lowest dark:bg-surface-container-highest"
             />
             <div>
-              <label htmlFor="maintenance_mode" className="text-sm font-medium text-on-surface">
+              <label htmlFor="maintenance_mode" className="text-sm font-medium text-on-surface cursor-pointer">
                 Enable Maintenance Mode
               </label>
               <p className="text-xs text-on-surface-variant">
@@ -394,12 +386,11 @@ function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
           </div>
           {active && (
             <Field label="Maintenance Message (Optional)">
-              <textarea
+              <Textarea
                 name="maintenance_message"
                 rows={2}
                 defaultValue={settings?.maintenance_message ?? ""}
                 placeholder="We'll be back soon..."
-                className={inputCls}
               />
             </Field>
           )}
@@ -449,18 +440,16 @@ function AdvertisementsSection({ settings }: { settings: SettingsRow | null }) {
       <CardHeader>Global Advertisement Settings</CardHeader>
       <CardBody>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex items-start gap-3">
-            <input
+          <div className="flex items-center gap-3">
+            <Switch
               id="hide_all_ads"
               name="hide_all_ads"
-              type="checkbox"
               value="true"
               checked={active}
               onChange={(e) => setActive(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary self-center bg-surface-container-lowest dark:bg-surface-container-highest"
             />
             <div>
-              <label htmlFor="hide_all_ads" className="text-sm font-medium text-on-surface">
+              <label htmlFor="hide_all_ads" className="text-sm font-medium text-on-surface cursor-pointer">
                 Disable & Hide All Ads Globally
               </label>
               <p className="text-xs text-on-surface-variant">
@@ -468,6 +457,78 @@ function AdvertisementsSection({ settings }: { settings: SettingsRow | null }) {
               </p>
             </div>
           </div>
+          <SectionFooter isPending={isPending} error={error} />
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+// ─── Section: Legal & Policies ──────────────────────────────────────────────────
+
+function LegalSection({ settings }: { settings: SettingsRow | null }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
+
+  const [copyrightText, setCopyrightText] = useState(settings?.copyright_text ?? "Bharatendu Shikhar. All rights reserved.");
+  const [aboutUs, setAboutUs] = useState(settings?.about_us ?? "");
+  const [privacyPolicy, setPrivacyPolicy] = useState(settings?.privacy_policy ?? "");
+  const [termsConditions, setTermsConditions] = useState(settings?.terms_conditions ?? "");
+  const [editorialPolicy, setEditorialPolicy] = useState(settings?.editorial_policy ?? "");
+  const [correctionPolicy, setCorrectionPolicy] = useState(settings?.correction_policy ?? "");
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    startTransition(async () => {
+      const res = await updateLegalAction({
+        copyright_text: copyrightText || null,
+        about_us: aboutUs || null,
+        privacy_policy: privacyPolicy || null,
+        terms_conditions: termsConditions || null,
+        editorial_policy: editorialPolicy || null,
+        correction_policy: correctionPolicy || null,
+      });
+      if (res.success) {
+        toast.success("Legal & Policies saved.");
+      } else {
+        const msg = res.error ?? "Unknown error";
+        setError(msg);
+        toast.error(msg);
+      }
+    });
+  }
+
+  return (
+    <Card>
+      <CardHeader>Legal & Policies</CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <Field label="Copyright Text">
+            <Input
+              type="text"
+              name="copyright_text"
+              value={copyrightText}
+              onChange={(e) => setCopyrightText(e.target.value)}
+              placeholder="e.g. Bharatendu Shikhar. All rights reserved."
+            />
+          </Field>
+          <Field label="About Us">
+            <RichEditor value={aboutUs} onChange={setAboutUs} />
+          </Field>
+          <Field label="Privacy Policy">
+            <RichEditor value={privacyPolicy} onChange={setPrivacyPolicy} />
+          </Field>
+          <Field label="Terms & Conditions">
+            <RichEditor value={termsConditions} onChange={setTermsConditions} />
+          </Field>
+          <Field label="Editorial Policy">
+            <RichEditor value={editorialPolicy} onChange={setEditorialPolicy} />
+          </Field>
+          <Field label="Correction Policy">
+            <RichEditor value={correctionPolicy} onChange={setCorrectionPolicy} />
+          </Field>
           <SectionFooter isPending={isPending} error={error} />
         </form>
       </CardBody>
@@ -486,6 +547,7 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
     { id: "social", label: "Social Media" },
     { id: "contact", label: "Contact" },
     { id: "advertisements", label: "Advertisements" },
+    { id: "legal", label: "Legal & Policies" },
     { id: "maintenance", label: "Maintenance" },
   ];
 
@@ -523,8 +585,9 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
           {activeTab === "seo" && <SeoSection settings={settings} />}
           {activeTab === "social" && <SocialSection settings={settings} />}
           {activeTab === "contact" && <ContactSection settings={settings} />}
-          {activeTab === "advertisements" && <AdvertisementsSection settings={settings} />}
-          {activeTab === "maintenance" && <MaintenanceSection settings={settings} />}
+          { activeTab === "advertisements" && <AdvertisementsSection settings={settings} /> }
+          { activeTab === "legal" && <LegalSection settings={settings} /> }
+          { activeTab === "maintenance" && <MaintenanceSection settings={settings} /> }
         </div>
       </div>
     </div>

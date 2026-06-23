@@ -1,5 +1,5 @@
 import { createSupabaseServerClient } from "@repo/api";
-import { unstable_cache } from "next/cache";
+
 import { cookies } from "next/headers";
 
 export async function getElections(options: { limit?: number, regionId?: string, status?: string } = {}) {
@@ -36,7 +36,7 @@ export async function getElections(options: { limit?: number, regionId?: string,
     console.error("Error fetching elections:", error.message);
     return [];
   }
-  return data as any[];
+  return data as Record<string, unknown>[];
 }
 
 export async function getElectionBySlug(slug: string) {
@@ -46,17 +46,19 @@ export async function getElectionBySlug(slug: string) {
     set: () => {},
     remove: () => {},
   });
+  const decodedSlug = decodeURIComponent(slug);
   const { data, error } = await supabase
     .from("elections")
     .select(`
       *,
       region:regions(id, name)
     `)
-    .eq("slug", slug)
+    .eq("slug", decodedSlug)
     .eq("is_published", true)
-    .single();
+    .maybeSingle();
 
   if (error || !data) {
+    if (error) console.error("getElectionBySlug error:", error);
     return null;
   }
 
@@ -82,9 +84,11 @@ export async function getElectionBySlug(slug: string) {
     ...data,
     groups: groups?.map(g => ({
       ...g,
-      candidates: g.candidates.sort((a: any, b: any) => {
-        if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
-        return b.votes - a.votes; // fallback sorting by votes descending
+      candidates: g.candidates.sort((a: { sort_order?: number; votes?: number }, b: { sort_order?: number; votes?: number }) => {
+        const orderA = a.sort_order || 0;
+        const orderB = b.sort_order || 0;
+        if (orderA !== orderB) return orderA - orderB;
+        return (b.votes || 0) - (a.votes || 0); // fallback sorting by votes descending
       })
     })) || [],
     updates: updates || []

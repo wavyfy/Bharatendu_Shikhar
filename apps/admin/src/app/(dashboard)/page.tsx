@@ -10,10 +10,12 @@ export const metadata = {
 };
 
 async function DashboardContent() {
-  const stats = await getDashboardStats();
-
-  const { supabaseAdmin } = await import("@repo/api");
-  const { data: settings } = await supabaseAdmin.from("settings").select("site_logo_url, site_logo_dark_url").eq("id", 1).single();
+  const [stats, settings] = await Promise.all([
+    getDashboardStats(),
+    import("@repo/api").then(({ supabaseAdmin }) =>
+      supabaseAdmin.from("settings").select("site_logo_url, site_logo_dark_url").eq("id", 1).single().then(res => res.data)
+    )
+  ]);
   
   const getImageUrl = (path: string | null) => {
     if (!path) return null;

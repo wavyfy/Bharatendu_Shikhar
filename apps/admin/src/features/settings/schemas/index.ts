@@ -4,6 +4,7 @@ const urlOrEmpty = z.string().url("Must be a valid URL").or(z.literal("")).optio
 
 export const siteInfoSchema = z.object({
   site_name: z.string().min(1, "Site name is required").max(100),
+  site_url: z.string().min(1, "Site URL is required").url("Must be a valid URL"),
   site_tagline: z.string().max(200).optional().nullable(),
   site_logo_url: urlOrEmpty,
   site_logo_dark_url: urlOrEmpty,
@@ -13,8 +14,7 @@ export const siteInfoSchema = z.object({
 export const seoSchema = z.object({
   meta_title: z.string().max(70).optional().nullable(),
   meta_description: z.string().max(160).optional().nullable(),
-  meta_keywords: z.string().max(500).optional().nullable(),
-  og_image_url: urlOrEmpty,
+  og_image_url: z.string().min(1, "Default OG Image is required").url("Must be a valid URL"),
 });
 
 export const socialSchema = z.object({
@@ -51,6 +51,15 @@ export const advertisementsSchema = z.object({
   hide_all_ads: z.boolean().default(false),
 });
 
+export const legalSchema = z.object({
+  copyright_text: z.string().optional().nullable(),
+  about_us: z.string().optional().nullable(),
+  privacy_policy: z.string().optional().nullable(),
+  terms_conditions: z.string().optional().nullable(),
+  editorial_policy: z.string().optional().nullable(),
+  correction_policy: z.string().optional().nullable(),
+});
+
 // Combined full settings schema
 export const settingsSchema = siteInfoSchema
   .merge(seoSchema)
@@ -59,7 +68,8 @@ export const settingsSchema = siteInfoSchema
   .merge(notificationsSchema)
   .merge(homepageSchema)
   .merge(maintenanceSchema)
-  .merge(advertisementsSchema);
+  .merge(advertisementsSchema)
+  .merge(legalSchema);
 
 export type SettingsInput = z.infer<typeof settingsSchema>;
 export type SiteInfoInput = z.infer<typeof siteInfoSchema>;
@@ -70,3 +80,4 @@ export type NotificationsInput = z.infer<typeof notificationsSchema>;
 export type HomepageInput = z.infer<typeof homepageSchema>;
 export type MaintenanceInput = z.infer<typeof maintenanceSchema>;
 export type AdvertisementsInput = z.infer<typeof advertisementsSchema>;
+export type LegalInput = z.infer<typeof legalSchema>;

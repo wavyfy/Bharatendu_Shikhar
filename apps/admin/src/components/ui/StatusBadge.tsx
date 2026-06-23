@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export type StatusVariant = "draft" | "published" | "expired" | "active" | "inactive" | "scheduled";
+export type StatusVariant = "draft" | "published" | "expired" | "active" | "inactive" | "scheduled" | "globally_disabled";
 
 interface StatusBadgeProps {
   variant: StatusVariant;
@@ -15,6 +15,7 @@ export function StatusBadge({ variant, className }: StatusBadgeProps) {
     inactive: "bg-on-surface-variant text-white",
     expired: "bg-red-700 text-white",
     scheduled: "bg-amber-600 text-white",
+    globally_disabled: "bg-slate-700 text-white",
   };
 
   const labels = {
@@ -24,6 +25,7 @@ export function StatusBadge({ variant, className }: StatusBadgeProps) {
     inactive: "Inactive",
     expired: "Expired",
     scheduled: "Scheduled",
+    globally_disabled: "Globally Hidden",
   };
 
   return (

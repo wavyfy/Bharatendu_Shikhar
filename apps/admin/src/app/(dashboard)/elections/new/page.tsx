@@ -5,15 +5,36 @@ import { getRegions } from "@/features/regions/queries";
 
 export const metadata = { title: "Create Election | Bharatendu Shikhar Admin" };
 
+import { ElectionTabs } from "@/features/elections/components/ElectionTabs";
+import { EmptyState } from "@/components/ui/EmptyState";
+
 async function CreateElectionContent() {
   const { regions } = await getRegions({ limit: 100 });
 
-  return (
-    <div className="cms-card">
-      <div className="p-6">
-        <ElectionForm regions={regions} />
-      </div>
+  const placeholderGroups = (
+    <div className="p-8">
+      <EmptyState 
+        title="Election Not Created Yet" 
+        description="Please fill out and save the General Settings first to create the election before adding groups and candidates." 
+      />
     </div>
+  );
+
+  const placeholderUpdates = (
+    <div className="p-8">
+      <EmptyState 
+        title="Election Not Created Yet" 
+        description="Please fill out and save the General Settings first to create the election before posting live updates." 
+      />
+    </div>
+  );
+
+  return (
+    <ElectionTabs 
+      electionForm={<ElectionForm regions={regions} />}
+      groupsList={placeholderGroups}
+      liveUpdatesList={placeholderUpdates}
+    />
   );
 }
 

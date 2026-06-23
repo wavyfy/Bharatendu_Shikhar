@@ -623,6 +623,12 @@ export type Database = {
       }
       settings: {
         Row: {
+          about_us: string | null
+          correction_policy: string | null
+          copyright_text: string | null
+          editorial_policy: string | null
+          privacy_policy: string | null
+          terms_conditions: string | null
           contact_address: string | null
           contact_email: string | null
           contact_phone: string | null
@@ -646,12 +652,19 @@ export type Database = {
           site_logo_dark_url: string | null
           site_logo_url: string | null
           site_name: string
+          site_url: string | null
           site_tagline: string | null
           twitter_url: string | null
           updated_at: string
           youtube_url: string | null
         }
         Insert: {
+          about_us?: string | null
+          correction_policy?: string | null
+          copyright_text?: string | null
+          editorial_policy?: string | null
+          privacy_policy?: string | null
+          terms_conditions?: string | null
           contact_address?: string | null
           contact_email?: string | null
           contact_phone?: string | null
@@ -675,12 +688,19 @@ export type Database = {
           site_logo_dark_url?: string | null
           site_logo_url?: string | null
           site_name?: string
+          site_url?: string | null
           site_tagline?: string | null
           twitter_url?: string | null
           updated_at?: string
           youtube_url?: string | null
         }
         Update: {
+          about_us?: string | null
+          correction_policy?: string | null
+          copyright_text?: string | null
+          editorial_policy?: string | null
+          privacy_policy?: string | null
+          terms_conditions?: string | null
           contact_address?: string | null
           contact_email?: string | null
           contact_phone?: string | null
@@ -704,6 +724,7 @@ export type Database = {
           site_logo_dark_url?: string | null
           site_logo_url?: string | null
           site_name?: string
+          site_url?: string | null
           site_tagline?: string | null
           twitter_url?: string | null
           updated_at?: string

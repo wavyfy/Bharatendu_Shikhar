@@ -84,7 +84,7 @@ export function LiveUpdatesSection({ articleId, initialUpdates }: LiveUpdatesSec
       {/* Section card */}
       <div className="cms-card m-4 sm:m-6 shadow-md">
         {/* Header */}
-        <div className="cms-card-header bg-surface-container-high px-6 py-4 flex items-center justify-between">
+        <div className="cms-card-header border-b border-outline-variant px-6 py-4 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
               {/* Pulsing live indicator */}
@@ -117,7 +117,7 @@ export function LiveUpdatesSection({ articleId, initialUpdates }: LiveUpdatesSec
         </div>
 
         {/* Updates list */}
-        <div className="bg-surface-container-lowest">
+        <div className="bg-transparent rounded-b-xl">
           {updates.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center px-6">
               <Radio className="w-10 h-10 text-slate-300 mb-3" strokeWidth={1.5} />
@@ -163,9 +163,10 @@ export function LiveUpdatesSection({ articleId, initialUpdates }: LiveUpdatesSec
                       {update.headline}
                     </h3>
 
-                    <p className="mt-1 text-sm text-on-surface-variant leading-relaxed line-clamp-3">
-                      {update.content}
-                    </p>
+                    <div 
+                      className="mt-1 text-sm text-on-surface-variant leading-relaxed line-clamp-3 [&>p]:mb-0 [&>p]:mt-1"
+                      dangerouslySetInnerHTML={{ __html: update.content }}
+                    />
 
                     {/* Updated indicator */}
                     {update.updated_at !== update.created_at && (
