@@ -20,10 +20,6 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
     fetchNavbarData()
   ]);
 
-  const liveElections = elections.filter(e => e.status === "live");
-  const upcomingElections = elections.filter(e => e.status === "upcoming");
-  const completedElections = elections.filter(e => e.status === "completed");
-
   interface Election {
     id: string;
     slug: string;
@@ -35,6 +31,11 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
     result_date?: string | null;
     region?: { name: string } | null;
   }
+
+  const typedElections = elections as unknown as Election[];
+  const liveElections = typedElections.filter(e => e.status === "live");
+  const upcomingElections = typedElections.filter(e => e.status === "upcoming");
+  const completedElections = typedElections.filter(e => e.status === "completed");
 
   const ElectionCard = ({ election }: { election: Election }) => (
     <Link href={`/elections/${election.slug}`} className="flex flex-col border-2 border-gray-200 dark:border-news-border rounded-sm overflow-hidden hover:shadow-md transition-shadow bg-card group">
