@@ -6,13 +6,16 @@ import { Advertisement } from "@/components/shared/Advertisement";
 import { ArticleMeta } from "@/components/shared/ArticleMeta";
 import { Ticker } from "@/components/home/Ticker";
 import { LiveTimeline } from "@/components/article/LiveTimeline";
-import { fetchArticleBySlug, fetchTickerArticles, fetchRelatedArticles } from "@/utils/fetchData";
+import { fetchArticleBySlug, fetchTickerArticles, fetchRelatedArticles, fetchSettings } from "@/utils/fetchData";
 import { DoubleRowRelatedSlider } from "@/components/article/DoubleRowRelatedSlider";
 import type { SliderItem } from "@/components/home/HorizontalArticleSlider";
 import type { ArticleWithAuthor } from "@/utils/mapArticleData";
 import { RelatedArticlesList } from "@/components/shared/RelatedArticlesList";
 import { RelativeTime } from "@/components/shared/RelativeTime";
 import type { Metadata, ResolvingMetadata } from "next";
+import { sanitize } from "@repo/api";
+import { getSiteUrl } from "@/utils/seo";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
 import { ArticleSkeleton, RelatedArticlesSkeleton } from "@/components/skeletons/ArticleSkeletons";
@@ -25,6 +28,8 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await params;
   const article = await fetchArticleBySlug(slug);
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
 
   if (!article) {
     return {
@@ -33,16 +38,29 @@ export async function generateMetadata(
   }
 
   const previousImages = (await parent).openGraph?.images || [];
-  const ogImages = article.featured_image ? [article.featured_image, ...previousImages] : previousImages;
+  const defaultImage = settings?.og_image_url ? [settings.og_image_url] : previousImages;
+  const ogImages = article.featured_image ? [article.featured_image, ...previousImages] : defaultImage;
+  const publishedAt = article.published_at || article.created_at || new Date().toISOString();
+  const updatedAt = article.updated_at || publishedAt;
+  const authorName = "Bharatendu Shikhar"; // Fallback to publisher name
+
+  const title = article.title || settings?.meta_title || "Bharatendu Shikhar";
+  const description = article.excerpt || settings?.meta_description || `Read ${title}`;
 
   return {
-    title: article.title,
-    description: article.excerpt || `Read ${article.title}`,
+    title,
+    description,
+    alternates: {
+      canonical: `${siteUrl}/article/${article.slug}`,
+    },
     openGraph: {
-      title: article.title,
-      description: article.excerpt || `Read ${article.title}`,
+      title,
+      description,
+      url: `${siteUrl}/article/${article.slug}`,
       type: "article",
-      publishedTime: article.published_at || article.created_at || undefined,
+      publishedTime: publishedAt,
+      modifiedTime: updatedAt,
+      authors: [authorName],
       images: ogImages,
     },
     twitter: {
@@ -54,6 +72,40 @@ export async function generateMetadata(
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function JsonLdSchema({ article }: { article: any }) {
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
+
+  const publishedAt = article.published_at || article.created_at || new Date().toISOString();
+  const updatedAt = article.updated_at || publishedAt;
+
+  const title = article.title || settings?.meta_title || "Bharatendu Shikhar";
+  const description = article.excerpt || settings?.meta_description || title;
+  const imageUrl = article.featured_image || settings?.og_image_url;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${siteUrl}/article/${article.slug}`
+    },
+    "headline": title,
+    "description": description,
+    "image": imageUrl ? [imageUrl] : [],
+    "datePublished": publishedAt,
+    "dateModified": updatedAt,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+    />
+  );
+}
+
 async function TickerSection() {
   const topArticles = await fetchTickerArticles();
   return <Ticker articles={topArticles} />;
@@ -61,42 +113,34 @@ async function TickerSection() {
 
 async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug: string }> }) {
   const { slug } = await paramsPromise;
-  const article = await fetchArticleBySlug(slug);
+  const [article, settings] = await Promise.all([
+    fetchArticleBySlug(slug),
+    fetchSettings(),
+  ]);
+  const siteUrl = getSiteUrl(settings?.site_url).toString();
 
   if (!article) {
     notFound();
   }
 
-  const { categoryArticles, regionArticles } = await fetchRelatedArticles(
+  const relatedArticles = await fetchRelatedArticles(
     article.categories?.id,
     article.regions?.id,
     article.id
   );
 
-  let relatedArticles = categoryArticles.slice(0, 5);
-  if (relatedArticles.length === 0) {
-    relatedArticles = regionArticles.slice(0, 5);
+  const breadcrumbs = [{ label: "Home", href: "/" }];
+  if (article.categories?.name) {
+    breadcrumbs.push({ label: article.categories.name, href: `/${article.categories.slug}` });
   }
-
-  const tags = [];
-  if (article.categories?.name) tags.push(article.categories.name);
-  if (article.regions?.name) tags.push(article.regions.name);
+  breadcrumbs.push({ label: article.title, href: "#" });
 
   return (
     <article className="flex-1 min-w-0 flex flex-col animate-in fade-in duration-300">
+      <JsonLdSchema article={article} />
       <div className="flex flex-col lg:grid lg:grid-cols-13 gap-0 md:gap-6">
         <div className="lg:col-span-9 flex flex-col min-w-0">
-          {/* Category / Region Tags */}
-          {tags.length > 0 && (
-            <div className="flex items-center gap-3 text-red-600 dark:text-red-500 font-medium mb-3">
-              {tags.map((tag, i) => (
-                <span key={tag} className="flex items-center gap-3">
-                  {tag}
-                  {i < tags.length - 1 && <span className="text-gray-400 dark:text-gray-500 text-sm">&bull;</span>}
-                </span>
-              ))}
-            </div>
-          )}
+          <Breadcrumbs items={breadcrumbs} siteUrl={siteUrl} />
           {/* Article Title */}
           <h1 className="text-2xl md:text-4xl font-playfair font-bold text-black dark:text-white mb-3">
             {article.title}
@@ -115,6 +159,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
                   src={article.featured_image}
                   alt={article.title}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-cover"
                   priority
                 />
@@ -131,10 +176,9 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
             </div>
           )}
 
-          {/* Article Content */}
           <div
             className="w-full text-left prose prose-lg md:prose-[21px] max-w-none dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent hover:prose-a:text-red-700 prose-img:rounded-md"
-            dangerouslySetInnerHTML={{ __html: article.content }}
+            dangerouslySetInnerHTML={{ __html: sanitize(article.content) }}
           />
 
           <div className="w-full flex justify-end mt-4">
@@ -171,25 +215,29 @@ async function RelatedSection({ paramsPromise }: { paramsPromise: Promise<{ slug
 
   if (!article) return null;
 
-  const { categoryArticles, regionArticles } = await fetchRelatedArticles(
+  const relatedArticles = await fetchRelatedArticles(
     article.categories?.id,
     article.regions?.id,
     article.id
   );
 
-  const categorySliderItems: SliderItem[] = categoryArticles.map((art) => ({
-    id: art.id.toString(),
-    label: article.categories?.name || "Related Topic",
-    slug: article.categories?.slug || "",
-    article: art,
-  }));
+  const categorySliderItems: SliderItem[] = relatedArticles
+    .filter((art) => art.category_id === article.categories?.id)
+    .map((art) => ({
+      id: art.id.toString(),
+      label: article.categories?.name || "Related Topic",
+      slug: article.categories?.slug || "",
+      article: art,
+    }));
 
-  const regionSliderItems: SliderItem[] = regionArticles.map((art) => ({
-    id: art.id.toString(),
-    label: article.regions?.name || "Related Region",
-    slug: article.regions?.slug || "",
-    article: art,
-  }));
+  const regionSliderItems: SliderItem[] = relatedArticles
+    .filter((art) => art.category_id !== article.categories?.id)
+    .map((art) => ({
+      id: art.id.toString(),
+      label: article.regions?.name || "Related Region",
+      slug: article.regions?.slug || "",
+      article: art,
+    }));
 
   if (categorySliderItems.length === 0 && regionSliderItems.length === 0) {
     return null;

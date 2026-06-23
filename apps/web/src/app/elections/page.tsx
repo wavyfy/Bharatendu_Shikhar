@@ -37,7 +37,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
   }
 
   const ElectionCard = ({ election }: { election: Election }) => (
-    <Link href={`/elections/${election.slug}`} className="flex flex-col border border-gray-200 dark:border-gray-800 rounded-sm overflow-hidden hover:shadow-md transition-shadow bg-card group">
+    <Link href={`/elections/${election.slug}`} className="flex flex-col border-2 border-gray-200 dark:border-news-border rounded-sm overflow-hidden hover:shadow-md transition-shadow bg-card group">
       {election.featured_image_url ? (
         <div className="aspect-video w-full overflow-hidden bg-muted relative">
           <Image 
@@ -77,7 +77,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
         {election.description && (
           <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{election.description}</p>
         )}
-        <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
+        <div className="mt-auto pt-4 border-t border-gray-200 dark:border-news-border flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
           {election.voting_date && (
             <div className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
@@ -110,7 +110,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
       </div>
 
       {elections.length === 0 ? (
-        <div className="text-center py-20 bg-muted/30 rounded-sm border border-dashed border-gray-200 dark:border-gray-800">
+        <div className="text-center py-20 bg-muted/30 rounded-sm border border-dashed border-gray-200 dark:border-news-border">
           <p className="text-muted-foreground">No elections found.</p>
         </div>
       ) : (

@@ -25,7 +25,7 @@ export function DialChart({
 
   return (
     <div className="flex flex-col items-center justify-center p-6 bg-card h-full">
-      <div className="w-full flex justify-between items-end border-b border-gray-200 dark:border-gray-800 pb-4 mb-8">
+      <div className="w-full flex justify-between items-end border-b border-gray-200 dark:border-news-border pb-4 mb-8">
         <div>
           <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Total Seats</p>
           <p className="text-3xl font-black text-red-600">{totalSeats}</p>
@@ -72,21 +72,21 @@ export function DialChart({
 
       {/* Legend below chart */}
       <div className="flex gap-2 w-full mt-auto pt-4">
-        <div className="flex-1 border border-gray-200 dark:border-gray-800 p-2 rounded-sm flex flex-col items-center justify-center bg-card">
+        <div className="flex-1 border-2 border-gray-200 dark:border-news-border p-2 rounded-sm flex flex-col items-center justify-center bg-card">
           <div className="flex items-center gap-1.5 mb-1">
             <div className="w-2 h-2 rounded-full bg-red-600"></div>
             <p className="text-[10px] font-bold text-foreground">{leadingSeats}</p>
           </div>
           <p className="text-[9px] text-muted-foreground uppercase">Leading</p>
         </div>
-        <div className="flex-1 border border-gray-200 dark:border-gray-800 p-2 rounded-sm flex flex-col items-center justify-center bg-card">
+        <div className="flex-1 border-2 border-gray-200 dark:border-news-border p-2 rounded-sm flex flex-col items-center justify-center bg-card">
           <div className="flex items-center gap-1.5 mb-1">
             <div className="w-2 h-2 rounded-full bg-foreground"></div>
             <p className="text-[10px] font-bold text-foreground">{losingSeats}</p>
           </div>
           <p className="text-[9px] text-muted-foreground uppercase">Losing</p>
         </div>
-        <div className="flex-1 border border-gray-200 dark:border-gray-800 p-2 rounded-sm flex flex-col items-center justify-center bg-card">
+        <div className="flex-1 border-2 border-gray-200 dark:border-news-border p-2 rounded-sm flex flex-col items-center justify-center bg-card">
           <div className="flex items-center gap-1.5 mb-1">
             <div className="w-2 h-2 rounded-full bg-muted-foreground"></div>
             <p className="text-[10px] font-bold text-foreground">{yetToWin}</p>

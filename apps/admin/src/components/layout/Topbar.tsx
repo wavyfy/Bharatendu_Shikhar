@@ -30,6 +30,7 @@ export function Topbar({ displayName, role, logoUrl, darkLogoUrl }: TopbarProps)
                 alt="Logo" 
                 fill 
                 sizes="192px"
+                priority
                 className={`object-contain object-left ${darkLogoUrl ? 'dark:hidden' : ''}`} 
               />
             )}
@@ -39,6 +40,7 @@ export function Topbar({ displayName, role, logoUrl, darkLogoUrl }: TopbarProps)
                 alt="Logo (Dark)" 
                 fill 
                 sizes="192px"
+                priority
                 className={`object-contain object-left ${logoUrl ? 'hidden dark:block' : ''}`} 
               />
             )}

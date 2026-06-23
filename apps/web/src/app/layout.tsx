@@ -19,16 +19,58 @@ const geistMono = Geist_Mono({
 
 import { fetchSettings } from "@/utils/fetchData";
 
+import { getSiteUrl } from "@/utils/seo";
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url);
+  const siteName = settings?.site_name || "Bharatendu Shikhar";
+  const title = settings?.meta_title || siteName;
+  const description = settings?.meta_description || "Latest News and Updates";
+  const ogImageUrl = settings?.og_image_url || "/default-og.jpg";
   
+  const iconUrl = settings?.favicon_url 
+    ? (settings.favicon_url.startsWith("http") ? settings.favicon_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${settings.favicon_url}`)
+    : "/favicon.ico";
+
   return {
-    title: settings?.meta_title || "Web",
-    description: settings?.meta_description || "Web App",
+    metadataBase: siteUrl,
+    title: {
+      default: title,
+      template: `%s | ${siteName}`,
+    },
+    description,
+    alternates: {
+      types: {
+        "application/rss+xml": [
+          { url: "/rss.xml", title: `${siteName} RSS Feed` },
+        ],
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl.toString(),
+      siteName,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: siteName,
+        },
+      ],
+      locale: "hi_IN",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
     icons: {
-      icon: settings?.favicon_url 
-        ? (settings.favicon_url.startsWith("http") ? settings.favicon_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${settings.favicon_url}`)
-        : "/favicon.ico",
+      icon: iconUrl,
     }
   };
 }
@@ -47,20 +89,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await fetchSettings();
+  const [settings, { regions, categories }, { topArticles, categorySections }] = await Promise.all([
+    fetchSettings(),
+    fetchNavbarData(),
+    fetchHomepageData(),
+  ]);
 
   if (settings?.maintenance_mode) {
     return (
-      <MaintenanceScreen 
-        settings={settings} 
-        geistSansVariable={geistSans.variable} 
-        geistMonoVariable={geistMono.variable} 
+      <MaintenanceScreen
+        settings={settings}
+        geistSansVariable={geistSans.variable}
+        geistMonoVariable={geistMono.variable}
       />
     );
   }
-
-  const { regions, categories } = await fetchNavbarData();
-  const { topArticles, categorySections } = await fetchHomepageData();
 
   return (
     <html

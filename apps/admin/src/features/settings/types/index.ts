@@ -2,6 +2,7 @@ export type SettingsRow = {
   id: number;
   // Site Info
   site_name: string;
+  site_url: string;
   site_tagline: string | null;
   site_logo_url: string | null;
   site_logo_dark_url: string | null;
@@ -10,7 +11,7 @@ export type SettingsRow = {
   meta_title: string | null;
   meta_description: string | null;
   meta_keywords: string | null;
-  og_image_url: string | null;
+  og_image_url: string;
   // Social
   facebook_url: string | null;
   twitter_url: string | null;
@@ -35,4 +36,11 @@ export type SettingsRow = {
   updated_at: string;
   // Advertisements
   hide_all_ads: boolean;
+  // Legal & Policies
+  copyright_text: string | null;
+  about_us: string | null;
+  privacy_policy: string | null;
+  terms_conditions: string | null;
+  editorial_policy: string | null;
+  correction_policy: string | null;
 };

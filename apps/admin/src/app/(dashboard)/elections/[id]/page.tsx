@@ -21,11 +21,17 @@ async function ElectionDetailContent({ id }: { id: string }) {
   let updates;
 
   try {
-    election = await getElectionById(id);
-    const regionsRes = await getRegions({ limit: 100 });
+    const [electionRes, regionsRes, groupsRes, updatesRes] = await Promise.all([
+      getElectionById(id),
+      getRegions({ limit: 100 }),
+      getElectionGroups(id),
+      getElectionUpdates(id)
+    ]);
+    
+    election = electionRes;
     regions = regionsRes.regions;
-    groups = await getElectionGroups(id);
-    updates = await getElectionUpdates(id);
+    groups = groupsRes;
+    updates = updatesRes;
   } catch {
     notFound();
   }

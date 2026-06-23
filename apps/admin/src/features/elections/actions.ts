@@ -2,15 +2,9 @@
 
 import { cookies } from "next/headers";
 import { z } from "zod";
-import { createSupabaseServerClient } from "@repo/api";
+import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import { revalidatePath } from "next/cache";
-
-function generateSlug(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)+/g, '');
-}
+import { generateSlug } from "@/features/articles/utils/slug";
 
 const electionSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters").max(200),
@@ -75,7 +69,7 @@ async function getAuth() {
 
 export async function createElectionAction(formData: FormData) {
   try {
-    const { supabase, user } = await getAuth();
+    const { user } = await getAuth();
     
     const title = formData.get("title")?.toString() || "";
     let slug = formData.get("slug")?.toString() || "";
@@ -98,7 +92,7 @@ export async function createElectionAction(formData: FormData) {
 
     const validated = electionSchema.parse(payload);
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("elections")
       .insert({ ...validated, created_by: user.id })
       .select("id")
@@ -107,25 +101,25 @@ export async function createElectionAction(formData: FormData) {
     if (error) throw error;
     revalidatePath("/elections");
     return { success: true, data };
-  } catch (error) {
-    return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
+  } catch (error: unknown) {
+    let message = error instanceof Error ? error.message : "An error occurred";
+    if (typeof error === 'object' && error !== null && 'code' in error && (error as { code: string }).code === '23505') message = "An election with a similar title/slug already exists.";
+    return { success: false, error: message };
   }
 }
 
 export async function updateElectionAction(id: string, formData: FormData) {
   try {
-    const { supabase, user, role } = await getAuth();
+    await getAuth();
     
-    const { data: existing, error: fetchError } = await supabase
+    const { data: existing, error: fetchError } = await supabaseAdmin
       .from("elections")
       .select("created_by")
       .eq("id", id)
       .single();
       
     if (fetchError || !existing) throw new Error("Election not found");
-    if (role !== "admin" && existing.created_by !== user.id) {
-      throw new Error("No permission");
-    }
+    
 
     const title = formData.get("title")?.toString() || "";
     let slug = formData.get("slug")?.toString() || "";
@@ -148,7 +142,7 @@ export async function updateElectionAction(id: string, formData: FormData) {
 
     const validated = electionSchema.parse(payload);
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("elections")
       .update({ ...validated })
       .eq("id", id);
@@ -157,6 +151,24 @@ export async function updateElectionAction(id: string, formData: FormData) {
     revalidatePath("/elections");
     revalidatePath(`/elections/${id}`);
     return { success: true };
+  } catch (error: unknown) {
+    let message = error instanceof Error ? error.message : "An error occurred";
+    if (typeof error === 'object' && error !== null && 'code' in error && (error as { code: string }).code === '23505') message = "An election with a similar title/slug already exists.";
+    return { success: false, error: message };
+  }
+}
+
+export async function toggleElectionPublishAction(id: string, is_published: boolean) {
+  try {
+    await getAuth();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("elections").select("created_by").eq("id", id).single();
+    if (fetchError || !existing) throw new Error("Not found");
+    
+
+    const { error } = await supabaseAdmin.from("elections").update({ is_published }).eq("id", id);
+    if (error) throw error;
+    revalidatePath("/elections");
+    return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
   }
@@ -164,12 +176,12 @@ export async function updateElectionAction(id: string, formData: FormData) {
 
 export async function deleteElectionAction(id: string) {
   try {
-    const { supabase, user, role } = await getAuth();
-    const { data: existing, error: fetchError } = await supabase.from("elections").select("created_by").eq("id", id).single();
+    await getAuth();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("elections").select("created_by").eq("id", id).single();
     if (fetchError || !existing) throw new Error("Not found");
-    if (role !== "admin" && existing.created_by !== user.id) throw new Error("No permission");
+    
 
-    const { error } = await supabase.from("elections").delete().eq("id", id);
+    const { error } = await supabaseAdmin.from("elections").delete().eq("id", id);
     if (error) throw error;
     revalidatePath("/elections");
     return { success: true };
@@ -182,14 +194,14 @@ export async function deleteElectionAction(id: string) {
 
 export async function createGroupAction(electionId: string, formData: FormData) {
   try {
-    const { supabase, user } = await getAuth();
+    const { user } = await getAuth();
     const payload = {
       title: formData.get("title")?.toString() || "",
       sort_order: formData.get("sort_order") || 0,
     };
     const validated = groupSchema.parse(payload);
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("election_groups")
       .insert({ ...validated, election_id: electionId, created_by: user.id });
 
@@ -203,10 +215,10 @@ export async function createGroupAction(electionId: string, formData: FormData) 
 
 export async function updateGroupAction(id: string, electionId: string, formData: FormData) {
   try {
-    const { supabase, user, role } = await getAuth();
-    const { data: existing, error: fetchError } = await supabase.from("election_groups").select("created_by").eq("id", id).single();
+    await getAuth();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("election_groups").select("created_by").eq("id", id).single();
     if (fetchError || !existing) throw new Error("Not found");
-    if (role !== "admin" && existing.created_by !== user.id) throw new Error("No permission");
+    
 
     const payload = {
       title: formData.get("title")?.toString() || "",
@@ -214,7 +226,7 @@ export async function updateGroupAction(id: string, electionId: string, formData
     };
     const validated = groupSchema.parse(payload);
 
-    const { error } = await supabase.from("election_groups").update({ ...validated }).eq("id", id);
+    const { error } = await supabaseAdmin.from("election_groups").update({ ...validated }).eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
     return { success: true };
@@ -225,12 +237,12 @@ export async function updateGroupAction(id: string, electionId: string, formData
 
 export async function deleteGroupAction(id: string, electionId: string) {
   try {
-    const { supabase, user, role } = await getAuth();
-    const { data: existing, error: fetchError } = await supabase.from("election_groups").select("created_by").eq("id", id).single();
+    await getAuth();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("election_groups").select("created_by").eq("id", id).single();
     if (fetchError || !existing) throw new Error("Not found");
-    if (role !== "admin" && existing.created_by !== user.id) throw new Error("No permission");
+    
 
-    const { error } = await supabase.from("election_groups").delete().eq("id", id);
+    const { error } = await supabaseAdmin.from("election_groups").delete().eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
     return { success: true };
@@ -243,7 +255,7 @@ export async function deleteGroupAction(id: string, electionId: string) {
 
 export async function createCandidateAction(groupId: string, electionId: string, formData: FormData) {
   try {
-    const { supabase, user } = await getAuth();
+    const { user } = await getAuth();
     const payload = {
       candidate_name: formData.get("candidate_name")?.toString() || "",
       party_name: formData.get("party_name")?.toString() || null,
@@ -255,7 +267,7 @@ export async function createCandidateAction(groupId: string, electionId: string,
     };
     const validated = candidateSchema.parse(payload);
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("election_candidates")
       .insert({ ...validated, group_id: groupId, created_by: user.id });
 
@@ -269,10 +281,10 @@ export async function createCandidateAction(groupId: string, electionId: string,
 
 export async function updateCandidateAction(id: string, electionId: string, formData: FormData) {
   try {
-    const { supabase, user, role } = await getAuth();
-    const { data: existing, error: fetchError } = await supabase.from("election_candidates").select("created_by").eq("id", id).single();
+    await getAuth();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("election_candidates").select("created_by").eq("id", id).single();
     if (fetchError || !existing) throw new Error("Not found");
-    if (role !== "admin" && existing.created_by !== user.id) throw new Error("No permission");
+    
 
     const payload = {
       candidate_name: formData.get("candidate_name")?.toString() || "",
@@ -285,7 +297,7 @@ export async function updateCandidateAction(id: string, electionId: string, form
     };
     const validated = candidateSchema.parse(payload);
 
-    const { error } = await supabase.from("election_candidates").update({ ...validated }).eq("id", id);
+    const { error } = await supabaseAdmin.from("election_candidates").update({ ...validated }).eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
     return { success: true };
@@ -296,12 +308,12 @@ export async function updateCandidateAction(id: string, electionId: string, form
 
 export async function deleteCandidateAction(id: string, electionId: string) {
   try {
-    const { supabase, user, role } = await getAuth();
-    const { data: existing, error: fetchError } = await supabase.from("election_candidates").select("created_by").eq("id", id).single();
+    await getAuth();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("election_candidates").select("created_by").eq("id", id).single();
     if (fetchError || !existing) throw new Error("Not found");
-    if (role !== "admin" && existing.created_by !== user.id) throw new Error("No permission");
+    
 
-    const { error } = await supabase.from("election_candidates").delete().eq("id", id);
+    const { error } = await supabaseAdmin.from("election_candidates").delete().eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
     return { success: true };
@@ -314,14 +326,14 @@ export async function deleteCandidateAction(id: string, electionId: string) {
 
 export async function createUpdateAction(electionId: string, formData: FormData) {
   try {
-    const { supabase, user } = await getAuth();
+    const { user } = await getAuth();
     const payload = {
       title: formData.get("title")?.toString() || "",
       content: formData.get("content")?.toString() || "",
     };
     const validated = updateSchema.parse(payload);
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("election_updates")
       .insert({ ...validated, election_id: electionId, created_by: user.id });
 
@@ -335,12 +347,12 @@ export async function createUpdateAction(electionId: string, formData: FormData)
 
 export async function deleteUpdateAction(id: string, electionId: string) {
   try {
-    const { supabase, user, role } = await getAuth();
-    const { data: existing, error: fetchError } = await supabase.from("election_updates").select("created_by").eq("id", id).single();
+    await getAuth();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("election_updates").select("created_by").eq("id", id).single();
     if (fetchError || !existing) throw new Error("Not found");
-    if (role !== "admin" && existing.created_by !== user.id) throw new Error("No permission");
+    
 
-    const { error } = await supabase.from("election_updates").delete().eq("id", id);
+    const { error } = await supabaseAdmin.from("election_updates").delete().eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
     return { success: true };

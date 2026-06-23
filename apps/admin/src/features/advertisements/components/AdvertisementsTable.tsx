@@ -13,9 +13,10 @@ import { Pencil, Trash2, Power, PowerOff } from "lucide-react";
 
 interface AdvertisementsTableProps {
   advertisements: AdvertisementRow[];
+  hideAllAds: boolean;
 }
 
-export function AdvertisementsTable({ advertisements }: AdvertisementsTableProps) {
+export function AdvertisementsTable({ advertisements, hideAllAds }: AdvertisementsTableProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = parseInt(searchParams?.get("page") || "1", 10);
@@ -50,7 +51,11 @@ export function AdvertisementsTable({ advertisements }: AdvertisementsTableProps
     startTransition(async () => {
       const res = await updateAdvertisementStatusAction(ad.id, newStatus);
       if (res.success) {
-        toast.success(`Advertisement ${newStatus ? 'activated' : 'deactivated'}.`);
+        if (res.warning) {
+          toast.warning(res.warning);
+        } else {
+          toast.success(`Advertisement ${newStatus ? 'activated' : 'deactivated'}.`);
+        }
         router.refresh();
       } else {
         toast.error(res.error ?? "Failed to update status");
@@ -58,7 +63,8 @@ export function AdvertisementsTable({ advertisements }: AdvertisementsTableProps
     });
   }
 
-  const getStatusVariant = (ad: AdvertisementRow): "active" | "inactive" | "expired" | "scheduled" => {
+  const getStatusVariant = (ad: AdvertisementRow): "active" | "inactive" | "expired" | "scheduled" | "globally_disabled" => {
+    if (hideAllAds) return "globally_disabled";
     const now = new Date();
     const startDate = new Date(ad.start_date);
     const endDate = new Date(ad.end_date);

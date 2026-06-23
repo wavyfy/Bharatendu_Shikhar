@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { getAdvertisements } from "@/features/advertisements/queries";
+import { getSettings } from "@/features/settings/queries";
 import { AdvertisementsTable } from "@/features/advertisements/components/AdvertisementsTable";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Pagination } from "@/components/ui/Pagination";
@@ -19,6 +20,8 @@ async function AdvertisementsContent({ searchParamsPromise }: { searchParamsProm
   const params = await searchParamsPromise;
   const page = params?.page ? parseInt(params.page, 10) : 1;
   const { advertisements } = await getAdvertisements();
+  const settings = await getSettings();
+  const hideAllAds = settings?.hide_all_ads ?? false;
   // Using simple length since pagination isn't fully implemented in the query yet
   const count = advertisements.length;
   const totalPages = 1;
@@ -35,7 +38,7 @@ async function AdvertisementsContent({ searchParamsPromise }: { searchParamsProm
       </div>
 
       <div className="overflow-x-auto custom-scrollbar">
-        <AdvertisementsTable advertisements={advertisements} />
+        <AdvertisementsTable advertisements={advertisements} hideAllAds={hideAllAds} />
       </div>
 
       <div className="px-5 pb-3 bg-surface">

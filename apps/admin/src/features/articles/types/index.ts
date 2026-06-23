@@ -13,6 +13,7 @@ export interface CategoryRow {
   name: string;
   slug: string;
   is_active: boolean;
+  seo_description: string | null;
   created_at: string;
 }
 
@@ -21,6 +22,7 @@ export interface RegionRow {
   name: string;
   slug: string;
   is_active: boolean;
+  seo_description: string | null;
   created_at: string;
 }
 

@@ -31,8 +31,20 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
     get: (name) => cookieStore.get(name)?.value,
-    set: (name, value, options) => cookieStore.set(name, value, options),
-    remove: (name, options) => cookieStore.delete({ name, ...options }),
+    set: (name, value, options) => {
+      try {
+        cookieStore.set(name, value, options);
+      } catch (error) {
+        // Ignored in Server Components
+      }
+    },
+    remove: (name, options) => {
+      try {
+        cookieStore.delete({ name, ...options });
+      } catch (error) {
+        // Ignored in Server Components
+      }
+    },
   });
 
   const { data: { user } } = await supabase.auth.getUser();

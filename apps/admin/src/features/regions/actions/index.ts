@@ -57,9 +57,10 @@ export async function createRegionAction(input: CreateRegionInput) {
 
     revalidatePath("/regions");
     return { success: true, regionId: (data as { id: number })?.id };
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error("Create region error:", error);
-    const message = error instanceof Error ? error.message : "Failed to create region";
+    let message = error?.message || "Failed to create region";
+    if (error?.code === '23505') message = "A region with this name already exists.";
     return { success: false, error: message };
   }
 }
@@ -94,9 +95,10 @@ export async function updateRegionAction(id: number, input: UpdateRegionInput) {
 
     revalidatePath("/regions");
     return { success: true };
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error("Update region error:", error);
-    const message = error instanceof Error ? error.message : "Failed to update region";
+    let message = error?.message || "Failed to update region";
+    if (error?.code === '23505') message = "A region with this name already exists.";
     return { success: false, error: message };
   }
 }

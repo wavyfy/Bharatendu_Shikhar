@@ -46,17 +46,19 @@ export async function getElectionBySlug(slug: string) {
     set: () => {},
     remove: () => {},
   });
+  const decodedSlug = decodeURIComponent(slug);
   const { data, error } = await supabase
     .from("elections")
     .select(`
       *,
       region:regions(id, name)
     `)
-    .eq("slug", slug)
+    .eq("slug", decodedSlug)
     .eq("is_published", true)
-    .single();
+    .maybeSingle();
 
   if (error || !data) {
+    if (error) console.error("getElectionBySlug error:", error);
     return null;
   }
 
