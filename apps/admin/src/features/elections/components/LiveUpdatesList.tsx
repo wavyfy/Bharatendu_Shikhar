@@ -12,6 +12,12 @@ interface LiveUpdatesListProps {
   updates: { id: string; title: string; content: string; created_at: string; }[];
 }
 
+/**
+ * Displays a list of election live updates with controls to create and delete updates.
+ *
+ * @param electionId - The election ID to associate with created updates and to pass to delete actions.
+ * @param updates - The existing updates to render.
+ */
 export function LiveUpdatesList({ electionId, updates }: LiveUpdatesListProps) {
   const [isPending, startTransition] = useTransition();
   const toast = useToast();

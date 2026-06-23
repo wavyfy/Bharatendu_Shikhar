@@ -3,6 +3,9 @@ import type { Database } from "@repo/api";
 
 type ElectionUpdate = Database["public"]["Tables"]["election_updates"]["Row"];
 
+/**
+ * Renders election updates in two side-by-side timeline channels: one for updates from today and one for earlier updates.
+ */
 export function UpdatesTimeline({ updates }: { updates: ElectionUpdate[] }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);

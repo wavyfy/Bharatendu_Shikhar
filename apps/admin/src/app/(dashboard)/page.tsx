@@ -9,6 +9,9 @@ export const metadata = {
   title: "Dashboard | Bharatendu Shikhar Admin",
 };
 
+/**
+ * Renders a dashboard with summary statistics, recent articles, and recent e-papers.
+ */
 async function DashboardContent() {
   const [stats, settings] = await Promise.all([
     getDashboardStats(),

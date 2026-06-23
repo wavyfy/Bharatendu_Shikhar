@@ -15,6 +15,12 @@ interface PageProps {
   searchParams: Promise<{ page?: string; search?: string }>;
 }
 
+/**
+ * Fetches advertisements and application settings, then renders the advertisement management interface.
+ *
+ * @param searchParamsPromise - A promise resolving to search parameters including page number.
+ * @returns A React element displaying the advertisement management card with table, search, and pagination.
+ */
 async function AdvertisementsContent({ searchParamsPromise }: { searchParamsPromise: PageProps["searchParams"] }) {
   // In a future step, these params can be passed to getAdvertisements for server-side pagination
   const params = await searchParamsPromise;

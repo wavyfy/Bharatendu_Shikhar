@@ -4,6 +4,14 @@ import type { Metadata } from "next";
 import { getSiteUrl } from "@/utils/seo";
 import { LegalDialog } from "./LegalDialog";
 
+/**
+ * Renders a legal page with HTML content fetched from site settings.
+ *
+ * Triggers a 404 if the requested content is missing or empty.
+ *
+ * @param field - The settings key containing the legal content
+ * @param title - The page title to display
+ */
 export async function LegalPage({ field, title }: { field: string, title: string }) {
   const settings = await fetchSettings();
   const content = settings?.[field as keyof typeof settings] as string | null;
@@ -21,6 +29,14 @@ export async function LegalPage({ field, title }: { field: string, title: string
   );
 }
 
+/**
+ * Generates metadata for a legal page based on site settings.
+ *
+ * @param field - The settings field name containing the legal content
+ * @param title - The page title to use in metadata (e.g., "Privacy Policy")
+ * @param slug - The URL path segment for the page
+ * @returns A Metadata object with title, description, canonical URL, and OpenGraph fields; an empty object if the specified field contains no content
+ */
 export async function generateLegalMetadata(field: string, title: string, slug: string): Promise<Metadata> {
   const settings = await fetchSettings();
   const content = settings?.[field as keyof typeof settings] as string | null;

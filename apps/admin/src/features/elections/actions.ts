@@ -65,7 +65,12 @@ async function getAuth() {
   return { supabase, user, role };
 }
 
-// --- Elections ---
+/**
+ * Creates a new election record.
+ *
+ * @param formData - Contains election fields: `title`, optional `slug` (auto-generated if omitted), `description`, `featured_image_url`, `region_id`, `status`, `is_published`, `display_order`, `voting_date`, and `result_date`.
+ * @returns An object with `success: true` and the new election's `id` in `data` on success, or `success: false` with an error message. Returns a specific message if an election with a similar title or slug already exists.
+ */
 
 export async function createElectionAction(formData: FormData) {
   try {
@@ -108,6 +113,13 @@ export async function createElectionAction(formData: FormData) {
   }
 }
 
+/**
+ * Updates an existing election with the provided details.
+ *
+ * @param id - The election ID
+ * @param formData - Form data containing election fields to update
+ * @returns An object with `success: true` on successful update, or `success: false` with an error message on failure
+ */
 export async function updateElectionAction(id: string, formData: FormData) {
   try {
     await getAuth();
@@ -158,6 +170,13 @@ export async function updateElectionAction(id: string, formData: FormData) {
   }
 }
 
+/**
+ * Sets the publish status of an election.
+ *
+ * @param id - The ID of the election to update
+ * @param is_published - The new publish status
+ * @returns An object with `success: true` on success, or `success: false` with an error message if the election was not found or the update failed
+ */
 export async function toggleElectionPublishAction(id: string, is_published: boolean) {
   try {
     await getAuth();
@@ -174,6 +193,12 @@ export async function toggleElectionPublishAction(id: string, is_published: bool
   }
 }
 
+/**
+ * Deletes an election record.
+ *
+ * @param id - The ID of the election to delete
+ * @returns `{ success: true }` on successful deletion, or `{ success: false, error }` if the election is not found or deletion fails
+ */
 export async function deleteElectionAction(id: string) {
   try {
     await getAuth();
@@ -190,7 +215,13 @@ export async function deleteElectionAction(id: string) {
   }
 }
 
-// --- Groups ---
+/**
+ * Creates a new election group.
+ *
+ * @param electionId - The election to add the group to
+ * @param formData - Form data containing the group title and sort order
+ * @returns An object with `success: true` on success, or `success: false` with an `error` message on failure
+ */
 
 export async function createGroupAction(electionId: string, formData: FormData) {
   try {
@@ -213,6 +244,14 @@ export async function createGroupAction(electionId: string, formData: FormData) 
   }
 }
 
+/**
+ * Updates the title and sort order of an election group.
+ *
+ * @param id - The ID of the group to update
+ * @param electionId - The ID of the parent election
+ * @param formData - Form data containing `title` and `sort_order`
+ * @returns `{ success: true }` if the group was updated, or `{ success: false, error }` with an error message if it failed
+ */
 export async function updateGroupAction(id: string, electionId: string, formData: FormData) {
   try {
     await getAuth();
@@ -235,6 +274,13 @@ export async function updateGroupAction(id: string, electionId: string, formData
   }
 }
 
+/**
+ * Deletes an election group.
+ *
+ * @param id - The ID of the group to delete
+ * @param electionId - The ID of the parent election for cache revalidation
+ * @returns An object with `success: true` on successful deletion, or `{ success: false, error: string }` if the operation fails or the group is not found
+ */
 export async function deleteGroupAction(id: string, electionId: string) {
   try {
     await getAuth();
@@ -251,7 +297,11 @@ export async function deleteGroupAction(id: string, electionId: string) {
   }
 }
 
-// --- Candidates ---
+/**
+ * Creates a new candidate record for an election group.
+ *
+ * @returns An object with `success: true` on successful creation, or `success: false` with an `error` message on failure.
+ */
 
 export async function createCandidateAction(groupId: string, electionId: string, formData: FormData) {
   try {
@@ -279,6 +329,11 @@ export async function createCandidateAction(groupId: string, electionId: string,
   }
 }
 
+/**
+ * Updates a candidate record.
+ *
+ * @returns `{ success: true }` on successful update; `{ success: false, error }` on failure
+ */
 export async function updateCandidateAction(id: string, electionId: string, formData: FormData) {
   try {
     await getAuth();
@@ -306,6 +361,11 @@ export async function updateCandidateAction(id: string, electionId: string, form
   }
 }
 
+/**
+ * Deletes a candidate from an election.
+ *
+ * @returns An object with `success: true` on successful deletion, or `success: false` with an error message if the operation fails.
+ */
 export async function deleteCandidateAction(id: string, electionId: string) {
   try {
     await getAuth();
@@ -322,7 +382,13 @@ export async function deleteCandidateAction(id: string, electionId: string) {
   }
 }
 
-// --- Updates ---
+/**
+ * Creates a new election update with the provided title and content.
+ *
+ * @param electionId - The ID of the election to associate the update with
+ * @param formData - Form data containing `title` and `content` fields for the update
+ * @returns An object with `success: true` on successful creation, or `success: false` with an error message on failure
+ */
 
 export async function createUpdateAction(electionId: string, formData: FormData) {
   try {
@@ -345,6 +411,11 @@ export async function createUpdateAction(electionId: string, formData: FormData)
   }
 }
 
+/**
+ * Deletes an election update.
+ *
+ * @returns An object with `success: true` if the update is deleted successfully, or `success: false` with an error message if the deletion fails.
+ */
 export async function deleteUpdateAction(id: string, electionId: string) {
   try {
     await getAuth();

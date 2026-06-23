@@ -1,6 +1,12 @@
 import { redirect } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { getSessionUser } from "@/utils/session";
+/**
+ * Renders the authenticated dashboard layout.
+ *
+ * Redirects to login if the user does not have a valid session.
+ */
+```
 export default async function DashboardLayout({
   children,
 }: {

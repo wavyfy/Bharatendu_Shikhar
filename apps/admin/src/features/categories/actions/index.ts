@@ -33,6 +33,11 @@ async function getAdminAuth() {
   return { supabase, user };
 }
 
+/**
+ * Creates a new category.
+ *
+ * @returns `{ success: true, categoryId: number }` if creation succeeds, or `{ success: false, error: string }` if validation or insertion fails.
+ */
 export async function createCategoryAction(input: CreateCategoryInput) {
   try {
     const { supabase } = await getAdminAuth();
@@ -65,6 +70,13 @@ export async function createCategoryAction(input: CreateCategoryInput) {
   }
 }
 
+/**
+ * Updates an existing category.
+ *
+ * @param id - The ID of the category to update
+ * @param input - The new category data
+ * @returns `{ success: true }` on success, or `{ success: false, error: <message> }` on failure
+ */
 export async function updateCategoryAction(id: number, input: UpdateCategoryInput) {
   try {
     const { supabase } = await getAdminAuth();

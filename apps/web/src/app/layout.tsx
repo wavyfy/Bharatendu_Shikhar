@@ -21,6 +21,15 @@ import { fetchSettings } from "@/utils/fetchData";
 
 import { getSiteUrl } from "@/utils/seo";
 
+/**
+ * Generates metadata for the Next.js application.
+ *
+ * Fetches site settings and assembles a metadata object for SEO and social sharing,
+ * using fallback values for site name, title, and description. Relative favicon URLs
+ * are resolved as Supabase storage paths.
+ *
+ * @returns The configured Next.js Metadata object.
+ */
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url);
@@ -84,6 +93,14 @@ import { FloatingNav } from "@/components/shared/FloatingNav";
 import { MaintenanceScreen } from "@/components/shared/MaintenanceScreen";
 import { CommonListener } from "@/components/shared/CommonListener";
 
+/**
+ * Renders the root layout of the application.
+ *
+ * Displays a maintenance screen if maintenance mode is enabled. Otherwise renders
+ * the complete page structure with theme and search functionality.
+ *
+ * @returns The root HTML element or a maintenance screen component.
+ */
 export default async function RootLayout({
   children,
 }: Readonly<{

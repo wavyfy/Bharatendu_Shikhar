@@ -28,6 +28,9 @@ interface ArticleFormProps {
   badges: BadgeRow[];
 }
 
+/**
+ * Renders an article creation and editing form with support for categorization, image uploads, and live article configuration.
+ */
 export function ArticleFormPlaceholder({ initialData, categories, regions, badges }: ArticleFormProps) {
   const router = useRouter();
   const toast = useToast();

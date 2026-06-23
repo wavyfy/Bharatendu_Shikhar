@@ -3,6 +3,15 @@
 import { useRouter } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 
+/**
+ * A dropdown component for selecting regions to filter elections.
+ * 
+ * Selecting a region navigates to the elections page filtered by that region. "All Regions" shows all elections.
+ * 
+ * @param regions - Array of region objects to display
+ * @param defaultRegionId - The region ID to pre-select
+ * @returns The rendered region select component
+ */
 export function RegionSelect({ 
   regions, 
   defaultRegionId 

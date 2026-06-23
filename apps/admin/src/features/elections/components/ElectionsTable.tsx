@@ -14,6 +14,11 @@ interface ElectionsTableProps {
   elections: any[];
 }
 
+/**
+ * Renders a table of elections with options to edit, publish, and delete.
+ *
+ * @param elections - List of election objects to display in the table.
+ */
 export function ElectionsTable({ elections }: ElectionsTableProps) {
   const router = useRouter();
   const toast = useToast();

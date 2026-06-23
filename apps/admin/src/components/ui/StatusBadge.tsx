@@ -7,6 +7,11 @@ interface StatusBadgeProps {
   className?: string;
 }
 
+/**
+ * Renders a styled status badge displaying the current status.
+ *
+ * @returns A span element with variant-specific styling and label.
+ */
 export function StatusBadge({ variant, className }: StatusBadgeProps) {
   const styles = {
     published: "bg-[#0284c7] text-white",

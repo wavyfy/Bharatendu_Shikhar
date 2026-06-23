@@ -17,6 +17,11 @@ interface PreviewArticlePageProps {
 
 import { getLiveUpdatesByArticleId } from "@/features/articles/queries/liveUpdates";
 
+/**
+ * Renders an article preview page.
+ *
+ * Requires user authentication. Admins can preview any article; publishers can only preview their own articles. If the article is marked as live, displays a timeline of live updates sorted by most recent first.
+ */
 export default async function PreviewArticlePage({ params }: PreviewArticlePageProps) {
   const resolvedParams = await params;
   const articleId = parseInt(resolvedParams.id, 10);

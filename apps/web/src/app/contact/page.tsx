@@ -4,6 +4,14 @@ import type { Metadata } from "next";
 import { getSiteUrl } from "@/utils/seo";
 import { LegalDialog } from "@/components/shared/LegalDialog";
 
+/**
+ * Generates metadata for the Contact page.
+ *
+ * Fetches site settings and returns SEO and OpenGraph metadata if contact information
+ * is configured. Returns an empty metadata object if no contact information is available.
+ *
+ * @returns Metadata object with SEO and OpenGraph fields for the Contact page, or an empty object if no contact information is configured.
+ */
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
   const hasContactInfo = settings?.contact_email || settings?.contact_phone || settings?.contact_address;
@@ -32,6 +40,13 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+/**
+ * Renders the Contact Us page with available contact information sections.
+ *
+ * Triggers a 404 response if no contact information (email, phone, or address) is configured.
+ *
+ * @returns The Contact Us page component.
+ */
 export default async function ContactPage() {
   const settings = await fetchSettings();
   const hasContactInfo = settings?.contact_email || settings?.contact_phone || settings?.contact_address;

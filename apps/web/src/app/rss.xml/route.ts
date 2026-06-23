@@ -3,7 +3,13 @@ import { fetchSettings } from "@/utils/fetchData";
 import { getSiteUrl } from "@/utils/seo";
 import { NextResponse } from "next/server";
 
-/** Infer MIME type from image URL extension. Returns null if unknown. */
+/**
+ * Determines the MIME type of an image based on its URL extension.
+ *
+ * Attempts to parse the URL to extract the file extension; if parsing fails, falls back to simple string matching.
+ *
+ * @returns The MIME type if a recognized extension (jpg, jpeg, png, webp, gif, avif) is found, `null` otherwise.
+ */
 function getImageMimeType(url: string): string | null {
   try {
     const pathname = new URL(url).pathname.toLowerCase();
@@ -22,7 +28,12 @@ function getImageMimeType(url: string): string | null {
   return null;
 }
 
-/** Escape XML special characters. */
+/**
+ * Replaces XML special characters with their escaped equivalents.
+ *
+ * @param str - The input string to escape
+ * @returns The string with XML special characters escaped
+ */
 function escapeXml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -32,7 +43,12 @@ function escapeXml(str: string): string {
     .replace(/'/g, "&apos;");
 }
 
-/** Format a date string as RFC-822 (required by RSS 2.0). */
+/**
+ * Converts a date to RFC-822 format.
+ *
+ * @param dateStr - The date string to format; if omitted or null, uses the current date
+ * @returns The date formatted as an RFC-822 string
+ */
 function toRfc822(dateStr: string | null | undefined): string {
   const d = dateStr ? new Date(dateStr) : new Date();
   return d.toUTCString();
@@ -41,6 +57,11 @@ function toRfc822(dateStr: string | null | undefined): string {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+/**
+ * Generates an RSS 2.0 feed of the latest published articles.
+ *
+ * @returns An HTTP response containing the RSS 2.0 feed with site metadata and article entries.
+ */
 export async function GET() {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();

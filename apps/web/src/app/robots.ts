@@ -2,6 +2,11 @@ import { MetadataRoute } from "next";
 import { fetchSettings } from "@/utils/fetchData";
 import { getSiteUrl } from "@/utils/seo";
 
+/**
+ * Generates the robots.txt metadata for search engine crawlers.
+ *
+ * @returns A robots metadata object defining crawl rules and sitemap locations.
+ */
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url);

@@ -14,6 +14,14 @@ interface TopbarProps {
   darkLogoUrl?: string | null;
 }
 
+/**
+ * Renders a sticky top header with brand identity and user menu.
+ *
+ * The left section contains a brand button that reloads the page, displaying
+ * either custom logo images (with light and dark variants) or default brand text.
+ * The right section shows the user's display name and role alongside a menu with
+ * dark mode toggle, settings, and sign out options.
+ */
 export function Topbar({ displayName, role, logoUrl, darkLogoUrl }: TopbarProps) {
   return (
     <header className="h-16 sticky top-0 bg-surface/80 backdrop-blur-md border-b border-outline-variant flex items-center px-6 justify-between shrink-0 z-30 shadow-sm">

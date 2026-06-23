@@ -3,7 +3,11 @@ import { fetchSettings } from "@/utils/fetchData";
 import { getSiteUrl } from "@/utils/seo";
 import { NextResponse } from "next/server";
 
-/** Escape XML special characters. */
+/**
+ * Escapes XML special characters in a string.
+ *
+ * @returns The input string with XML special characters replaced by their entity references
+ */
 function escapeXml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -16,6 +20,11 @@ function escapeXml(str: string): string {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+/**
+ * Generates a Google News sitemap for articles published in the last 48 hours.
+ *
+ * @returns A `NextResponse` containing the sitemap XML with Google News metadata for each article.
+ */
 export async function GET() {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();

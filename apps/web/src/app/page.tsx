@@ -14,7 +14,12 @@ import {
 import { fetchSettings } from "@/utils/fetchData";
 import { getSiteUrl } from "@/utils/seo";
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 60; /**
+ * Generates and renders JSON-LD structured data for SEO.
+ *
+ * @returns Three `<script>` elements containing Schema.org JSON-LD data for
+ * the website, organization, and latest articles.
+ */
 
 async function JsonLdSchema() {
   const settings = await fetchSettings();
@@ -70,6 +75,11 @@ async function JsonLdSchema() {
   );
 }
 
+/**
+ * Renders a ticker section displaying the latest articles.
+ *
+ * @returns The rendered ticker section component.
+ */
 async function TickerSection() {
   const { topArticles } = await fetchHomepageData();
   return <Ticker articles={topArticles} />;

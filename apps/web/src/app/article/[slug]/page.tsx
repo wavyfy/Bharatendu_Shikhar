@@ -22,6 +22,14 @@ import { ArticleSkeleton, RelatedArticlesSkeleton } from "@/components/skeletons
 
 export const revalidate = 60;
 
+/**
+ * Generate SEO and social media metadata for an article page.
+ *
+ * Builds canonical URL, Open Graph, and Twitter card metadata. If the article
+ * does not exist, returns minimal metadata with a "not found" title.
+ *
+ * @returns Metadata object for SEO and social sharing.
+ */
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },
   parent: ResolvingMetadata
@@ -72,7 +80,11 @@ export async function generateMetadata(
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/**
+ * Generates a JSON-LD schema for a news article.
+ *
+ * @returns A React script element containing the JSON-LD NewsArticle schema.
+ */
 async function JsonLdSchema({ article }: { article: any }) {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();
@@ -106,11 +118,17 @@ async function JsonLdSchema({ article }: { article: any }) {
   );
 }
 
+/**
+ * Renders a ticker section displaying the top articles.
+ */
 async function TickerSection() {
   const topArticles = await fetchTickerArticles();
   return <Ticker articles={topArticles} />;
 }
 
+/**
+ * Renders the complete article page with breadcrumbs, featured image, excerpt, content, and related articles sidebar.
+ */
 async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug: string }> }) {
   const { slug } = await paramsPromise;
   const [article, settings] = await Promise.all([
@@ -209,6 +227,13 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
   );
 }
 
+/**
+ * Displays related articles in two rows organized by category and region.
+ *
+ * Fetches articles related to the current article and groups them: the first row contains articles from the same category, and the second row contains articles from the same region but different category.
+ *
+ * @returns A component with related articles grouped by category and region, or `null` if no related articles exist.
+ */
 async function RelatedSection({ paramsPromise }: { paramsPromise: Promise<{ slug: string }> }) {
   const { slug } = await paramsPromise;
   const article = await fetchArticleBySlug(slug);

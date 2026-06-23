@@ -12,6 +12,9 @@ interface GroupsListProps {
   groups: any[];
 }
 
+/**
+ * Renders a scrollable list of election groups with options to create, edit, delete, and manage candidates within each group.
+ */
 export function GroupsList({ electionId, groups }: GroupsListProps) {
   const [isPending, startTransition] = useTransition();
   const toast = useToast();

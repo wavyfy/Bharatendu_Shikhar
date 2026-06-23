@@ -9,6 +9,11 @@ function getImageUrl(path: string | null): string | null {
   return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${path}`;
 }
 
+/**
+ * Renders a clickable card for a secondary featured article.
+ *
+ * @returns A React node containing the article card and link, or null if no article is provided.
+ */
 export function SecondaryFeatureArticle({ article }: { article?: ArticleWithAuthor }) {
   if (!article) return null;
   return (

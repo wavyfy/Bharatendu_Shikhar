@@ -25,6 +25,12 @@ function formatTimestamp(iso: string) {
   });
 }
 
+/**
+ * Renders an interactive timeline section for managing live updates on an article.
+ *
+ * Displays timestamped updates in newest-first order with options to add, edit,
+ * or delete individual updates.
+ */
 export function LiveUpdatesSection({ articleId, initialUpdates }: LiveUpdatesSectionProps) {
   const router = useRouter();
   const toast = useToast();

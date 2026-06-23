@@ -5,6 +5,11 @@ import Image from "next/image";
 import { Mail, Phone, MapPin, ChevronRight } from "lucide-react";
 
 
+/**
+ * Renders the page footer with branding, navigation, contact information, and social media links.
+ *
+ * Displays a logo (with light and dark mode support), navigation columns for categories and regions, legal links, contact details, social media icons, and call-to-action buttons. Content sections are rendered based on the provided configuration.
+ */
 export function Footer({ 
   logoUrl, 
   logoDarkUrl,

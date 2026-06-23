@@ -16,6 +16,11 @@ function escapeXml(str: string): string {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+/**
+ * Generates an XML image sitemap for published articles and elections.
+ *
+ * @returns A `NextResponse` with the XML sitemap as content.
+ */
 export async function GET() {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();

@@ -11,6 +11,9 @@ export const metadata = {
   description: "Live updates, results, and information about upcoming and past elections.",
 };
 
+/**
+ * Renders a page listing elections grouped by status, optionally filtered by region via the `region` query parameter.
+ */
 export default async function ElectionsListingPage({ searchParams }: { searchParams: Promise<{ region?: string }> }) {
   const params = await searchParams;
   const regionId = params?.region;

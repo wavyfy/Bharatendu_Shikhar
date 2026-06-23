@@ -1,3 +1,9 @@
+/**
+ * Renders a dial chart displaying seat distribution among leading, losing, and yet-to-win categories.
+ *
+ * Displays a semi-circular dial with a red arc representing the proportion of leading seats,
+ * a header showing total seats and majority threshold, and a legend with seat count breakdown.
+ */
 export function DialChart({ 
   totalSeats, 
   majority, 

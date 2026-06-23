@@ -1,15 +1,9 @@
 /**
- * Generates a URL-safe slug from any text.
- * Works correctly for both English and Hindi (Devanagari) / other Unicode scripts.
+ * Generates a URL-safe slug from any input text, with support for Unicode scripts.
  *
- * Strategy:
- *  1. Trim whitespace
- *  2. Replace whitespace runs with hyphens
- *  3. Strip characters that are NOT Unicode letters, digits, or hyphens
- *  4. Collapse consecutive hyphens
- *  5. Strip leading/trailing hyphens
- *  6. Lowercase the result
- *  7. If result is empty (e.g. pure punctuation title), fall back to a timestamp
+ * Falls back to a timestamp-based slug if the result is empty (e.g., input contains only punctuation or whitespace).
+ *
+ * @returns A lowercase slug containing Unicode letters, digits, and single hyphens, or `item-${timestamp}` if the slug is empty
  */
 export function generateSlug(text: string): string {
   const slug = text

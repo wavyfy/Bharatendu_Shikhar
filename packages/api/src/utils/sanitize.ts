@@ -1,5 +1,10 @@
 import DOMPurify from "isomorphic-dompurify";
 
+/**
+ * Sanitizes HTML content by removing potentially harmful elements and attributes.
+ *
+ * @returns The sanitized HTML string, or an empty string if the input is falsy
+ */
 export function sanitize(dirtyHtml: string): string {
   if (!dirtyHtml) return "";
   return DOMPurify.sanitize(dirtyHtml, {

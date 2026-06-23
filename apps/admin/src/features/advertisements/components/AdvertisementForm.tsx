@@ -26,6 +26,11 @@ interface AdvertisementFormProps {
   initialData?: AdvertisementRow;
 }
 
+/**
+ * A form for creating or updating advertisements with image upload, date scheduling, and placement slot configuration.
+ *
+ * @param initialData - Pre-populated form values when editing an existing advertisement
+ */
 export function AdvertisementForm({ initialData }: AdvertisementFormProps) {
   const router = useRouter();
   const toast = useToast();

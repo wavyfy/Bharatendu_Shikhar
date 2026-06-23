@@ -16,6 +16,12 @@ interface AdvertisementsTableProps {
   hideAllAds: boolean;
 }
 
+/**
+ * Renders a paginated table of advertisements with inline edit, activation, and deletion actions.
+ *
+ * @param advertisements - The advertisements to display in the table.
+ * @param hideAllAds - When true, all advertisements display a "globally disabled" status.
+ */
 export function AdvertisementsTable({ advertisements, hideAllAds }: AdvertisementsTableProps) {
   const router = useRouter();
   const searchParams = useSearchParams();

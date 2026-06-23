@@ -2,6 +2,9 @@
 
 import { useEffect } from "react";
 
+/**
+ * Error boundary component that displays a fallback interface and allows users to attempt recovery from errors.
+ */
 export default function ErrorBoundary({
   error,
   reset,

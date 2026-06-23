@@ -16,6 +16,11 @@ interface RegionFormProps {
   initialData?: RegionRow;
 }
 
+/**
+ * Renders a form for creating or updating a region record.
+ *
+ * @param initialData - When provided, the form operates in edit mode with pre-filled values. When omitted, the form is in create mode with default values.
+ */
 export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
   const router = useRouter();
   const toast = useToast();

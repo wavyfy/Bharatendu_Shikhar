@@ -26,6 +26,11 @@ interface Group {
   candidates: Candidate[];
 }
 
+/**
+ * Generates SEO metadata for an election detail page.
+ *
+ * @returns SEO metadata object containing the page title, description, canonical URL, OpenGraph properties for social sharing, and Twitter card configuration.
+ */
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const election = await getElectionBySlug(slug);
@@ -58,6 +63,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+/**
+ * Renders the election detail page for a given election slug.
+ *
+ * @returns The election detail page as a JSX element.
+ */
 export default async function ElectionDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const election = await getElectionBySlug(slug);

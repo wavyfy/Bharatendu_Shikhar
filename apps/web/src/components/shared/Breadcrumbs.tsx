@@ -11,6 +11,11 @@ interface BreadcrumbsProps {
   siteUrl: string;
 }
 
+/**
+ * Renders a breadcrumb navigation UI and injects corresponding JSON-LD structured data.
+ *
+ * @param siteUrl - The base URL used to construct absolute URLs in the JSON-LD schema
+ */
 export function Breadcrumbs({ items, siteUrl }: BreadcrumbsProps) {
   const schemaList = items.map((item, index) => ({
     "@type": "ListItem",

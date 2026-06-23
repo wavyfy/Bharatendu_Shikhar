@@ -2,6 +2,14 @@ import { createSupabaseServerClient } from "@repo/api";
 
 import { cookies } from "next/headers";
 
+/**
+ * Fetches published elections, optionally filtered by region, status, or limit.
+ *
+ * @param options.limit - Maximum number of elections to return.
+ * @param options.regionId - Filter elections by region ID.
+ * @param options.status - Filter elections by election status.
+ * @returns An array of election records with joined region data. Returns an empty array if the query fails.
+ */
 export async function getElections(options: { limit?: number, regionId?: string, status?: string } = {}) {
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
@@ -39,6 +47,12 @@ export async function getElections(options: { limit?: number, regionId?: string,
   return data as Record<string, unknown>[];
 }
 
+/**
+ * Fetches a published election by its slug, including its groups, candidates, and updates.
+ *
+ * @param slug - A URL-encoded election slug
+ * @returns The election with its associated groups and updates, or `null` if the election is not found
+ */
 export async function getElectionBySlug(slug: string) {
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({

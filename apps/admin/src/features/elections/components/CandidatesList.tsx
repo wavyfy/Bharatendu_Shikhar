@@ -13,6 +13,9 @@ interface CandidatesListProps {
   candidates: any[];
 }
 
+/**
+ * Renders a candidates management interface for a specific group and election, supporting creation, inline editing, and deletion with toast notifications.
+ */
 export function CandidatesList({ groupId, electionId, candidates }: CandidatesListProps) {
   const [isPending, startTransition] = useTransition();
   const toast = useToast();

@@ -3,6 +3,13 @@ import { supabase } from "@repo/api";
 import { fetchSettings } from "@/utils/fetchData";
 import { getSiteUrl } from "@/utils/seo";
 
+/**
+ * Generates a Next.js sitemap for the site.
+ *
+ * Compiles sitemap entries for the homepage, static pages (if configured), and dynamic content including published articles, elections, active categories, and regions.
+ *
+ * @returns The sitemap entries array.
+ */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();

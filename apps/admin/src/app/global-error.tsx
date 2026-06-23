@@ -1,5 +1,11 @@
 "use client";
 
+/**
+ * Renders a global error boundary UI with a reload button.
+ *
+ * Displays a static error message and provides a button to reset the error state
+ * by invoking the reset callback.
+ */
 export default function GlobalError({
   error,
   reset,

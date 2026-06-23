@@ -33,6 +33,13 @@ async function getAdminAuth() {
   return { supabase, user };
 }
 
+/**
+ * Creates a new region with the provided information.
+ *
+ * Requires admin access.
+ *
+ * @returns An object with `success: true` and the new `regionId` on success, or `success: false` with an `error` message on failure
+ */
 export async function createRegionAction(input: CreateRegionInput) {
   try {
     const { supabase } = await getAdminAuth();
@@ -65,6 +72,13 @@ export async function createRegionAction(input: CreateRegionInput) {
   }
 }
 
+/**
+ * Updates a region by ID.
+ *
+ * @param id - The region ID to update
+ * @param input - The update data for the region
+ * @returns `{ success: true }` on success, or `{ success: false, error }` on failure.
+ */
 export async function updateRegionAction(id: number, input: UpdateRegionInput) {
   try {
     const { supabase } = await getAdminAuth();

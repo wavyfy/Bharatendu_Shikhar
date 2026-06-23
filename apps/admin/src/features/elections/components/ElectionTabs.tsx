@@ -9,6 +9,9 @@ interface ElectionTabsProps {
   liveUpdatesList: React.ReactNode;
 }
 
+/**
+ * Renders a tabbed interface for election administration with sections for general settings, groups management, and live updates.
+ */
 export function ElectionTabs({ electionForm, groupsList, liveUpdatesList }: ElectionTabsProps) {
   const [activeTab, setActiveTab] = useState<"details" | "groups" | "updates">("details");
 

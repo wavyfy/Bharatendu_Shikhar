@@ -6,6 +6,12 @@ import { cookies } from "next/headers";
 import { randomUUID } from "crypto";
 import { getSettings } from "@/features/settings/queries";
 
+/**
+ * Authenticates the current request and retrieves the authenticated user.
+ *
+ * @returns A Supabase client bound to the current request and the authenticated user.
+ * @throws Throws an error if the request is not authenticated.
+ */
 async function getAuth() {
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
@@ -20,6 +26,17 @@ async function getAuth() {
   return { supabase, user };
 }
 
+/**
+ * Creates a new advertisement with optional slot placements.
+ *
+ * Inserts an advertisement record and creates placement records for each selected
+ * slot. Returns a warning if the advertisement is activated while global ads are
+ * disabled in settings.
+ *
+ * @returns An object with `success: true` containing the created advertisement data,
+ * or `success: false` with an error message. A `warning` field is included if the
+ * advertisement is activated while global ad display is disabled.
+ */
 export async function createAdvertisementAction(formData: FormData) {
   const { user } = await getAuth();
 
@@ -84,6 +101,15 @@ export async function createAdvertisementAction(formData: FormData) {
   return { success: true, data, warning };
 }
 
+/**
+ * Updates an existing advertisement and replaces its placements.
+ *
+ * If the advertisement is activated while advertisements are globally disabled in settings, the response includes
+ * a warning message.
+ *
+ * @returns A result object with `success: true` containing the updated advertisement data and optional `warning`,
+ * or `success: false` with an error message if the operation fails.
+ */
 export async function updateAdvertisementAction(id: string, formData: FormData) {
   await getAuth();
   
@@ -151,6 +177,12 @@ export async function updateAdvertisementAction(id: string, formData: FormData) 
   return { success: true, data, warning };
 }
 
+/**
+ * Deletes an advertisement by id.
+ *
+ * @param id - The advertisement id
+ * @returns An object with `success: true` if deletion succeeded, or `success: false` with an error message if it failed
+ */
 export async function deleteAdvertisementAction(id: string) {
   await getAuth();
   const { error } = await supabaseAdmin.from("advertisements").delete().eq("id", id);
@@ -161,6 +193,11 @@ export async function deleteAdvertisementAction(id: string) {
   return { success: true };
 }
 
+/**
+ * Updates the active status of an advertisement.
+ *
+ * @returns An object with `success` (true if the update succeeded). If successful and the ad is activated while ads are globally disabled, includes a `warning` message.
+ */
 export async function updateAdvertisementStatusAction(id: string, is_active: boolean) {
   await getAuth();
   const { error } = await supabaseAdmin.from("advertisements").update({ is_active }).eq("id", id);
@@ -180,6 +217,12 @@ export async function updateAdvertisementStatusAction(id: string, is_active: boo
   return { success: true, warning };
 }
 
+/**
+ * Generates a signed upload URL for an advertisement image in Supabase Storage.
+ *
+ * @param fileExt - The file extension (e.g., "jpg", "png")
+ * @returns A response object containing the signed URL, token, and storage path on success, or an error message on failure.
+ */
 export async function getAdvertisementUploadUrlAction(fileExt: string) {
   try {
     const { supabase, user } = await getAuth();

@@ -18,7 +18,11 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Switch } from "@/components/ui/Switch";
 
-// ─── Shared primitives ────────────────────────────────────────────────────────
+/**
+ * Renders a labeled form field with optional hint text.
+ *
+ * @returns The rendered field wrapper component.
+ */
 
 function Field({
   label,
@@ -38,7 +42,12 @@ function Field({
   );
 }
 
-// Removed inputCls since we use Input component now
+/**
+ * Renders a form footer with optional error message and submit button.
+ *
+ * @param isPending - Whether the form is currently submitting
+ * @param error - The error message to display, or null if there is no error
+ */
 
 function SectionFooter({
   isPending,
@@ -63,7 +72,9 @@ function SectionFooter({
   );
 }
 
-// ─── Section: Site Info ───────────────────────────────────────────────────────
+/**
+ * Renders a form for editing site information settings.
+ */
 
 function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
   const [isPending, startTransition] = useTransition();
@@ -147,7 +158,11 @@ function SiteInfoSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Section: SEO ────────────────────────────────────────────────────────────
+/**
+ * Renders a form for configuring default SEO metadata for the site.
+ *
+ * Submits updates via `updateSeoAction` and displays success or error feedback through a toast notification and inline error message.
+ */
 
 function SeoSection({ settings }: { settings: SettingsRow | null }) {
   const [isPending, startTransition] = useTransition();
@@ -213,7 +228,9 @@ function SeoSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Section: Social Media ────────────────────────────────────────────────────
+/**
+ * Renders a form for editing social media profile links.
+ */
 
 function SocialSection({ settings }: { settings: SettingsRow | null }) {
   const [isPending, startTransition] = useTransition();
@@ -272,7 +289,9 @@ function SocialSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Section: Contact ─────────────────────────────────────────────────────────
+/**
+ * Renders a form for editing contact information.
+ */
 
 function ContactSection({ settings }: { settings: SettingsRow | null }) {
   const [isPending, startTransition] = useTransition();
@@ -335,7 +354,9 @@ function ContactSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Section: Maintenance ─────────────────────────────────────────────────────
+/**
+ * Renders a form section for configuring site maintenance mode settings.
+ */
 
 function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
   const [isPending, startTransition] = useTransition();
@@ -407,7 +428,12 @@ function MaintenanceSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Section: Advertisements ──────────────────────────────────────────────────
+/**
+ * Renders a settings section for controlling global advertisement visibility.
+ *
+ * @param settings - The current site settings
+ * @returns The rendered component
+ */
 
 function AdvertisementsSection({ settings }: { settings: SettingsRow | null }) {
   const [isPending, startTransition] = useTransition();
@@ -464,7 +490,11 @@ function AdvertisementsSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Section: Legal & Policies ──────────────────────────────────────────────────
+/**
+ * Renders a form for editing legal and policy text fields.
+ *
+ * @param settings - The current settings object containing initial values for the legal and policy fields.
+ */
 
 function LegalSection({ settings }: { settings: SettingsRow | null }) {
   const [isPending, startTransition] = useTransition();
@@ -478,6 +508,11 @@ function LegalSection({ settings }: { settings: SettingsRow | null }) {
   const [editorialPolicy, setEditorialPolicy] = useState(settings?.editorial_policy ?? "");
   const [correctionPolicy, setCorrectionPolicy] = useState(settings?.correction_policy ?? "");
 
+  /**
+   * Submits the legal and policy settings form.
+   *
+   * Shows a success toast on successful submission or displays an error message and error toast if the submission fails.
+   */
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
@@ -536,7 +571,13 @@ function LegalSection({ settings }: { settings: SettingsRow | null }) {
   );
 }
 
-// ─── Root Export ──────────────────────────────────────────────────────────────
+/**
+ * Renders a tabbed settings editor interface with sidebar navigation.
+ *
+ * Allows users to switch between different settings sections (Site Info, SEO, Social Media, Contact, Advertisements, Legal & Policies, and Maintenance) using sidebar buttons. The active section updates its corresponding form fields based on the provided settings data.
+ *
+ * @param settings - The settings data to populate form fields; may be null if not yet loaded
+ */
 
 export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
   const [activeTab, setActiveTab] = useState("site");

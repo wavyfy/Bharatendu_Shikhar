@@ -20,6 +20,15 @@ interface LegalDialogProps {
   children: React.ReactNode;
 }
 
+/**
+ * Renders an animated modal dialog for displaying legal or informational content.
+ *
+ * Navigates back in history when the dialog is closed.
+ *
+ * @param title - The heading text displayed in the dialog header
+ * @param field - The key determining which icon to display in the header
+ * @param children - The content rendered inside the scrollable dialog body
+ */
 export function LegalDialog({ title, field, children }: LegalDialogProps) {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();

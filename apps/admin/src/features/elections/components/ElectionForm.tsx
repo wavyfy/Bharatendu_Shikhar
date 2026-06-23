@@ -18,6 +18,13 @@ interface ElectionFormProps {
   regions: RegionRow[];
 }
 
+/**
+ * Form for creating or editing an election.
+ *
+ * Renders fields for election details, configuration, and publication status.
+ * Submits to create a new election or update an existing one, then navigates
+ * to the appropriate page and displays success or error notifications.
+ */
 export function ElectionForm({ initialData, regions }: ElectionFormProps) {
   const router = useRouter();
   const toast = useToast();

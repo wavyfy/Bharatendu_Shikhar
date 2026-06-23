@@ -12,7 +12,15 @@ import type { Metadata } from "next";
 import { getSiteUrl } from "@/utils/seo";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
-/** CollectionPage + ItemList structured data for category/region listing pages. */
+/**
+ * Generates Schema.org JSON-LD structured data scripts for category or region listing pages.
+ *
+ * Creates a CollectionPage schema and an ItemList schema, with the latter containing up to 20 articles.
+ * Both are rendered as `<script>` tags with `application/ld+json` MIME type.
+ *
+ * @param pageType - Either "category" or "region", used to construct the page URL
+ * @returns Two structured data script elements
+ */
 async function CollectionPageAndItemListSchema({
   pageTitle,
   displayDescription,
@@ -65,7 +73,11 @@ async function CollectionPageAndItemListSchema({
   );
 }
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 60; /**
+ * Generates metadata for a dynamic category or region page.
+ *
+ * @returns A metadata object containing the page title, description, canonical URL, OpenGraph, and Twitter card data. If the page is not found, returns metadata with only a title.
+ */
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
@@ -114,6 +126,11 @@ async function TickerSection() {
   return <Ticker articles={topArticles} />;
 }
 
+/**
+ * Renders a category or region page with breadcrumbs, featured articles, and topic sections.
+ * 
+ * Displays a 404 if the requested page does not exist.
+ */
 async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slug: string }> }) {
   const { slug } = await paramsPromise;
   const pageData = await fetchDynamicPageData(slug);

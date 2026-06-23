@@ -6,6 +6,11 @@ import { RelativeTime } from "@/components/shared/RelativeTime";
 
 type LiveUpdate = Database["public"]["Tables"]["article_live_updates"]["Row"];
 
+/**
+ * Displays a timeline of live article updates, with the most recent first.
+ *
+ * @returns A timeline UI element, or `null` if no updates are provided.
+ */
 export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
 
   if (!updates || updates.length === 0) return null;

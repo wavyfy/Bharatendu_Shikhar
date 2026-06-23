@@ -27,6 +27,17 @@ export interface DashboardStats {
   isAdmin: boolean;
 }
 
+/**
+ * Fetches and assembles dashboard statistics for the authenticated user.
+ *
+ * Retrieves counts of articles (total, published, draft) and epapers, along with recent items.
+ * Administrators also receive system-wide counts for categories, regions, and publishers.
+ * For non-administrators, all data is scoped to the user's own content.
+ *
+ * @returns Dashboard statistics including article and epaper counts, recent articles and epapers,
+ * and an `isAdmin` flag.
+ * @throws When the user is not authenticated.
+ */
 export async function getDashboardStats(): Promise<DashboardStats> {
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({

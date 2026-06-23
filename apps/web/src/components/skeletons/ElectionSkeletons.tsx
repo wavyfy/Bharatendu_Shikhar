@@ -1,5 +1,8 @@
 import { Skeleton } from "@/components/ui/Skeleton";
 
+/**
+ * Renders a loading placeholder for an election card.
+ */
 export function ElectionCardSkeleton() {
   return (
     <div className="flex flex-col border border-gray-200 dark:border-gray-800 rounded-sm overflow-hidden bg-card">
@@ -24,6 +27,9 @@ export function ElectionCardSkeleton() {
   );
 }
 
+/**
+ * Renders a loading skeleton for an elections listing page.
+ */
 export function ElectionsListingSkeleton() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -51,6 +57,9 @@ export function ElectionsListingSkeleton() {
   );
 }
 
+/**
+ * Renders a skeleton layout for an election detail page.
+ */
 export function ElectionDetailSkeleton() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl font-sans">

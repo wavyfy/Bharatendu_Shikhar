@@ -23,6 +23,16 @@ interface ActionMenuProps {
   headerSlot?: React.ReactNode;
 }
 
+/**
+ * Renders a dropdown action menu that automatically positions itself based on available viewport space.
+ *
+ * The menu closes when the user clicks outside of it or selects a menu item. Items render as navigation
+ * links or action buttons depending on the presence of an `href`, and support disabled and danger variants.
+ *
+ * @param items - Array of menu items to display
+ * @param customTrigger - Optional custom trigger element; defaults to a "more" icon button
+ * @param headerSlot - Optional header content rendered above a divider at the top of the menu
+ */
 export function ActionMenu({ items, customTrigger, headerSlot }: ActionMenuProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);

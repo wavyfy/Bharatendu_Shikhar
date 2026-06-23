@@ -3,6 +3,11 @@
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
+/**
+ * Wraps children with animations based on the current route.
+ *
+ * Modal routes (`/about`, `/contact`, `/privacy`, `/terms`, `/editorial-policy`, `/correction-policy`) receive CSS fade-in animation, while other routes receive framer-motion animation with fade-in and upward slide effects.
+ */
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   

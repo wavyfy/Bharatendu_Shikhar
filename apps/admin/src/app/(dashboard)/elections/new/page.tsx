@@ -8,6 +8,11 @@ export const metadata = { title: "Create Election | Bharatendu Shikhar Admin" };
 import { ElectionTabs } from "@/features/elections/components/ElectionTabs";
 import { EmptyState } from "@/components/ui/EmptyState";
 
+/**
+ * Prepares the election creation interface with fetched regions and placeholder content.
+ *
+ * @returns An ElectionTabs component containing the election form with regions, and placeholder content for groups and live updates.
+ */
 async function CreateElectionContent() {
   const { regions } = await getRegions({ limit: 100 });
 
@@ -38,6 +43,11 @@ async function CreateElectionContent() {
   );
 }
 
+/**
+ * Displays the election creation page with form and placeholder sections.
+ *
+ * @returns The election creation page component.
+ */
 export default function CreateElectionPage() {
   return (
     <AnimatedPage className="space-y-6">

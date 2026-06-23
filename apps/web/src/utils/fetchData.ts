@@ -138,6 +138,17 @@ async function _fetchSettings() {
   return data;
 }
 
+/**
+ * Fetches and assembles page data for a region or category matched by slug.
+ *
+ * Matches the slug against regions and categories. If a region is found, fetches 
+ * top articles for that region and groups articles by category; if a category is 
+ * found, fetches top articles for that category and groups articles by region.
+ *
+ * @param slug - The URL slug to match against regions and categories (will be decoded and lowercased)
+ * @returns An object containing topArticles, categorySections, pageTitle, seoDescription, 
+ * type, id, and slug of the matched region or category; `null` if no match is found.
+ */
 async function _fetchDynamicPageData(slug: string) {
   const { startOfDayISO, endOfDayISO } = getTodayDateRange();
 
@@ -257,6 +268,11 @@ async function _fetchDynamicPageData(slug: string) {
   };
 }
 
+/**
+ * Fetches the latest published article for each active region and category, organizing them into slider items.
+ *
+ * @returns An object containing `regionSliderItems` (region slider items paired with their latest article) and `categorySliderItems` (category slider items paired with their latest article).
+ */
 async function _fetchBottomSlidersData() {
 
   const [regionsResponse, categoriesResponse] = await Promise.all([
@@ -325,6 +341,11 @@ async function _fetchBottomSlidersData() {
   };
 }
 
+/**
+ * Fetches a published article by its slug, including related categories, regions, live updates, and badges.
+ *
+ * @returns The article data with related information, or `null` if no published article matches the slug.
+ */
 async function _fetchArticleBySlug(slug: string) {
   // Decode in case the slug arrived URL-encoded (e.g. Hindi characters)
   const decodedSlug = decodeURIComponent(slug);
@@ -349,6 +370,11 @@ async function _fetchArticleBySlug(slug: string) {
   return data;
 }
 
+/**
+ * Fetches related articles filtered by category and region with priority-based ordering.
+ *
+ * @returns An array of up to 8 deduplicated related articles, ordered by publication date descending.
+ */
 async function _fetchRelatedArticles(categoryId?: number | null, regionId?: number | null, excludeArticleId?: number) {
   const baseSelect = `*, article_badges(badge:badges(id, name, slug, color))`;
   const excludeId = excludeArticleId || -1;

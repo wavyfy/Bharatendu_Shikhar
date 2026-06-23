@@ -4,6 +4,9 @@ interface PageHeaderProps {
   action?: React.ReactNode;
 }
 
+/**
+ * Renders a page header containing a title, optional description, and optional action content.
+ */
 export function PageHeader({ title, description, action }: PageHeaderProps) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">

@@ -7,6 +7,9 @@ export const metadata = {
   title: "Sign In | Bharatendu Shikhar Admin",
 };
 
+/**
+ * Renders the login page with site branding, or redirects authenticated users to the home page.
+ */
 export default async function LoginPage() {
   const [cookieStore, settings] = await Promise.all([
     cookies(),

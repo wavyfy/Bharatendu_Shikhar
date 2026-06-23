@@ -88,7 +88,13 @@ function ToastItem({
   );
 }
 
-// ─── Provider ────────────────────────────────────────────────────────────────
+/**
+ * Manages toast notifications and provides an API to display temporary alerts.
+ *
+ * Toasts are automatically dismissed after 4 seconds. At most 3 toasts are
+ * displayed simultaneously; newer toasts replace the oldest. Child components
+ * access the toast API via the `useToast()` hook.
+ */
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);

@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * Renders a global error fallback UI for critical system errors.
+ *
+ * Displays a page with a "Critical System Error" message and a button that triggers recovery by calling the `reset` callback.
+ */
 export default function GlobalError({
   error,
   reset,

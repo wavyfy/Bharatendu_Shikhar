@@ -36,7 +36,9 @@ async function getAuth() {
 }
 
 /**
- * Resolve the "live" badge ID by slug. Returns null if not found.
+ * Resolves the ID of the "live" badge.
+ *
+ * @returns The badge ID, or `null` if not found or an error occurs.
  */
 async function resolveLiveBadgeId(): Promise<number | null> {
   const { supabaseAdmin } = await import("@repo/api");
@@ -64,6 +66,17 @@ async function ensureLiveBadge(badgeIds: number[], isLive: boolean): Promise<num
   return [...badgeIds, liveBadgeId];
 }
 
+/**
+ * Creates a new article with optional badge assignment.
+ *
+ * Validates the input against the article schema. If `is_live` is enabled, the "live" badge
+ * is automatically added to the article. For duplicate title errors, a user-friendly message
+ * is returned instead of the raw database error.
+ *
+ * @param input - The article data to create
+ * @param badgeIds - Badge IDs to assign to the article
+ * @returns An object with `success: true` and `articleId` on success, or `success: false` and `error` message on failure
+ */
 export async function createArticleAction(input: CreateArticleInput, badgeIds: number[] = []) {
   try {
     const { supabase, user } = await getAuth();
@@ -121,6 +134,11 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
   }
 }
 
+/**
+ * Updates an article with new data and optionally synchronizes associated badges.
+ *
+ * @returns `{ success: true }` if the article was updated successfully, or `{ success: false, error }` with a descriptive error message.
+ */
 export async function updateArticleAction(id: number, input: UpdateArticleInput, badgeIds?: number[]) {
   try {
     const { supabase, user, role } = await getAuth();

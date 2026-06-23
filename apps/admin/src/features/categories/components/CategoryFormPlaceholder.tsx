@@ -16,6 +16,11 @@ interface CategoryFormProps {
   initialData?: CategoryRow;
 }
 
+/**
+ * Renders a form for creating or editing a category.
+ *
+ * @param initialData - When provided, the form operates in edit mode with pre-filled values; otherwise, it operates in create mode.
+ */
 export function CategoryFormPlaceholder({ initialData }: CategoryFormProps) {
   const router = useRouter();
   const toast = useToast();

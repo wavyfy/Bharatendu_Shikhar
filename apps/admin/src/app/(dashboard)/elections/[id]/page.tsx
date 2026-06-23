@@ -14,6 +14,12 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+/**
+ * Loads election details and related data for display in the management interface.
+ *
+ * @param id - The election identifier
+ * @returns A tabbed UI component with the election form, groups list, and live updates
+ */
 async function ElectionDetailContent({ id }: { id: string }) {
   let election;
   let regions;

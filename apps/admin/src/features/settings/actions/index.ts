@@ -158,6 +158,12 @@ export async function updateMaintenanceAction(input: MaintenanceInput) {
   }
 }
 
+/**
+ * Validates and persists advertisement settings for an authenticated admin.
+ *
+ * @param input - The advertisement settings data to validate and save.
+ * @returns An object with `success: true` if settings were saved, or `success: false` with an error message if validation or persistence failed.
+ */
 export async function updateAdvertisementsAction(input: import("../schemas").AdvertisementsInput) {
   try {
     await verifyAdmin();
@@ -173,6 +179,11 @@ export async function updateAdvertisementsAction(input: import("../schemas").Adv
   }
 }
 
+/**
+ * Validates and persists legal settings for an authenticated admin.
+ *
+ * @returns `{ success: true }` if saved successfully; `{ success: false, error: <message> }` otherwise.
+ */
 export async function updateLegalAction(input: LegalInput) {
   try {
     await verifyAdmin();

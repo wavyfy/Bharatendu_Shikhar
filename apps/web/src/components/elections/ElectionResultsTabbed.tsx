@@ -23,6 +23,12 @@ interface ElectionResultsTabbedProps {
   groups: Group[];
 }
 
+/**
+ * Displays election results in a tabbed interface organized by candidate groups.
+ *
+ * Each group tab displays the candidates within that group, including their vote counts and
+ * vote percentages. The leading candidate is highlighted in red.
+ */
 export function ElectionResultsTabbed({ groups }: ElectionResultsTabbedProps) {
   const [activeTab, setActiveTab] = useState(groups.length > 0 ? groups[0].id : null);
 

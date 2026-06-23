@@ -1,3 +1,9 @@
+/**
+ * Constructs a normalized site URL from multiple fallback sources.
+ *
+ * @param settingsSiteUrl - Optional site URL override. Falls back to `NEXT_PUBLIC_SITE_URL` environment variable, then to a default.
+ * @returns A normalized `URL` instance representing the site's base URL.
+ */
 export function getSiteUrl(settingsSiteUrl?: string | null): URL {
   let url = settingsSiteUrl || process.env.NEXT_PUBLIC_SITE_URL || "https://www.bhartendushikhar.com";
   // Ensure it starts with http/https

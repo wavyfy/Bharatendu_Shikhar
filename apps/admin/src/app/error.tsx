@@ -2,6 +2,9 @@
 
 import { useEffect } from "react";
 
+/**
+ * Renders a fallback UI for application errors with an option to retry.
+ */
 export default function ErrorBoundary({
   error,
   reset,

@@ -12,6 +12,11 @@ import Image from "next/image";
 
 import { DashboardMockup } from "./DashboardMockup";
 
+/**
+ * Renders a responsive login page with email and password authentication.
+ *
+ * @param logoUrl - Optional logo URL to display in the top-left pill. HTTP URLs are displayed directly; other paths are rewritten as Supabase Storage URLs. Defaults to "BS Admin" text if not provided.
+ */
 export function LoginForm({ logoUrl }: { logoUrl?: string | null }) {
   const [state, formAction, isPending] = useActionState(loginAction, { error: undefined });
   const [showPassword, setShowPassword] = useState(false);
