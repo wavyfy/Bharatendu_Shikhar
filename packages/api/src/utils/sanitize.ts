@@ -1,18 +1,23 @@
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 
 export function sanitize(dirtyHtml: string): string {
   if (!dirtyHtml) return "";
-  return DOMPurify.sanitize(dirtyHtml, {
-    ALLOWED_TAGS: [
+  return sanitizeHtml(dirtyHtml, {
+    allowedTags: [
       "b", "i", "em", "strong", "a", "p", "h1", "h2", "h3", "h4", "h5", "h6",
       "ul", "ol", "li", "blockquote", "code", "pre", "span", "div", "br", "hr",
       "table", "thead", "tbody", "tr", "th", "td", "img", "iframe", "video", "source"
     ],
-    ALLOWED_ATTR: [
-      "href", "name", "target", "rel", "src", "alt", "width", "height",
-      "allowfullscreen", "allow", "frameborder", "controls", "poster", "type",
-      "class", "id", "style"
-    ],
-    ADD_ATTR: ["target"], // For Links
-  }) as string;
+    allowedAttributes: {
+      "*": ["class", "id", "style"],
+      "a": ["href", "name", "target", "rel"],
+      "img": ["src", "alt", "width", "height"],
+      "iframe": ["src", "allowfullscreen", "allow", "frameborder", "width", "height"],
+      "video": ["src", "controls", "poster", "width", "height"],
+      "source": ["src", "type"]
+    },
+    transformTags: {
+      'a': sanitizeHtml.simpleTransform('a', { target: '_blank' })
+    }
+  });
 }
