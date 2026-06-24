@@ -66,7 +66,7 @@ export function DoubleRowRelatedSlider({
             />
           )}
         </div>
-        <h4 className="font-playfair text-[15px] leading-snug line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors pointer-events-none">
+        <h4 className="text-[15px] leading-snug line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors pointer-events-none">
           {item.article.title}
         </h4>
       </Link>
@@ -78,7 +78,7 @@ export function DoubleRowRelatedSlider({
       
       {/* Header & Controls */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="font-playfair font-bold text-xl uppercase tracking-wide">
+        <h2 className="font-medium text-xl uppercase tracking-wide">
           Related Articles
         </h2>
         <div className="flex gap-4">
@@ -103,10 +103,10 @@ export function DoubleRowRelatedSlider({
           {topItems.length > 0 && (
             <div className="flex gap-8 items-start">
               <div className="w-[120px] shrink-0 border-l-4 border-red-600 pl-3">
-                <h3 className="font-bold text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <h3 className="font-medium text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Topic
                 </h3>
-                <h4 className="font-playfair font-bold text-sm mt-1 leading-tight text-gray-900 dark:text-gray-100">
+                <h4 className="font-medium text-sm mt-1 leading-relaxed text-gray-900 dark:text-gray-100">
                   {topTitle}
                 </h4>
               </div>
@@ -117,10 +117,10 @@ export function DoubleRowRelatedSlider({
           {bottomItems.length > 0 && (
             <div className="flex gap-8 items-start">
               <div className="w-[120px] shrink-0 border-l-4 border-red-600 pl-3">
-                <h3 className="font-bold text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <h3 className="font-medium text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Region
                 </h3>
-                <h4 className="font-playfair font-bold text-sm mt-1 leading-tight text-gray-900 dark:text-gray-100">
+                <h4 className="font-medium text-sm mt-1 leading-relaxed text-gray-900 dark:text-gray-100">
                   {bottomTitle}
                 </h4>
               </div>

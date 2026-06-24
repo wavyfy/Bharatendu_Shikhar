@@ -74,13 +74,13 @@ export function MaintenanceScreen({
                     )}
                   </>
                 ) : (
-                  <h2 className="text-4xl font-bold tracking-tight text-black dark:text-white font-serif">BHARATENDU SHIKHAR</h2>
+                  <h2 className="text-4xl font-medium tracking-tight text-black dark:text-white font-serif">BHARATENDU SHIKHAR</h2>
                 )}
               </div>
             </div>
 
             {/* Content Section */}
-            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-black dark:text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-black dark:text-white mb-6">
               Website Under Maintenance
             </h1>
             

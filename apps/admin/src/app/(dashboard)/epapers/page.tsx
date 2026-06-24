@@ -3,21 +3,22 @@ import { getSessionUser } from "@/utils/session";
 import Link from "next/link";
 import { getEpapers } from "@/features/epapers/queries";
 import { EpapersTable } from "@/features/epapers/components/EpapersTable";
-import { SearchInput } from "@/components/ui/SearchInput";
 import { Pagination } from "@/components/ui/Pagination";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
 import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
+import { EpaperFilters } from "@/features/epapers/components/EpaperFilters";
 
 export const metadata = { title: "E-Papers | Bharatendu Shikhar Admin" };
 
 interface PageProps {
-  searchParams: Promise<{ page?: string; search?: string }>;
+  searchParams: Promise<{ page?: string; search?: string; status?: string }>;
 }
 
 async function EpapersContent({ searchParamsPromise }: { searchParamsPromise: PageProps["searchParams"] }) {
   const params = await searchParamsPromise;
   const page = params?.page ? parseInt(params.page, 10) : 1;
   const search = params?.search || "";
+  const status = params?.status || "";
 
   const session = await getSessionUser();
   const user = session?.user;
@@ -25,17 +26,16 @@ async function EpapersContent({ searchParamsPromise }: { searchParamsPromise: Pa
 
   const userId = role === "admin" ? undefined : user?.id;
 
-  const { epapers, count, totalPages } = await getEpapers({ page, limit: 10, role, userId, search });
+  const { epapers, count, totalPages } = await getEpapers({ page, limit: 10, role, userId, search, status });
 
   return (
     <div className="cms-card animate-in fade-in duration-300">
-      <div className="cms-card-header flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="w-full sm:w-auto text-left">
-          <span className="cms-card-label">All E-Papers ({count})</span>
-        </div>
-        <div className="w-full sm:max-w-md">
-          <SearchInput placeholder="Search e-papers..." />
-        </div>
+      <div className="cms-card-header p-0">
+        <EpaperFilters currentStatus={status} />
+      </div>
+
+      <div className="px-5 py-3 border-t border-outline-variant">
+        <span className="cms-card-label">All E-Papers ({count})</span>
       </div>
 
       <div className="overflow-x-auto custom-scrollbar">

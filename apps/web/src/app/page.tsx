@@ -102,8 +102,8 @@ async function BottomSlidersSection() {
   const { regionSliderItems, categorySliderItems } = await fetchBottomSlidersData();
   return (
     <div className="max-w-[1400px] mx-auto px-0 mb-0 mt-4 flex flex-col gap-0 shadow-sm" style={{ zoom: 1 }}>
-      <HorizontalArticleSlider title="UTTARAKHAND REGIONS" items={regionSliderItems} />
-      <HorizontalArticleSlider title="GLOBAL NEWS" items={categorySliderItems} />
+      <HorizontalArticleSlider title="उत्तराखंड क्षेत्र" items={regionSliderItems} />
+      <HorizontalArticleSlider title="विश्व समाचार" items={categorySliderItems} />
     </div>
   );
 }

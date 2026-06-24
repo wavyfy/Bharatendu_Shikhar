@@ -7,8 +7,8 @@ import { fetchNavbarData } from "@/utils/fetchData";
 import { RegionSelect } from "./RegionSelect";
 
 export const metadata = {
-  title: "Elections | Bharatendu Shikhar",
-  description: "Live updates, results, and information about upcoming and past elections.",
+  title: "चुनाव | भारतेंदु शिखर",
+  description: "आगामी और पिछले चुनावों के लाइव अपडेट, परिणाम और जानकारी।",
 };
 
 export default async function ElectionsListingPage({ searchParams }: { searchParams: Promise<{ region?: string }> }) {
@@ -59,36 +59,36 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
           {election.status === "live" ? (
             <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400">
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 mr-1.5 animate-pulse" />
-              LIVE
+              लाइव
             </span>
           ) : election.status === "upcoming" ? (
             <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-              UPCOMING
+              आगामी
             </span>
           ) : (
             <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-              COMPLETED
+              संपन्न
             </span>
           )}
           {election.region && (
             <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{election.region.name}</span>
           )}
         </div>
-        <h3 className="text-lg font-bold text-foreground leading-tight mb-2 group-hover:text-primary transition-colors">{election.title}</h3>
+        <h3 className="text-xl font-bold text-foreground leading-snug mb-3 group-hover:text-primary transition-colors">{election.title}</h3>
         {election.description && (
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{election.description}</p>
+          <p className="text-sm text-muted-foreground/80 dark:text-gray-400 leading-relaxed line-clamp-3 mb-5">{election.description}</p>
         )}
         <div className="mt-auto pt-4 border-t border-gray-200 dark:border-news-border flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
           {election.voting_date && (
             <div className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
-              <span>Voting: {new Date(election.voting_date).toLocaleDateString()}</span>
+              <span>मतदान: {new Date(election.voting_date).toLocaleDateString()}</span>
             </div>
           )}
           {election.result_date && (
             <div className="flex items-center gap-1.5">
               <BarChart2 className="w-3.5 h-3.5" />
-              <span>Results: {new Date(election.result_date).toLocaleDateString()}</span>
+              <span>परिणाम: {new Date(election.result_date).toLocaleDateString()}</span>
             </div>
           )}
         </div>
@@ -100,8 +100,8 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-black text-foreground mb-2">Elections</h1>
-          <p className="text-muted-foreground">Live updates, results, and coverage.</p>
+          <h1 className="text-3xl font-semibold text-foreground mb-2">चुनाव</h1>
+          <p className="text-muted-foreground">लाइव अपडेट, परिणाम और कवरेज।</p>
         </div>
         
         {/* Region Filter */}
@@ -112,16 +112,16 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
 
       {elections.length === 0 ? (
         <div className="text-center py-20 bg-muted/30 rounded-sm border border-dashed border-gray-200 dark:border-news-border">
-          <p className="text-muted-foreground">No elections found.</p>
+          <p className="text-muted-foreground">कोई चुनाव नहीं मिला।</p>
         </div>
       ) : (
         <div className="space-y-12">
           {/* Live Elections */}
           {liveElections.length > 0 && (
             <section>
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <h2 className="text-2xl font-medium mb-4 flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-                Live Now
+                अभी लाइव
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {liveElections.map(e => <ElectionCard key={e.id} election={e} />)}
@@ -132,7 +132,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
           {/* Upcoming Elections */}
           {upcomingElections.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold mb-4 text-foreground">Upcoming Elections</h2>
+              <h2 className="text-xl font-medium mb-4 text-foreground">आगामी चुनाव</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {upcomingElections.map(e => <ElectionCard key={e.id} election={e} />)}
               </div>
@@ -142,7 +142,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
           {/* Completed Elections */}
           {completedElections.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold mb-4 text-foreground">Past Elections</h2>
+              <h2 className="text-xl font-medium mb-4 text-foreground">पिछले चुनाव</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {completedElections.map(e => <ElectionCard key={e.id} election={e} />)}
               </div>

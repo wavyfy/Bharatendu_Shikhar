@@ -5,24 +5,38 @@ import { RegionsTable } from "@/features/regions/components/RegionsTable";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
 import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
 
+import { RegionFilters } from "@/features/regions/components/RegionFilters";
+import { Pagination } from "@/components/ui/Pagination";
+
 export const metadata = { title: "Regions | Bharatendu Shikhar Admin" };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface PageProps {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; search?: string; status?: string }>;
 }
 
 async function RegionsContent({ searchParamsPromise }: { searchParamsPromise: PageProps["searchParams"] }) {
   const params = await searchParamsPromise;
   const page = params?.page ? parseInt(params.page, 10) : 1;
+  const search = params?.search || "";
+  const status = params?.status || "";
 
   const { regions, count, totalPages } = await getRegions({
     page,
     limit: 10,
+    search,
+    status
   });
 
   return (
     <div className="cms-card animate-in fade-in duration-300">
-      <div className="cms-card-header">
+      <div className="cms-card-header p-0">
+        <RegionFilters currentStatus={status} />
+      </div>
+
+      <div className="px-5 py-3 border-t border-outline-variant">
         <span className="cms-card-label">All Regions ({count})</span>
       </div>
 
@@ -30,32 +44,13 @@ async function RegionsContent({ searchParamsPromise }: { searchParamsPromise: Pa
         <RegionsTable regions={regions} />
       </div>
 
-      {totalPages > 1 && (
-        <div className="px-5 pb-3 bg-surface flex items-center justify-between">
-          <span className="text-sm text-on-surface-variant">Page {page} of {totalPages}</span>
-          <div className="flex gap-1">
-            <Link
-              href={`/regions?page=${Math.max(1, page - 1)}`}
-              className={`px-3 py-1 rounded border border-outline-variant text-sm font-medium transition-colors ${
-                page <= 1 ? "opacity-40 pointer-events-none text-outline" : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-              }`}
-            >
-              Previous
-            </Link>
-            <Link
-              href={`/regions?page=${Math.min(totalPages, page + 1)}`}
-              className={`px-3 py-1 rounded border border-outline-variant text-sm font-medium transition-colors ${
-                page >= totalPages ? "opacity-40 pointer-events-none text-outline" : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-              }`}
-            >
-              Next
-            </Link>
-          </div>
-        </div>
-      )}
+      <div className="px-5 pb-3 bg-surface">
+        <Pagination currentPage={page} totalPages={totalPages} />
+      </div>
     </div>
   );
 }
+
 
 export default function RegionsPage({ searchParams }: PageProps) {
   return (

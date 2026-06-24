@@ -1,18 +1,11 @@
-import { createSupabaseServerClient } from "@repo/api";
-import { cookies } from "next/headers";
+import { supabaseAdmin } from "@repo/api";
+
 
 export async function getElections(options: { search?: string, status?: string, region_id?: string, page?: number, limit?: number } = {}) {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
   const { search, status, region_id, page = 1, limit = 20 } = options;
   const offset = (page - 1) * limit;
 
-  let query = supabase
+  let query = supabaseAdmin
     .from("elections")
     .select(`
       *,
@@ -38,18 +31,12 @@ export async function getElections(options: { search?: string, status?: string, 
     throw new Error("Failed to fetch elections");
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return { elections: data as any[], count: count || 0 };
 }
 
 export async function getElectionById(id: string) {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("elections")
     .select(`
       *,
@@ -59,18 +46,12 @@ export async function getElectionById(id: string) {
     .single();
 
   if (error) throw error;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return data as any;
 }
 
 export async function getElectionGroups(electionId: string) {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("election_groups")
     .select("*")
     .eq("election_id", electionId)
@@ -78,18 +59,12 @@ export async function getElectionGroups(electionId: string) {
     .order("created_at", { ascending: true });
 
   if (error) throw error;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return data as any[];
 }
 
 export async function getElectionCandidates(groupId: string) {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("election_candidates")
     .select("*")
     .eq("group_id", groupId)
@@ -97,23 +72,18 @@ export async function getElectionCandidates(groupId: string) {
     .order("created_at", { ascending: true });
 
   if (error) throw error;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return data as any[];
 }
 
 export async function getElectionUpdates(electionId: string) {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("election_updates")
     .select("*")
     .eq("election_id", electionId)
     .order("created_at", { ascending: false });
 
   if (error) throw error;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return data as any[];
 }

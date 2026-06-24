@@ -8,11 +8,12 @@ export interface GetEpapersOptions {
   role?: string;
   userId?: string;
   search?: string;
+  status?: string;
   regionId?: number;
 }
 
 export async function getEpapers(options: GetEpapersOptions = {}) {
-  const { page = 1, limit = 10, role = "publisher", userId, search, regionId } = options;
+  const { page = 1, limit = 10, role = "publisher", userId, search, regionId, status } = options;
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
     get: (name) => cookieStore.get(name)?.value,
@@ -38,6 +39,14 @@ export async function getEpapers(options: GetEpapersOptions = {}) {
   
   if (regionId) {
     query = query.eq("region_id", regionId);
+  }
+
+  if (status === "active") {
+    // Active means either no expiry date, or expiry date is in the future
+    query = query.or(`expiry_date.is.null,expiry_date.gte.${new Date().toISOString()}`);
+  } else if (status === "expired") {
+    // Expired means expiry date is in the past
+    query = query.lt("expiry_date", new Date().toISOString());
   }
 
   const from = (page - 1) * limit;

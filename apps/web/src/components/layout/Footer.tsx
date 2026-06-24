@@ -71,7 +71,7 @@ export function Footer({
                 )}
               </>
             ) : (
-              <h2 className="text-3xl font-black uppercase tracking-tighter">BHARATENDU <span className="text-red-600">SHIKHAR</span></h2>
+              <h2 className="text-3xl font-semibold uppercase tracking-tighter">BHARATENDU <span className="text-red-600">SHIKHAR</span></h2>
             )}
           </button>
           
@@ -88,7 +88,7 @@ export function Footer({
               <div className="flex flex-col gap-4 md:border-r-2 border-gray-200 dark:border-news-border md:pr-8">
                 <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
 
-                  Categories
+                  श्रेणियाँ
                 </h3>
                 <div className="flex flex-col gap-3">
                   {categories.map((cat) => (
@@ -106,7 +106,7 @@ export function Footer({
               <div className="flex flex-col gap-4 md:border-r-2 border-gray-200 dark:border-news-border md:pr-8">
                 <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
 
-                  Regions
+                  क्षेत्र
                 </h3>
                 <div className="flex flex-col gap-3">
                   {regions.map((reg) => (
@@ -122,37 +122,37 @@ export function Footer({
             {/* Legal & Policies */}
             <div className="hidden md:flex flex-col gap-4 md:pl-2">
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
-                Legal & Policies
+                कानूनी और नीतियां
               </h3>
               <div className="flex flex-col gap-3">
                 {settings?.about_us && (
                   <Link href="/about" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
                     <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
-                    <span className="group-hover:translate-x-1 transition-transform">About Us</span>
+                    <span className="group-hover:translate-x-1 transition-transform">हमारे बारे में</span>
                   </Link>
                 )}
                 {settings?.editorial_policy && (
                   <Link href="/editorial-policy" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
                     <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
-                    <span className="group-hover:translate-x-1 transition-transform">Editorial Policy</span>
+                    <span className="group-hover:translate-x-1 transition-transform">संपादकीय नीति</span>
                   </Link>
                 )}
                 {settings?.correction_policy && (
                   <Link href="/correction-policy" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
                     <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
-                    <span className="group-hover:translate-x-1 transition-transform">Correction Policy</span>
+                    <span className="group-hover:translate-x-1 transition-transform">सुधार नीति</span>
                   </Link>
                 )}
                 {settings?.terms_conditions && (
                   <Link href="/terms" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
                     <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
-                    <span className="group-hover:translate-x-1 transition-transform">Terms & Conditions</span>
+                    <span className="group-hover:translate-x-1 transition-transform">नियम और शर्तें</span>
                   </Link>
                 )}
                 {settings?.privacy_policy && (
                   <Link href="/privacy" className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all">
                     <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
-                    <span className="group-hover:translate-x-1 transition-transform">Privacy Policy</span>
+                    <span className="group-hover:translate-x-1 transition-transform">गोपनीयता नीति</span>
                   </Link>
                 )}
               </div>
@@ -166,7 +166,7 @@ export function Footer({
             {/* Contact */}
             <div className="mb-10">
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-5 flex items-center gap-2">
-                Contact Us
+                संपर्क करें
               </h3>
               <div className="flex flex-col gap-4 text-[14px] text-gray-600 dark:text-news-text-secondary">
                 {settings?.contact_email && (
@@ -193,7 +193,7 @@ export function Footer({
             {/* Follow Us */}
             <div>
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-5 flex items-center gap-2">
-                Follow Us
+                हमें फॉलो करें
               </h3>
               <div className="flex flex-wrap gap-3">
                 {settings?.facebook_url && (
@@ -234,16 +234,16 @@ export function Footer({
         <div className="flex flex-col xl:flex-row justify-between items-center xl:items-start gap-6 w-full">
           {/* Copyright & T&C */}
           <div className="text-[13px] text-gray-500 dark:text-news-text-muted flex justify-center xl:justify-start items-center">
-            <span className="font-medium whitespace-nowrap">&copy; {new Date().getFullYear()} {settings?.copyright_text || "Bharatendu Shikhar. All rights reserved."}</span>
+            <span className="font-medium whitespace-nowrap">&copy; {new Date().getFullYear()} {settings?.copyright_text || "Bharatendu Shikhar. सर्वाधिकार सुरक्षित।"}</span>
           </div>
 
           {/* Bottom Buttons */}
           <div className="flex flex-col sm:flex-row justify-center xl:justify-end items-center gap-3 w-full xl:w-auto shrink-0">
             <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap">
-              Read ePaper
+              ई-पेपर पढ़ें
             </Link>
-            <Link href="/app" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap">
-              Get the App
+            <Link href="/app" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap capitalize">
+              ऐप डाउनलोड करें
             </Link>
           </div>
         </div>

@@ -31,7 +31,7 @@ export function FloatingNav() {
         >
           <Link href="/" className="flex flex-col items-center gap-1 text-white hover:text-white transition-colors w-12">
             <Home size={20} strokeWidth={2} />
-            <span className="text-[11px] font-bold tracking-widest">Home</span>
+            <span className="text-[11px] font-bold tracking-widest">होम</span>
           </Link>
           
           <div className="w-px h-8 bg-white/40 mx-1"></div>

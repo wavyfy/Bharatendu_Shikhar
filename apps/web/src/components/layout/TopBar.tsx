@@ -13,11 +13,11 @@ export function TopBar() {
           <ThemeToggle />
         </div>
         <div className="flex gap-3">
-          <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors leading-none h-8 flex items-center justify-center">
-            Read ePaper
+          <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors leading-snug h-8 flex items-center justify-center">
+            ई-पेपर पढ़ें
           </Link>
-          <button className="bg-red-600 text-white hover:bg-red-700 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors h-8 flex items-center justify-center">
-            Get the App
+          <button className="bg-red-600 text-white hover:bg-red-700 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors h-8 flex items-center justify-center capitalize">
+            ऐप डाउनलोड करें
           </button>
         </div>
       </div>

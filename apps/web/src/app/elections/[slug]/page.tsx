@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
+
 import { getElectionBySlug } from "@/utils/fetchElections";
 import { ElectionResultsTabbed } from "@/components/elections/ElectionResultsTabbed";
 import { DialChart } from "@/components/elections/DialChart";
 import { UpdatesTimeline } from "@/components/elections/UpdatesTimeline";
-import { ChevronDown, User } from "lucide-react";
+import { TopLeadersCarousel } from "@/components/elections/TopLeadersCarousel";
+
 
 import { fetchSettings } from "@/utils/fetchData";
 import { getSiteUrl } from "@/utils/seo";
@@ -70,8 +71,8 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
   const siteUrl = getSiteUrl(settings?.site_url).toString();
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "Elections", href: "/elections" },
+    { label: "होम", href: "/" },
+    { label: "चुनाव", href: "/elections" },
     { label: election.title }
   ];  // Data processing for the new layout
   const sortedGroups = election.groups.map((group: Group) => ({
@@ -81,16 +82,20 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
 
   const allCandidates = sortedGroups.flatMap((g: Group) => g.candidates);
   
-  // Find top leaders across the entire election
-  const topLeaders = [...allCandidates]
+  // Find top leaders across the entire election (deduplicated by candidate name since we copied candidates)
+  const uniqueCandidatesMap = new Map();
+  [...allCandidates]
     .sort((a, b) => (b.votes || 0) - (a.votes || 0))
-    .slice(0, 4);
+    .forEach(candidate => {
+      if (!uniqueCandidatesMap.has(candidate.candidate_name)) {
+        uniqueCandidatesMap.set(candidate.candidate_name, candidate);
+      }
+    });
+  const topLeaders = Array.from(uniqueCandidatesMap.values()).slice(0, 4);
 
   // Summary statistics
   const totalGroups = sortedGroups.length;
   const majority = Math.floor(totalGroups / 2) + 1;
-  const declaredGroups = sortedGroups.filter((g: Group) => g.candidates.some(c => c.is_winner)).length;
-  const pendingGroups = totalGroups - declaredGroups;
 
   // Party Standings Calculation
   interface PartyStanding {
@@ -131,15 +136,10 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
   // Top Party for Dial Chart
   const topParty = partyStandings.length > 0 ? partyStandings[0] : null;
   const leadingSeats = topParty ? topParty.won + topParty.leading : 0;
-  // Calculate trailing seats logic:
-  // Losing seats for top party = Declared Groups - (seats won by top party)
-  // Wait, if a group is declared, and top party didn't win, they lost it.
-
-  
-  // To keep it simple and match the image (which has "Leading", "Losing", "Yet to win"):
-  const yetToWin = pendingGroups;
-  // Actually, "Leading" in dial could be top party leading + won
-  // "Losing" could be totalGroups - leadingSeats - yetToWin
+  // Let's sum up all leading/won across all parties:
+  const totalWonOrLeading = partyStandings.reduce((sum, p) => sum + p.won + p.leading, 0);
+  const losingSeats = totalWonOrLeading - leadingSeats;
+  const yetToWin = totalGroups - leadingSeats - losingSeats;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl font-sans">
@@ -148,9 +148,9 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
       <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-8 mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
         <div>
           <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-red-600 text-white mb-4">
-            State Election Updates
+            राज्य चुनाव अपडेट
           </span>
-          <h1 className="text-4xl font-bold text-foreground mb-2">{election.title}</h1>
+          <h1 className="text-4xl font-medium text-foreground mb-2">{election.title}</h1>
           {election.description && (
             <p className="text-base text-red-500 max-w-2xl">{election.description}</p>
           )}
@@ -167,14 +167,14 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
         
         {/* Live Updates Timeline */}
         <div className="lg:col-span-2">
-          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-full overflow-hidden">
-            <div className="p-5 border-b border-gray-200 dark:border-news-border">
-              <h2 className="text-base font-bold flex items-center gap-2">
-                <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs">Live</span>
-                <span className="text-foreground border-l border-gray-300 pl-3">Sensor Election Updates</span>
+          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-[420px] flex flex-col">
+            <div className="p-5 border-b border-gray-200 dark:border-news-border shrink-0">
+              <h2 className="text-base font-medium flex items-center gap-3">
+                <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs font-bold">लाइव</span>
+                <span className="text-foreground border-l border-gray-600 pl-3">सेंसर चुनाव अपडेट</span>
               </h2>
             </div>
-            <div className="p-0">
+            <div className="p-0 flex-1 overflow-y-auto custom-scrollbar">
               <UpdatesTimeline updates={election.updates} />
             </div>
           </div>
@@ -182,39 +182,39 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
 
         {/* Party Standings Box */}
         <div className="lg:col-span-1">
-          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-6 h-full">
-            <div className="flex items-center gap-2 mb-6 border-b border-gray-200 dark:border-news-border pb-4">
+          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-6 h-[420px] flex flex-col">
+            <div className="flex items-center gap-2 mb-6 border-b border-gray-200 dark:border-news-border pb-4 shrink-0">
               <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold bg-red-600 text-white">
-                Party Standings
+                पार्टी की स्थिति
               </span>
-              <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs font-bold">Live</span>
+              <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs font-bold">लाइव</span>
             </div>
             
-            <div className="flex justify-between text-xs font-bold text-foreground mb-4">
-              <span>Parties</span>
-              <span>Position</span>
+            <div className="flex justify-between text-xs font-bold text-foreground mb-4 shrink-0">
+              <span>पार्टियां</span>
+              <span className="w-16 text-center">स्थिति</span>
             </div>
             
-            <div className="space-y-6">
+            <div className="space-y-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
               {partyStandings.slice(0, 3).map((party, idx) => {
                 const positionText = idx === 0 ? "LEAD" : idx === 1 ? "SECOND" : "THIRD";
                 return (
                   <div key={party.party_name} className="flex items-center justify-between">
                     <div>
-                      <p className="font-bold text-sm text-foreground leading-tight mb-1">
+                      <p className="font-bold text-sm text-foreground leading-relaxed mb-1">
                         {party.party_name}
                       </p>
-                      <p className="text-xs font-mono text-muted-foreground">{party.votes.toLocaleString()} VOTES</p>
+                      <p className="text-xs font-mono text-muted-foreground">{party.votes.toLocaleString()} वोट</p>
                     </div>
-                    <div className="text-center">
-                      <p className="text-lg font-bold text-red-600 leading-none mb-1">{party.won + party.leading}</p>
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-foreground">{positionText}</p>
+                    <div className="flex flex-col items-center justify-center w-16">
+                      <span className="text-2xl font-bold text-red-600 leading-none mb-1.5">{party.won + party.leading}</span>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-foreground">{positionText}</span>
                     </div>
                   </div>
                 );
               })}
               {partyStandings.length === 0 && (
-                <p className="text-xs text-muted-foreground italic">No data yet.</p>
+                <p className="text-xs text-muted-foreground italic">अभी तक कोई डेटा नहीं।</p>
               )}
             </div>
           </div>
@@ -224,47 +224,9 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
       {/* 3. Top Leaders Section */}
       <div className="mb-12 mt-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-base font-bold text-foreground">Top Leaders</h2>
+          <h2 className="text-base font-medium text-foreground">शीर्ष नेता</h2>
         </div>
-        <div className="flex overflow-x-auto gap-4 custom-scrollbar snap-x pb-4">
-          {topLeaders.map((leader: Candidate) => {
-            const group = sortedGroups.find((g: Group) => g.candidates.some(c => c.id === leader.id));
-            const isActuallyLeading = group?.candidates[0].id === leader.id && leader.votes! > 0;
-            const badgeStatus = leader.is_winner ? "WON" : isActuallyLeading ? "LEADING" : "LOSING";
-            
-            return (
-              <div key={leader.id} className="min-w-[260px] shrink-0 snap-start bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-5 flex flex-col justify-between">
-                <div className="flex gap-4 mb-6">
-                  <div className="w-16 h-16 shrink-0 relative rounded-sm overflow-hidden bg-muted">
-                    {leader.photo_url ? (
-                      <Image src={leader.photo_url} alt={leader.candidate_name} fill className="object-cover" unoptimized />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-muted/50">
-                        <User className="w-8 h-8 text-gray-400" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="pt-1">
-                    <h3 className="font-bold text-sm leading-tight mb-1.5 text-foreground">{leader.candidate_name}</h3>
-                    <p className="text-xs font-medium text-red-600 leading-snug">{leader.party_name || "Independent"}</p>
-                  </div>
-                </div>
-                <div>
-                  <span className={`inline-block px-3 py-1 text-xs font-bold rounded-sm ${
-                    badgeStatus === "WON" || badgeStatus === "LEADING" ? "bg-red-600 text-white" : "bg-red-600 text-white"
-                  }`}>
-                    {badgeStatus}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-          {topLeaders.length === 0 && (
-            <div className="col-span-full p-8 text-center border-2 border-gray-200 dark:border-news-border rounded-sm text-muted-foreground text-sm">
-              No leaders available yet.
-            </div>
-          )}
-        </div>
+        <TopLeadersCarousel topLeaders={topLeaders} sortedGroups={sortedGroups} />
       </div>
 
       {/* 4. Main Content Split (Dial Chart & Tabs) */}
@@ -274,18 +236,17 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
         <div className="lg:col-span-1">
           <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-full flex flex-col">
             <div className="p-6 border-b border-gray-200 dark:border-news-border">
-              <h2 className="text-base font-bold flex items-center gap-1 mb-1 text-foreground">
-                {election.region ? election.region.name : "Global"}
-                <ChevronDown className="w-5 h-5" />
+              <h2 className="text-base font-medium flex items-center gap-1 mb-1 text-foreground">
+                {election.region ? election.region.name : "ग्लोबल"}
               </h2>
-              <p className="text-sm text-foreground">Election Result 2026</p>
+              <p className="text-sm text-foreground">चुनाव परिणाम 2026</p>
             </div>
             <div className="p-0 flex-1">
               <DialChart 
                 totalSeats={totalGroups} 
                 majority={majority}
                 leadingSeats={leadingSeats}
-                losingSeats={totalGroups - leadingSeats - yetToWin} // Approximate
+                losingSeats={losingSeats}
                 yetToWin={yetToWin}
               />
             </div>

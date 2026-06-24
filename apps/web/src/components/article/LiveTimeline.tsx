@@ -19,7 +19,7 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
     <div className="mt-0">
       <div className="flex items-center gap-3 mb-8">
         <div className="w-3.5 h-3.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
-        <h2 className="text-2xl md:text-3xl font-black uppercase tracking-wider text-black dark:text-white">Live Updates</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-wider text-black dark:text-white">Live Updates</h2>
       </div>
       
       <div className="relative">
@@ -39,7 +39,7 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
 
             {/* Content */}
             <div className="flex flex-col items-start w-full">
-              <h2 className="text-2xl md:text-3xl font-bold font-playfair text-black dark:text-white leading-tight mb-3">
+              <h2 className="text-2xl md:text-3xl font-medium text-black dark:text-white leading-relaxed mb-3">
                 {update.headline}
               </h2>
 

@@ -45,7 +45,7 @@ export default async function ContactPage() {
       <div className="space-y-8">
         {settings.contact_email && (
           <div className="group transition-all duration-300 p-6 rounded-2xl border border-transparent hover:border-gray-200 dark:hover:border-news-border hover:bg-gray-50 dark:hover:bg-news-card hover:shadow-sm">
-            <h3 className="text-sm font-bold text-red-600 uppercase tracking-widest mb-2">Email Us</h3>
+            <h3 className="text-sm font-medium text-red-600 uppercase tracking-widest mb-2">Email Us</h3>
             <p className="text-xl font-medium text-gray-900 dark:text-white">
               <a href={`mailto:${settings.contact_email}`} className="hover:text-red-600 transition-colors inline-block transform hover:translate-x-1 duration-200">
                 {settings.contact_email}
@@ -56,7 +56,7 @@ export default async function ContactPage() {
         
         {settings.contact_phone && (
           <div className="group transition-all duration-300 p-6 rounded-2xl border border-transparent hover:border-gray-200 dark:hover:border-news-border hover:bg-gray-50 dark:hover:bg-news-card hover:shadow-sm">
-            <h3 className="text-sm font-bold text-red-600 uppercase tracking-widest mb-2">Call Us</h3>
+            <h3 className="text-sm font-medium text-red-600 uppercase tracking-widest mb-2">Call Us</h3>
             <p className="text-xl font-medium text-gray-900 dark:text-white">
               <a href={`tel:${settings.contact_phone}`} className="hover:text-red-600 transition-colors inline-block transform hover:translate-x-1 duration-200">
                 {settings.contact_phone}
@@ -67,7 +67,7 @@ export default async function ContactPage() {
         
         {settings.contact_address && (
           <div className="group transition-all duration-300 p-6 rounded-2xl border border-transparent hover:border-gray-200 dark:hover:border-news-border hover:bg-gray-50 dark:hover:bg-news-card hover:shadow-sm">
-            <h3 className="text-sm font-bold text-red-600 uppercase tracking-widest mb-2">Visit Us</h3>
+            <h3 className="text-sm font-medium text-red-600 uppercase tracking-widest mb-2">Visit Us</h3>
             <p className="text-xl font-medium text-gray-900 dark:text-white whitespace-pre-wrap leading-relaxed">
               {settings.contact_address}
             </p>

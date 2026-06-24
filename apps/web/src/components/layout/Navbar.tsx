@@ -56,7 +56,7 @@ export function Navbar({
     };
   }, [isMobileMenuOpen]);
 
-  if (activeMenu && activeMenu !== lastActiveMenu && activeMenu !== "Home") {
+  if (activeMenu && activeMenu !== lastActiveMenu && activeMenu !== "Home" && activeMenu !== "अधिक") {
     setLastActiveMenu(activeMenu);
   }
 
@@ -120,12 +120,12 @@ export function Navbar({
     scrollRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
-  const isMoreOpen = activeMenu === "More" || (activeMenu && dropdownLinks.some(l => l.name === activeMenu));
-  const isMegaMenuOpen = !!activeMenu && activeMenu !== "Home" && activeMenu !== "More";
+  const isMoreOpen = activeMenu === "अधिक" || (activeMenu && dropdownLinks.some(l => l.name === activeMenu));
+  const isMegaMenuOpen = !!activeMenu && activeMenu !== "Home" && activeMenu !== "अधिक";
 
   const renderMegaMenu = () => {
-    const targetMenu = (activeMenu && activeMenu !== "Home" && activeMenu !== "More") ? activeMenu : lastActiveMenu;
-    const articles = targetMenu && targetMenu !== "Home" && targetMenu !== "More" ? getArticlesForLink(targetMenu).slice(0, 10) : [];
+    const targetMenu = (activeMenu && activeMenu !== "Home" && activeMenu !== "अधिक") ? activeMenu : lastActiveMenu;
+    const articles = targetMenu && targetMenu !== "Home" && targetMenu !== "अधिक" ? getArticlesForLink(targetMenu).slice(0, 10) : [];
 
     return (
       <AnimatePresence>
@@ -165,7 +165,7 @@ export function Navbar({
                             />
                           )}
                         </div>
-                        <h4 className="font-playfair font-bold text-[17px] leading-snug line-clamp-2 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+                        <h4 className="font-medium text-[17px] leading-snug line-clamp-2 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
                           {art.title}
                         </h4>
                       </Link>
@@ -241,7 +241,7 @@ export function Navbar({
             </>
           ) : (
             <div className="flex items-center gap-3">
-              <span className="font-playfair font-black tracking-tight uppercase text-[22px]">
+              <span className="font-bold tracking-tight uppercase text-[22px]">
                 BHARTENDU SHIKHAR
               </span>
             </div>
@@ -283,7 +283,7 @@ export function Navbar({
                       }}
                       className="group relative flex items-center w-full bg-gray-100 dark:bg-news-bg hover:bg-gray-200 dark:hover:bg-[#1A1A1A] border border-gray-200 dark:border-news-border rounded-full h-[46px] text-gray-500 dark:text-news-text-muted hover:text-black dark:hover:text-white transition-colors overflow-hidden"
                     >
-                      <span className="ml-5 text-[15px] font-medium tracking-wide">Search Articles...</span>
+                      <span className="ml-5 text-[15px] font-medium tracking-wide">लेख खोजें...</span>
                       <div className="absolute right-[3px] top-[3px] bottom-[3px] w-[40px] bg-white dark:bg-news-card rounded-full flex items-center justify-center shadow-sm">
                         <Search size={18} strokeWidth={2.5} className="text-gray-600 dark:text-news-text transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
                       </div>
@@ -296,9 +296,9 @@ export function Navbar({
                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
                          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                        </span>
-                       ELECTION
+                       चुनाव
                      </Link>
-                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Home</Link>
+                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>होम</Link>
                      <Link href="/politics" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/politics' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Politics</Link>
                      <Link href="/entertainment" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/entertainment' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Entertainment</Link>
                      <Link href="/sports" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/sports' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Sports</Link>
@@ -334,10 +334,10 @@ export function Navbar({
   
                   <div className="bg-gray-200 dark:bg-news-card p-5 mt-auto flex flex-col gap-4">
                     <button onClick={() => setIsSettingsOpen(true)} className="flex items-center justify-end w-full gap-3 text-[15px] font-medium dark:text-news-text hover:text-red-600 transition-colors">
-                      Settings <Settings size={20} />
+                      सेटिंग्स <Settings size={20} />
                     </button>
-                    <Link href="/app" onClick={() => setIsMobileMenuOpen(false)} className="bg-red-600 text-white rounded-full py-3 flex items-center justify-center font-bold tracking-wider text-[15px] hover:bg-red-700 transition-colors">
-                      Get The App
+                    <Link href="/app" onClick={() => setIsMobileMenuOpen(false)} className="bg-red-600 text-white rounded-full py-3 flex items-center justify-center font-bold tracking-wider text-[15px] hover:bg-red-700 transition-colors capitalize">
+                      ऐप डाउनलोड करें
                     </Link>
                   </div>
                 </motion.div>
@@ -356,7 +356,7 @@ export function Navbar({
                     </button>
                   </div>
                   <div className="px-5">
-                    <h2 className="text-red-600 text-2xl font-bold border-b border-black dark:border-news-border pb-4 mb-2">Settings</h2>
+                    <h2 className="text-red-600 text-2xl font-medium border-b border-black dark:border-news-border pb-4 mb-2">सेटिंग्स</h2>
                     <div className="flex justify-between items-center py-5 border-b border-gray-300 dark:border-news-border">
                       <span className="font-medium text-[16px] dark:text-news-text">Theme</span>
                       <MobileThemeToggle />
@@ -420,10 +420,10 @@ export function Navbar({
             {dropdownLinks.length > 0 && (
               <div 
                 className="relative cursor-pointer h-full"
-                onMouseEnter={() => setActiveMenu("More")}
+                onMouseEnter={() => setActiveMenu("अधिक")}
               >
                 <div className="flex items-center gap-1 hover:text-red-600 py-4">
-                  More <ChevronDown size={14} className={`text-gray-400 transition-transform duration-300 ${isMoreOpen ? 'rotate-180' : ''}`}/>
+                  अधिक <ChevronDown size={14} className={`text-gray-400 transition-transform duration-300 ${isMoreOpen ? 'rotate-180' : ''}`}/>
                 </div>
                 
                 <AnimatePresence>
@@ -464,7 +464,7 @@ export function Navbar({
           </div>
           <div>
             <Link href="/elections" className="group text-red-600 font-bold uppercase tracking-widest py-4 inline-block relative overflow-hidden">
-              ELECTION
+              चुनाव
               <span className="absolute bottom-3 left-0 w-full h-[2px] bg-red-600 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
             </Link>
           </div>

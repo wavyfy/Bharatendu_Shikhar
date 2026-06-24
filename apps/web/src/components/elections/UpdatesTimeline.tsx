@@ -13,7 +13,7 @@ export function UpdatesTimeline({ updates }: { updates: ElectionUpdate[] }) {
 
   const renderChannel = (title: string, channelUpdates: ElectionUpdate[]) => (
     <div className="flex-1 min-w-0">
-      <h3 className="text-sm font-bold text-foreground mb-6 pb-2 border-b border-gray-200 dark:border-news-border">{title}</h3>
+      <h3 className="text-sm font-medium text-foreground mb-6 pb-2 border-b border-gray-200 dark:border-news-border">{title}</h3>
       
       <div className="relative">
         {/* Vertical Timeline Line */}
@@ -28,14 +28,14 @@ export function UpdatesTimeline({ updates }: { updates: ElectionUpdate[] }) {
               <div className="absolute left-0 top-2 w-4 h-4 rounded-full bg-black dark:bg-gray-300" />
 
               {/* Date Button */}
-              <div className="bg-red-600 text-white rounded-full px-3 py-1 text-[11px] font-bold inline-block mb-3 -ml-2 md:-ml-6 shadow-sm">
+              <div className="bg-red-600 text-white rounded-full px-3 py-1 text-[11px] font-bold inline-block mb-3 ml-0 md:-ml-2 shadow-sm">
                 {new Date(update.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </div>
 
               {/* Content */}
               <div className="flex flex-col items-start w-full">
                 {update.title && (
-                  <h4 className="font-bold text-base text-foreground mb-1 leading-tight">
+                  <h4 className="font-medium text-base text-foreground mb-1 leading-relaxed">
                     {update.title}
                   </h4>
                 )}

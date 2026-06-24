@@ -12,7 +12,7 @@ export function Header({ logoUrl, logoDarkUrl }: { logoUrl?: string | null, logo
       <div className="flex justify-between items-center">
         <div className="w-48 text-sm text-gray-700 dark:text-news-text-secondary space-y-1">
           <p><CurrentDate /></p>
-          <p>Today&apos;s Paper</p>
+          <p>आज का अखबार</p>
         </div>
         
         <div className="flex items-center">
@@ -53,7 +53,7 @@ export function Header({ logoUrl, logoDarkUrl }: { logoUrl?: string | null, logo
               </>
             ) : (
               <div className="flex items-center gap-6">
-                <h1 className="text-5xl md:text-6xl font-playfair font-semibold tracking-tight">
+                <h1 className="text-5xl md:text-6xl font-medium tracking-tight">
                   Bharatendu Shikhar
                 </h1>
               </div>

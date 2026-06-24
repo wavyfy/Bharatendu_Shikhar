@@ -38,28 +38,28 @@ const NAV_ITEMS = [
     icon: "label",
   },
   {
-    label: "Publishers",
-    href: "/publishers",
-    section: "publishers",
-    icon: "business",
-  },
-  {
     label: "E-Papers",
     href: "/epapers",
     section: "epapers",
     icon: "newspaper",
   },
   {
-    label: "Advertisements",
-    href: "/advertisements",
-    section: "advertisements",
-    icon: "ads_click",
+    label: "Publishers",
+    href: "/publishers",
+    section: "publishers",
+    icon: "business",
   },
   {
     label: "Elections",
     href: "/elections",
     section: "elections",
     icon: "how_to_vote",
+  },
+  {
+    label: "Advertisements",
+    href: "/advertisements",
+    section: "advertisements",
+    icon: "ads_click",
   },
   {
     label: "Settings",

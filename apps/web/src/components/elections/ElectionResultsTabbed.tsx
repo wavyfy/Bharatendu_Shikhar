@@ -39,14 +39,14 @@ export function ElectionResultsTabbed({ groups }: ElectionResultsTabbedProps) {
   return (
     <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-full flex flex-col">
       {/* Tabs */}
-      <div className="flex overflow-x-auto custom-scrollbar px-2 pt-2 pb-1 items-center gap-2 border-b border-gray-200 dark:border-news-border">
+      <div className="flex overflow-x-auto custom-scrollbar px-4 pt-4 pb-3 items-center gap-4 border-b border-gray-200 dark:border-news-border">
         {groups.map((group) => {
           const isActive = activeTab === group.id;
           return (
             <button
               key={group.id}
               onClick={() => setActiveTab(group.id)}
-              className={`text-[11px] whitespace-nowrap transition-colors px-3 py-1.5 rounded-full ${
+              className={`text-[12px] whitespace-nowrap transition-colors px-4 py-2 rounded-full ${
                 isActive
                   ? "bg-red-600 text-white font-bold"
                   : "text-foreground font-medium hover:bg-muted"
@@ -66,13 +66,13 @@ export function ElectionResultsTabbed({ groups }: ElectionResultsTabbedProps) {
           </div>
         ) : (
           <div className="overflow-x-auto h-full">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse min-w-[500px]">
               <thead className="border-b border-gray-200 dark:border-news-border">
                 <tr className="text-xs font-bold uppercase tracking-wider text-foreground bg-muted/20">
-                  <th className="px-6 py-3">Party</th>
-                  <th className="px-6 py-3">Candidate</th>
-                  <th className="px-6 py-3 text-center">Votes</th>
-                  <th className="px-6 py-3 text-center">Vote %</th>
+                  <th className="px-6 py-3">पार्टी</th>
+                  <th className="px-6 py-3">जीती</th>
+                  <th className="px-6 py-3 text-center">बढ़त</th>
+                  <th className="px-6 py-3 text-center">कुल</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">

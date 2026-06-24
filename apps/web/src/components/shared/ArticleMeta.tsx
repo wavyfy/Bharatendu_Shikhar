@@ -1,10 +1,10 @@
 import { ArticleWithAuthor, getArticleBadges } from "@/utils/mapArticleData";
 
 function calculateReadTime(content: string | undefined | null): string {
-  if (!content) return "1 MIN READ";
+  if (!content) return "1 मिनट पढ़ें";
   const words = content.trim().split(/\s+/).length;
   const minutes = Math.ceil(words / 200);
-  return `${minutes} MIN READ`;
+  return `${minutes} मिनट पढ़ें`;
 }
 
 export function ArticleMeta({ article, isArticlePage, alignRight }: { article: ArticleWithAuthor, isArticlePage?: boolean, alignRight?: boolean }) {

@@ -26,9 +26,9 @@ export function RegionSelect({
           }
         }}
       >
-        <option value="">All Regions</option>
+        <option className="dark:bg-news-card dark:text-news-text" value="">सभी राज्य</option>
         {regions.map((r: { id: string | number; name: string }) => (
-          <option key={r.id} value={r.id}>{r.name}</option>
+          <option className="dark:bg-news-card dark:text-news-text" key={r.id} value={r.id}>{r.name}</option>
         ))}
       </select>
       <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
