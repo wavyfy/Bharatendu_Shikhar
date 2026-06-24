@@ -546,8 +546,8 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
     { id: "seo", label: "SEO" },
     { id: "social", label: "Social Media" },
     { id: "contact", label: "Contact" },
-    { id: "advertisements", label: "Advertisements" },
     { id: "legal", label: "Legal & Policies" },
+    { id: "advertisements", label: "Advertisements" },
     { id: "maintenance", label: "Maintenance" },
   ];
 
@@ -584,9 +584,9 @@ export function SettingsForm({ settings }: { settings: SettingsRow | null }) {
           {activeTab === "site" && <SiteInfoSection settings={settings} />}
           {activeTab === "seo" && <SeoSection settings={settings} />}
           {activeTab === "social" && <SocialSection settings={settings} />}
-          {activeTab === "contact" && <ContactSection settings={settings} />}
-          { activeTab === "advertisements" && <AdvertisementsSection settings={settings} /> }
+          { activeTab === "contact" && <ContactSection settings={settings} /> }
           { activeTab === "legal" && <LegalSection settings={settings} /> }
+          { activeTab === "advertisements" && <AdvertisementsSection settings={settings} /> }
           { activeTab === "maintenance" && <MaintenanceSection settings={settings} /> }
         </div>
       </div>

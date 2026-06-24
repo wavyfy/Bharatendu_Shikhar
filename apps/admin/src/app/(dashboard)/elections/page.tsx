@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getSessionUser } from "@/utils/session";
+
 import Link from "next/link";
 import { getElections } from "@/features/elections/queries";
 import { ElectionsTable } from "@/features/elections/components/ElectionsTable";
@@ -10,6 +10,9 @@ import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
 
 export const metadata = { title: "Elections | Bharatendu Shikhar Admin" };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface PageProps {
   searchParams: Promise<{ page?: string; search?: string }>;
 }
@@ -19,9 +22,7 @@ async function ElectionsContent({ searchParamsPromise }: { searchParamsPromise: 
   const page = params?.page ? parseInt(params.page, 10) : 1;
   const search = params?.search || "";
 
-  const session = await getSessionUser();
-  const user = session?.user;
-  const role = session?.role || "publisher";
+
 
   const { elections, count } = await getElections({ page, limit: 10, search });
   const totalPages = Math.ceil(count / 10);

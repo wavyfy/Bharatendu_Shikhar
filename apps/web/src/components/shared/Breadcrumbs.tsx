@@ -40,13 +40,13 @@ export function Breadcrumbs({ items, siteUrl }: BreadcrumbsProps) {
                 {index === 0 && <Home className="h-4 w-4 mr-1.5" />}
                 {index > 0 && <ChevronRight className="h-4 w-4 mx-1.5 text-slate-400" />}
                 {isLast || !item.href ? (
-                  <span className="font-medium text-slate-800 dark:text-slate-200" aria-current="page">
+                  <span className="font-medium text-slate-800 dark:text-slate-200 capitalize" aria-current="page">
                     {item.label}
                   </span>
                 ) : (
                   <Link
                     href={item.href}
-                    className="hover:text-primary transition-colors hover:underline"
+                    className="hover:text-primary transition-colors hover:underline capitalize"
                   >
                     {item.label}
                   </Link>

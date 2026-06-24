@@ -28,7 +28,7 @@ export function UpdatesTimeline({ updates }: { updates: ElectionUpdate[] }) {
               <div className="absolute left-0 top-2 w-4 h-4 rounded-full bg-black dark:bg-gray-300" />
 
               {/* Date Button */}
-              <div className="bg-red-600 text-white rounded-full px-3 py-1 text-[11px] font-bold inline-block mb-3 -ml-2 md:-ml-6 shadow-sm">
+              <div className="bg-red-600 text-white rounded-full px-3 py-1 text-[11px] font-bold inline-block mb-3 ml-0 md:-ml-2 shadow-sm">
                 {new Date(update.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </div>
 

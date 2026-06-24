@@ -132,7 +132,10 @@ export function ElectionForm({ initialData, regions }: ElectionFormProps) {
                 placeholder="Global / All Regions"
                 options={[
                   { label: "Global / All Regions", value: "" },
-                  ...regions.map(r => ({ label: r.name, value: r.id.toString() }))
+                  ...regions.map(r => ({ 
+                    label: r.is_active ? r.name : `${r.name} (Inactive)`, 
+                    value: r.id.toString() 
+                  }))
                 ]}
               />
             </div>
