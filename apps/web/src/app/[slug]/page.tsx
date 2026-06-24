@@ -84,8 +84,8 @@ export async function generateMetadata(
   const urlType = pageData.type === "region" ? "region" : "category";
 
   const fallbackDescription = pageData.type === "region"
-    ? `Latest ${pageData.pageTitle} news, local updates and regional coverage from Bharatendu Shikhar.`
-    : `Latest ${pageData.pageTitle} news, updates and breaking stories from Bharatendu Shikhar.`;
+    ? `भारतेंदु शिखर से नवीनतम ${pageData.pageTitle} समाचार, स्थानीय अपडेट और क्षेत्रीय कवरेज।`
+    : `भारतेंदु शिखर से नवीनतम ${pageData.pageTitle} समाचार, अपडेट और ब्रेकिंग स्टोरीज़।`;
 
   const metaDescription = pageData.seoDescription || fallbackDescription;
 
@@ -127,13 +127,13 @@ async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slu
   const { topArticles, categorySections, pageTitle, seoDescription, type } = pageData;
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "होम", href: "/" },
     { label: pageTitle }
   ];
 
   const fallbackDescription = type === "region"
-    ? `Latest ${pageTitle} news, local updates and regional coverage from Bharatendu Shikhar.`
-    : `Latest ${pageTitle} news, updates and breaking stories from Bharatendu Shikhar.`;
+    ? `भारतेंदु शिखर से नवीनतम ${pageTitle} समाचार, स्थानीय अपडेट और क्षेत्रीय कवरेज।`
+    : `भारतेंदु शिखर से नवीनतम ${pageTitle} समाचार, अपडेट और ब्रेकिंग स्टोरीज़।`;
 
   const displayDescription = seoDescription || fallbackDescription;
 
@@ -147,9 +147,9 @@ async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slu
         topArticles={topArticles}
       />
       <Breadcrumbs items={breadcrumbs} siteUrl={siteUrl} />
-      <div className="pb-4 pt-2 mb-2 border-b-2 border-red-600">
-        <h1 className="text-4xl font-playfair font-bold uppercase tracking-wider">{pageTitle}</h1>
-        <p className="mt-2 text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+      <div className="pb-2 pt-2 mb-6 border-b-2 border-red-600">
+        <h1 className="text-4xl font-medium uppercase tracking-wider">{pageTitle}</h1>
+        <p className="mt-0 text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
           {displayDescription}
         </p>
       </div>

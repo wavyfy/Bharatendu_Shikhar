@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, Noto_Sans_Devanagari } from "next/font/google";
+import { Inter, Geist_Mono, Newsreader, Noto_Sans_Devanagari } from "next/font/google";
 import "./globals.css";
 import { TopBar } from "@/components/layout/TopBar";
 import { Header } from "@/components/layout/Header";
@@ -7,8 +7,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { fetchNavbarData, fetchHomepageData } from "@/utils/fetchData";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
 });
 
@@ -109,7 +109,7 @@ export default async function RootLayout({
     return (
       <MaintenanceScreen
         settings={settings}
-        geistSansVariable={geistSans.variable}
+        geistSansVariable={inter.variable}
         geistMonoVariable={geistMono.variable}
       />
     );
@@ -119,7 +119,7 @@ export default async function RootLayout({
     <html
       lang="hi"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${devanagari.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${newsreader.variable} ${devanagari.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col bg-news-bg text-news-text dark:bg-news-bg dark:text-news-text">
         <CommonListener 

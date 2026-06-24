@@ -65,7 +65,7 @@ export function DialChart({
 
         {/* Center Text */}
         <div className="absolute bottom-0 left-0 right-0 text-center mb-[-10px]">
-          <p className="text-3xl font-black leading-none text-foreground">{majority}</p>
+          <p className="text-3xl font-black leading-snug text-foreground">{majority}</p>
           <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">To Win</p>
         </div>
       </div>

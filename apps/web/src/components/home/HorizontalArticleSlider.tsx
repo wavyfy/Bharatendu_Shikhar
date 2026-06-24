@@ -59,7 +59,7 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
 
   return (
     <div className="py-8 border-b-2 border-gray-300 dark:border-news-border mx-4">
-      <h2 className="font-playfair font-bold text-lg mb-4 uppercase tracking-wide">
+      <h2 className="font-medium text-lg mb-4 capitalize tracking-wide">
         {title}
       </h2>
       
@@ -91,7 +91,7 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
                       />
                     )}
                   </div>
-                  <h4 className="font-playfair text-[14px] leading-snug line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors pointer-events-none">
+                  <h4 className="text-[14px] leading-snug line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors pointer-events-none">
                     {item.article.title}
                   </h4>
                 </Link>

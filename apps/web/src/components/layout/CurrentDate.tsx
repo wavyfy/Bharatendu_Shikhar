@@ -2,7 +2,7 @@
 
 export function CurrentDate() {
   const d = new Date();
-  const dateStr = d.toLocaleDateString("en-US", {
+  const dateStr = d.toLocaleDateString("hi-IN", {
     weekday: "long",
     year: "numeric",
     month: "long",

@@ -74,7 +74,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
             <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{election.region.name}</span>
           )}
         </div>
-        <h3 className="text-lg font-bold text-foreground leading-tight mb-2 group-hover:text-primary transition-colors">{election.title}</h3>
+        <h3 className="text-lg font-medium text-foreground leading-relaxed mb-2 group-hover:text-primary transition-colors">{election.title}</h3>
         {election.description && (
           <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{election.description}</p>
         )}
@@ -100,7 +100,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-black text-foreground mb-2">Elections</h1>
+          <h1 className="text-3xl font-semibold text-foreground mb-2">Elections</h1>
           <p className="text-muted-foreground">Live updates, results, and coverage.</p>
         </div>
         
@@ -119,7 +119,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
           {/* Live Elections */}
           {liveElections.length > 0 && (
             <section>
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <h2 className="text-2xl font-medium mb-4 flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
                 Live Now
               </h2>
@@ -132,7 +132,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
           {/* Upcoming Elections */}
           {upcomingElections.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold mb-4 text-foreground">Upcoming Elections</h2>
+              <h2 className="text-xl font-medium mb-4 text-foreground">Upcoming Elections</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {upcomingElections.map(e => <ElectionCard key={e.id} election={e} />)}
               </div>
@@ -142,7 +142,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
           {/* Completed Elections */}
           {completedElections.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold mb-4 text-foreground">Past Elections</h2>
+              <h2 className="text-xl font-medium mb-4 text-foreground">Past Elections</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {completedElections.map(e => <ElectionCard key={e.id} election={e} />)}
               </div>

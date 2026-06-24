@@ -90,7 +90,7 @@ async function EpaperContent({ page }: { page: number }) {
                 )}
               </div>
               <div className="p-4 flex flex-col flex-1">
-                <h3 className="font-playfair font-bold text-lg leading-tight mb-2 group-hover:text-red-600 dark:group-hover:text-news-accent transition-colors dark:text-news-text">
+                <h3 className="font-medium text-lg leading-relaxed mb-2 group-hover:text-red-600 dark:group-hover:text-news-accent transition-colors dark:text-news-text">
                   {paper.title}
                 </h3>
                 <div className="text-xs text-gray-500 dark:text-news-text-muted mt-auto">
@@ -105,7 +105,7 @@ async function EpaperContent({ page }: { page: number }) {
           ))
         ) : (
           <div className="col-span-full py-20 text-center text-gray-500 dark:text-news-text-muted font-medium">
-            No E-Papers available at the moment.
+            इस समय कोई ई-पेपर उपलब्ध नहीं है।
           </div>
         )}
       </div>
@@ -117,16 +117,16 @@ async function EpaperContent({ page }: { page: number }) {
               href={`/epaper?page=${page - 1}`}
               className="px-4 py-2 border border-gray-300 dark:border-news-border rounded hover:bg-gray-100 dark:hover:bg-news-card transition-colors dark:text-news-text"
             >
-              Previous
+              पिछला
             </Link>
           ) : (
             <button disabled className="px-4 py-2 border border-gray-200 dark:border-news-border rounded text-gray-400 dark:text-gray-600 cursor-not-allowed">
-              Previous
+              पिछला
             </button>
           )}
           
           <span className="text-sm text-gray-600 dark:text-news-text-muted font-medium">
-            Page {page} of {totalPages}
+            पेज {page} / {totalPages}
           </span>
 
           {page < totalPages ? (
@@ -134,11 +134,11 @@ async function EpaperContent({ page }: { page: number }) {
               href={`/epaper?page=${page + 1}`}
               className="px-4 py-2 border border-gray-300 dark:border-news-border rounded hover:bg-gray-100 dark:hover:bg-news-card transition-colors dark:text-news-text"
             >
-              Next
+              अगला
             </Link>
           ) : (
             <button disabled className="px-4 py-2 border border-gray-200 dark:border-news-border rounded text-gray-400 dark:text-gray-600 cursor-not-allowed">
-              Next
+              अगला
             </button>
           )}
         </div>
@@ -158,8 +158,8 @@ export default async function EPaperPage({
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-news-bg py-10">
       <div className="max-w-[1400px] mx-auto px-4">
-        <h1 className="text-3xl font-playfair font-bold mb-8 text-black dark:text-news-text border-b-2 border-red-600 pb-4 inline-block">
-          E-Papers
+        <h1 className="text-3xl font-medium mb-8 text-black dark:text-news-text border-b-2 border-red-600 pb-4 inline-block">
+          ई-पेपर
         </h1>
 
         <Suspense fallback={<EpaperSkeleton />} key={page}>

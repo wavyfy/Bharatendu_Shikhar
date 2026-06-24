@@ -16,7 +16,7 @@ export default function ErrorBoundary({
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[50vh] p-4 text-center">
-      <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">Oops! Something went wrong.</h2>
+      <h2 className="text-2xl font-medium mb-4 text-black dark:text-white">Oops! Something went wrong.</h2>
       <p className="text-gray-600 dark:text-gray-400 mb-6">
         An unexpected error occurred. We have been notified and are looking into it.
       </p>

@@ -11,7 +11,7 @@ export default function GlobalError({
     <html>
       <body>
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
-          <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">Critical System Error</h2>
+          <h2 className="text-2xl font-medium mb-4 text-black dark:text-white">Critical System Error</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             A critical error occurred. Please try reloading the page.
           </p>

@@ -174,7 +174,7 @@ export function SearchModal() {
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder="Search Articles..."
+                  placeholder="लेख खोजें..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   className="flex-1 bg-transparent text-base outline-none text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
@@ -238,7 +238,7 @@ export function SearchModal() {
                         onClick={handleClose}
                         className="block bg-white dark:bg-news-card p-4 rounded-xl border border-gray-100 dark:border-news-border hover:border-red-200 dark:hover:border-red-900 transition-colors group"
                       >
-                        <h3 className="font-playfair font-bold text-lg mb-2 group-hover:text-red-600 dark:group-hover:text-news-accent transition-colors text-black dark:text-news-text">
+                        <h3 className="font-medium text-lg mb-2 group-hover:text-red-600 dark:group-hover:text-news-accent transition-colors text-black dark:text-news-text">
                           {article.title}
                         </h3>
                         {article.excerpt && (

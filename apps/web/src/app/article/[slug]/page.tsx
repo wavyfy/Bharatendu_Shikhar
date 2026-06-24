@@ -129,8 +129,8 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
     article.id
   );
 
-  const breadcrumbs = [{ label: "Home", href: "/" }];
-  if (article.categories?.name) {
+  const breadcrumbs = [{ label: "होम", href: "/" }];
+  if (article.categories) {
     breadcrumbs.push({ label: article.categories.name, href: `/${article.categories.slug}` });
   }
   breadcrumbs.push({ label: article.title, href: "#" });
@@ -142,7 +142,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
         <div className="lg:col-span-9 flex flex-col min-w-0">
           <Breadcrumbs items={breadcrumbs} siteUrl={siteUrl} />
           {/* Article Title */}
-          <h1 className="text-2xl md:text-4xl font-playfair font-bold text-black dark:text-white mb-3">
+          <h1 className="text-2xl md:text-4xl font-medium text-black dark:text-white mb-3">
             {article.title}
           </h1>
 
@@ -177,7 +177,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
           )}
 
           <div
-            className="w-full text-left prose prose-lg md:prose-[21px] max-w-none dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent hover:prose-a:text-red-700 prose-img:rounded-md"
+            className="w-full text-left prose prose-lg md:prose-xl max-w-none dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-a:text-red-600 dark:prose-a:text-news-accent hover:prose-a:text-red-700 prose-img:rounded-md"
             dangerouslySetInnerHTML={{ __html: sanitize(article.content) }}
           />
 

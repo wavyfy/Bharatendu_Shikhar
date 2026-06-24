@@ -93,14 +93,14 @@ export function ExpandableSectionLayout({
 
       {(totalChunks > 1) && (
         <div className="flex justify-center mt-6 mb-4 border-t-2 border-gray-300 dark:border-news-border pt-6 relative">
-          <div className="absolute -top-px left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-news-bg px-2 sm:px-4 flex gap-2 sm:gap-4 w-[95%] sm:w-auto justify-center">
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-news-bg px-6 sm:px-8 flex gap-2 sm:gap-4 w-[95%] sm:w-auto justify-center">
             {visibleChunks > 1 && (
               <motion.button 
                 whileTap={{ scale: 0.97 }}
                 onClick={handleLoadLess}
                 className="whitespace-nowrap px-3 sm:px-5 py-2 border border-gray-400 dark:border-news-text-muted text-gray-600 dark:text-news-text-muted font-bold uppercase tracking-wider text-[12px] sm:text-[13px] hover:bg-gray-200 dark:hover:bg-news-card transition-colors flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
               >
-                <ChevronUp className="w-4 h-4 shrink-0" /> Load Less
+                <ChevronUp className="w-4 h-4 shrink-0" /> कम दिखाएं
               </motion.button>
             )}
             {visibleChunks < totalChunks && (
@@ -109,7 +109,7 @@ export function ExpandableSectionLayout({
                 onClick={handleLoadMore}
                 className="whitespace-nowrap px-3 sm:px-5 py-2 border border-black dark:border-news-border text-black dark:text-news-text font-bold uppercase tracking-wider text-[12px] sm:text-[13px] hover:bg-black dark:hover:bg-news-card hover:text-white dark:hover:text-news-accent transition-colors flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
               >
-                Load More <ChevronDown className="w-4 h-4 shrink-0" />
+                और दिखाएं <ChevronDown className="w-4 h-4 shrink-0" />
               </motion.button>
             )}
           </div>

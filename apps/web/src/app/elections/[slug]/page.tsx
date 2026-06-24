@@ -70,7 +70,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
   const siteUrl = getSiteUrl(settings?.site_url).toString();
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "होम", href: "/" },
     { label: "Elections", href: "/elections" },
     { label: election.title }
   ];  // Data processing for the new layout
@@ -150,7 +150,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
           <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-red-600 text-white mb-4">
             State Election Updates
           </span>
-          <h1 className="text-4xl font-bold text-foreground mb-2">{election.title}</h1>
+          <h1 className="text-4xl font-medium text-foreground mb-2">{election.title}</h1>
           {election.description && (
             <p className="text-base text-red-500 max-w-2xl">{election.description}</p>
           )}
@@ -169,7 +169,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
         <div className="lg:col-span-2">
           <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-full overflow-hidden">
             <div className="p-5 border-b border-gray-200 dark:border-news-border">
-              <h2 className="text-base font-bold flex items-center gap-2">
+              <h2 className="text-base font-medium flex items-center gap-2">
                 <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs">Live</span>
                 <span className="text-foreground border-l border-gray-300 pl-3">Sensor Election Updates</span>
               </h2>
@@ -201,13 +201,13 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
                 return (
                   <div key={party.party_name} className="flex items-center justify-between">
                     <div>
-                      <p className="font-bold text-sm text-foreground leading-tight mb-1">
+                      <p className="font-bold text-sm text-foreground leading-relaxed mb-1">
                         {party.party_name}
                       </p>
                       <p className="text-xs font-mono text-muted-foreground">{party.votes.toLocaleString()} VOTES</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-lg font-bold text-red-600 leading-none mb-1">{party.won + party.leading}</p>
+                      <p className="text-lg font-bold text-red-600 leading-snug mb-1">{party.won + party.leading}</p>
                       <p className="text-[10px] font-bold uppercase tracking-wider text-foreground">{positionText}</p>
                     </div>
                   </div>
@@ -224,7 +224,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
       {/* 3. Top Leaders Section */}
       <div className="mb-12 mt-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-base font-bold text-foreground">Top Leaders</h2>
+          <h2 className="text-base font-medium text-foreground">Top Leaders</h2>
         </div>
         <div className="flex overflow-x-auto gap-4 custom-scrollbar snap-x pb-4">
           {topLeaders.map((leader: Candidate) => {
@@ -245,7 +245,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
                     )}
                   </div>
                   <div className="pt-1">
-                    <h3 className="font-bold text-sm leading-tight mb-1.5 text-foreground">{leader.candidate_name}</h3>
+                    <h3 className="font-medium text-sm leading-relaxed mb-1.5 text-foreground">{leader.candidate_name}</h3>
                     <p className="text-xs font-medium text-red-600 leading-snug">{leader.party_name || "Independent"}</p>
                   </div>
                 </div>
@@ -274,7 +274,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
         <div className="lg:col-span-1">
           <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-full flex flex-col">
             <div className="p-6 border-b border-gray-200 dark:border-news-border">
-              <h2 className="text-base font-bold flex items-center gap-1 mb-1 text-foreground">
+              <h2 className="text-base font-medium flex items-center gap-1 mb-1 text-foreground">
                 {election.region ? election.region.name : "Global"}
                 <ChevronDown className="w-5 h-5" />
               </h2>

@@ -71,7 +71,7 @@ export function LegalDialog({ title, field, children }: LegalDialogProps) {
                 <div className="p-2 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl shadow-sm transform transition-transform hover:scale-105">
                   <Icon size={24} className="stroke-[2.5]" />
                 </div>
-                <h1 className="text-xl md:text-2xl font-black uppercase tracking-tight text-black dark:text-white">
+                <h1 className="text-xl md:text-2xl font-semibold uppercase tracking-tight text-black dark:text-white">
                   {title}
                 </h1>
               </div>

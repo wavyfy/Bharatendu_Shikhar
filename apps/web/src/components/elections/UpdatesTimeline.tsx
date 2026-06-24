@@ -13,7 +13,7 @@ export function UpdatesTimeline({ updates }: { updates: ElectionUpdate[] }) {
 
   const renderChannel = (title: string, channelUpdates: ElectionUpdate[]) => (
     <div className="flex-1 min-w-0">
-      <h3 className="text-sm font-bold text-foreground mb-6 pb-2 border-b border-gray-200 dark:border-news-border">{title}</h3>
+      <h3 className="text-sm font-medium text-foreground mb-6 pb-2 border-b border-gray-200 dark:border-news-border">{title}</h3>
       
       <div className="relative">
         {/* Vertical Timeline Line */}
@@ -35,7 +35,7 @@ export function UpdatesTimeline({ updates }: { updates: ElectionUpdate[] }) {
               {/* Content */}
               <div className="flex flex-col items-start w-full">
                 {update.title && (
-                  <h4 className="font-bold text-base text-foreground mb-1 leading-tight">
+                  <h4 className="font-medium text-base text-foreground mb-1 leading-relaxed">
                     {update.title}
                   </h4>
                 )}

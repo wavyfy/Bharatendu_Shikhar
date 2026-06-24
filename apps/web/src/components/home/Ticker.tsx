@@ -8,8 +8,8 @@ export function Ticker({ articles = [] }: { articles?: ArticleWithAuthor[] }) {
     <div className="sticky top-0 z-50 w-full bg-news-bg dark:bg-news-bg py-2 mb-0 shadow-sm">
       <div className="max-w-[1400px] mx-auto px-4">
         <div className="flex items-stretch text-xs">
-        <div className="bg-red-600 text-white font-bold px-4 py-2 uppercase tracking-wide z-10 shadow-[2px_0_5px_rgba(0,0,0,0.2)]">
-          BREAKING NEWS
+        <div className="bg-red-600 text-white font-bold px-4 py-2.5 uppercase tracking-wide z-10 shadow-[2px_0_5px_rgba(0,0,0,0.2)]">
+          ब्रेकिंग न्यूज़
         </div>
         <div className="bg-red-600 text-white flex-1 overflow-hidden flex items-center relative">
           <div className="animate-marquee-ltr flex w-max hover:[animation-play-state:paused]">
@@ -22,7 +22,7 @@ export function Ticker({ articles = [] }: { articles?: ArticleWithAuthor[] }) {
                   </Link>
                 ))
               ) : (
-                <span className="font-medium text-[13px] whitespace-nowrap">Stay tuned for the latest news and updates.</span>
+                <span className="font-medium text-[13px] whitespace-nowrap">नवीनतम समाचार और अपडेट के लिए बने रहें।</span>
               )}
             </div>
             <div className="flex shrink-0 gap-10 pr-10 items-center" aria-hidden="true">
@@ -34,7 +34,7 @@ export function Ticker({ articles = [] }: { articles?: ArticleWithAuthor[] }) {
                   </Link>
                 ))
               ) : (
-                <span className="font-medium text-[13px] whitespace-nowrap">Stay tuned for the latest news and updates.</span>
+                <span className="font-medium text-[13px] whitespace-nowrap">नवीनतम समाचार और अपडेट के लिए बने रहें।</span>
               )}
             </div>
           </div>

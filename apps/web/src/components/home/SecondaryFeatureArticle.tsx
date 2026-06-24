@@ -15,7 +15,7 @@ export function SecondaryFeatureArticle({ article }: { article?: ArticleWithAuth
     <Link href={`/article/${article.slug}`} className="block group/article hover:translate-y-[-2px] transition-all duration-300 rounded-[2px] overflow-hidden">
       <article className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className={`order-2 lg:order-1 flex flex-col h-full ${article.featured_image ? "lg:col-span-7" : "lg:col-span-12"}`}>
-          <h3 className="font-playfair font-bold text-[29px] leading-tight mb-4 pr-4 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+          <h3 className="font-medium text-[29px] leading-relaxed mb-4 pr-4 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
             {article.title}
           </h3>
           {article.excerpt && (
