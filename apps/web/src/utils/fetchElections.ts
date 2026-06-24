@@ -1,15 +1,10 @@
-import { createSupabaseServerClient } from "@repo/api";
+import { supabase } from "@repo/api";
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
-import { cookies } from "next/headers";
+const IS_DEV = process.env.NODE_ENV === "development";
 
-export async function getElections(options: { limit?: number, regionId?: string, status?: string } = {}) {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-  
+async function _getElections(options: { limit?: number, regionId?: string, status?: string } = {}) {
   let query = supabase
     .from("elections")
     .select(`
@@ -36,16 +31,11 @@ export async function getElections(options: { limit?: number, regionId?: string,
     console.error("Error fetching elections:", error.message);
     return [];
   }
-  return data as Record<string, unknown>[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return data as any[];
 }
 
-export async function getElectionBySlug(slug: string) {
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
+async function _getElectionBySlug(slug: string) {
   const decodedSlug = decodeURIComponent(slug);
   const { data, error } = await supabase
     .from("elections")
@@ -84,7 +74,8 @@ export async function getElectionBySlug(slug: string) {
     ...data,
     groups: groups?.map(g => ({
       ...g,
-      candidates: g.candidates.sort((a: { sort_order?: number; votes?: number }, b: { sort_order?: number; votes?: number }) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      candidates: g.candidates.sort((a: any, b: any) => {
         const orderA = a.sort_order || 0;
         const orderB = b.sort_order || 0;
         if (orderA !== orderB) return orderA - orderB;
@@ -94,3 +85,6 @@ export async function getElectionBySlug(slug: string) {
     updates: updates || []
   };
 }
+
+export const getElections = IS_DEV ? cache(_getElections) : unstable_cache(cache(_getElections), ["getElections"], { revalidate: 60, tags: ["elections"] });
+export const getElectionBySlug = IS_DEV ? cache(_getElectionBySlug) : unstable_cache(cache(_getElectionBySlug), ["getElectionBySlug"], { revalidate: 60, tags: ["elections"] });

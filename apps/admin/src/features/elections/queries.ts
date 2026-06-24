@@ -31,7 +31,8 @@ export async function getElections(options: { search?: string, status?: string, 
     throw new Error("Failed to fetch elections");
   }
 
-  return { elections: data as Record<string, unknown>[], count: count || 0 };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return { elections: data as any[], count: count || 0 };
 }
 
 export async function getElectionById(id: string) {
@@ -45,7 +46,8 @@ export async function getElectionById(id: string) {
     .single();
 
   if (error) throw error;
-  return data as Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return data as any;
 }
 
 export async function getElectionGroups(electionId: string) {
@@ -57,7 +59,8 @@ export async function getElectionGroups(electionId: string) {
     .order("created_at", { ascending: true });
 
   if (error) throw error;
-  return data as Record<string, unknown>[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return data as any[];
 }
 
 export async function getElectionCandidates(groupId: string) {
@@ -69,7 +72,8 @@ export async function getElectionCandidates(groupId: string) {
     .order("created_at", { ascending: true });
 
   if (error) throw error;
-  return data as Record<string, unknown>[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return data as any[];
 }
 
 export async function getElectionUpdates(electionId: string) {
@@ -80,5 +84,6 @@ export async function getElectionUpdates(electionId: string) {
     .order("created_at", { ascending: false });
 
   if (error) throw error;
-  return data as Record<string, unknown>[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return data as any[];
 }
