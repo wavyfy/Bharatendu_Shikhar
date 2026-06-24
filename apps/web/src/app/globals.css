@@ -111,6 +111,14 @@ body.translated-ltr h6 {
   letter-spacing: normal !important;
 }
 
+/* Custom Translation Overrides */
+html.translated-ltr .show-in-hi {
+  display: none !important;
+}
+html:not(.translated-ltr) .show-in-en {
+  display: none !important;
+}
+
 /* Fallback Typography Styles for Rich Editor Content */
 .prose {
   font-weight: 400;

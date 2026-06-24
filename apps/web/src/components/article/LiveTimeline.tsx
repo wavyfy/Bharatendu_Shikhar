@@ -19,7 +19,7 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
     <div className="mt-0">
       <div className="flex items-center gap-3 mb-8">
         <div className="w-3.5 h-3.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
-        <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-wider text-black dark:text-white">Live Updates</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-wider text-black dark:text-white">लाइव अपडेट्स</h2>
       </div>
       
       <div className="relative">
@@ -39,12 +39,12 @@ export function LiveTimeline({ updates }: { updates: LiveUpdate[] }) {
 
             {/* Content */}
             <div className="flex flex-col items-start w-full">
-              <h2 className="text-2xl md:text-3xl font-medium text-black dark:text-white leading-relaxed mb-3">
+              <h2 className="text-2xl md:text-3xl font-medium text-black dark:text-white leading-relaxed mb-1">
                 {update.headline}
               </h2>
 
               <div
-                className="prose prose-lg md:prose-[21px] max-w-none w-full dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-a:text-red-600 dark:prose-a:text-news-accent"
+                className="prose prose-lg md:prose-[21px] max-w-none w-full dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-p:leading-[1.8] prose-p:mt-0 prose-a:text-red-600 dark:prose-a:text-news-accent"
                 dangerouslySetInnerHTML={{ __html: sanitize(update.content) }}
               />
               
