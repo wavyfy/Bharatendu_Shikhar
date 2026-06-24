@@ -119,7 +119,7 @@ export default async function ElectionsListingPage({ searchParams }: { searchPar
           {/* Live Elections */}
           {liveElections.length > 0 && (
             <section>
-              <h2 className="text-2xl font-medium mb-4 flex items-center gap-2">
+              <h2 className="text-2xl font-medium mb-4 flex items-center gap-2 capitalize">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
                 अभी लाइव
               </h2>

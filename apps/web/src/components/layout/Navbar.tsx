@@ -38,6 +38,7 @@ export function Navbar({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isRegionsOpen, setIsRegionsOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const { lang: translateLang, toggle: toggleTranslate } = useTranslateToggle();
   const { openSearch } = useSearch();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -298,14 +299,40 @@ export function Navbar({
                        </span>
                        चुनाव
                      </Link>
-                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>होम</Link>
-                     <Link href="/politics" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/politics' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Politics</Link>
-                     <Link href="/entertainment" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/entertainment' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Entertainment</Link>
-                     <Link href="/sports" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] transition-colors ${pathname === '/sports' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>Sports</Link>
+                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] capitalize transition-colors ${pathname === '/' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>होम</Link>
+                     
+                     <div className="border-b border-gray-300 dark:border-news-border">
+                       <button onClick={() => setIsCategoriesOpen(!isCategoriesOpen)} className="w-full py-4 flex justify-between items-center font-medium text-[16px] capitalize dark:text-news-text hover:text-red-600 transition-colors">
+                         श्रेणियां
+                         <ChevronDown size={20} strokeWidth={1.5} className={`transition-transform duration-300 ${isCategoriesOpen ? 'rotate-180' : ''}`} />
+                       </button>
+                       <AnimatePresence>
+                         {isCategoriesOpen && (
+                           <motion.div 
+                             initial={{ height: 0, opacity: 0 }}
+                             animate={{ height: "auto", opacity: 1 }}
+                             exit={{ height: 0, opacity: 0 }}
+                             transition={{ duration: 0.2 }}
+                             className="flex flex-col pb-2 overflow-hidden"
+                           >
+                             {navCategories.map((category, idx) => {
+                               const targetPath = `/${category.slug}`;
+                               const isCurrentPage = pathname === targetPath;
+                               return (
+                                 <Link key={category.slug} href={targetPath} onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 px-2 border-b border-gray-300 dark:border-news-border hover:text-black dark:hover:text-white transition-colors ${idx === navCategories.length - 1 ? 'border-b-0' : ''} ${isCurrentPage ? 'text-red-600 dark:text-news-accent font-medium' : 'text-gray-600 dark:text-news-text-secondary'}`}>
+                                   {category.name}
+                                 </Link>
+                               );
+                             })}
+                           </motion.div>
+                         )}
+                       </AnimatePresence>
+                     </div>
                      
                      <div className="border-b border-black dark:border-news-border">
-                       <button onClick={() => setIsRegionsOpen(!isRegionsOpen)} className="w-full py-4 flex justify-between items-center font-medium text-[16px] dark:text-news-text hover:text-red-600 transition-colors">
-                         Regions
+                       <button onClick={() => setIsRegionsOpen(!isRegionsOpen)} className="w-full py-4 flex justify-between items-center font-medium text-[16px] capitalize dark:text-news-text hover:text-red-600 transition-colors">
+                         <span className="show-in-hi">क्षेत्र</span>
+                         <span className="show-in-en" translate="no">Regions</span>
                          <ChevronDown size={20} strokeWidth={1.5} className={`transition-transform duration-300 ${isRegionsOpen ? 'rotate-180' : ''}`} />
                        </button>
                        <AnimatePresence>

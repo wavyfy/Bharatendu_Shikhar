@@ -15,7 +15,7 @@ export function RegionSelect({
   return (
     <div className="relative w-full md:w-48">
       <select 
-        className="w-full px-4 py-2.5 text-sm font-medium border-2 border-gray-200 dark:border-news-border rounded-sm bg-card text-foreground appearance-none cursor-pointer hover:border-gray-300 dark:hover:border-gray-700 transition-colors focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        className="w-full px-4 py-2.5 text-sm font-medium border-2 border-gray-200 dark:border-news-border rounded-sm bg-white dark:bg-news-card text-black dark:text-news-text appearance-none cursor-pointer hover:border-gray-300 dark:hover:border-gray-700 transition-colors focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 capitalize"
         defaultValue={defaultRegionId}
         onChange={(e) => {
           const val = e.target.value;
