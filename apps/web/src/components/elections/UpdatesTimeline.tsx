@@ -40,7 +40,7 @@ export function UpdatesTimeline({ updates }: { updates: ElectionUpdate[] }) {
                   </h4>
                 )}
                 <div 
-                  className="prose prose-sm max-w-none w-full dark:prose-invert prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-red-600 dark:prose-a:text-news-accent" 
+                  className="prose prose-sm max-w-none w-full dark:prose-invert prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mt-0 prose-a:text-red-600 dark:prose-a:text-news-accent" 
                   dangerouslySetInnerHTML={{ __html: sanitize(update.content) }} 
                 />
               </div>
