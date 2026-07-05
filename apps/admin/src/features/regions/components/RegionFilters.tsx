@@ -6,9 +6,10 @@ import { SearchInput } from "@/components/ui/SearchInput";
 
 interface RegionFiltersProps {
   currentStatus: string;
+  currentLevel?: string;
 }
 
-export function RegionFilters({ currentStatus }: RegionFiltersProps) {
+export function RegionFilters({ currentStatus, currentLevel = "" }: RegionFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
@@ -35,31 +36,60 @@ export function RegionFilters({ currentStatus }: RegionFiltersProps) {
 
   return (
     <div className="flex flex-col w-full">
-      <div className="flex items-center gap-6 px-4 pt-4">
-        <button
-          onClick={() => setFilter("status", "")}
-          className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-            currentStatus === "" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
-          }`}
-        >
-          All
-        </button>
-        <button
-          onClick={() => setFilter("status", "active")}
-          className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-            currentStatus === "active" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
-          }`}
-        >
-          Active
-        </button>
-        <button
-          onClick={() => setFilter("status", "inactive")}
-          className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-            currentStatus === "inactive" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
-          }`}
-        >
-          Inactive
-        </button>
+      <div className="flex items-center justify-between px-4 pt-2">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setFilter("status", "")}
+            className={`py-3 px-1 -mb-px text-sm font-medium border-b-2 transition-colors ${
+              currentStatus === "" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+            }`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => setFilter("status", "active")}
+            className={`py-3 px-1 -mb-px text-sm font-medium border-b-2 transition-colors ${
+              currentStatus === "active" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+            }`}
+          >
+            Active
+          </button>
+          <button
+            onClick={() => setFilter("status", "inactive")}
+            className={`py-3 px-1 -mb-px text-sm font-medium border-b-2 transition-colors ${
+              currentStatus === "inactive" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+            }`}
+          >
+            Inactive
+          </button>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setFilter("level", "countries")}
+            className={`py-3 px-1 -mb-px text-sm font-medium border-b-2 transition-colors ${
+              currentLevel === "countries" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+            }`}
+          >
+            Countries
+          </button>
+          <button
+            onClick={() => setFilter("level", "states")}
+            className={`py-3 px-1 -mb-px text-sm font-medium border-b-2 transition-colors ${
+              currentLevel === "states" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+            }`}
+          >
+            States
+          </button>
+          <button
+            onClick={() => setFilter("level", "cities")}
+            className={`py-3 px-1 -mb-px text-sm font-medium border-b-2 transition-colors ${
+              currentLevel === "cities" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+            }`}
+          >
+            Cities
+          </button>
+        </div>
       </div>
       
       <div className="p-4">

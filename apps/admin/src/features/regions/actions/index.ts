@@ -49,6 +49,7 @@ export async function createRegionAction(input: CreateRegionInput) {
         name: validatedData.name,
         slug,
         is_active: validatedData.is_active ?? true,
+        parent_id: validatedData.parent_id ?? null,
       } as never)
       .select("id")
       .single();
@@ -57,10 +58,11 @@ export async function createRegionAction(input: CreateRegionInput) {
 
     revalidatePath("/regions");
     return { success: true, regionId: (data as { id: number })?.id };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Create region error:", error);
-    let message = error?.message || "Failed to create region";
-    if (error?.code === '23505') message = "A region with this name already exists.";
+    const err = error as { message?: string; code?: string };
+    let message = err?.message || "Failed to create region";
+    if (err?.code === '23505') message = "A region with this name already exists.";
     return { success: false, error: message };
   }
 }
@@ -95,10 +97,11 @@ export async function updateRegionAction(id: number, input: UpdateRegionInput) {
 
     revalidatePath("/regions");
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Update region error:", error);
-    let message = error?.message || "Failed to update region";
-    if (error?.code === '23505') message = "A region with this name already exists.";
+    const err = error as { message?: string; code?: string };
+    let message = err?.message || "Failed to update region";
+    if (err?.code === '23505') message = "A region with this name already exists.";
     return { success: false, error: message };
   }
 }

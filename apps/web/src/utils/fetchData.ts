@@ -118,8 +118,21 @@ async function _fetchNavbarData() {
       .order("id", { ascending: true }),
   ]);
 
+  const allRegions = regionsResponse.data || [];
+  
+  const buildRegionTree = (regions: any[], parentId: number | null = null): any[] => {
+    return regions
+      .filter((r) => r.parent_id === parentId)
+      .map((r) => ({
+        ...r,
+        subRegions: buildRegionTree(regions, r.id),
+      }));
+  };
+
+  const regionsWithSub = buildRegionTree(allRegions);
+
   return {
-    regions: regionsResponse.data || [],
+    regions: regionsWithSub,
     categories: categoriesResponse.data || [],
   };
 }

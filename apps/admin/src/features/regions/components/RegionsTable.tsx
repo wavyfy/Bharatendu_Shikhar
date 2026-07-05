@@ -9,7 +9,7 @@ import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { ActionMenu } from "@/components/ui/ActionMenu";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { Pencil, Trash2, Ban, CheckCircle } from "lucide-react";
+import { Pencil, Trash2, Ban, CheckCircle, Plus } from "lucide-react";
 
 interface RegionsTableProps {
   regions: RegionRow[];
@@ -82,58 +82,73 @@ export function RegionsTable({ regions }: RegionsTableProps) {
     <div className="w-full min-w-full p-5">
       <div className="overflow-x-auto rounded-xl border border-outline-variant">
         <table className="w-full text-sm text-left">
-        <thead className="bg-surface-container-high border-b border-outline-variant text-on-surface-variant uppercase text-xs font-bold tracking-wider">
-          <tr>
-            <th className="px-6 py-3 w-16 font-medium">S.No.</th>
-            <th className="px-6 py-3 font-medium">Name</th>
-            <th className="px-6 py-3 font-medium">Slug</th>
-            <th className="px-6 py-3 font-medium">Status</th>
-            <th className="px-6 py-3 font-medium">Created</th>
-            <th className="px-6 py-3 font-medium text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-outline-variant bg-surface">
-          {regions.map((region, index) => (
-            <tr key={region.id} className="hover:bg-surface-container-low transition-colors">
-              <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-medium">{serialStart + index + 1}</td>
-              <td className="px-6 py-4 font-medium text-gray-900 dark:text-slate-100">{region.name}</td>
-              <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-mono text-xs">{region.slug}</td>
-              <td className="px-6 py-4">
-                <StatusBadge variant={region.is_active ? "active" : "inactive"} />
-              </td>
-              <td className="px-6 py-4 text-gray-500 dark:text-slate-400">
-                {new Date(region.created_at).toLocaleDateString()}
-              </td>
-              <td className="px-6 py-4 text-right">
-                <ActionMenu
-                  items={[
-                    {
-                      label: "Edit",
-                      icon: <Pencil strokeWidth={1.5} />,
-                      href: `/regions/${region.id}/edit`,
-                      disabled: isPending,
-                    },
-                    {
-                      label: region.is_active ? "Deactivate" : "Reactivate",
-                      icon: region.is_active ? <Ban strokeWidth={1.5} /> : <CheckCircle strokeWidth={1.5} />,
-                      onClick: () => handleToggleActive(region),
-                      variant: region.is_active ? "danger" : "default",
-                      disabled: isPending,
-                    },
-                    {
-                      label: "Delete",
-                      icon: <Trash2 strokeWidth={1.5} />,
-                      onClick: () => handleDelete(region),
-                      variant: "danger",
-                      disabled: isPending,
-                    },
-                  ]}
-                />
-              </td>
+          <thead className="bg-surface-container-high border-b border-outline-variant text-on-surface-variant uppercase text-xs font-bold tracking-wider">
+            <tr>
+              <th className="px-6 py-3 w-16 font-medium">S.No.</th>
+              <th className="px-6 py-3 font-medium">Name</th>
+              <th className="px-6 py-3 font-medium">Slug</th>
+              <th className="px-6 py-3 font-medium">Parent</th>
+              <th className="px-6 py-3 font-medium">Status</th>
+              <th className="px-6 py-3 font-medium">Created</th>
+              <th className="px-6 py-3 font-medium text-right">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-outline-variant bg-surface">
+            {regions.map((region, index) => {
+              const actions: React.ComponentProps<typeof ActionMenu>["items"] = [
+                {
+                  label: "Edit",
+                  icon: <Pencil strokeWidth={1.5} />,
+                  href: `/regions/${region.id}/edit`,
+                  disabled: isPending,
+                },
+                {
+                  label: "Create Sub Region",
+                  icon: <Plus strokeWidth={1.5} />,
+                  href: `/regions/new?parent_id=${region.id}`,
+                  disabled: isPending,
+                },
+                {
+                  label: region.is_active ? "Deactivate" : "Reactivate",
+                  icon: region.is_active ? <Ban strokeWidth={1.5} /> : <CheckCircle strokeWidth={1.5} />,
+                  onClick: () => handleToggleActive(region),
+                  variant: region.is_active ? "danger" : "default",
+                  disabled: isPending,
+                },
+                {
+                  label: "Delete",
+                  icon: <Trash2 strokeWidth={1.5} />,
+                  onClick: () => handleDelete(region),
+                  variant: "danger",
+                  disabled: isPending,
+                }
+              ];
+
+              // We don't have access to ALL regions here to map parent_id to name reliably
+              // since this is a paginated list. So we just show the ID or fetch it elsewhere.
+              // For simplicity, we just display the parent_id if it exists.
+              return (
+                <tr key={region.id} className="hover:bg-surface-container-low transition-colors">
+                  <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-medium">{serialStart + index + 1}</td>
+                  <td className="px-6 py-4 font-medium text-gray-900 dark:text-slate-100">{region.name}</td>
+                  <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-mono text-xs">{region.slug}</td>
+                  <td className="px-6 py-4 text-gray-500 dark:text-slate-400 text-xs">
+                    {Array.isArray(region.parent) ? region.parent[0]?.name : region.parent?.name || (region.parent_id ? `ID: ${region.parent_id}` : "-")}
+                  </td>
+                  <td className="px-6 py-4">
+                    <StatusBadge variant={region.is_active ? "active" : "inactive"} />
+                  </td>
+                  <td className="px-6 py-4 text-gray-500 dark:text-slate-400">
+                    {new Date(region.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <ActionMenu items={actions} />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );

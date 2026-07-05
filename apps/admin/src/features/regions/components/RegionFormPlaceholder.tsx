@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createRegionAction, updateRegionAction } from "../actions";
 import type { RegionRow } from "../types";
 import { Button } from "@/components/ui/Button";
@@ -10,20 +10,59 @@ import { FormSection } from "@/components/ui/FormSection";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Switch } from "@/components/ui/Switch";
+import { Select } from "@/components/ui/Select";
 import { motion } from "framer-motion";
 
 interface RegionFormProps {
   initialData?: RegionRow;
+  parentRegions?: RegionRow[];
 }
 
-export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
+export function RegionFormPlaceholder({ initialData, parentRegions = [] }: RegionFormProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  const defaultParentId = initialData?.parent_id?.toString() || searchParams?.get("parent_id") || "";
+  const [parentId, setParentId] = useState<string>(defaultParentId);
   const [, startTransition] = useTransition();
 
   const isEditing = !!initialData;
+
+  const getHierarchicalOptions = (
+    regions: RegionRow[], 
+    currentParentId: number | null = null, 
+    depth: number = 0
+  ): { label: string, value: string }[] => {
+    // Cities are at depth 2, and they cannot be parents.
+    if (depth >= 2) return [];
+
+    let options: { label: string, value: string }[] = [];
+    const children = regions.filter(r => r.parent_id === currentParentId);
+    
+    children.forEach((child, index) => {
+      let prefixStr = "";
+      if (depth === 0) {
+        prefixStr = `${index + 1}. `;
+      } else if (depth === 1) {
+        const letter = String.fromCharCode(97 + index);
+        prefixStr = `\u00A0\u00A0\u00A0\u00A0${letter}. `;
+      }
+      
+      const displayLabel = prefixStr + child.name;
+      options.push({ label: displayLabel, value: child.id.toString() });
+      options = options.concat(getHierarchicalOptions(regions, child.id, depth + 1));
+    });
+    
+    return options;
+  };
+
+  const formattedOptions = [
+    { label: "None (Top-level region)", value: "" },
+    ...getHierarchicalOptions(parentRegions)
+  ];
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,7 +73,9 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
     const name = formData.get("name") as string;
     const is_active = formData.get("is_active") === "on";
     const seo_description = formData.get("seo_description") as string | null;
-    const payload = { name, is_active, seo_description: seo_description || null };
+    const parent_id_str = formData.get("parent_id") as string;
+    const parent_id = parent_id_str ? parseInt(parent_id_str, 10) : null;
+    const payload = { name, is_active, seo_description: seo_description || null, parent_id };
 
     startTransition(async () => {
       const result = isEditing && initialData
@@ -86,6 +127,21 @@ export function RegionFormPlaceholder({ initialData }: RegionFormProps) {
                   defaultValue={initialData?.name}
                 />
                 <p className="text-xs text-slate-500">Slug will be generated automatically.</p>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="parent_id" className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Parent Region
+                </label>
+                <input type="hidden" name="parent_id" value={parentId} />
+                <Select
+                  value={parentId}
+                  onChange={setParentId}
+                  options={formattedOptions}
+                  placeholder="Select a parent region..."
+                  disabled={loading}
+                />
+                <p className="text-xs text-slate-500">Optional. Select a country for a state, or a state for a city.</p>
               </div>
 
               <div className="flex flex-col gap-1.5">

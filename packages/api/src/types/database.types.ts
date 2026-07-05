@@ -604,6 +604,7 @@ export type Database = {
           is_active: boolean
           name: string
           slug: string
+          parent_id: number | null
         }
         Insert: {
           created_at?: string | null
@@ -611,6 +612,7 @@ export type Database = {
           is_active?: boolean
           name: string
           slug: string
+          parent_id?: number | null
         }
         Update: {
           created_at?: string | null
@@ -618,6 +620,7 @@ export type Database = {
           is_active?: boolean
           name?: string
           slug?: string
+          parent_id?: number | null
         }
         Relationships: []
       }

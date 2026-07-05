@@ -18,6 +18,76 @@ function getImageUrl(path: string | null): string | null {
   return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${path}`;
 }
 
+interface NavRegion {
+  name: string;
+  slug: string;
+  subRegions?: NavRegion[];
+}
+
+function MobileRegionItem({ 
+  region, 
+  isLast, 
+  pathname, 
+  onClose, 
+  depth = 0 
+}: { 
+  region: NavRegion; 
+  isLast: boolean; 
+  pathname: string; 
+  onClose: () => void; 
+  depth?: number;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const targetPath = `/${region.slug}`;
+  const isCurrentPage = pathname === targetPath.toLowerCase();
+  const hasSubRegions = region.subRegions && region.subRegions.length > 0;
+
+  return (
+    <div className={`border-gray-300 dark:border-news-border ${!isLast ? 'border-b' : ''}`}>
+      <div className="flex justify-between items-center pr-2">
+        <Link 
+          href={targetPath} 
+          onClick={onClose} 
+          className={`flex-1 py-4 hover:text-black dark:hover:text-white transition-colors ${isCurrentPage ? 'text-red-600 dark:text-news-accent font-medium' : 'text-gray-600 dark:text-news-text-secondary'}`}
+          style={{ paddingLeft: `${(depth * 1) + 0.5}rem` }}
+        >
+          {region.name}
+        </Link>
+        {hasSubRegions && (
+          <button 
+            onClick={() => setIsOpen(!isOpen)} 
+            className="p-3 text-gray-500 hover:text-red-600 dark:text-news-text-secondary transition-colors"
+          >
+            <ChevronDown size={18} className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+          </button>
+        )}
+      </div>
+      <AnimatePresence>
+        {hasSubRegions && isOpen && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col overflow-hidden"
+          >
+            {region.subRegions?.map((subRegion: NavRegion, idx: number) => (
+              <MobileRegionItem 
+                key={subRegion.slug}
+                region={subRegion}
+                isLast={idx === (region.subRegions?.length || 0) - 1}
+                pathname={pathname}
+                onClose={onClose}
+                depth={depth + 1}
+              />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function Navbar({ 
   categories = [],
   topArticles = [],
@@ -28,7 +98,7 @@ export function Navbar({
 }: { 
   categories?: TopicCategoryData[],
   topArticles?: ArticleWithAuthor[],
-  navRegions?: { name: string, slug: string }[],
+  navRegions?: { name: string, slug: string, subRegions?: { name: string, slug: string }[] }[],
   navCategories?: { name: string, slug: string }[],
   logoUrl?: string | null,
   logoDarkUrl?: string | null
@@ -61,21 +131,66 @@ export function Navbar({
     setLastActiveMenu(activeMenu);
   }
 
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = decodeURIComponent(rawPathname.endsWith('/') && rawPathname.length > 1 ? rawPathname.slice(0, -1) : rawPathname).trim().toLowerCase();
+
+  let activeNavRegions = navRegions;
+  
+  const indiaRegion = navRegions.find(r => r.name.includes("भारत") || r.name.toLowerCase().includes("india"));
+
+  type NavRegionType = typeof navRegions[0];
+
+  function findActiveContext(regions: NavRegionType[], currentPath: string, siblings: NavRegionType[], depth: number = 1): NavRegionType[] | null {
+    for (const r of regions) {
+      const cleanSlug = r.slug ? r.slug.replace(/^\/+/, '') : '';
+      const regionPath = decodeURIComponent(`/${cleanSlug}`).trim().toLowerCase();
+      if (regionPath === currentPath) {
+        if (depth === 1) {
+          // It's a Country (e.g. India). Show its states.
+          return r.subRegions as NavRegionType[] || [];
+        }
+        if (depth === 2) {
+          // It's a State. Show its cities (even if there are none, show empty).
+          return r.subRegions as NavRegionType[] || [];
+        }
+        if (depth >= 3) {
+          // It's a City. Show its sibling cities.
+          return siblings;
+        }
+      }
+      if (r.subRegions && r.subRegions.length > 0) {
+        const found = findActiveContext(r.subRegions as NavRegionType[], currentPath, r.subRegions as NavRegionType[], depth + 1);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  const contextRegions = findActiveContext(navRegions, pathname, navRegions);
+
+  if (contextRegions) {
+    activeNavRegions = contextRegions;
+  } else if (indiaRegion && indiaRegion.subRegions && indiaRegion.subRegions.length > 0) {
+    activeNavRegions = indiaRegion.subRegions as NavRegionType[];
+  }
 
   const VISIBLE_COUNT = 7;
-  const visibleRegions = navRegions.slice(0, VISIBLE_COUNT - 1);
-  const dropdownRegions = navRegions.slice(VISIBLE_COUNT - 1);
+  const visibleRegions = activeNavRegions.slice(0, VISIBLE_COUNT - 1);
+  const dropdownRegions = activeNavRegions.slice(VISIBLE_COUNT - 1);
 
   const visibleLinks = [
     { name: "Home", slug: "" },
-    ...visibleRegions.map(r => ({ name: r.name, slug: r.slug }))
+    ...visibleRegions.map(r => ({ name: r.name, slug: r.slug ? decodeURIComponent(r.slug).trim().replace(/^\/+/, '') : "" }))
   ];
 
-  const dropdownLinks = [
-    ...dropdownRegions.map(r => ({ name: r.name, slug: r.slug })),
-    ...navCategories.map(c => ({ name: c.name, slug: c.slug }))
+  const rawDropdownLinks = [
+    ...(activeNavRegions !== navRegions ? navRegions.map(r => ({ name: r.name, slug: r.slug ? r.slug.replace(/^\/+/, '') : "" })) : []),
+    ...dropdownRegions.map(r => ({ name: r.name, slug: r.slug ? r.slug.replace(/^\/+/, '') : "" })),
+    ...navCategories.map(c => ({ name: c.name, slug: c.slug ? c.slug.replace(/^\/+/, '') : "" }))
   ];
+
+  // Deduplicate by slug to ensure we don't show the same link twice
+  const dropdownLinks = Array.from(new Map(rawDropdownLinks.map(l => [l.slug, l])).values());
 
   const getArticlesForLink = (linkName: string) => {
     if (linkName === "Home") return topArticles;
@@ -173,6 +288,25 @@ export function Navbar({
                     ))}
                   </div>
                 </div>
+
+                {(() => {
+                  const targetRegion = navRegions.find(r => r.name === targetMenu);
+                  if (targetRegion && targetRegion.subRegions && targetRegion.subRegions.length > 0) {
+                    return (
+                      <div className="mt-8 border-t border-gray-200 dark:border-news-border pt-6">
+                        <h5 className="font-bold text-[16px] mb-4 text-red-600 dark:text-news-accent uppercase tracking-wider">उप-क्षेत्र</h5>
+                        <div className="flex flex-wrap gap-x-6 gap-y-3">
+                          {targetRegion.subRegions.map(sub => (
+                            <Link key={sub.slug} href={`/${sub.slug}`} className="text-gray-700 dark:text-news-text hover:text-red-600 dark:hover:text-news-accent text-[15px] font-medium transition-colors">
+                              {sub.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
                 
                 <div className="absolute bottom-4 right-6 flex gap-2">
                   <button 
@@ -344,15 +478,15 @@ export function Navbar({
                              transition={{ duration: 0.2 }}
                              className="flex flex-col pb-2 overflow-hidden"
                            >
-                             {navRegions.map((region, idx) => {
-                               const targetPath = `/${region.slug}`;
-                               const isCurrentPage = pathname === targetPath;
-                               return (
-                                 <Link key={region.slug} href={targetPath} onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 px-2 border-b border-gray-300 dark:border-news-border hover:text-black dark:hover:text-white transition-colors ${idx === navRegions.length - 1 ? 'border-b-0' : ''} ${isCurrentPage ? 'text-red-600 dark:text-news-accent font-medium' : 'text-gray-600 dark:text-news-text-secondary'}`}>
-                                   {region.name}
-                                 </Link>
-                               );
-                             })}
+                             {navRegions.map((region, idx) => (
+                               <MobileRegionItem 
+                                 key={region.slug}
+                                 region={region}
+                                 isLast={idx === navRegions.length - 1}
+                                 pathname={pathname}
+                                 onClose={() => setIsMobileMenuOpen(false)}
+                               />
+                             ))}
                            </motion.div>
                          )}
                        </AnimatePresence>
@@ -413,7 +547,7 @@ export function Navbar({
           <div className="flex gap-6 items-center h-full">
             {visibleLinks.map((link) => {
               const targetPath = link.slug === "" ? "/" : `/${link.slug}`;
-              const isCurrentPage = pathname === targetPath;
+              const isCurrentPage = pathname === targetPath.toLowerCase();
               const isActiveOrHover = activeMenu === link.name || isCurrentPage;
 
               return (
@@ -464,14 +598,14 @@ export function Navbar({
                     >
                       <div className="w-full">
                         <div className="bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-xl py-2 flex flex-col rounded-[2px]">
-                          {dropdownLinks.map(link => {
+                          {dropdownLinks.map((link, idx) => {
                             const targetPath = `/${link.slug}`;
                             const isCurrentPage = pathname === targetPath;
                             const isActiveOrHover = activeMenu === link.name || isCurrentPage;
                             
                             return (
                               <div 
-                                key={link.name} 
+                                key={`dropdown-${link.slug}-${idx}`} 
                                 className="relative"
                                 onMouseEnter={() => setActiveMenu(link.name)}
                               >
