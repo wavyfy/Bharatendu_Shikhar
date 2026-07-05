@@ -7,9 +7,10 @@ interface GetRegionsParams {
   limit?: number;
   search?: string;
   status?: string;
+  level?: string;
 }
 
-export async function getRegions({ page = 1, limit = 20, search, status }: GetRegionsParams = {}) {
+export async function getRegions({ page = 1, limit = 20, search, status, level }: GetRegionsParams = {}) {
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
     get: (name) => cookieStore.get(name)?.value,
@@ -34,6 +35,24 @@ export async function getRegions({ page = 1, limit = 20, search, status }: GetRe
     query = query.eq("is_active", false);
   }
 
+  if (level === "countries") {
+    query = query.is("parent_id", null);
+  } else if (level === "states") {
+    const { data: countries } = await supabase.from("regions").select("id").is("parent_id", null);
+    const countryIds = countries?.map(c => c.id) || [];
+    query = countryIds.length > 0 ? query.in("parent_id", countryIds) : query.eq("id", -1);
+  } else if (level === "cities") {
+    const { data: countries } = await supabase.from("regions").select("id").is("parent_id", null);
+    const countryIds = countries?.map(c => c.id) || [];
+    if (countryIds.length > 0) {
+      const { data: states } = await supabase.from("regions").select("id").in("parent_id", countryIds);
+      const stateIds = states?.map(s => s.id) || [];
+      query = stateIds.length > 0 ? query.in("parent_id", stateIds) : query.eq("id", -1);
+    } else {
+      query = query.eq("id", -1);
+    }
+  }
+
   const { data, count, error } = await query
     .order("created_at", { ascending: false })
     .range(from, to);
@@ -43,8 +62,27 @@ export async function getRegions({ page = 1, limit = 20, search, status }: GetRe
     throw new Error("Failed to fetch regions");
   }
 
+  const regions = data as RegionRow[];
+  const parentIds = [...new Set(regions.map(r => r.parent_id).filter(Boolean))] as number[];
+  
+  if (parentIds.length > 0) {
+    const { data: parents } = await supabase
+      .from("regions")
+      .select("id, name")
+      .in("id", parentIds);
+      
+    if (parents) {
+      const parentMap = new Map(parents.map(p => [p.id, { name: p.name }]));
+      regions.forEach(r => {
+        if (r.parent_id) {
+          r.parent = parentMap.get(r.parent_id) || null;
+        }
+      });
+    }
+  }
+
   return {
-    regions: data as RegionRow[],
+    regions,
     count: count ?? 0,
     totalPages: count ? Math.ceil(count / limit) : 0,
   };

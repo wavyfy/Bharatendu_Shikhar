@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 interface PageProps {
-  searchParams: Promise<{ page?: string; search?: string; status?: string }>;
+  searchParams: Promise<{ page?: string; search?: string; status?: string; level?: string }>;
 }
 
 async function RegionsContent({ searchParamsPromise }: { searchParamsPromise: PageProps["searchParams"] }) {
@@ -22,18 +22,20 @@ async function RegionsContent({ searchParamsPromise }: { searchParamsPromise: Pa
   const page = params?.page ? parseInt(params.page, 10) : 1;
   const search = params?.search || "";
   const status = params?.status || "";
+  const level = params?.level || "states";
 
   const { regions, count, totalPages } = await getRegions({
     page,
     limit: 10,
     search,
-    status
+    status,
+    level
   });
 
   return (
     <div className="cms-card animate-in fade-in duration-300">
       <div className="cms-card-header p-0">
-        <RegionFilters currentStatus={status} />
+        <RegionFilters currentStatus={status} currentLevel={level} />
       </div>
 
       <div className="px-5 py-3 border-t border-outline-variant">

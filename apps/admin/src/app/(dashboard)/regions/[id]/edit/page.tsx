@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { getSessionUser } from "@/utils/session";
 import { redirect } from "next/navigation";
 import { RegionFormPlaceholder } from "@/features/regions/components/RegionFormPlaceholder";
-import { getRegionById } from "@/features/regions/queries";
+import { getRegionById, getRegions } from "@/features/regions/queries";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
 import { FormSkeleton } from "@/components/skeletons/FormSkeleton";
 
@@ -26,9 +26,12 @@ async function EditRegionContent({ paramsPromise }: { paramsPromise: EditRegionP
   const region = await getRegionById(regionId);
   if (!region) redirect("/regions");
 
+  const { regions } = await getRegions({ limit: 100, status: "active" });
+  const parentRegions = regions.filter(r => r.id !== regionId);
+
   return (
     <div className="animate-in fade-in duration-300">
-      <RegionFormPlaceholder initialData={region} />
+      <RegionFormPlaceholder initialData={region} parentRegions={parentRegions} />
     </div>
   );
 }

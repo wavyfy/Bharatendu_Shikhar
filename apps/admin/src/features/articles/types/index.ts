@@ -23,6 +23,8 @@ export interface RegionRow {
   slug: string;
   is_active: boolean;
   seo_description: string | null;
+  parent_id: number | null;
+  parent?: { name: string } | null;
   created_at: string;
 }
 
