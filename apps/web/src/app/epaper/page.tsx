@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { supabase } from "@repo/api";
-import Image from "next/image";
+import { SafeImage } from "@/components/shared/SafeImage";
+import { FileText } from "lucide-react";
 import Link from "next/link";
 import { EpaperSkeleton } from "@/components/skeletons/EpaperSkeletons";
 import type { Metadata } from "next";
@@ -17,7 +18,7 @@ function getImageUrl(path: string | null): string | null {
 }
 
 async function EpaperContent({ page }: { page: number }) {
-  const limit = 12;
+  const limit = 20;
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
@@ -44,7 +45,7 @@ async function EpaperContent({ page }: { page: number }) {
             >
               <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card overflow-hidden border-b border-gray-200 dark:border-news-border">
                 {paper.thumbnail_url ? (
-                  <Image
+                  <SafeImage
                     src={getImageUrl(paper.thumbnail_url)!}
                     alt={paper.title}
                     fill
@@ -56,7 +57,7 @@ async function EpaperContent({ page }: { page: number }) {
                       <>
                         {settings?.site_logo_url && (
                           <div className={`relative w-full h-1/2 ${settings.site_logo_dark_url ? 'dark:hidden' : ''}`}>
-                            <Image
+                            <SafeImage
                               src={getImageUrl(settings.site_logo_url)!}
                               alt="Default Cover"
                               fill
@@ -66,7 +67,7 @@ async function EpaperContent({ page }: { page: number }) {
                         )}
                         {settings?.site_logo_dark_url && (
                           <div className={`relative w-full h-1/2 ${settings.site_logo_url ? 'hidden dark:block' : ''}`}>
-                            <Image
+                            <SafeImage
                               src={getImageUrl(settings.site_logo_dark_url)!}
                               alt="Default Cover (Dark)"
                               fill
@@ -77,7 +78,7 @@ async function EpaperContent({ page }: { page: number }) {
                       </>
                     ) : (
                       <div className="flex flex-col items-center text-gray-400">
-                        <span className="material-symbols-outlined text-4xl mb-2">picture_as_pdf</span>
+                        <FileText className="w-10 h-10 mb-2 opacity-80" />
                         <span className="text-sm font-medium">No Preview</span>
                       </div>
                     )}

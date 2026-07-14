@@ -153,10 +153,24 @@ export async function updateAdvertisementAction(id: string, formData: FormData) 
 
 export async function deleteAdvertisementAction(id: string) {
   await getAuth();
+  
+  // Fetch existing for cleanup
+  const { data: existing } = await supabaseAdmin
+    .from("advertisements")
+    .select("image_url")
+    .eq("id", id)
+    .single();
+    
   const { error } = await supabaseAdmin.from("advertisements").delete().eq("id", id);
   if (error) {
     return { success: false, error: error.message };
   }
+  
+  // Cleanup file
+  if (existing?.image_url) {
+    await deleteAdvertisementImageAction(existing.image_url);
+  }
+  
   revalidatePath("/advertisements");
   return { success: true };
 }
@@ -215,7 +229,7 @@ export async function deleteAdvertisementImageAction(url: string) {
     
     const filePath = pathParts.slice(bucketIndex + 1).join("/");
 
-    const { error } = await supabase.storage
+    const { error } = await supabaseAdmin.storage
       .from("advertisements")
       .remove([filePath]);
 

@@ -33,7 +33,7 @@ async function _fetchTickerArticles() {
   const { startISO, endISO } = getRecentDateRange();
   const { data } = await supabase
     .from("articles")
-    .select(`*, article_badges(badge:badges(id, name, slug, color))`)
+    .select(`*, categories(id, name, slug), article_badges(badge:badges(id, name, slug, color))`)
     .eq("status", "published")
     .gte("published_at", startISO)
     .lte("published_at", endISO)

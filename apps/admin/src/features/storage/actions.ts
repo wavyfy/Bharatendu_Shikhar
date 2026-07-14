@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { createSupabaseServerClient } from "@repo/api";
+import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import { randomUUID } from "crypto";
 
 async function getAuth() {
@@ -64,18 +64,23 @@ export async function deleteImageAction(url: string, bucket = "articles") {
 
 export async function deleteFileAction(url: string, bucket = "articles") {
   try {
-    const { supabase } = await getAuth();
+    await getAuth(); // Ensure user is authenticated
     if (!url) return { success: true }; // Nothing to delete
     
-    // Extract filename from the standard Supabase public URL
-    const parts = url.split("/");
-    const fileName = parts.pop();
+    const urlParts = new URL(url);
+    const pathParts = urlParts.pathname.split("/");
+    const bucketIndex = pathParts.findIndex(p => p === bucket);
     
-    if (!fileName) throw new Error("Invalid URL format");
+    if (bucketIndex === -1 || bucketIndex === pathParts.length - 1) {
+      // Fallback for some weird formats, but normally it should find the bucket
+      throw new Error("Invalid URL format");
+    }
+    
+    const filePath = pathParts.slice(bucketIndex + 1).join("/");
 
-    const { error } = await supabase.storage
+    const { error } = await supabaseAdmin.storage
       .from(bucket)
-      .remove([fileName]);
+      .remove([filePath]);
 
     if (error) throw error;
 

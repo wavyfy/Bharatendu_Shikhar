@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const srcDir = path.join(__dirname, 'apps/admin/src');
+const srcDir = process.argv[2] ? path.resolve(process.argv[2]) : path.join(__dirname, 'apps/admin/src');
 
 function walk(dir) {
   let results = [];

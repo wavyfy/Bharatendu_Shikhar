@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import { revalidatePath } from "next/cache";
 import { generateSlug } from "@/features/articles/utils/slug";
+import { deleteFileAction } from "@/features/storage/actions";
 
 const electionSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters").max(200),
@@ -177,12 +178,17 @@ export async function toggleElectionPublishAction(id: string, is_published: bool
 export async function deleteElectionAction(id: string) {
   try {
     await getAuth();
-    const { data: existing, error: fetchError } = await supabaseAdmin.from("elections").select("created_by").eq("id", id).single();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("elections").select("created_by, featured_image_url").eq("id", id).single();
     if (fetchError || !existing) throw new Error("Not found");
     
 
     const { error } = await supabaseAdmin.from("elections").delete().eq("id", id);
     if (error) throw error;
+    
+    if (existing.featured_image_url) {
+      await deleteFileAction(existing.featured_image_url as string, "articles").catch(console.error);
+    }
+    
     revalidatePath("/elections");
     return { success: true };
   } catch (error) {
@@ -309,12 +315,20 @@ export async function updateCandidateAction(id: string, electionId: string, form
 export async function deleteCandidateAction(id: string, electionId: string) {
   try {
     await getAuth();
-    const { data: existing, error: fetchError } = await supabaseAdmin.from("election_candidates").select("created_by").eq("id", id).single();
+    const { data: existing, error: fetchError } = await supabaseAdmin.from("election_candidates").select("created_by, photo_url, party_symbol_url").eq("id", id).single();
     if (fetchError || !existing) throw new Error("Not found");
     
 
     const { error } = await supabaseAdmin.from("election_candidates").delete().eq("id", id);
     if (error) throw error;
+    
+    if (existing.photo_url) {
+      await deleteFileAction(existing.photo_url as string, "articles").catch(console.error);
+    }
+    if (existing.party_symbol_url) {
+      await deleteFileAction(existing.party_symbol_url as string, "articles").catch(console.error);
+    }
+    
     revalidatePath(`/elections/${electionId}`);
     return { success: true };
   } catch (error) {
