@@ -56,6 +56,12 @@ const NAV_ITEMS = [
     icon: "how_to_vote",
   },
   {
+    label: "Sports",
+    href: "/sports/competitions",
+    section: "sports_competitions",
+    icon: "sports_soccer",
+  },
+  {
     label: "Advertisements",
     href: "/advertisements",
     section: "advertisements",
@@ -89,27 +95,31 @@ export function Sidebar({ role }: SidebarProps) {
 
       {/* Nav items */}
       <nav className="flex-1 flex flex-col gap-1">
-        {allowed.map(({ label, href, section, icon }) => {
+        {allowed.map((item) => {
+          if (!item) return null;
+          
+          const { label, href, section, icon } = item;
           const active = isActive(href);
           return (
-            <Link
-              key={section}
-              href={href}
-              onClick={() => setMobileOpen(false)}
-              className={`group flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-[0.98] ${
-                active
-                  ? "bg-surface-container-high text-primary font-bold border-r-2 border-primary"
-                  : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high"
-              }`}
-            >
-              <span
-                className={`material-symbols-outlined text-[20px] w-6 flex items-center justify-center shrink-0 transition-transform duration-200 ${!active && "group-hover:scale-110 group-hover:rotate-3"}`}
-                style={active ? { fontVariationSettings: "'FILL' 1" } : undefined}
+            <div key={section}>
+              <Link
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className={`group flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-[0.98] ${
+                  active
+                    ? "bg-surface-container-high text-primary font-bold border-r-2 border-primary"
+                    : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high"
+                }`}
               >
-                {icon}
-              </span>
-              {label}
-            </Link>
+                <span
+                  className={`material-symbols-outlined text-[20px] w-6 flex items-center justify-center shrink-0 transition-transform duration-200 ${!active && "group-hover:scale-110 group-hover:rotate-3"}`}
+                  style={active ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                >
+                  {icon}
+                </span>
+                {label}
+              </Link>
+            </div>
           );
         })}
       </nav>
