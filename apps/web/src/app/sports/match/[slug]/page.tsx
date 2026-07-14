@@ -40,7 +40,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
   const homeParsed = parseScore(match.home_score);
   const awayParsed = parseScore(match.away_score);
 
-  const keyMoments = updates.filter((u: {is_key_moment: boolean}) => u.is_key_moment);
+  const keyMoments = updates.filter((u: {is_key_moment?: boolean}) => u.is_key_moment);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function UpdateRow({ u, isLast }: { u: any, isLast?: boolean }) {
@@ -216,7 +216,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
             </div>
             {keyMoments.length > 0 ? (
               <div className="flex flex-col max-h-[500px] overflow-y-auto pr-2">
-                {keyMoments.map((u: {id: string}, idx: number) => (
+                {keyMoments.map((u, idx) => (
                   <UpdateRow key={u.id} u={u} isLast={idx === keyMoments.length - 1} />
                 ))}
               </div>
@@ -234,7 +234,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
             </div>
             {updates.length > 0 ? (
               <div className="flex flex-col max-h-[500px] overflow-y-auto pr-2">
-                {updates.map((u: {id: string}, idx: number) => (
+                {updates.map((u, idx) => (
                   <UpdateRow key={u.id} u={u} isLast={idx === updates.length - 1} />
                 ))}
               </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Trophy, ArrowRight } from "lucide-react";
 import { getCompetitionBySlug } from "@/utils/fetchSports";
 import { fetchTickerArticles } from "@/utils/fetchData";
+import { ArticleWithAuthor } from "@/utils/mapArticleData";
 import { PointsTable } from "@/components/sports/PointsTable";
 import { MatchTabs } from "@/components/sports/MatchTabs";
 
@@ -11,15 +12,6 @@ interface PageProps {
   params: Promise<{ sport: string; slug: string }>;
 }
 
-interface ArticleItem {
-  id: string | number;
-  slug: string;
-  title: string;
-  excerpt?: string;
-  seo_description?: string;
-  featured_image?: string;
-  categories?: { slug: string };
-}
 
 interface MatchData {
   id: string;
@@ -48,7 +40,8 @@ export default async function CompetitionDetailPage({ params }: PageProps) {
 
   // News
   const news = await fetchTickerArticles();
-  const sportsNews = news.filter((article: ArticleItem) => article.categories?.slug === "sports");
+  type NewsArticle = ArticleWithAuthor & { categories?: { slug: string }; seo_description?: string };
+  const sportsNews = (news as NewsArticle[]).filter((article) => article.categories?.slug === "sports");
   const displayNews = sportsNews.slice(0, 4);
 
   // Identify Live Match or next Upcoming Match for Hero
@@ -218,7 +211,7 @@ export default async function CompetitionDetailPage({ params }: PageProps) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {displayNews.map((article: ArticleItem) => (
+              {displayNews.map((article) => (
                 <Link key={article.id} href={`/article/${article.slug}`} className="group flex flex-col gap-3">
                   <div className="relative w-full aspect-4/3 rounded-xl overflow-hidden mb-3 bg-news-card">
                     {article.featured_image && (
