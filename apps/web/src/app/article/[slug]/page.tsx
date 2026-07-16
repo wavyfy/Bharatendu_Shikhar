@@ -20,8 +20,6 @@ import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
 import { ArticleSkeleton, RelatedArticlesSkeleton } from "@/components/skeletons/ArticleSkeletons";
 
-export const revalidate = 60;
-
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },
   parent: ResolvingMetadata

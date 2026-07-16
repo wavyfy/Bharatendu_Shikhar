@@ -119,8 +119,17 @@ async function _fetchNavbarData() {
   ]);
 
   const allRegions = regionsResponse.data || [];
+  interface RegionItem {
+    id: number;
+    parent_id: number | null;
+    name: string;
+    slug: string;
+    [key: string]: unknown;
+  }
   
-  const buildRegionTree = (regions: any[], parentId: number | null = null): any[] => {
+  type RegionTreeItem = RegionItem & { subRegions: RegionTreeItem[] };
+  
+  const buildRegionTree = (regions: RegionItem[], parentId: number | null = null): RegionTreeItem[] => {
     return regions
       .filter((r) => r.parent_id === parentId)
       .map((r) => ({
@@ -420,11 +429,11 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
 import { cache } from "react";
 const IS_DEV = process.env.NODE_ENV === "development";
 
-export const fetchTickerArticles = IS_DEV ? cache(_fetchTickerArticles) : unstable_cache(cache(_fetchTickerArticles), ["fetchTickerArticles"], { revalidate: 60, tags: ["articles"] });
-export const fetchHomepageData = IS_DEV ? cache(_fetchHomepageData) : unstable_cache(cache(_fetchHomepageData), ["fetchHomepageData"], { revalidate: 60, tags: ["articles", "categories"] });
-export const fetchNavbarData = IS_DEV ? cache(_fetchNavbarData) : unstable_cache(cache(_fetchNavbarData), ["fetchNavbarData"], { revalidate: 60, tags: ["categories", "regions"] });
-export const fetchSettings = IS_DEV ? cache(_fetchSettings) : unstable_cache(cache(_fetchSettings), ["fetchSettings"], { revalidate: 60, tags: ["settings"] });
-export const fetchDynamicPageData = IS_DEV ? cache(_fetchDynamicPageData) : unstable_cache(cache(_fetchDynamicPageData), ["fetchDynamicPageData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchBottomSlidersData = IS_DEV ? cache(_fetchBottomSlidersData) : unstable_cache(cache(_fetchBottomSlidersData), ["fetchBottomSlidersData"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchArticleBySlug = IS_DEV ? cache(_fetchArticleBySlug) : unstable_cache(cache(_fetchArticleBySlug), ["fetchArticleBySlug"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
-export const fetchRelatedArticles = IS_DEV ? cache(_fetchRelatedArticles) : unstable_cache(cache(_fetchRelatedArticles), ["fetchRelatedArticles"], { revalidate: 60, tags: ["articles", "categories", "regions"] });
+export const fetchTickerArticles = IS_DEV ? cache(_fetchTickerArticles) : unstable_cache(cache(_fetchTickerArticles), ["fetchTickerArticles"], { tags: ["articles"] });
+export const fetchHomepageData = IS_DEV ? cache(_fetchHomepageData) : unstable_cache(cache(_fetchHomepageData), ["fetchHomepageData"], { tags: ["articles", "categories"] });
+export const fetchNavbarData = IS_DEV ? cache(_fetchNavbarData) : unstable_cache(cache(_fetchNavbarData), ["fetchNavbarData"], { tags: ["categories", "regions"] });
+export const fetchSettings = IS_DEV ? cache(_fetchSettings) : unstable_cache(cache(_fetchSettings), ["fetchSettings"], { tags: ["settings"] });
+export const fetchDynamicPageData = IS_DEV ? cache(_fetchDynamicPageData) : unstable_cache(cache(_fetchDynamicPageData), ["fetchDynamicPageData"], { tags: ["articles", "categories", "regions"] });
+export const fetchBottomSlidersData = IS_DEV ? cache(_fetchBottomSlidersData) : unstable_cache(cache(_fetchBottomSlidersData), ["fetchBottomSlidersData"], { tags: ["articles", "categories", "regions"] });
+export const fetchArticleBySlug = IS_DEV ? cache(_fetchArticleBySlug) : unstable_cache(cache(_fetchArticleBySlug), ["fetchArticleBySlug"], { tags: ["articles", "categories", "regions"] });
+export const fetchRelatedArticles = IS_DEV ? cache(_fetchRelatedArticles) : unstable_cache(cache(_fetchRelatedArticles), ["fetchRelatedArticles"], { tags: ["articles", "categories", "regions"] });

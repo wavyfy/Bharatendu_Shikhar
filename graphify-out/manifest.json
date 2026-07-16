@@ -930,8 +930,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\layout\\Navbar.tsx": {
-    "mtime": 1783348441.5680592,
-    "ast_hash": "e1ae151d6be903fc6b021f13f83324fc",
+    "mtime": 1784023719.523149,
+    "ast_hash": "4aba9d6eecdce0531ea890eac30b191a",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\layout\\ThemeToggle.tsx": {
@@ -1565,43 +1565,43 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\layout.tsx": {
-    "mtime": 1783955769.4639826,
-    "ast_hash": "80f02838ca84726892117c040dfb0f41",
+    "mtime": 1784021311.7431612,
+    "ast_hash": "077fec5cdd9e5e043ffe3b22ad29aa12",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\page.tsx": {
-    "mtime": 1783955799.7779315,
-    "ast_hash": "d355e02ca75084b84954a27a29325a17",
+    "mtime": 1784023408.9864917,
+    "ast_hash": "0962d15cf766439945315c73d0970a16",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\live\\page.tsx": {
-    "mtime": 1783956070.6730044,
-    "ast_hash": "d60cfc2c478f8a2475a805bd937453d4",
+    "mtime": 1784022885.530983,
+    "ast_hash": "8c6c6cc0895b6d187c6db9c9b096e0d9",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\match\\[slug]\\page.tsx": {
-    "mtime": 1783955536.8458462,
-    "ast_hash": "8f8a5f153ce1ab6f74a3775471868774",
+    "mtime": 1784024671.898715,
+    "ast_hash": "f8c99a316ab97c6f5e17b972eba59d35",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\points-table\\page.tsx": {
-    "mtime": 1783956070.670865,
-    "ast_hash": "53f1690ce3fa6f089ce99a0bcae4b073",
+    "mtime": 1784019474.2623749,
+    "ast_hash": "82dcfc63874326ceaa4e535cb439a882",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\results\\page.tsx": {
-    "mtime": 1783956070.6724813,
-    "ast_hash": "6eb8fc19104529d403fcf842aeb04ee9",
+    "mtime": 1784019110.0301135,
+    "ast_hash": "1380a0f77e619b74bc71714acab0b018",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\schedule\\page.tsx": {
-    "mtime": 1783954749.3969245,
-    "ast_hash": "0d39827356c45b05abf349a65d3a24e8",
+    "mtime": 1784023027.4383337,
+    "ast_hash": "f5988892faabe4baf69d1ee9e3a57b0b",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\[sport]\\[slug]\\page.tsx": {
-    "mtime": 1783955041.3749487,
-    "ast_hash": "f61c9ddc5ade6ef7efad1214cb477042",
+    "mtime": 1784024856.0879064,
+    "ast_hash": "000d6e6cfeb75b7519d8fcd4d5134de4",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\SafeImage.tsx": {
@@ -1610,18 +1610,18 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\sports\\MatchCard.tsx": {
-    "mtime": 1783954724.0536654,
-    "ast_hash": "33535e2ba5b3da14d135414108928535",
+    "mtime": 1784022933.833809,
+    "ast_hash": "62c0ad8d6f270d225e91c409fb248dcf",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\sports\\PointsTable.tsx": {
-    "mtime": 1783953787.579068,
-    "ast_hash": "347241496f59a2ab097a99f1535a031e",
+    "mtime": 1784022981.145457,
+    "ast_hash": "e05d9ff27d25fc6c133ed3639724809d",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\sports\\SportsTopNav.tsx": {
-    "mtime": 1783955678.989965,
-    "ast_hash": "bcda74ecc67e2084b5c71852c644fd7d",
+    "mtime": 1784023721.5556653,
+    "ast_hash": "afedef3fd27c8cad6dccda85dfa66746",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\utils\\fetchSports.ts": {
@@ -1635,13 +1635,13 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\competitions\\page.tsx": {
-    "mtime": 1783956070.6753862,
-    "ast_hash": "8d3be7dbae9aa1c42ba7df14c1b6175a",
+    "mtime": 1784023408.0733,
+    "ast_hash": "6d7a07aed84804230b6dfeed86018123",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\sports\\CompetitionCard.tsx": {
-    "mtime": 1783954897.8036408,
-    "ast_hash": "b5b5fff1d6c142912be3514f9f703c60",
+    "mtime": 1784019445.7054873,
+    "ast_hash": "b2712be3082f9e76d9dbd27b5b3439ba",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\sports\\CountdownTimer.tsx": {
@@ -1650,13 +1650,48 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\sports\\MatchTabs.tsx": {
-    "mtime": 1783953777.3585782,
-    "ast_hash": "4a617903467ccfe9ec84385b6302a1ca",
+    "mtime": 1784023305.1773384,
+    "ast_hash": "35d7d88a8dc6aadfcf9cddf599b10165",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\sports\\SportsHeader.tsx": {
-    "mtime": 1783956070.676581,
-    "ast_hash": "fc622f56272ce109a951d1465c484863",
+    "mtime": 1784022838.4996138,
+    "ast_hash": "20580e6bd6020b54d4b007239a0bf52e",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\loading.tsx": {
+    "mtime": 1784023852.9867625,
+    "ast_hash": "d2a8d7a0231c6ab032f58f316218d115",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\competitions\\loading.tsx": {
+    "mtime": 1784023855.123042,
+    "ast_hash": "d2a8d7a0231c6ab032f58f316218d115",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\live\\loading.tsx": {
+    "mtime": 1784023869.3003747,
+    "ast_hash": "d2a8d7a0231c6ab032f58f316218d115",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\match\\[slug]\\loading.tsx": {
+    "mtime": 1784023859.2163308,
+    "ast_hash": "86f27f36c488d2612db5d44fb6955e7d",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\schedule\\loading.tsx": {
+    "mtime": 1784023871.3374963,
+    "ast_hash": "d2a8d7a0231c6ab032f58f316218d115",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sports\\[sport]\\[slug]\\loading.tsx": {
+    "mtime": 1784023857.166802,
+    "ast_hash": "86f27f36c488d2612db5d44fb6955e7d",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\skeletons\\SportsSkeletons.tsx": {
+    "mtime": 1784023850.952635,
+    "ast_hash": "e003971f9db60dbf8bafada77ae65204",
     "semantic_hash": ""
   }
 }
