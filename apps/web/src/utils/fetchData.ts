@@ -127,7 +127,9 @@ async function _fetchNavbarData() {
     [key: string]: unknown;
   }
   
-  const buildRegionTree = (regions: RegionItem[], parentId: number | null = null): (RegionItem & { subRegions: unknown[] })[] => {
+  type RegionTreeItem = RegionItem & { subRegions: RegionTreeItem[] };
+  
+  const buildRegionTree = (regions: RegionItem[], parentId: number | null = null): RegionTreeItem[] => {
     return regions
       .filter((r) => r.parent_id === parentId)
       .map((r) => ({
