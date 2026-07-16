@@ -122,6 +122,8 @@ async function _fetchNavbarData() {
   interface RegionItem {
     id: number;
     parent_id: number | null;
+    name: string;
+    slug: string;
     [key: string]: unknown;
   }
   
