@@ -86,5 +86,5 @@ async function _getElectionBySlug(slug: string) {
   };
 }
 
-export const getElections = IS_DEV ? cache(_getElections) : unstable_cache(cache(_getElections), ["getElections"], { revalidate: 60, tags: ["elections"] });
-export const getElectionBySlug = IS_DEV ? cache(_getElectionBySlug) : unstable_cache(cache(_getElectionBySlug), ["getElectionBySlug"], { revalidate: 60, tags: ["elections"] });
+export const getElections = IS_DEV ? cache(_getElections) : unstable_cache(cache(_getElections), ["getElections"], { tags: ["elections"] });
+export const getElectionBySlug = IS_DEV ? cache(_getElectionBySlug) : unstable_cache(cache(_getElectionBySlug), ["getElectionBySlug"], { tags: ["elections"] });
