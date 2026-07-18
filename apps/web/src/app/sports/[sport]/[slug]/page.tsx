@@ -172,7 +172,7 @@ export default async function CompetitionDetailPage({ params }: PageProps) {
           <section>
             <div className="flex items-center gap-2 mb-6">
               <Trophy className="w-5 h-5 text-yellow-500" />
-              <h2 className="text-xl font-bold text-news-text">अंक तालिका</h2>
+              <h2 className="text-xl font-bold text-news-text leading-none mt-1">अंक तालिका</h2>
             </div>
             
             <div className="bg-news-card rounded-3xl p-6 shadow-sm border border-news-border">
@@ -194,8 +194,8 @@ export default async function CompetitionDetailPage({ params }: PageProps) {
         {/* Football Match Section */}
         <section>
           <div className="flex items-center gap-2 mb-6">
-            <span className="text-xl">⚽</span>
-            <h2 className="text-xl font-bold text-news-text capitalize">{competition.sport} मैच</h2>
+            <span className="text-xl leading-none">{competition.sport === 'cricket' ? '🏏' : '⚽'}</span>
+            <h2 className="text-xl font-bold text-news-text capitalize leading-none mt-1">{competition.sport === 'cricket' ? 'क्रिकेट' : (competition.sport === 'football' ? 'फुटबॉल' : competition.sport)} मैच</h2>
           </div>
           <MatchTabs matches={matches} />
         </section>

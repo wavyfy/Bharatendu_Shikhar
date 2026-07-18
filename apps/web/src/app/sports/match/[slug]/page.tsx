@@ -87,6 +87,14 @@ export default async function MatchDetailPage({ params }: PageProps) {
       {/* Match Header Scoreboard */}
       <section className="px-4 py-8 max-w-6xl mx-auto mt-4">
         <div className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden flex flex-col items-center bg-slate-900 shadow-lg pb-8 pt-6">
+          
+          {/* Top Left Status Badge */}
+          <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20">
+            <span className={`text-[10px] md:text-xs font-bold tracking-widest uppercase px-3 py-1.5 rounded shadow-sm ${isLive ? 'bg-[#f0141e] text-white' : 'bg-white/20 text-white'}`}>
+              {match.status === 'live' ? 'लाइव' : (match.status === 'finished' ? 'पूर्ण' : match.status)}
+            </span>
+          </div>
+
           {/* Dark Overlay Background */}
           <div className="absolute inset-0 flex w-full h-full pointer-events-none opacity-40">
             <div className="w-1/2 h-full bg-linear-to-r from-black/50 to-transparent"></div>
@@ -131,8 +139,8 @@ export default async function MatchDetailPage({ params }: PageProps) {
                   </div>
                   
                   <div className="flex flex-col items-center justify-center shrink-0 -mt-2">
-                    <span className={`text-[10px] md:text-xs font-bold tracking-widest uppercase px-2.5 py-1 rounded-md ${isLive ? 'bg-red-600 text-white shadow-sm' : 'bg-white/10 text-gray-300'}`}>
-                      {match.status === 'live' ? 'लाइव' : (match.status === 'finished' ? 'पूर्ण' : match.status)}
+                    <span className="text-[12px] md:text-sm font-black tracking-widest text-white/40 px-3 py-1">
+                      VS
                     </span>
                   </div>
 
@@ -173,7 +181,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
       <section className="max-w-6xl mx-auto px-4 mb-12">
         <div className="flex items-center gap-2 mb-6">
           <Trophy className="w-5 h-5 text-amber-500" />
-          <h2 className="text-lg font-bold text-news-text">अंक तालिका</h2>
+          <h2 className="text-lg font-bold text-news-text leading-none mt-1">अंक तालिका</h2>
         </div>
         
         {pointsTableEntries.length > 0 ? (
@@ -205,9 +213,14 @@ export default async function MatchDetailPage({ params }: PageProps) {
       </section>
 
       {/* Main Content Layout (Live Commentary in 2 Columns) */}
-      <div className="max-w-6xl mx-auto px-4 mt-8 bg-news-card p-8 md:p-12 lg:p-16 rounded-3xl shadow-sm border border-news-border">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      <section className="max-w-6xl mx-auto px-4 mt-8 mb-12">
+        <div className="flex items-center gap-2 mb-6">
+          <span className="text-xl leading-none">🎙️</span>
+          <h2 className="text-lg font-bold text-news-text leading-none mt-1">मैच कमेंट्री और अपडेट</h2>
+        </div>
+
+        <div className="bg-news-card p-8 md:p-12 lg:p-16 rounded-3xl shadow-sm border border-news-border">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           
           {/* Left Column: Key Moments */}
           <div className="flex flex-col">
@@ -246,7 +259,8 @@ export default async function MatchDetailPage({ params }: PageProps) {
           </div>
           
         </div>
-      </div>
+        </div>
+      </section>
     </main>
   );
 }

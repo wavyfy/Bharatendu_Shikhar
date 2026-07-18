@@ -436,7 +436,8 @@ export function Navbar({
                            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                          </span>
                        )}
-                       खेल
+                       <span className="show-in-hi">खेल</span>
+                       <span className="show-in-en" translate="no">Sports</span>
                      </Link>
                      <Link href="/elections" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center gap-2 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border ${pathname === '/elections' || pathname.startsWith('/elections/') ? 'text-red-700 dark:text-red-500' : 'text-red-600'}`}>
                        {isElectionLive && (
@@ -445,7 +446,8 @@ export function Navbar({
                            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                          </span>
                        )}
-                       चुनाव
+                       <span className="show-in-hi">चुनाव</span>
+                       <span className="show-in-en" translate="no">Elections</span>
                      </Link>
                      <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] capitalize transition-colors ${pathname === '/' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>होम</Link>
                      
@@ -638,12 +640,14 @@ export function Navbar({
             )}
           </div>
           <div className="flex gap-4">
-            <Link href="/sports" className="group text-red-600 font-bold uppercase tracking-widest py-4 inline-block relative overflow-hidden">
-              खेल
+            <Link href="/sports" className="group text-red-600 font-bold py-4 flex items-center h-full relative overflow-hidden">
+              <span className="show-in-hi">खेल</span>
+              <span className="show-in-en" translate="no">Sports</span>
               <span className={`absolute bottom-3 left-0 w-full h-[2px] bg-red-600 transition-transform duration-300 ease-out ${pathname === '/sports' || pathname.startsWith('/sports/') ? 'translate-x-0' : '-translate-x-full group-hover:translate-x-0'}`}></span>
             </Link>
-            <Link href="/elections" className="group text-red-600 font-bold uppercase tracking-widest py-4 inline-block relative overflow-hidden">
-              चुनाव
+            <Link href="/elections" className="group text-red-600 font-bold py-4 flex items-center h-full relative overflow-hidden">
+              <span className="show-in-hi">चुनाव</span>
+              <span className="show-in-en" translate="no">Elections</span>
               <span className={`absolute bottom-3 left-0 w-full h-[2px] bg-red-600 transition-transform duration-300 ease-out ${pathname === '/elections' || pathname.startsWith('/elections/') ? 'translate-x-0' : '-translate-x-full group-hover:translate-x-0'}`}></span>
             </Link>
           </div>

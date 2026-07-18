@@ -54,7 +54,9 @@ export function MatchCard({ match }: { match: any }) {
         {/* Left Team (Home) */}
         <div className="flex flex-col items-center gap-3 w-[30%]">
           {homeLogo ? (
-            <Image src={homeLogo} alt={home} width={48} height={48} className="w-10 h-10 md:w-12 md:h-12 object-contain" unoptimized />
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white overflow-hidden flex items-center justify-center p-1 shadow-sm shrink-0">
+              <Image src={homeLogo} alt={home} width={40} height={40} className="w-full h-full object-contain" unoptimized />
+            </div>
           ) : (
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-news-border flex items-center justify-center font-bold text-sm md:text-lg shrink-0">{home.charAt(0)}</div>
           )}
@@ -75,7 +77,9 @@ export function MatchCard({ match }: { match: any }) {
         {/* Right Team (Away) */}
         <div className="flex flex-col items-center gap-3 w-[30%]">
           {awayLogo ? (
-            <Image src={awayLogo} alt={away} width={48} height={48} className="w-10 h-10 md:w-12 md:h-12 object-contain" unoptimized />
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white overflow-hidden flex items-center justify-center p-1 shadow-sm shrink-0">
+              <Image src={awayLogo} alt={away} width={40} height={40} className="w-full h-full object-contain" unoptimized />
+            </div>
           ) : (
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-news-border flex items-center justify-center font-bold text-sm md:text-lg shrink-0">{away.charAt(0)}</div>
           )}
@@ -85,11 +89,13 @@ export function MatchCard({ match }: { match: any }) {
 
       {/* Result Row */}
       {(match.live_status_text || match.result_text) && (
-        <div className="flex justify-center items-center gap-1.5 mb-4 px-2">
-          <Trophy className="w-4 h-4 text-red-500 shrink-0" />
-          <span className="text-[11px] md:text-xs font-medium text-news-text text-center line-clamp-1">
-            {match.live_status_text || match.result_text}
-          </span>
+        <div className="flex justify-center px-3 mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-red-50 dark:bg-[#2a0e0e] border border-red-100 dark:border-red-900/50 rounded-full max-w-full">
+            <Trophy className="w-3.5 h-3.5 text-red-600 dark:text-red-500 shrink-0" />
+            <span className="text-[11px] md:text-xs font-semibold text-red-700 dark:text-red-400 truncate">
+              {match.live_status_text || match.result_text}
+            </span>
+          </div>
         </div>
       )}
 

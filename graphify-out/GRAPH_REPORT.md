@@ -1,7 +1,7 @@
-# Graph Report - Bhartendu_Shikhar  (2026-07-16)
+# Graph Report - Bhartendu_Shikhar  (2026-07-18)
 
 ## Corpus Check
-- 338 files · ~101,979 words
+- 338 files · ~101,984 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `55c0acf0`
+- Built from commit: `c67ce1cc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -293,8 +293,8 @@ Cohesion: 0.15
 Nodes (16): AdvertisementPlacementRow, supabase, supabaseAdmin, createSupabaseMiddlewareClient(), updateSession(), CookieMethods, CompositeTypes, Constants (+8 more)
 
 ### Community 53 - "Community 53"
-Cohesion: 0.15
-Nodes (22): calculateReadTime(), FeatureArticle(), getImageUrl(), getImageUrl(), LiveUpdatesSection(), getImageUrl(), SecondaryFeatureArticle(), calculateReadTime() (+14 more)
+Cohesion: 0.11
+Nodes (27): TOPIC_CATEGORIES, ExpandableSectionLayout(), calculateReadTime(), FeatureArticle(), getImageUrl(), getImageUrl(), LiveUpdatesSection(), getImageUrl() (+19 more)
 
 ### Community 54 - "Community 54"
 Cohesion: 0.47
@@ -329,12 +329,12 @@ Cohesion: 0.16
 Nodes (14): LiveUpdateModal(), LiveUpdateModalProps, LiveUpdatesSectionProps, LiveUpdateRow, ButtonProps, Size, SIZES, Variant (+6 more)
 
 ### Community 63 - "Community 63"
-Cohesion: 0.07
-Nodes (26): getAdvertisementById(), metadata, PageProps, metadata, metadata, metadata, PageProps, metadata (+18 more)
+Cohesion: 0.09
+Nodes (18): getAdvertisementById(), metadata, PageProps, metadata, metadata, metadata, metadata, PageProps (+10 more)
 
 ### Community 64 - "Community 64"
-Cohesion: 0.11
-Nodes (15): JsonLdSchema(), generateMetadata(), Ticker(), Advertisement(), BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps, CategoryPageSkeleton() (+7 more)
+Cohesion: 0.10
+Nodes (16): JsonLdSchema(), generateMetadata(), Ticker(), TopicSection(), Advertisement(), BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps (+8 more)
 
 ### Community 65 - "Community 65"
 Cohesion: 0.06
@@ -385,8 +385,8 @@ Cohesion: 0.50
 Nodes (3): LoginForm(), LoginPage(), metadata
 
 ### Community 81 - "Community 81"
-Cohesion: 0.27
-Nodes (6): TOPIC_CATEGORIES, ExpandableSectionLayout(), TopicCategoryData, TopicSection(), CategoryHeader(), SectionLayout()
+Cohesion: 0.21
+Nodes (8): metadata, PageProps, EditTeamContent(), metadata, PageProps, TeamsContent(), getTeamById(), getTeams()
 
 ### Community 82 - "Community 82"
 Cohesion: 0.15
