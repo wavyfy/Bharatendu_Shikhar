@@ -20,7 +20,7 @@ export function FeatureArticle({ article }: { article?: ArticleWithAuthor }) {
             {article.title}
           </h2>
         <p className="text-gray-600 dark:text-news-text-secondary text-[15px] leading-snug mb-4 line-clamp-5">
-          {article.excerpt || article.content.substring(0, 150) + "..."}
+          {article.excerpt || article.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."}
         </p>
         <div className="mt-auto">
           <ArticleMeta article={article} />

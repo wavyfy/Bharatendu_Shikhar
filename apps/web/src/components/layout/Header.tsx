@@ -12,7 +12,10 @@ export function Header({ logoUrl, logoDarkUrl }: { logoUrl?: string | null, logo
       <div className="flex justify-between items-center">
         <div className="w-48 text-sm text-gray-700 dark:text-news-text-secondary space-y-1">
           <p><CurrentDate /></p>
-          <p>आज का अखबार</p>
+          <p>
+            <span className="show-in-hi">आज का अखबार</span>
+            <span className="show-in-en" translate="no">Today&apos;s Newspaper</span>
+          </p>
         </div>
         
         <div className="flex items-center">

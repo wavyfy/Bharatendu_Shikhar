@@ -3609,7 +3609,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/page.tsx",
       "source_location": "L1",
       "id": "apps_admin_src_app_dashboard_sports_teams_page_tsx",
-      "community": 63,
+      "community": 81,
       "norm_label": "page.tsx"
     },
     {
@@ -3618,7 +3618,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/page.tsx",
       "source_location": "L10",
       "id": "teams_page_metadata",
-      "community": 63,
+      "community": 81,
       "norm_label": "metadata"
     },
     {
@@ -3627,7 +3627,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/page.tsx",
       "source_location": "L14",
       "id": "teams_page_pageprops",
-      "community": 63,
+      "community": 81,
       "norm_label": "pageprops"
     },
     {
@@ -3636,7 +3636,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/page.tsx",
       "source_location": "L18",
       "id": "teams_page_teamscontent",
-      "community": 63,
+      "community": 81,
       "norm_label": "teamscontent()"
     },
     {
@@ -3645,7 +3645,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/page.tsx",
       "source_location": "L45",
       "id": "teams_page_teamspage",
-      "community": 63,
+      "community": 81,
       "norm_label": "teamspage()"
     },
     {
@@ -3681,7 +3681,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/[id]/page.tsx",
       "source_location": "L1",
       "id": "apps_admin_src_app_dashboard_sports_teams_id_page_tsx",
-      "community": 63,
+      "community": 81,
       "norm_label": "page.tsx"
     },
     {
@@ -3690,7 +3690,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/[id]/page.tsx",
       "source_location": "L7",
       "id": "apps_admin_src_app_dashboard_sports_teams_id_page_tsx_id_page_metadata",
-      "community": 63,
+      "community": 81,
       "norm_label": "metadata"
     },
     {
@@ -3699,7 +3699,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/[id]/page.tsx",
       "source_location": "L9",
       "id": "apps_admin_src_app_dashboard_sports_teams_id_page_tsx_id_page_pageprops",
-      "community": 63,
+      "community": 81,
       "norm_label": "pageprops"
     },
     {
@@ -3708,7 +3708,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/[id]/page.tsx",
       "source_location": "L13",
       "id": "id_page_editteamcontent",
-      "community": 63,
+      "community": 81,
       "norm_label": "editteamcontent()"
     },
     {
@@ -3717,7 +3717,7 @@
       "source_file": "apps/admin/src/app/(dashboard)/sports/teams/[id]/page.tsx",
       "source_location": "L27",
       "id": "id_page_editteampage",
-      "community": 63,
+      "community": 81,
       "norm_label": "editteampage()"
     },
     {
@@ -8352,7 +8352,7 @@
       "source_file": "apps/admin/src/features/sports/teams/queries.ts",
       "source_location": "L1",
       "id": "apps_admin_src_features_sports_teams_queries_ts",
-      "community": 63,
+      "community": 81,
       "norm_label": "queries.ts"
     },
     {
@@ -8361,7 +8361,7 @@
       "source_file": "apps/admin/src/features/sports/teams/queries.ts",
       "source_location": "L3",
       "id": "teams_queries_getteams",
-      "community": 63,
+      "community": 81,
       "norm_label": "getteams()"
     },
     {
@@ -8370,7 +8370,7 @@
       "source_file": "apps/admin/src/features/sports/teams/queries.ts",
       "source_location": "L26",
       "id": "teams_queries_getteambyid",
-      "community": 63,
+      "community": 81,
       "norm_label": "getteambyid()"
     },
     {
@@ -9430,7 +9430,7 @@
       "label": "generateMetadata()",
       "file_type": "code",
       "source_file": "apps/web/src/app/article/[slug]/page.tsx",
-      "source_location": "L25",
+      "source_location": "L23",
       "id": "apps_web_src_app_article_slug_page_tsx_slug_page_generatemetadata",
       "community": 76,
       "norm_label": "generatemetadata()"
@@ -9439,7 +9439,7 @@
       "label": "JsonLdSchema()",
       "file_type": "code",
       "source_file": "apps/web/src/app/article/[slug]/page.tsx",
-      "source_location": "L76",
+      "source_location": "L74",
       "id": "slug_page_jsonldschema",
       "community": 76,
       "norm_label": "jsonldschema()"
@@ -9448,7 +9448,7 @@
       "label": "TickerSection()",
       "file_type": "code",
       "source_file": "apps/web/src/app/article/[slug]/page.tsx",
-      "source_location": "L109",
+      "source_location": "L107",
       "id": "apps_web_src_app_article_slug_page_tsx_slug_page_tickersection",
       "community": 76,
       "norm_label": "tickersection()"
@@ -9457,7 +9457,7 @@
       "label": "ArticleContent()",
       "file_type": "code",
       "source_file": "apps/web/src/app/article/[slug]/page.tsx",
-      "source_location": "L114",
+      "source_location": "L112",
       "id": "slug_page_articlecontent",
       "community": 55,
       "norm_label": "articlecontent()"
@@ -9466,7 +9466,7 @@
       "label": "RelatedSection()",
       "file_type": "code",
       "source_file": "apps/web/src/app/article/[slug]/page.tsx",
-      "source_location": "L212",
+      "source_location": "L210",
       "id": "slug_page_relatedsection",
       "community": 76,
       "norm_label": "relatedsection()"
@@ -9475,7 +9475,7 @@
       "label": "ArticlePage()",
       "file_type": "code",
       "source_file": "apps/web/src/app/article/[slug]/page.tsx",
-      "source_location": "L259",
+      "source_location": "L257",
       "id": "slug_page_articlepage",
       "community": 76,
       "norm_label": "articlepage()"
@@ -10512,7 +10512,7 @@
       "source_file": "apps/web/src/components/home/ExpandableSectionLayout.tsx",
       "source_location": "L12",
       "id": "home_expandablesectionlayout_expandablesectionlayout",
-      "community": 81,
+      "community": 53,
       "norm_label": "expandablesectionlayout()"
     },
     {
@@ -10656,7 +10656,7 @@
       "source_file": "apps/web/src/components/home/TopicSection.tsx",
       "source_location": "L1",
       "id": "apps_web_src_components_home_topicsection_tsx",
-      "community": 81,
+      "community": 53,
       "norm_label": "topicsection.tsx"
     },
     {
@@ -10665,7 +10665,7 @@
       "source_file": "apps/web/src/components/home/TopicSection.tsx",
       "source_location": "L5",
       "id": "home_topicsection_topiccategorydata",
-      "community": 81,
+      "community": 53,
       "norm_label": "topiccategorydata"
     },
     {
@@ -10674,7 +10674,7 @@
       "source_file": "apps/web/src/components/home/TopicSection.tsx",
       "source_location": "L13",
       "id": "home_topicsection_topicsection",
-      "community": 81,
+      "community": 64,
       "norm_label": "topicsection()"
     },
     {
@@ -11007,7 +11007,7 @@
       "source_file": "apps/web/src/components/shared/CategoryHeader.tsx",
       "source_location": "L1",
       "id": "apps_web_src_components_shared_categoryheader_tsx",
-      "community": 81,
+      "community": 53,
       "norm_label": "categoryheader.tsx"
     },
     {
@@ -11016,7 +11016,7 @@
       "source_file": "apps/web/src/components/shared/CategoryHeader.tsx",
       "source_location": "L3",
       "id": "shared_categoryheader_categoryheader",
-      "community": 81,
+      "community": 53,
       "norm_label": "categoryheader()"
     },
     {
@@ -11259,7 +11259,7 @@
       "source_file": "apps/web/src/components/shared/SectionLayout.tsx",
       "source_location": "L1",
       "id": "apps_web_src_components_shared_sectionlayout_tsx",
-      "community": 81,
+      "community": 53,
       "norm_label": "sectionlayout.tsx"
     },
     {
@@ -11268,7 +11268,7 @@
       "source_file": "apps/web/src/components/shared/SectionLayout.tsx",
       "source_location": "L3",
       "id": "shared_sectionlayout_sectionlayout",
-      "community": 81,
+      "community": 53,
       "norm_label": "sectionlayout()"
     },
     {
@@ -11743,7 +11743,7 @@
       "label": "_fetchSettings()",
       "file_type": "code",
       "source_file": "apps/web/src/utils/fetchData.ts",
-      "source_location": "L140",
+      "source_location": "L149",
       "id": "utils_fetchdata_fetchsettings",
       "community": 42,
       "norm_label": "_fetchsettings()"
@@ -11752,7 +11752,7 @@
       "label": "_fetchDynamicPageData()",
       "file_type": "code",
       "source_file": "apps/web/src/utils/fetchData.ts",
-      "source_location": "L154",
+      "source_location": "L163",
       "id": "utils_fetchdata_fetchdynamicpagedata",
       "community": 73,
       "norm_label": "_fetchdynamicpagedata()"
@@ -11761,7 +11761,7 @@
       "label": "_fetchBottomSlidersData()",
       "file_type": "code",
       "source_file": "apps/web/src/utils/fetchData.ts",
-      "source_location": "L273",
+      "source_location": "L282",
       "id": "utils_fetchdata_fetchbottomslidersdata",
       "community": 73,
       "norm_label": "_fetchbottomslidersdata()"
@@ -11770,7 +11770,7 @@
       "label": "_fetchArticleBySlug()",
       "file_type": "code",
       "source_file": "apps/web/src/utils/fetchData.ts",
-      "source_location": "L341",
+      "source_location": "L350",
       "id": "utils_fetchdata_fetcharticlebyslug",
       "community": 76,
       "norm_label": "_fetcharticlebyslug()"
@@ -11779,7 +11779,7 @@
       "label": "_fetchRelatedArticles()",
       "file_type": "code",
       "source_file": "apps/web/src/utils/fetchData.ts",
-      "source_location": "L365",
+      "source_location": "L374",
       "id": "utils_fetchdata_fetchrelatedarticles",
       "community": 76,
       "norm_label": "_fetchrelatedarticles()"
@@ -15119,7 +15119,7 @@
       "file_type": "code",
       "source_file": "apps/web/src/data/topics.ts",
       "source_location": "L1",
-      "community": 81,
+      "community": 53,
       "norm_label": "topics.ts",
       "id": "apps_web_src_data_topics_ts"
     },
@@ -15128,7 +15128,7 @@
       "file_type": "code",
       "source_file": "apps/web/src/data/topics.ts",
       "source_location": "L3",
-      "community": 81,
+      "community": 53,
       "norm_label": "topic_categories",
       "id": "data_topics_topic_categories"
     },
@@ -46647,9 +46647,9 @@
       "source_file": "apps/web/src/app/elections/[slug]/loading.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_elections_slug_loading_tsx",
-      "target": "apps_web_src_app_elections_slug_loading_tsx_slug_loading_loading",
-      "confidence_score": 1.0
+      "target": "apps_web_src_app_elections_slug_loading_tsx_slug_loading_loading"
     },
     {
       "relation": "contains",
@@ -47593,9 +47593,9 @@
       "source_file": "apps/web/src/app/sports/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_loading_tsx",
-      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "confidence_score": 1.0
+      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx"
     },
     {
       "relation": "imports",
@@ -47604,9 +47604,9 @@
       "source_file": "apps/web/src/app/sports/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_loading_tsx",
-      "target": "skeletons_sportsskeletons_sportslistingskeleton",
-      "confidence_score": 1.0
+      "target": "skeletons_sportsskeletons_sportslistingskeleton"
     },
     {
       "relation": "contains",
@@ -47614,9 +47614,9 @@
       "source_file": "apps/web/src/app/sports/loading.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_loading_tsx",
-      "target": "sports_loading_loading",
-      "confidence_score": 1.0
+      "target": "sports_loading_loading"
     },
     {
       "relation": "imports_from",
@@ -47798,9 +47798,9 @@
       "source_file": "apps/web/src/app/sports/competitions/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_competitions_loading_tsx",
-      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "confidence_score": 1.0
+      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx"
     },
     {
       "relation": "imports",
@@ -47809,9 +47809,9 @@
       "source_file": "apps/web/src/app/sports/competitions/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_competitions_loading_tsx",
-      "target": "skeletons_sportsskeletons_sportslistingskeleton",
-      "confidence_score": 1.0
+      "target": "skeletons_sportsskeletons_sportslistingskeleton"
     },
     {
       "relation": "contains",
@@ -47819,9 +47819,9 @@
       "source_file": "apps/web/src/app/sports/competitions/loading.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_competitions_loading_tsx",
-      "target": "competitions_loading_loading",
-      "confidence_score": 1.0
+      "target": "competitions_loading_loading"
     },
     {
       "relation": "imports_from",
@@ -47905,9 +47905,9 @@
       "source_file": "apps/web/src/app/sports/live/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_live_loading_tsx",
-      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "confidence_score": 1.0
+      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx"
     },
     {
       "relation": "imports",
@@ -47916,9 +47916,9 @@
       "source_file": "apps/web/src/app/sports/live/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_live_loading_tsx",
-      "target": "skeletons_sportsskeletons_sportslistingskeleton",
-      "confidence_score": 1.0
+      "target": "skeletons_sportsskeletons_sportslistingskeleton"
     },
     {
       "relation": "contains",
@@ -47926,9 +47926,9 @@
       "source_file": "apps/web/src/app/sports/live/loading.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_live_loading_tsx",
-      "target": "live_loading_loading",
-      "confidence_score": 1.0
+      "target": "live_loading_loading"
     },
     {
       "relation": "imports_from",
@@ -48012,9 +48012,9 @@
       "source_file": "apps/web/src/app/sports/match/[slug]/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_match_slug_loading_tsx",
-      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "confidence_score": 1.0
+      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx"
     },
     {
       "relation": "imports",
@@ -48023,9 +48023,9 @@
       "source_file": "apps/web/src/app/sports/match/[slug]/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_match_slug_loading_tsx",
-      "target": "skeletons_sportsskeletons_sportsdetailskeleton",
-      "confidence_score": 1.0
+      "target": "skeletons_sportsskeletons_sportsdetailskeleton"
     },
     {
       "relation": "contains",
@@ -48033,9 +48033,9 @@
       "source_file": "apps/web/src/app/sports/match/[slug]/loading.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_match_slug_loading_tsx",
-      "target": "apps_web_src_app_sports_match_slug_loading_tsx_slug_loading_loading",
-      "confidence_score": 1.0
+      "target": "apps_web_src_app_sports_match_slug_loading_tsx_slug_loading_loading"
     },
     {
       "relation": "imports_from",
@@ -48334,9 +48334,9 @@
       "source_file": "apps/web/src/app/sports/schedule/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_schedule_loading_tsx",
-      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "confidence_score": 1.0
+      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx"
     },
     {
       "relation": "imports",
@@ -48345,9 +48345,9 @@
       "source_file": "apps/web/src/app/sports/schedule/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_schedule_loading_tsx",
-      "target": "skeletons_sportsskeletons_sportslistingskeleton",
-      "confidence_score": 1.0
+      "target": "skeletons_sportsskeletons_sportslistingskeleton"
     },
     {
       "relation": "contains",
@@ -48355,9 +48355,9 @@
       "source_file": "apps/web/src/app/sports/schedule/loading.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_schedule_loading_tsx",
-      "target": "schedule_loading_loading",
-      "confidence_score": 1.0
+      "target": "schedule_loading_loading"
     },
     {
       "relation": "imports_from",
@@ -48473,9 +48473,9 @@
       "source_file": "apps/web/src/app/sports/[sport]/[slug]/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_sport_slug_loading_tsx",
-      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "confidence_score": 1.0
+      "target": "apps_web_src_components_skeletons_sportsskeletons_tsx"
     },
     {
       "relation": "imports",
@@ -48484,9 +48484,9 @@
       "source_file": "apps/web/src/app/sports/[sport]/[slug]/loading.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_sport_slug_loading_tsx",
-      "target": "skeletons_sportsskeletons_sportsdetailskeleton",
-      "confidence_score": 1.0
+      "target": "skeletons_sportsskeletons_sportsdetailskeleton"
     },
     {
       "relation": "contains",
@@ -48494,9 +48494,9 @@
       "source_file": "apps/web/src/app/sports/[sport]/[slug]/loading.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_sport_slug_loading_tsx",
-      "target": "apps_web_src_app_sports_sport_slug_loading_tsx_slug_loading_loading",
-      "confidence_score": 1.0
+      "target": "apps_web_src_app_sports_sport_slug_loading_tsx_slug_loading_loading"
     },
     {
       "relation": "imports_from",
@@ -48549,9 +48549,9 @@
       "source_file": "apps/web/src/app/sports/[sport]/[slug]/page.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_sport_slug_page_tsx",
-      "target": "apps_web_src_utils_maparticledata_ts",
-      "confidence_score": 1.0
+      "target": "apps_web_src_utils_maparticledata_ts"
     },
     {
       "relation": "imports",
@@ -48560,9 +48560,9 @@
       "source_file": "apps/web/src/app/sports/[sport]/[slug]/page.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_app_sports_sport_slug_page_tsx",
-      "target": "utils_maparticledata_articlewithauthor",
-      "confidence_score": 1.0
+      "target": "utils_maparticledata_articlewithauthor"
     },
     {
       "relation": "imports_from",
@@ -51456,9 +51456,9 @@
       "source_file": "apps/web/src/components/skeletons/SportsSkeletons.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "target": "apps_web_src_components_ui_skeleton_tsx",
-      "confidence_score": 1.0
+      "target": "apps_web_src_components_ui_skeleton_tsx"
     },
     {
       "relation": "imports",
@@ -51467,9 +51467,9 @@
       "source_file": "apps/web/src/components/skeletons/SportsSkeletons.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "target": "ui_skeleton_skeleton",
-      "confidence_score": 1.0
+      "target": "ui_skeleton_skeleton"
     },
     {
       "relation": "contains",
@@ -51477,9 +51477,9 @@
       "source_file": "apps/web/src/components/skeletons/SportsSkeletons.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "target": "skeletons_sportsskeletons_sportslistingskeleton",
-      "confidence_score": 1.0
+      "target": "skeletons_sportsskeletons_sportslistingskeleton"
     },
     {
       "relation": "contains",
@@ -51487,9 +51487,9 @@
       "source_file": "apps/web/src/components/skeletons/SportsSkeletons.tsx",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "apps_web_src_components_skeletons_sportsskeletons_tsx",
-      "target": "skeletons_sportsskeletons_sportsdetailskeleton",
-      "confidence_score": 1.0
+      "target": "skeletons_sportsskeletons_sportsdetailskeleton"
     },
     {
       "relation": "contains",
@@ -55986,5 +55986,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "55c0acf0d9dd040dcf875f004c1e4f110a362542"
+  "built_at_commit": "c67ce1cc4818f585c32d239883de5ec5c20f2a7c"
 }

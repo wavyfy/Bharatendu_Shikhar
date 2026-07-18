@@ -3,6 +3,8 @@ import { CheckCircle2, XCircle, MinusCircle } from "lucide-react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Table({ rows, isCricket }: { rows: any[]; isCricket: boolean }) {
+  const hasForm = rows.some((r) => Array.isArray(r.form) && r.form.length > 0);
+
   return (
     <div className="overflow-x-auto overflow-y-auto max-h-[500px] pb-6 pr-2">
       <table className="w-full text-[15px] text-left border-separate border-spacing-y-2">
@@ -20,14 +22,13 @@ function Table({ rows, isCricket }: { rows: any[]; isCricket: boolean }) {
               </>
             )}
             <th className="px-2 py-4 text-center font-normal w-[8%]">अंक</th>
-            <th className="px-6 py-4 text-left font-normal w-[15%] min-w-[120px]">अंतिम मैच</th>
+            {hasForm && <th className="px-6 py-4 text-left font-normal w-[15%] min-w-[120px]">अंतिम मैच</th>}
           </tr>
         </thead>
         <tbody>
           {rows.map((entry, i) => {
-            const form = entry.form || ["W", "W", "W", "L", "W"]; 
-            const isRelegation = i >= rows.length - 2 && rows.length > 3; // mock red zone
-            const rowBg = isRelegation ? "bg-[#f8d7d7] dark:bg-red-900/40" : "bg-[#e2e6eb] dark:bg-[#1e1e1e]";
+            const form = Array.isArray(entry.form) ? entry.form : [];
+            const rowBg = "bg-[#e2e6eb] dark:bg-[#1e1e1e]";
 
             return (
               <tr key={entry.id} className={`${rowBg} transition-colors group`}>
@@ -65,16 +66,18 @@ function Table({ rows, isCricket }: { rows: any[]; isCricket: boolean }) {
                     <td className="px-2 py-4 text-center text-news-text-secondary border-y border-white dark:border-background">{entry.goals_against ?? "-"}</td>
                   </>
                 )}
-                <td className="px-2 py-4 text-center text-news-text border-y border-white dark:border-background">{entry.points ?? "-"}</td>
-                <td className="px-6 py-4 text-left rounded-r-xl border-y border-r border-white dark:border-background">
-                  <div className="flex items-center gap-1.5">
-                    {form.map((result: string, idx: number) => {
-                      if (result === "W") return <CheckCircle2 key={idx} className="w-[18px] h-[18px] text-[#22C55E] fill-[#22C55E]" />;
-                      if (result === "L") return <XCircle key={idx} className="w-[18px] h-[18px] text-[#EF4444] fill-[#EF4444]" />;
-                      return <MinusCircle key={idx} className="w-[18px] h-[18px] text-gray-400 fill-gray-400" />;
-                    })}
-                  </div>
-                </td>
+                <td className={`px-2 py-4 text-center text-news-text border-y border-white dark:border-background ${!hasForm ? 'rounded-r-xl border-r' : ''}`}>{entry.points ?? "-"}</td>
+                {hasForm && (
+                  <td className="px-6 py-4 text-left rounded-r-xl border-y border-r border-white dark:border-background">
+                    <div className="flex items-center gap-1.5">
+                      {form.map((result: string, idx: number) => {
+                        if (result === "W") return <CheckCircle2 key={idx} className="w-[18px] h-[18px] text-[#22C55E] fill-[#22C55E]" />;
+                        if (result === "L") return <XCircle key={idx} className="w-[18px] h-[18px] text-[#EF4444] fill-[#EF4444]" />;
+                        return <MinusCircle key={idx} className="w-[18px] h-[18px] text-gray-400 fill-gray-400" />;
+                      })}
+                    </div>
+                  </td>
+                )}
               </tr>
             );
           })}
