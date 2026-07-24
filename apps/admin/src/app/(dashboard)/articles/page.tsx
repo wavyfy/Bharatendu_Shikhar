@@ -8,7 +8,7 @@ import { ArticlesTable } from "@/features/articles/components/ArticlesTable";
 import { ArticleFilters } from "@/features/articles/components/ArticleFilters";
 import { Pagination } from "@/components/ui/Pagination";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
-import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
+import { TableBodySkeleton } from "@/components/skeletons/TableBodySkeleton";
 
 export const metadata = { title: "Articles | Bharatendu Shikhar Admin" };
 
@@ -31,18 +31,12 @@ async function ArticlesContent({ searchParamsPromise }: { searchParamsPromise: P
 
   const userId = role === "admin" ? undefined : user?.id;
 
-  const [{ articles, count, totalPages }, { categories }, { regions }] = await Promise.all([
+  const [{ articles, count, totalPages }] = await Promise.all([
     getArticles({ page, limit: 10, role, userId, search, status, categoryId, regionId, isLive }),
-    getCategories({ limit: 100 }),
-    getRegions({ limit: 100 }),
   ]);
 
   return (
-    <div className="cms-card animate-in fade-in duration-300">
-      <div className="cms-card-header">
-        <ArticleFilters categories={categories} regions={regions} />
-      </div>
-
+    <div key="table-content" className="animate-in fade-in duration-300">
       <div className="px-5 pt-3">
         <span className="cms-card-label">All Articles ({count})</span>
       </div>
@@ -58,7 +52,14 @@ async function ArticlesContent({ searchParamsPromise }: { searchParamsPromise: P
   );
 }
 
-export default function ArticlesPage({ searchParams }: PageProps) {
+export default async function ArticlesPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  
+  const [{ categories }, { regions }] = await Promise.all([
+    getCategories({ limit: 100 }),
+    getRegions({ limit: 100 }),
+  ]);
+  
   return (
     <AnimatedPage className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -74,9 +75,15 @@ export default function ArticlesPage({ searchParams }: PageProps) {
         </Link>
       </div>
 
-      <Suspense fallback={<TableSkeleton />}>
-        <ArticlesContent searchParamsPromise={searchParams} />
-      </Suspense>
+      <div className="cms-card">
+        <div className="cms-card-header">
+          <ArticleFilters categories={categories} regions={regions} />
+        </div>
+
+        <Suspense key={JSON.stringify(params)} fallback={<TableBodySkeleton />}>
+          <ArticlesContent searchParamsPromise={searchParams} />
+        </Suspense>
+      </div>
     </AnimatedPage>
   );
 }

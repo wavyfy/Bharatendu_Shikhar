@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
-import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
+import { TableBodySkeleton } from "@/components/skeletons/TableBodySkeleton";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Pagination } from "@/components/ui/Pagination";
 import { getCompetitions } from "@/features/sports/competitions/queries";
@@ -24,14 +24,9 @@ async function CompetitionsContent({ sp }: { sp: PageProps["searchParams"] }) {
   const totalPages = Math.ceil(count / 20);
 
   return (
-    <div className="cms-card animate-in fade-in duration-300">
-      <div className="cms-card-header flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="w-full sm:w-auto text-left">
-          <span className="cms-card-label">All Competitions ({count})</span>
-        </div>
-        <div className="w-full sm:max-w-md">
-          <SearchInput placeholder="Search competitions..." />
-        </div>
+    <div key="table-content" className="animate-in fade-in duration-300">
+      <div className="px-5 py-3 border-b border-outline-variant">
+        <span className="cms-card-label">All Competitions ({count})</span>
       </div>
       <div className="overflow-x-auto custom-scrollbar">
         <CompetitionsTable competitions={competitions} />
@@ -43,18 +38,31 @@ async function CompetitionsContent({ sp }: { sp: PageProps["searchParams"] }) {
   );
 }
 
-export default function CompetitionsPage({ searchParams }: PageProps) {
+export default async function CompetitionsPage({ searchParams }: PageProps) {
+  const params = await searchParams;
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      <div className="flex justify-end">
+    <AnimatedPage className="space-y-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="page-title">Competitions</h1>
+          <p className="page-subtitle">Manage sports competitions.</p>
+        </div>
         <Link href="/sports/competitions/new" className="btn-cms-primary self-start md:self-auto">
           <span className="material-symbols-outlined text-[20px]">add</span>
           Create Competition
         </Link>
       </div>
-      <Suspense fallback={<TableSkeleton />}>
-        <CompetitionsContent sp={searchParams} />
-      </Suspense>
-    </div>
+      
+      <div className="cms-card">
+        <div className="cms-card-header flex justify-end p-4">
+          <div className="w-full sm:max-w-md">
+            <SearchInput placeholder="Search competitions..." />
+          </div>
+        </div>
+        <Suspense key={JSON.stringify(params)} fallback={<TableBodySkeleton />}>
+          <CompetitionsContent sp={searchParams} />
+        </Suspense>
+      </div>
+    </AnimatedPage>
   );
 }

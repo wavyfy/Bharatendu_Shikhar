@@ -35,20 +35,24 @@ export function Breadcrumbs({ items, siteUrl }: BreadcrumbsProps) {
         <ol className="flex items-center space-x-2">
           {items.map((item, index) => {
             const isLast = index === items.length - 1;
+            const words = item.label.split(' ');
+            const shortLabel = isLast && words.length > 3 ? words.slice(0, 3).join(' ') + '...' : item.label;
+            
             return (
               <li key={index} className="flex items-center">
-                {index === 0 && <Home className="h-4 w-4 mr-1.5" />}
-                {index > 0 && <ChevronRight className="h-4 w-4 mx-1.5 text-slate-400" />}
+                {index === 0 && <Home className="h-4 w-4 mr-1.5 shrink-0" />}
+                {index > 0 && <ChevronRight className="h-4 w-4 mx-1.5 text-slate-400 shrink-0" />}
                 {isLast || !item.href ? (
-                  <span className="font-medium text-slate-800 dark:text-slate-200 capitalize" aria-current="page">
-                    {item.label}
+                  <span className="font-medium text-slate-800 dark:text-slate-200 capitalize" aria-current="page" title={item.label}>
+                    {shortLabel}
                   </span>
                 ) : (
                   <Link
                     href={item.href}
                     className="hover:text-primary transition-colors hover:underline capitalize"
+                    title={item.label}
                   >
-                    {item.label}
+                    {shortLabel}
                   </Link>
                 )}
               </li>

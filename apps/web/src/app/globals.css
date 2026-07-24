@@ -85,6 +85,13 @@ body {
   display: none !important;
 }
 
+/* Disable Google Translate text highlight on hover */
+.goog-text-highlight,
+html.translated-ltr font {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
 /* Fix Devanagari glyph clipping globally.
    Hindi Devanagari glyphs need balanced line-height. */
 h1, h2, h3, h4, h5, h6 {

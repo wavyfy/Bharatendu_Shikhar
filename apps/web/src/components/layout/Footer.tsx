@@ -1,8 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, ChevronRight } from "lucide-react";
+import { Mail, Phone, MapPin, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface RegionCity {
+  id?: string | number;
+  name: string;
+  slug: string;
+}
+
+interface RegionItem {
+  id?: string | number;
+  name: string;
+  slug: string;
+  subRegions?: RegionCity[];
+}
 
 
 export function Footer({ 
@@ -15,7 +30,7 @@ export function Footer({
   logoUrl?: string | null, 
   logoDarkUrl?: string | null,
   categories?: { id?: string | number; name: string; slug: string }[],
-  regions?: { id?: string | number; name: string; slug: string }[],
+  regions?: RegionItem[],
   settings?: {
     contact_email?: string | null;
     contact_phone?: string | null;
@@ -34,9 +49,17 @@ export function Footer({
     [key: string]: unknown;
   } | null
 }) {
+  const indiaRegion = regions?.find(r => r.name.includes("भारत") || r.name.toLowerCase().includes("india"));
+  const displayRegions = indiaRegion && indiaRegion.subRegions && indiaRegion.subRegions.length > 0 
+    ? indiaRegion.subRegions 
+    : regions;
+
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const [showAllRegions, setShowAllRegions] = useState(false);
+
   return (
     <footer className="w-full bg-white dark:bg-news-card text-black dark:text-news-text pb-24 lg:pb-4 mt-auto border-t-2 border-gray-200 dark:border-news-border">
-      <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
+      <div className="max-w-300 mx-auto px-5 lg:px-8">
         
         <div className="mb-4 w-full border-b-2 border-gray-200 dark:border-news-border py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <button 
@@ -52,7 +75,7 @@ export function Footer({
                       alt="Bharatendu Shikhar Logo" 
                       width={240} 
                       height={60} 
-                      className="w-auto h-8 md:h-[60px] object-contain object-left"
+                      className="w-auto h-8 md:h-15 object-contain object-left"
                       style={{ width: "auto" }}
                     />
                   </div>
@@ -64,7 +87,7 @@ export function Footer({
                       alt="Bharatendu Shikhar Logo (Dark)" 
                       width={240} 
                       height={60} 
-                      className="w-auto h-8 md:h-[60px] object-contain object-left"
+                      className="w-auto h-8 md:h-15 object-contain object-left"
                       style={{ width: "auto" }}
                     />
                   </div>
@@ -91,30 +114,122 @@ export function Footer({
                   श्रेणियाँ
                 </h3>
                 <div className="flex flex-col gap-3">
-                  {categories.map((cat) => (
+                  {categories?.slice(0, 9).map((cat) => (
                     <Link key={cat.id} href={`/${cat.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
                       <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
                       <span className="group-hover:translate-x-1 transition-transform">{cat.name}</span>
                     </Link>
                   ))}
+                  <AnimatePresence>
+                    {showAllCategories && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="flex flex-col gap-3 overflow-hidden"
+                      >
+                        {categories?.slice(9).map((cat) => (
+                          <Link key={cat.id} href={`/${cat.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
+                            <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
+                            <span className="group-hover:translate-x-1 transition-transform">{cat.name}</span>
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  {categories && categories.length > 9 && (
+                    <button 
+                      onClick={() => setShowAllCategories(!showAllCategories)}
+                      className="text-[13px] font-medium text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors text-left mt-1 flex items-center gap-1"
+                    >
+                      <span className="show-in-hi">{showAllCategories ? "कम दिखाएं" : "और दिखाएं"}</span>
+                      <span className="show-in-en" translate="no">{showAllCategories ? "Show Less" : "Show More"}</span>
+                      {showAllCategories ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                    </button>
+                  )}
                 </div>
               </div>
             )}
 
             {/* Regions */}
-            {regions && regions.length > 0 && (
+            {displayRegions && displayRegions.length > 0 && (
               <div className="flex flex-col gap-4 md:border-r-2 border-gray-200 dark:border-news-border md:pr-8">
                 <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
-
-                  क्षेत्र
+                  <span className="show-in-hi">क्षेत्र</span>
+                  <span className="show-in-en" translate="no">Regions</span>
                 </h3>
-                <div className="flex flex-col gap-3">
-                  {regions.map((reg) => (
-                    <Link key={reg.id} href={`/${reg.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
-                      <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
-                      <span className="group-hover:translate-x-1 transition-transform">{reg.name}</span>
-                    </Link>
+                <div className="flex flex-col gap-3 relative">
+                  {displayRegions?.slice(0, 9).map((reg: RegionItem) => (
+                    <div key={reg.id || reg.slug} className="group/state relative w-max">
+                      <Link href={`/${reg.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
+                        <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
+                        <span className="group-hover:translate-x-1 transition-transform">{reg.name}</span>
+                      </Link>
+                      
+                      {/* Cities Dropdown */}
+                      {reg.subRegions && reg.subRegions.length > 0 && (
+                        <div className="absolute left-full top-0 ml-2 w-48 opacity-0 invisible group-hover/state:opacity-100 group-hover/state:visible transition-all z-50">
+                          <div className="bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-xl rounded-xs py-2 flex flex-col max-h-75 overflow-y-auto">
+                            {reg.subRegions.map((city: RegionCity) => (
+                              <Link 
+                                key={city.id || city.slug} 
+                                href={`/${city.slug}`}
+                                className="px-4 py-2 text-[13px] text-gray-700 dark:text-news-text hover:bg-gray-50 dark:hover:bg-news-bg hover:text-red-600 dark:hover:text-news-accent transition-colors capitalize"
+                              >
+                                {city.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   ))}
+                  <AnimatePresence>
+                    {showAllRegions && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="flex flex-col gap-3 overflow-hidden"
+                      >
+                        {displayRegions?.slice(9).map((reg: RegionItem) => (
+                          <div key={reg.id || reg.slug} className="group/state relative w-max">
+                            <Link href={`/${reg.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
+                              <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
+                              <span className="group-hover:translate-x-1 transition-transform">{reg.name}</span>
+                            </Link>
+                            
+                            {/* Cities Dropdown */}
+                            {reg.subRegions && reg.subRegions.length > 0 && (
+                              <div className="absolute left-full top-0 ml-2 w-48 opacity-0 invisible group-hover/state:opacity-100 group-hover/state:visible transition-all z-50">
+                                <div className="bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-xl rounded-xs py-2 flex flex-col max-h-75 overflow-y-auto">
+                                  {reg.subRegions.map((city: RegionCity) => (
+                                    <Link 
+                                      key={city.id || city.slug} 
+                                      href={`/${city.slug}`}
+                                      className="px-4 py-2 text-[13px] text-gray-700 dark:text-news-text hover:bg-gray-50 dark:hover:bg-news-bg hover:text-red-600 dark:hover:text-news-accent transition-colors capitalize"
+                                    >
+                                      {city.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  {displayRegions && displayRegions.length > 9 && (
+                    <button 
+                      onClick={() => setShowAllRegions(!showAllRegions)}
+                      className="text-[13px] font-medium text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors text-left mt-1 flex items-center gap-1"
+                    >
+                      <span className="show-in-hi">{showAllRegions ? "कम दिखाएं" : "और दिखाएं"}</span>
+                      <span className="show-in-en" translate="no">{showAllRegions ? "Show Less" : "Show More"}</span>
+                      {showAllRegions ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                    </button>
+                  )}
                 </div>
               </div>
             )}
@@ -228,7 +343,7 @@ export function Footer({
         </div>
 
         {/* Bottom Border */}
-        <div className="h-[2px] w-full bg-gray-200 dark:bg-news-border my-10"></div>
+        <div className="h-0.5 w-full bg-gray-200 dark:bg-news-border my-6"></div>
 
         {/* Bottom Content */}
         <div className="flex flex-col xl:flex-row justify-between items-center xl:items-start gap-6 w-full">

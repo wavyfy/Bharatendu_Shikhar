@@ -41,16 +41,31 @@ async function EpaperContent({ page }: { page: number }) {
               href={getImageUrl(paper.pdf_url) || "#"} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:shadow-lg hover:translate-y-[-2px] transition-all duration-300 rounded overflow-hidden flex flex-col"
+              className="group bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:shadow-lg hover:translate-y-0.5 transition-all duration-300 rounded-xl overflow-hidden flex flex-col"
             >
               <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card overflow-hidden border-b border-gray-200 dark:border-news-border">
                 {paper.thumbnail_url ? (
-                  <SafeImage
-                    src={getImageUrl(paper.thumbnail_url)!}
-                    alt={paper.title}
-                    fill
-                    className="object-cover transition-transform duration-500 ease-out"
-                  />
+                  <div className="relative w-full h-full">
+                    <SafeImage
+                      src={getImageUrl(paper.thumbnail_url)!}
+                      alt={paper.title}
+                      fill
+                      className="object-cover transition-transform duration-500 ease-out"
+                    />
+                    <div className="absolute inset-0 z-10 border border-gray-200 dark:border-news-border rounded-t-xl pointer-events-none" />
+                  </div>
+                ) : paper.pdf_url ? (
+                  <div className="relative w-full h-full overflow-hidden bg-white dark:bg-gray-100 rounded-t-xl">
+                    <iframe
+                      src={`${getImageUrl(paper.pdf_url)}#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                      className="absolute top-0 h-[150%] pointer-events-none"
+                      style={{ width: 'calc(100% + 20px)', left: '-2px' }}
+                      title={paper.title}
+                      scrolling="no"
+                      tabIndex={-1}
+                    />
+                    <div className="absolute inset-0 z-10 bg-transparent border border-gray-200 dark:border-news-border rounded-t-xl pointer-events-none" />
+                  </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-news-card p-8">
                     {settings?.site_logo_url || settings?.site_logo_dark_url ? (
@@ -94,12 +109,8 @@ async function EpaperContent({ page }: { page: number }) {
                 <h3 className="font-medium text-lg leading-relaxed mb-2 group-hover:text-red-600 dark:group-hover:text-news-accent transition-colors dark:text-news-text">
                   {paper.title}
                 </h3>
-                <div className="text-xs text-gray-500 dark:text-news-text-muted mt-auto">
-                  {paper.published_at ? new Date(paper.published_at).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  }) : ''}
+                <div className="text-xs font-semibold text-gray-500 dark:text-news-text-muted mt-auto uppercase tracking-wide">
+                  {paper.regions ? `Bhartendu ${(paper.regions as { name: string }).name} Edition` : 'Bhartendu Edition'}
                 </div>
               </div>
             </a>
@@ -158,7 +169,7 @@ export default async function EPaperPage({
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-news-bg py-10">
-      <div className="max-w-[1400px] mx-auto px-4">
+      <div className="max-w-350 mx-auto px-4">
         <h1 className="text-3xl font-medium mb-8 text-black dark:text-news-text border-b-2 border-red-600 pb-4 inline-block">
           ई-पेपर
         </h1>
