@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { revalidateWeb } from "@/utils/revalidateWeb";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@repo/api";
 import { createRegionSchema, updateRegionSchema, type CreateRegionInput, type UpdateRegionInput } from "../schemas";
@@ -57,6 +58,7 @@ export async function createRegionAction(input: CreateRegionInput) {
     if (error) throw error;
 
     revalidatePath("/regions");
+    revalidateWeb(["regions", "categories"]);
     return { success: true, regionId: (data as { id: number })?.id };
   } catch (error: unknown) {
     console.error("Create region error:", error);
@@ -96,6 +98,7 @@ export async function updateRegionAction(id: number, input: UpdateRegionInput) {
     if (error) throw error;
 
     revalidatePath("/regions");
+    revalidateWeb(["regions", "categories"]);
     return { success: true };
   } catch (error: unknown) {
     console.error("Update region error:", error);
@@ -120,6 +123,7 @@ export async function deleteRegionAction(id: number) {
     if (error) throw error;
 
     revalidatePath("/regions");
+    revalidateWeb(["regions", "categories"]);
     return { success: true };
   } catch (error: unknown) {
     console.error("Delete region error:", error);
@@ -140,6 +144,7 @@ export async function toggleRegionActiveAction(id: number, is_active: boolean) {
     if (error) throw error;
 
     revalidatePath("/regions");
+    revalidateWeb(["regions", "categories"]);
     return { success: true };
   } catch (error: unknown) {
     console.error("Toggle region status error:", error);

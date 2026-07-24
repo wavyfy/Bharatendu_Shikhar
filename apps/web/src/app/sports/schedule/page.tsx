@@ -1,5 +1,6 @@
 import { getPublishedMatches, getPublishedCompetitions } from "@/utils/fetchSports";
 import { MatchCard } from "@/components/sports/MatchCard";
+import { CalendarDays } from "lucide-react";
 import Image from "next/image";
 
 import { redirect } from "next/navigation";
@@ -49,7 +50,7 @@ export default async function SchedulePage() {
         
         {/* Banner */}
         {featuredCompetition && (
-          <div className="w-full relative rounded-2xl md:rounded-3xl overflow-hidden bg-slate-900 flex items-end md:items-center min-h-[340px] p-6 sm:p-8 md:p-12 shadow-sm mb-8">
+          <div className="w-full relative rounded-2xl md:rounded-3xl overflow-hidden bg-slate-900 flex items-end md:items-center min-h-85 p-6 sm:p-8 md:p-12 shadow-sm mb-8">
             {featuredCompetition.banner_url && (
               <>
                 <Image src={featuredCompetition.banner_url} alt="Banner" fill className="object-cover" unoptimized />
@@ -98,8 +99,9 @@ export default async function SchedulePage() {
         <Section title="हाल के मैच" matches={recentMatches} />
         
         {matches.length === 0 && (
-          <div className="text-center py-20 text-news-text-secondary">
-            <p className="text-lg font-medium">शेड्यूल में कोई मैच नहीं मिला।</p>
+          <div className="text-center py-20 text-news-text-secondary bg-news-card rounded-2xl border border-news-border border-dashed">
+            <CalendarDays className="w-12 h-12 mx-auto mb-4 opacity-40" />
+            <p className="text-lg font-medium">अभी कोई प्रतियोगिता उपलब्ध नहीं है।</p>
           </div>
         )}
       </div>

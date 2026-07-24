@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { revalidateWeb } from "@/utils/revalidateWeb";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@repo/api";
 import {
@@ -62,6 +63,7 @@ export async function createBadgeAction(input: CreateBadgeInput) {
     if (error) throw error;
 
     revalidatePath("/badges");
+    revalidateWeb(["articles"]);
     return { success: true, badgeId: (data as { id: number })?.id };
   } catch (err: unknown) {
     console.error("Create badge error:", err);
@@ -101,6 +103,7 @@ export async function updateBadgeAction(id: number, input: UpdateBadgeInput) {
     if (error) throw error;
 
     revalidatePath("/badges");
+    revalidateWeb(["articles"]);
     return { success: true };
   } catch (err: unknown) {
     console.error("Update badge error:", err);
@@ -122,6 +125,7 @@ export async function deleteBadgeAction(id: number) {
     if (error) throw error;
 
     revalidatePath("/badges");
+    revalidateWeb(["articles"]);
     return { success: true };
   } catch (err: unknown) {
     console.error("Delete badge error:", err);
