@@ -5,7 +5,7 @@ import { TopBar } from "@/components/layout/TopBar";
 import { Header } from "@/components/layout/Header";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { fetchNavbarData, fetchHomepageData } from "@/utils/fetchData";
+import { fetchNavbarData } from "@/utils/fetchData";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -99,10 +99,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [settings, { regions, categories }, { topArticles, categorySections }] = await Promise.all([
+  const [settings, { regions, categories }] = await Promise.all([
     fetchSettings(),
-    fetchNavbarData(),
-    fetchHomepageData(),
+    fetchNavbarData()
   ]);
 
   if (settings?.maintenance_mode) {
@@ -128,11 +127,11 @@ export default async function RootLayout({
         />
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           <SearchProvider>
-            <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col min-h-screen overflow-x-hidden">
               <div className="flex flex-col flex-1 bg-white dark:bg-news-bg relative z-10">
                 <TopBar />
                 <Header logoUrl={settings?.site_logo_url} logoDarkUrl={settings?.site_logo_dark_url} />
-                <Navbar categories={categorySections} topArticles={topArticles} navRegions={regions} navCategories={categories} logoUrl={settings?.site_logo_url} logoDarkUrl={settings?.site_logo_dark_url} />
+                <Navbar navRegions={regions} navCategories={categories} logoUrl={settings?.site_logo_url} logoDarkUrl={settings?.site_logo_dark_url} />
                 <div className="flex-1">
                   {children}
                 </div>

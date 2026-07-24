@@ -1,22 +1,14 @@
 "use client";
 
-import { ChevronDown, ChevronLeft, ChevronRight, Menu, X, Search, Settings, Globe } from "lucide-react";
+import { ChevronDown, ChevronRight, Menu, X, Search, Settings, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import type { TopicCategoryData } from "@/components/home/TopicSection";
-import type { ArticleWithAuthor } from "@/utils/mapArticleData";
 import { useTranslateToggle } from "./GoogleTranslate";
 import { MobileThemeToggle } from "./MobileThemeToggle";
 import { useSearch } from "@/context/SearchContext";
-
-function getImageUrl(path: string | null): string | null {
-  if (!path) return null;
-  if (path.startsWith("http")) return path;
-  return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${path}`;
-}
 
 interface NavRegion {
   name: string;
@@ -89,15 +81,11 @@ function MobileRegionItem({
 }
 
 export function Navbar({ 
-  categories = [],
-  topArticles = [],
   navRegions = [],
   navCategories = [],
   logoUrl,
   logoDarkUrl
 }: { 
-  categories?: TopicCategoryData[],
-  topArticles?: ArticleWithAuthor[],
   navRegions?: { name: string, slug: string, subRegions?: { name: string, slug: string }[] }[],
   navCategories?: { name: string, slug: string }[],
   logoUrl?: string | null,
@@ -111,7 +99,6 @@ export function Navbar({
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const { lang: translateLang, toggle: toggleTranslate } = useTranslateToggle();
   const { openSearch } = useSearch();
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   const isElectionLive = false; // TODO: Connect to actual live data status
   const isSportsLive = false; // TODO: Connect to actual live data status
@@ -258,145 +245,6 @@ export function Navbar({
   const uniqueDropdownCategories = Array.from(new Map(dropdownCategoriesLinks.map(l => [l.slug, l])).values());
   const dropdownLinks = [...uniqueDropdownRegions, ...uniqueDropdownCategories];
 
-  const getArticlesForLink = (linkName: string) => {
-    if (linkName === "Home") return topArticles;
-    const cat = categories.find(c => c.title.toLowerCase() === linkName.toLowerCase());
-    if (cat && cat.articles.length > 0) return cat.articles;
-    
-    const seed = linkName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const startIndex = seed % Math.max(1, topArticles.length - 10);
-    return topArticles.slice(startIndex, startIndex + 10);
-  };
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = 350;
-      scrollRef.current.scrollBy({ left: direction === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
-    }
-  };
-
-  const isDown = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    isDown.current = true;
-    startX.current = e.pageX - scrollRef.current.offsetLeft;
-    scrollLeft.current = scrollRef.current.scrollLeft;
-  };
-
-  const handleMouseLeave = () => {
-    isDown.current = false;
-  };
-
-  const handleMouseUp = () => {
-    isDown.current = false;
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDown.current || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2; // Scroll-fast
-    scrollRef.current.scrollLeft = scrollLeft.current - walk;
-  };
-
-  const isMoreOpen = activeMenu === "अधिक" || (activeMenu && dropdownLinks.some(l => l.name === activeMenu));
-  const isMegaMenuOpen = !!activeMenu && activeMenu !== "Home" && activeMenu !== "अधिक";
-
-  const renderMegaMenu = () => {
-    const targetMenu = (activeMenu && activeMenu !== "Home" && activeMenu !== "अधिक") ? activeMenu : lastActiveMenu;
-    const articles = targetMenu && targetMenu !== "Home" && targetMenu !== "अधिक" ? getArticlesForLink(targetMenu).slice(0, 10) : [];
-
-    return (
-      <AnimatePresence>
-        {isMegaMenuOpen && articles.length > 0 && (
-          <motion.div 
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 w-full bg-white dark:bg-news-bg shadow-xl z-50 border-t border-gray-200 dark:border-news-border"
-          >
-            <div className="w-full">
-              <div 
-                key={targetMenu}
-                className="w-full p-6 pb-16 relative"
-              >
-                <div 
-                  ref={scrollRef} 
-                  onMouseDown={handleMouseDown}
-                  onMouseLeave={handleMouseLeave}
-                  onMouseUp={handleMouseUp}
-                  onMouseMove={handleMouseMove}
-                  className="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none cursor-grab active:cursor-grabbing select-none"
-                >
-                  <div className="flex gap-6 w-max">
-                    {articles.map((art) => (
-                      <Link key={art.id} href={`/article/${art.slug}`} className="w-70 shrink-0 group/article block" draggable={false}>
-                        <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card mb-4 overflow-hidden rounded-xs">
-                          {art.featured_image && (
-                            <Image
-                              src={getImageUrl(art.featured_image)!}
-                              alt={art.title}
-                              fill
-                              sizes="280px"
-                              draggable={false}
-                              className="object-cover transition-transform duration-500 ease-out pointer-events-none"
-                            />
-                          )}
-                        </div>
-                        <h4 className="font-medium text-[17px] leading-snug line-clamp-2 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
-                          {art.title}
-                        </h4>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-
-                {(() => {
-                  const targetRegion = navRegions.find(r => r.name === targetMenu);
-                  if (targetRegion && targetRegion.subRegions && targetRegion.subRegions.length > 0) {
-                    return (
-                      <div className="mt-8 border-t border-gray-200 dark:border-news-border pt-6">
-                        <h5 className="font-bold text-[16px] mb-4 text-red-600 dark:text-news-accent uppercase tracking-wider">उप-क्षेत्र</h5>
-                        <div className="flex flex-wrap gap-x-6 gap-y-3">
-                          {targetRegion.subRegions.map(sub => (
-                            <Link key={sub.slug} href={`/${sub.slug}`} className="text-gray-700 dark:text-news-text hover:text-red-600 dark:hover:text-news-accent text-[15px] font-medium transition-colors">
-                              {sub.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  }
-                  return null;
-                })()}
-                
-                <div className="absolute bottom-4 right-6 flex gap-2">
-                  <button 
-                    onClick={() => scroll('left')} 
-                    className="p-2 bg-gray-100 dark:bg-news-card hover:bg-gray-200 dark:hover:bg-news-border text-gray-600 dark:text-news-text hover:text-black dark:hover:text-white rounded-full transition-colors shadow-sm"
-                    aria-label="Scroll left"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button 
-                    onClick={() => scroll('right')} 
-                    className="p-2 bg-gray-100 dark:bg-news-card hover:bg-gray-200 dark:hover:bg-news-border text-gray-600 dark:text-news-text hover:text-black dark:hover:text-white rounded-full transition-colors shadow-sm"
-                    aria-label="Scroll right"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    );
-  };
 
   return (
     <>
@@ -459,7 +307,7 @@ export function Navbar({
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="lg:hidden fixed inset-0 z-100 bg-white dark:bg-news-bg flex flex-col h-dvh shadow-2xl"
+            className="lg:hidden fixed inset-0 z-100 bg-white dark:bg-news-bg flex flex-col shadow-2xl"
           >
             <AnimatePresence mode="wait">
               {!isSettingsOpen ? (
@@ -623,7 +471,7 @@ export function Navbar({
       {/* Hidden container for measuring link widths */}
       <div 
         ref={hiddenMeasureRef} 
-        className="absolute -top-2499.75 -left-2499.75 invisible flex gap-6 items-center text-sm font-medium whitespace-nowrap"
+        className="absolute top-0 left-0 w-0 h-0 overflow-hidden invisible flex gap-6 items-center text-sm font-medium whitespace-nowrap"
         aria-hidden="true"
       >
         <div className="flex items-center h-full px-1">
@@ -668,7 +516,6 @@ export function Navbar({
                           />
                         )}
                       </span>
-                      {link.name !== "Home" && <ChevronDown size={18} strokeWidth={1.5} className={`ml-1 transition-all duration-300 ${activeMenu === link.name ? '-rotate-180 text-red-600 dark:text-news-accent' : (isCurrentPage ? 'text-red-600 dark:text-news-accent' : 'text-gray-400')}`}/>}
                     </span>
                   </Link>
                   {link.name === "Home" && (
@@ -683,12 +530,16 @@ export function Navbar({
                 className="relative cursor-pointer h-full"
                 onMouseEnter={() => setActiveMenu("अधिक")}
               >
-                <div className="flex items-center gap-1 hover:text-red-600 py-4">
-                  अधिक <ChevronDown size={14} className={`text-gray-400 transition-transform duration-300 ${isMoreOpen ? 'rotate-180' : ''}`}/>
-                </div>
-                
-                <AnimatePresence>
-                  {isMoreOpen && (
+                {(() => {
+                  const isMoreOpen = activeMenu === "अधिक" || (activeMenu && dropdownLinks.some(l => l.name === activeMenu));
+                  return (
+                    <>
+                      <div className="flex items-center gap-1 hover:text-red-600 py-4">
+                        अधिक <ChevronDown size={14} className={`text-gray-400 transition-transform duration-300 ${isMoreOpen ? 'rotate-180' : ''}`}/>
+                      </div>
+                      
+                      <AnimatePresence>
+                        {isMoreOpen && (
                     <motion.div 
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -709,7 +560,7 @@ export function Navbar({
                                 return (
                                   <div key={`dropdown-region-${link.slug}-${idx}`} className="relative" onMouseEnter={() => setActiveMenu(link.name)}>
                                     <Link href={targetPath} className={`px-6 py-2 hover:bg-gray-50 dark:hover:bg-news-bg transition-colors flex items-center justify-between group/dropdownLink ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'text-gray-700 dark:text-news-text'} ${isCurrentPage ? 'font-bold' : ''}`}>
-                                      {link.name} <ChevronDown size={14} strokeWidth={2.5} className={`transition-all duration-300 ${activeMenu === link.name ? 'rotate-0 text-red-600 dark:text-news-accent' : (isCurrentPage ? 'text-red-600 dark:text-news-accent' : '-rotate-90 text-gray-400')}`}/>
+                                      {link.name} <ChevronRight size={14} strokeWidth={2.5} className={`transition-all duration-300 ${isActiveOrHover ? 'text-red-600 dark:text-news-accent translate-x-1' : 'text-gray-400'}`}/>
                                     </Link>
                                   </div>
                                 );
@@ -727,7 +578,7 @@ export function Navbar({
                                 return (
                                   <div key={`dropdown-category-${link.slug}-${idx}`} className="relative" onMouseEnter={() => setActiveMenu(link.name)}>
                                     <Link href={targetPath} className={`px-6 py-2 hover:bg-gray-50 dark:hover:bg-news-bg transition-colors flex items-center justify-between group/dropdownLink ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'text-gray-700 dark:text-news-text'} ${isCurrentPage ? 'font-bold' : ''}`}>
-                                      {link.name} <ChevronDown size={14} strokeWidth={2.5} className={`transition-all duration-300 ${activeMenu === link.name ? 'rotate-0 text-red-600 dark:text-news-accent' : (isCurrentPage ? 'text-red-600 dark:text-news-accent' : '-rotate-90 text-gray-400')}`}/>
+                                      {link.name} <ChevronRight size={14} strokeWidth={2.5} className={`transition-all duration-300 ${isActiveOrHover ? 'text-red-600 dark:text-news-accent translate-x-1' : 'text-gray-400'}`}/>
                                     </Link>
                                   </div>
                                 );
@@ -738,7 +589,10 @@ export function Navbar({
                       </div>
                     </motion.div>
                   )}
-                </AnimatePresence>
+                      </AnimatePresence>
+                    </>
+                  );
+                })()}
               </div>
             )}
           </div>
@@ -755,7 +609,7 @@ export function Navbar({
             </Link>
           </div>
         </div>
-        {renderMegaMenu()}
+
       </nav>
       
       <div className="hidden lg:block w-full max-w-350 mx-auto px-4">

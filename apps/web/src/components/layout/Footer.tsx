@@ -160,7 +160,7 @@ export function Footer({
                 </h3>
                 <div className="flex flex-col gap-3 relative">
                   {displayRegions?.slice(0, 9).map((reg: RegionItem) => (
-                    <div key={reg.id || reg.slug} className="group/state relative w-max">
+                    <div key={reg.id || reg.slug} className="group/state relative w-full sm:w-max">
                       <Link href={`/${reg.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
                         <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
                         <span className="group-hover:translate-x-1 transition-transform">{reg.name}</span>
@@ -193,7 +193,7 @@ export function Footer({
                         className="flex flex-col gap-3 overflow-hidden"
                       >
                         {displayRegions?.slice(9).map((reg: RegionItem) => (
-                          <div key={reg.id || reg.slug} className="group/state relative w-max">
+                          <div key={reg.id || reg.slug} className="group/state relative w-full sm:w-max">
                             <Link href={`/${reg.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
                               <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
                               <span className="group-hover:translate-x-1 transition-transform">{reg.name}</span>

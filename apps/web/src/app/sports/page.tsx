@@ -1,4 +1,4 @@
-import { Trophy } from "lucide-react";
+import { Home } from "lucide-react";
 import { getPublishedCompetitions } from "@/utils/fetchSports";
 import { CompetitionCard } from "@/components/sports/CompetitionCard";
 import { redirect } from "next/navigation";
@@ -33,7 +33,7 @@ export default async function SportsPage() {
             </div>
           ) : (
             <div className="text-center py-20 text-news-text-secondary bg-news-card rounded-2xl border border-news-border border-dashed">
-              <Trophy className="w-12 h-12 mx-auto mb-4 opacity-40" />
+              <Home className="w-12 h-12 mx-auto mb-4 opacity-40" />
               <p className="text-lg font-medium">अभी कोई प्रतियोगिता उपलब्ध नहीं है।</p>
             </div>
           )}

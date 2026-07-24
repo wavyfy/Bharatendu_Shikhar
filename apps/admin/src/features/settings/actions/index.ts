@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { revalidateWeb } from "@/utils/revalidateWeb";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import {
@@ -56,6 +57,7 @@ async function upsertSettings(patch: Record<string, unknown>) {
 
   if (error) throw new Error(error.message);
   revalidatePath("/settings");
+  revalidateWeb(["settings", "categories", "regions", "articles"]);
 }
 
 // ─── Actions ─────────────────────────────────────────────────────────────────

@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { createSupabaseServerClient, supabaseAdmin } from "@repo/api";
 import { revalidatePath } from "next/cache";
+import { revalidateWeb } from "@/utils/revalidateWeb";
 import { generateSlug } from "@/features/articles/utils/slug";
 import { deleteFileAction } from "@/features/storage/actions";
 
@@ -101,6 +102,7 @@ export async function createElectionAction(formData: FormData) {
 
     if (error) throw error;
     revalidatePath("/elections");
+    revalidateWeb(["elections"]);
     return { success: true, data };
   } catch (error: unknown) {
     let message = error instanceof Error ? error.message : "An error occurred";
@@ -151,6 +153,7 @@ export async function updateElectionAction(id: string, formData: FormData) {
     if (error) throw error;
     revalidatePath("/elections");
     revalidatePath(`/elections/${id}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error: unknown) {
     let message = error instanceof Error ? error.message : "An error occurred";
@@ -169,6 +172,7 @@ export async function toggleElectionPublishAction(id: string, is_published: bool
     const { error } = await supabaseAdmin.from("elections").update({ is_published }).eq("id", id);
     if (error) throw error;
     revalidatePath("/elections");
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -190,6 +194,7 @@ export async function deleteElectionAction(id: string) {
     }
     
     revalidatePath("/elections");
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -213,6 +218,7 @@ export async function createGroupAction(electionId: string, formData: FormData) 
 
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -235,6 +241,7 @@ export async function updateGroupAction(id: string, electionId: string, formData
     const { error } = await supabaseAdmin.from("election_groups").update({ ...validated }).eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -251,6 +258,7 @@ export async function deleteGroupAction(id: string, electionId: string) {
     const { error } = await supabaseAdmin.from("election_groups").delete().eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -279,6 +287,7 @@ export async function createCandidateAction(groupId: string, electionId: string,
 
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -306,6 +315,7 @@ export async function updateCandidateAction(id: string, electionId: string, form
     const { error } = await supabaseAdmin.from("election_candidates").update({ ...validated }).eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -330,6 +340,7 @@ export async function deleteCandidateAction(id: string, electionId: string) {
     }
     
     revalidatePath(`/elections/${electionId}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -353,6 +364,7 @@ export async function createUpdateAction(electionId: string, formData: FormData)
 
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };
@@ -369,6 +381,7 @@ export async function deleteUpdateAction(id: string, electionId: string) {
     const { error } = await supabaseAdmin.from("election_updates").delete().eq("id", id);
     if (error) throw error;
     revalidatePath(`/elections/${electionId}`);
+    revalidateWeb(["elections"]);
     return { success: true };
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "An error occurred" };

@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { revalidateWeb } from "@/utils/revalidateWeb";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@repo/api";
 import { createCategorySchema, updateCategorySchema, type CreateCategoryInput, type UpdateCategoryInput } from "../schemas";
@@ -56,6 +57,7 @@ export async function createCategoryAction(input: CreateCategoryInput) {
     if (error) throw error;
 
     revalidatePath("/categories");
+    revalidateWeb(["categories", "regions"]);
     return { success: true, categoryId: (data as { id: number })?.id };
   } catch (error: any) {
     console.error("Create category error:", error);
@@ -94,6 +96,7 @@ export async function updateCategoryAction(id: number, input: UpdateCategoryInpu
     if (error) throw error;
 
     revalidatePath("/categories");
+    revalidateWeb(["categories", "regions"]);
     return { success: true };
   } catch (error: any) {
     console.error("Update category error:", error);
@@ -117,6 +120,7 @@ export async function deleteCategoryAction(id: number) {
     if (error) throw error;
 
     revalidatePath("/categories");
+    revalidateWeb(["categories", "regions"]);
     return { success: true };
   } catch (error: unknown) {
     console.error("Delete category error:", error);
@@ -137,6 +141,7 @@ export async function toggleCategoryActiveAction(id: number, is_active: boolean)
     if (error) throw error;
 
     revalidatePath("/categories");
+    revalidateWeb(["categories", "regions"]);
     return { success: true };
   } catch (error: unknown) {
     console.error("Toggle category status error:", error);
