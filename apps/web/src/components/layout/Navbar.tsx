@@ -177,23 +177,86 @@ export function Navbar({
     activeNavRegions = indiaRegion.subRegions as NavRegionType[];
   }
 
-  const VISIBLE_COUNT = 7;
-  const visibleRegions = activeNavRegions.slice(0, VISIBLE_COUNT - 1);
-  const dropdownRegions = activeNavRegions.slice(VISIBLE_COUNT - 1);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const navRef = useRef<HTMLElement>(null);
+  const hiddenMeasureRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const measure = () => {
+      if (!hiddenMeasureRef.current || !navRef.current) return;
+      // nav is hidden on mobile, so its width might be 0. If so, return.
+      const navWidth = navRef.current.getBoundingClientRect().width;
+      if (navWidth === 0) return;
+
+      // Right section (Sports/Elections): ~200px
+      // More button: ~60px
+      // Minimum gap desired: ~20px
+      // Total reserved space = 280px
+      const availableWidth = navWidth - 280;
+      
+      const children = Array.from(hiddenMeasureRef.current.children) as HTMLElement[];
+      let currentWidth = 0;
+      let count = 0;
+      
+      // children[0] is Home
+      if (children.length > 0) {
+        currentWidth += children[0].getBoundingClientRect().width + 24; // 24px for gap-6
+      }
+
+      for (let i = 1; i < children.length; i++) {
+        const itemWidth = children[i].getBoundingClientRect().width + 24;
+        if (currentWidth + itemWidth > availableWidth) {
+          break;
+        }
+        currentWidth += itemWidth;
+        count++;
+      }
+      
+      // Ensure we show at least 1 region if there's any space
+      setVisibleCount(Math.max(1, count));
+    };
+
+    measure();
+    // A small delay to ensure fonts/layout/translations are ready initially
+    setTimeout(measure, 300);
+    setTimeout(measure, 1500); // extra fallback for slow translations
+    
+    let observer: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined') {
+      observer = new ResizeObserver(() => measure());
+      if (hiddenMeasureRef.current) observer.observe(hiddenMeasureRef.current);
+      if (navRef.current) observer.observe(navRef.current);
+    } else {
+      window.addEventListener('resize', measure);
+    }
+    
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      } else {
+        window.removeEventListener('resize', measure);
+      }
+    };
+  }, [activeNavRegions, translateLang]);
+
+  const visibleRegions = activeNavRegions.slice(0, visibleCount);
+  const dropdownRegions = activeNavRegions.slice(visibleCount);
 
   const visibleLinks = [
     { name: "Home", slug: "" },
     ...visibleRegions.map(r => ({ name: r.name, slug: r.slug ? decodeURIComponent(r.slug).trim().replace(/^\/+/, '') : "" }))
   ];
 
-  const rawDropdownLinks = [
+  const dropdownRegionsLinks = [
     ...(activeNavRegions !== navRegions ? navRegions.map(r => ({ name: r.name, slug: r.slug ? r.slug.replace(/^\/+/, '') : "" })) : []),
-    ...dropdownRegions.map(r => ({ name: r.name, slug: r.slug ? r.slug.replace(/^\/+/, '') : "" })),
-    ...navCategories.map(c => ({ name: c.name, slug: c.slug ? c.slug.replace(/^\/+/, '') : "" }))
+    ...dropdownRegions.map(r => ({ name: r.name, slug: r.slug ? r.slug.replace(/^\/+/, '') : "" }))
   ];
-
-  // Deduplicate by slug to ensure we don't show the same link twice
-  const dropdownLinks = Array.from(new Map(rawDropdownLinks.map(l => [l.slug, l])).values());
+  
+  const dropdownCategoriesLinks = navCategories.map(c => ({ name: c.name, slug: c.slug ? c.slug.replace(/^\/+/, '') : "" }));
+  
+  const uniqueDropdownRegions = Array.from(new Map(dropdownRegionsLinks.map(l => [l.slug, l])).values());
+  const uniqueDropdownCategories = Array.from(new Map(dropdownCategoriesLinks.map(l => [l.slug, l])).values());
+  const dropdownLinks = [...uniqueDropdownRegions, ...uniqueDropdownCategories];
 
   const getArticlesForLink = (linkName: string) => {
     if (linkName === "Home") return topArticles;
@@ -271,8 +334,8 @@ export function Navbar({
                 >
                   <div className="flex gap-6 w-max">
                     {articles.map((art) => (
-                      <Link key={art.id} href={`/article/${art.slug}`} className="w-[280px] shrink-0 group/article block" draggable={false}>
-                        <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card mb-4 overflow-hidden rounded-[2px]">
+                      <Link key={art.id} href={`/article/${art.slug}`} className="w-70 shrink-0 group/article block" draggable={false}>
+                        <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card mb-4 overflow-hidden rounded-xs">
                           {art.featured_image && (
                             <Image
                               src={getImageUrl(art.featured_image)!}
@@ -357,7 +420,7 @@ export function Navbar({
                     alt="Bhartendu Shikhar Logo" 
                     width={200} 
                     height={40} 
-                    className="w-auto h-[40px] object-contain"
+                    className="w-auto h-10 object-contain"
                     style={{ width: "auto" }}
                     priority
                   />
@@ -370,7 +433,7 @@ export function Navbar({
                     alt="Bhartendu Shikhar Logo (Dark)" 
                     width={200} 
                     height={40} 
-                    className="w-auto h-[40px] object-contain"
+                    className="w-auto h-10 object-contain"
                     style={{ width: "auto" }}
                     priority
                   />
@@ -419,10 +482,10 @@ export function Navbar({
                         setIsMobileMenuOpen(false);
                         setTimeout(() => openSearch(), 50);
                       }}
-                      className="group relative flex items-center w-full bg-gray-100 dark:bg-news-bg hover:bg-gray-200 dark:hover:bg-[#1A1A1A] border border-gray-200 dark:border-news-border rounded-full h-[46px] text-gray-500 dark:text-news-text-muted hover:text-black dark:hover:text-white transition-colors overflow-hidden"
+                      className="group relative flex items-center w-full bg-gray-100 dark:bg-news-bg hover:bg-gray-200 dark:hover:bg-[#1A1A1A] border border-gray-200 dark:border-news-border rounded-full h-11.5 text-gray-500 dark:text-news-text-muted hover:text-black dark:hover:text-white transition-colors overflow-hidden"
                     >
                       <span className="ml-5 text-[15px] font-medium tracking-wide">लेख खोजें...</span>
-                      <div className="absolute right-[3px] top-[3px] bottom-[3px] w-[40px] bg-white dark:bg-news-card rounded-full flex items-center justify-center shadow-sm">
+                      <div className="absolute right-0.75 top-0.75 bottom-0.75 w-10 bg-white dark:bg-news-card rounded-full flex items-center justify-center shadow-sm">
                         <Search size={18} strokeWidth={2.5} className="text-gray-600 dark:text-news-text transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
                       </div>
                     </button>
@@ -557,8 +620,29 @@ export function Navbar({
         )}
       </AnimatePresence>
 
+      {/* Hidden container for measuring link widths */}
+      <div 
+        ref={hiddenMeasureRef} 
+        className="absolute -top-2499.75 -left-2499.75 invisible flex gap-6 items-center text-sm font-medium whitespace-nowrap"
+        aria-hidden="true"
+      >
+        <div className="flex items-center h-full px-1">
+           <span className="py-4 flex items-center whitespace-nowrap">
+             <span className="relative">Home</span>
+           </span>
+        </div>
+        {activeNavRegions.map(region => (
+          <div key={region.slug} className="flex items-center h-full px-1">
+             <span className="py-4 flex items-center whitespace-nowrap">
+               <span className="relative">{region.name}</span>
+               <ChevronDown size={18} strokeWidth={1.5} className="ml-1" />
+             </span>
+          </div>
+        ))}
+      </div>
+
       {/* Desktop Nav */}
-      <nav className="hidden lg:block w-full max-w-[1400px] mx-auto px-4 mb-0 relative z-100" onMouseLeave={() => setActiveMenu(null)}>
+      <nav ref={navRef} className="hidden lg:block w-full max-w-350 mx-auto px-4 mb-0 relative z-100" onMouseLeave={() => setActiveMenu(null)}>
         <div className="flex justify-between items-center text-sm font-medium">
           <div className="flex gap-6 items-center h-full">
             {visibleLinks.map((link) => {
@@ -569,17 +653,17 @@ export function Navbar({
               return (
                 <div 
                   key={link.name} 
-                  className="flex items-center h-full"
+                  className="flex items-center h-full relative"
                   onMouseEnter={() => setActiveMenu(link.name === "Home" ? null : link.name)}
                 >
-                  <Link href={targetPath} className={`flex items-center h-full gap-[4px] px-1 transition-colors ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'hover:text-red-600 dark:hover:text-news-accent'} ${isCurrentPage ? 'font-bold' : ''}`}>
-                    <span className="py-4 flex items-center">
+                  <Link href={targetPath} className={`flex items-center h-full gap-1 px-1 transition-colors ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'hover:text-red-600 dark:hover:text-news-accent'} ${isCurrentPage ? 'font-bold' : ''}`}>
+                    <span className="py-4 flex items-center whitespace-nowrap">
                       <span className="relative">
                         {link.name}
                         {isCurrentPage && (
                           <motion.div 
                             layoutId="desktopNavActiveIndicator"
-                            className="absolute -bottom-1 left-0 w-full h-[3px] bg-red-600 dark:bg-news-accent rounded-[2px]"
+                            className="absolute -bottom-1 left-0 w-full h-0.75 bg-red-600 dark:bg-news-accent rounded-xs"
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
                           />
                         )}
@@ -588,7 +672,7 @@ export function Navbar({
                     </span>
                   </Link>
                   {link.name === "Home" && (
-                    <div className="ml-8 mr-[-10px] w-px h-4 bg-gray-300 dark:bg-news-border hidden lg:block" aria-hidden="true"></div>
+                    <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300 dark:bg-news-border hidden lg:block" aria-hidden="true"></div>
                   )}
                 </div>
               );
@@ -610,27 +694,46 @@ export function Navbar({
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 z-60 w-full min-w-[200px] pt-2"
+                      className="absolute top-full right-0 z-60 w-max min-w-50 pt-2"
                     >
-                      <div className="w-full">
-                        <div className="bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-xl py-2 flex flex-col rounded-[2px]">
-                          {dropdownLinks.map((link, idx) => {
-                            const targetPath = `/${link.slug}`;
-                            const isCurrentPage = pathname === targetPath;
-                            const isActiveOrHover = activeMenu === link.name || isCurrentPage;
-                            
-                            return (
-                              <div 
-                                key={`dropdown-${link.slug}-${idx}`} 
-                                className="relative"
-                                onMouseEnter={() => setActiveMenu(link.name)}
-                              >
-                                <Link href={targetPath} className={`px-6 py-3 hover:bg-gray-50 dark:hover:bg-news-bg transition-colors flex items-center justify-between group/dropdownLink ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'text-gray-700 dark:text-news-text'} ${isCurrentPage ? 'font-bold' : ''}`}>
-                                  {link.name} <ChevronDown size={14} strokeWidth={2.5} className={`transition-all duration-300 ${activeMenu === link.name ? 'rotate-0 text-red-600 dark:text-news-accent' : (isCurrentPage ? 'text-red-600 dark:text-news-accent' : '-rotate-90 text-gray-400')}`}/>
-                                </Link>
-                              </div>
-                            );
-                          })}
+                      <div className="w-max">
+                        <div className="bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-xl py-2 flex rounded-xs">
+                          {uniqueDropdownRegions.length > 0 && (
+                            <div className="flex flex-col min-w-50 border-r border-gray-100 dark:border-news-border last:border-0 py-2">
+                              <div className="px-6 py-2 text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest show-in-hi">क्षेत्र</div>
+                              <div className="px-6 py-2 text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest show-in-en" translate="no">Regions</div>
+                              {uniqueDropdownRegions.map((link, idx) => {
+                                const targetPath = `/${link.slug}`;
+                                const isCurrentPage = pathname === targetPath;
+                                const isActiveOrHover = activeMenu === link.name || isCurrentPage;
+                                return (
+                                  <div key={`dropdown-region-${link.slug}-${idx}`} className="relative" onMouseEnter={() => setActiveMenu(link.name)}>
+                                    <Link href={targetPath} className={`px-6 py-2 hover:bg-gray-50 dark:hover:bg-news-bg transition-colors flex items-center justify-between group/dropdownLink ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'text-gray-700 dark:text-news-text'} ${isCurrentPage ? 'font-bold' : ''}`}>
+                                      {link.name} <ChevronDown size={14} strokeWidth={2.5} className={`transition-all duration-300 ${activeMenu === link.name ? 'rotate-0 text-red-600 dark:text-news-accent' : (isCurrentPage ? 'text-red-600 dark:text-news-accent' : '-rotate-90 text-gray-400')}`}/>
+                                    </Link>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                          {uniqueDropdownCategories.length > 0 && (
+                            <div className="flex flex-col min-w-50 border-r border-gray-100 dark:border-news-border last:border-0 py-2">
+                              <div className="px-6 py-2 text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest show-in-hi">श्रेणियां</div>
+                              <div className="px-6 py-2 text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest show-in-en" translate="no">Categories</div>
+                              {uniqueDropdownCategories.map((link, idx) => {
+                                const targetPath = `/${link.slug}`;
+                                const isCurrentPage = pathname === targetPath;
+                                const isActiveOrHover = activeMenu === link.name || isCurrentPage;
+                                return (
+                                  <div key={`dropdown-category-${link.slug}-${idx}`} className="relative" onMouseEnter={() => setActiveMenu(link.name)}>
+                                    <Link href={targetPath} className={`px-6 py-2 hover:bg-gray-50 dark:hover:bg-news-bg transition-colors flex items-center justify-between group/dropdownLink ${isActiveOrHover ? 'text-red-600 dark:text-news-accent' : 'text-gray-700 dark:text-news-text'} ${isCurrentPage ? 'font-bold' : ''}`}>
+                                      {link.name} <ChevronDown size={14} strokeWidth={2.5} className={`transition-all duration-300 ${activeMenu === link.name ? 'rotate-0 text-red-600 dark:text-news-accent' : (isCurrentPage ? 'text-red-600 dark:text-news-accent' : '-rotate-90 text-gray-400')}`}/>
+                                    </Link>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </motion.div>
@@ -643,20 +746,20 @@ export function Navbar({
             <Link href="/sports" className="group text-red-600 font-bold py-4 flex items-center h-full relative overflow-hidden">
               <span className="show-in-hi">खेल</span>
               <span className="show-in-en" translate="no">Sports</span>
-              <span className={`absolute bottom-3 left-0 w-full h-[2px] bg-red-600 transition-transform duration-300 ease-out ${pathname === '/sports' || pathname.startsWith('/sports/') ? 'translate-x-0' : '-translate-x-full group-hover:translate-x-0'}`}></span>
+              <span className={`absolute bottom-3 left-0 w-full h-0.5 bg-red-600 transition-transform duration-300 ease-out ${pathname === '/sports' || pathname.startsWith('/sports/') ? 'translate-x-0' : '-translate-x-full group-hover:translate-x-0'}`}></span>
             </Link>
             <Link href="/elections" className="group text-red-600 font-bold py-4 flex items-center h-full relative overflow-hidden">
               <span className="show-in-hi">चुनाव</span>
               <span className="show-in-en" translate="no">Elections</span>
-              <span className={`absolute bottom-3 left-0 w-full h-[2px] bg-red-600 transition-transform duration-300 ease-out ${pathname === '/elections' || pathname.startsWith('/elections/') ? 'translate-x-0' : '-translate-x-full group-hover:translate-x-0'}`}></span>
+              <span className={`absolute bottom-3 left-0 w-full h-0.5 bg-red-600 transition-transform duration-300 ease-out ${pathname === '/elections' || pathname.startsWith('/elections/') ? 'translate-x-0' : '-translate-x-full group-hover:translate-x-0'}`}></span>
             </Link>
           </div>
         </div>
         {renderMegaMenu()}
       </nav>
       
-      <div className="hidden lg:block w-full max-w-[1400px] mx-auto px-4">
-        <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border mb-1"></div>
+      <div className="hidden lg:block w-full max-w-350 mx-auto px-4">
+        <div className="h-0.5 w-full bg-gray-300 dark:bg-news-border mb-1"></div>
       </div>
     </>
   );

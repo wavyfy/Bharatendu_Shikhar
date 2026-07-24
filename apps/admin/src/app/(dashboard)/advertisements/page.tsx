@@ -6,7 +6,7 @@ import { AdvertisementsTable } from "@/features/advertisements/components/Advert
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Pagination } from "@/components/ui/Pagination";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
-import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
+import { TableBodySkeleton } from "@/components/skeletons/TableBodySkeleton";
 
 export const metadata = { title: "Advertisements | Bharatendu Shikhar Admin" };
 
@@ -27,14 +27,9 @@ async function AdvertisementsContent({ searchParamsPromise }: { searchParamsProm
   const totalPages = 1;
 
   return (
-    <div className="cms-card animate-in fade-in duration-300">
-      <div className="cms-card-header flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="w-full sm:w-auto text-left">
-          <span className="cms-card-label">All Advertisements ({count})</span>
-        </div>
-        <div className="w-full sm:max-w-md">
-          <SearchInput placeholder="Search advertisements..." />
-        </div>
+    <div key="table-content" className="animate-in fade-in duration-300">
+      <div className="px-5 py-3 border-b border-outline-variant">
+        <span className="cms-card-label">All Advertisements ({count})</span>
       </div>
 
       <div className="overflow-x-auto custom-scrollbar">
@@ -48,7 +43,8 @@ async function AdvertisementsContent({ searchParamsPromise }: { searchParamsProm
   );
 }
 
-export default function AdvertisementsPage({ searchParams }: PageProps) {
+export default async function AdvertisementsPage({ searchParams }: PageProps) {
+  const params = await searchParams;
   return (
     <AnimatedPage className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -62,9 +58,17 @@ export default function AdvertisementsPage({ searchParams }: PageProps) {
         </Link>
       </div>
 
-      <Suspense fallback={<TableSkeleton />}>
-        <AdvertisementsContent searchParamsPromise={searchParams} />
-      </Suspense>
+      <div className="cms-card">
+        <div className="cms-card-header flex justify-end p-4">
+          <div className="w-full sm:max-w-md">
+            <SearchInput placeholder="Search advertisements..." />
+          </div>
+        </div>
+
+        <Suspense key={JSON.stringify(params)} fallback={<TableBodySkeleton />}>
+          <AdvertisementsContent searchParamsPromise={searchParams} />
+        </Suspense>
+      </div>
     </AnimatedPage>
   );
 }

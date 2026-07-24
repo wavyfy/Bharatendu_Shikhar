@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getCategories } from "@/features/categories/queries";
 import { CategoriesTable } from "@/features/categories/components/CategoriesTable";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
-import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
+import { TableBodySkeleton } from "@/components/skeletons/TableBodySkeleton";
 import { CategoryFilters } from "@/features/categories/components/CategoryFilters";
 import { Pagination } from "@/components/ui/Pagination";
 
@@ -30,11 +30,7 @@ async function CategoriesContent({ searchParamsPromise }: { searchParamsPromise:
   });
 
   return (
-    <div className="cms-card animate-in fade-in duration-300">
-      <div className="cms-card-header p-0">
-        <CategoryFilters currentStatus={status} />
-      </div>
-
+    <div key="table-content" className="animate-in fade-in duration-300">
       <div className="px-5 py-3 border-t border-outline-variant">
         <span className="cms-card-label">All Categories ({count})</span>
       </div>
@@ -50,7 +46,8 @@ async function CategoriesContent({ searchParamsPromise }: { searchParamsPromise:
   );
 }
 
-export default function CategoriesPage({ searchParams }: PageProps) {
+export default async function CategoriesPage({ searchParams }: PageProps) {
+  const params = await searchParams;
   return (
     <AnimatedPage className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -64,9 +61,15 @@ export default function CategoriesPage({ searchParams }: PageProps) {
         </Link>
       </div>
 
-      <Suspense fallback={<TableSkeleton />}>
-        <CategoriesContent searchParamsPromise={searchParams} />
-      </Suspense>
+      <div className="cms-card">
+        <div className="cms-card-header p-0">
+          <CategoryFilters currentStatus={params?.status || ""} />
+        </div>
+
+        <Suspense key={JSON.stringify(params)} fallback={<TableBodySkeleton />}>
+          <CategoriesContent searchParamsPromise={searchParams} />
+        </Suspense>
+      </div>
     </AnimatedPage>
   );
 }

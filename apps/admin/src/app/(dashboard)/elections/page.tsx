@@ -6,7 +6,7 @@ import { ElectionsTable } from "@/features/elections/components/ElectionsTable";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Pagination } from "@/components/ui/Pagination";
 import { AnimatedPage } from "@/components/ui/AnimatedPage";
-import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
+import { TableBodySkeleton } from "@/components/skeletons/TableBodySkeleton";
 
 export const metadata = { title: "Elections | Bharatendu Shikhar Admin" };
 
@@ -28,14 +28,9 @@ async function ElectionsContent({ searchParamsPromise }: { searchParamsPromise: 
   const totalPages = Math.ceil(count / 10);
 
   return (
-    <div className="cms-card animate-in fade-in duration-300">
-      <div className="cms-card-header flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="w-full sm:w-auto text-left">
-          <span className="cms-card-label">All Elections ({count})</span>
-        </div>
-        <div className="w-full sm:max-w-md">
-          <SearchInput placeholder="Search elections..." />
-        </div>
+    <div key="table-content" className="animate-in fade-in duration-300">
+      <div className="px-5 py-3 border-b border-outline-variant">
+        <span className="cms-card-label">All Elections ({count})</span>
       </div>
 
       <div className="overflow-x-auto custom-scrollbar">
@@ -49,7 +44,8 @@ async function ElectionsContent({ searchParamsPromise }: { searchParamsPromise: 
   );
 }
 
-export default function ElectionsPage({ searchParams }: PageProps) {
+export default async function ElectionsPage({ searchParams }: PageProps) {
+  const params = await searchParams;
   return (
     <AnimatedPage className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -63,9 +59,17 @@ export default function ElectionsPage({ searchParams }: PageProps) {
         </Link>
       </div>
 
-      <Suspense fallback={<TableSkeleton />}>
-        <ElectionsContent searchParamsPromise={searchParams} />
-      </Suspense>
+      <div className="cms-card">
+        <div className="cms-card-header flex justify-end p-4">
+          <div className="w-full sm:max-w-md">
+            <SearchInput placeholder="Search elections..." />
+          </div>
+        </div>
+
+        <Suspense key={JSON.stringify(params)} fallback={<TableBodySkeleton />}>
+          <ElectionsContent searchParamsPromise={searchParams} />
+        </Suspense>
+      </div>
     </AnimatedPage>
   );
 }

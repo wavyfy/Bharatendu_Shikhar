@@ -7,6 +7,7 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { Select } from "@/components/ui/Select";
 import type { CategoryRow } from "@/features/categories/types";
 import type { RegionRow } from "@/features/regions/types";
+import { motion } from "framer-motion";
 
 interface ArticleFiltersProps {
   categories: CategoryRow[];
@@ -48,8 +49,8 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
     <div className="flex flex-col w-full">
       <div className="flex items-center gap-6 px-4 pt-4">
         <button
-          className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-            currentStatus === "" && currentIsLive === "" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+          className={`relative pb-3 text-sm font-medium transition-colors ${
+            currentStatus === "" && currentIsLive === "" ? "text-red-600" : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200"
           }`}
           onClick={() => {
             startTransition(() => {
@@ -62,27 +63,36 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
           }}
         >
           All
+          {currentStatus === "" && currentIsLive === "" && (
+            <motion.div layoutId="articleStatusIndicator" className="absolute -bottom-px left-0 w-full h-0.5 bg-red-600 rounded-t-sm" transition={{ type: "spring", stiffness: 300, damping: 30 }} />
+          )}
         </button>
         <button
           onClick={() => setFilter("status", "published")}
-          className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-            currentStatus === "published" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+          className={`relative pb-3 text-sm font-medium transition-colors ${
+            currentStatus === "published" ? "text-red-600" : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200"
           }`}
         >
           Published
+          {currentStatus === "published" && (
+            <motion.div layoutId="articleStatusIndicator" className="absolute -bottom-px left-0 w-full h-0.5 bg-red-600 rounded-t-sm" transition={{ type: "spring", stiffness: 300, damping: 30 }} />
+          )}
         </button>
         <button
           onClick={() => setFilter("status", "draft")}
-          className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-            currentStatus === "draft" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+          className={`relative pb-3 text-sm font-medium transition-colors ${
+            currentStatus === "draft" ? "text-red-600" : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200"
           }`}
         >
           Drafts
+          {currentStatus === "draft" && (
+            <motion.div layoutId="articleStatusIndicator" className="absolute -bottom-px left-0 w-full h-0.5 bg-red-600 rounded-t-sm" transition={{ type: "spring", stiffness: 300, damping: 30 }} />
+          )}
         </button>
         {/* Live tab */}
         <button
-          className={`pb-3 text-sm font-medium border-b-2 transition-colors flex items-center gap-1.5 ${
-            currentIsLive === "true" ? "border-red-600 text-red-600" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:border-gray-300"
+          className={`relative pb-3 text-sm font-medium transition-colors flex items-center gap-1.5 ${
+            currentIsLive === "true" ? "text-red-600" : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200"
           }`}
           onClick={() => {
             startTransition(() => {
@@ -105,6 +115,9 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
             </span>
           )}
           Live
+          {currentIsLive === "true" && (
+            <motion.div layoutId="articleStatusIndicator" className="absolute -bottom-px left-0 w-full h-0.5 bg-red-600 rounded-t-sm" transition={{ type: "spring", stiffness: 300, damping: 30 }} />
+          )}
         </button>
       </div>
       
@@ -113,7 +126,7 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
           <SearchInput placeholder="Search articles..." />
         </div>
         <div className="flex gap-2 flex-wrap w-full sm:w-auto">
-          <div className="flex-1 sm:w-48 sm:flex-none min-w-[140px] sm:min-w-0">
+          <div className="flex-1 sm:w-48 sm:flex-none min-w-35 sm:min-w-0">
             <Select
               value={currentCategoryId}
               onChange={(value) => setFilter("category_id", value)}
@@ -125,7 +138,7 @@ export function ArticleFilters({ categories, regions }: ArticleFiltersProps) {
             />
           </div>
           
-          <div className="flex-1 sm:w-48 sm:flex-none min-w-[140px] sm:min-w-0">
+          <div className="flex-1 sm:w-48 sm:flex-none min-w-35 sm:min-w-0">
             <Select
               value={currentRegionId}
               onChange={(value) => setFilter("region_id", value)}
