@@ -165,7 +165,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
       canvas.height = viewport.height * 0.4; // Crop to top half to save storage
       
       // Some versions of pdfjs-dist require canvas element in render params
-      await page.render({ canvasContext: context, viewport, canvas } as any).promise;
+      await page.render({ canvasContext: context, viewport, canvas } as unknown as Parameters<typeof page.render>[0]).promise;
       
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.8));
       if (!blob) throw new Error("Could not create image blob");
@@ -368,7 +368,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
                 <div className="flex items-center justify-between p-4 bg-surface-container-low border border-gray-200 dark:border-outline-variant rounded-lg">
                   <div className="flex items-center gap-3 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={thumbnailUrl} alt="Thumbnail" className="w-24 aspect-[16/9] object-cover object-top rounded shadow-sm" />
+                    <img src={thumbnailUrl} alt="Thumbnail" className="w-24 aspect-video object-cover object-top rounded shadow-sm" />
                     <a href={thumbnailUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline truncate">
                       View Uploaded Thumbnail
                     </a>
@@ -407,13 +407,13 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
                   {!thumbnailUrl && pdfUrl && (
                     <div className="mt-4 w-full">
                       <div className="relative flex items-center py-2">
-                        <div className="flex-grow border-t border-gray-200 dark:border-outline-variant"></div>
-                        <span className="flex-shrink-0 mx-4 text-xs text-gray-400 font-medium uppercase tracking-wider">OR</span>
-                        <div className="flex-grow border-t border-gray-200 dark:border-outline-variant"></div>
+                        <div className="grow border-t border-gray-200 dark:border-outline-variant"></div>
+                        <span className="shrink-0 mx-4 text-xs text-gray-400 font-medium uppercase tracking-wider">OR</span>
+                        <div className="grow border-t border-gray-200 dark:border-outline-variant"></div>
                       </div>
                       <Button
                         type="button"
-                        variant="outline"
+                        variant="secondary"
                         onClick={handleGenerateMissingThumbnail}
                         disabled={isGeneratingThumb || isUploadingThumb || isUploading}
                         className="w-full mt-2"

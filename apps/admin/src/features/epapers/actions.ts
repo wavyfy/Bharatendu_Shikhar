@@ -94,7 +94,7 @@ export async function updateEpaperAction(id: number, formData: FormData) {
       .select("author_id, pdf_url, thumbnail_url")
       .eq("id", id)
       .single();
-    const existing = data as any;
+    const existing = data as { author_id: string; pdf_url: string | null; thumbnail_url: string | null };
       
     if (fetchError || !existing) {
       throw new Error("Epaper not found");
@@ -159,7 +159,7 @@ export async function deleteEpaperAction(id: number) {
       .select("author_id, pdf_url, thumbnail_url")
       .eq("id", id)
       .single();
-    const existing = data as any;
+    const existing = data as { author_id: string; pdf_url: string | null; thumbnail_url: string | null };
       
     if (fetchError || !existing) {
       throw new Error("Epaper not found");
