@@ -54,10 +54,12 @@ export default async function EPapersPage({ searchParams }: PageProps) {
           <h1 className="page-title">E-Papers</h1>
           <p className="page-subtitle">Upload and manage digital editions for your publication.</p>
         </div>
-        <Link href="/epapers/new" className="btn-cms-primary self-start md:self-auto">
-          <span className="material-symbols-outlined text-[20px]">add</span>
-          Upload E-Paper
-        </Link>
+        <div className="flex items-center gap-3 self-start md:self-auto flex-wrap">
+          <Link href="/epapers/new" className="btn-cms-primary">
+            <span className="material-symbols-outlined text-[20px]">add</span>
+            Upload E-Paper
+          </Link>
+        </div>
       </div>
 
       <div className="cms-card">

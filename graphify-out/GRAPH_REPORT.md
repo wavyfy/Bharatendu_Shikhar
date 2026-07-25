@@ -1,16 +1,16 @@
-# Graph Report - Bhartendu_Shikhar  (2026-07-24)
+# Graph Report - Bhartendu_Shikhar  (2026-07-25)
 
 ## Corpus Check
-- 338 files · ~103,811 words
+- 340 files · ~103,605 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1709 nodes · 3859 edges · 98 communities (85 shown, 13 thin omitted)
+- 1743 nodes · 3925 edges · 106 communities (93 shown, 13 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 20 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e333c652`
+- Built from commit: `cc43df06`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -101,6 +101,14 @@
 - [[_COMMUNITY_Community 94|Community 94]]
 - [[_COMMUNITY_Community 95|Community 95]]
 - [[_COMMUNITY_Community 96|Community 96]]
+- [[_COMMUNITY_Community 98|Community 98]]
+- [[_COMMUNITY_Community 99|Community 99]]
+- [[_COMMUNITY_Community 100|Community 100]]
+- [[_COMMUNITY_Community 101|Community 101]]
+- [[_COMMUNITY_Community 102|Community 102]]
+- [[_COMMUNITY_Community 103|Community 103]]
+- [[_COMMUNITY_Community 104|Community 104]]
+- [[_COMMUNITY_Community 105|Community 105]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `createSupabaseServerClient()` - 96 edges
@@ -108,11 +116,11 @@
 3. `Button()` - 41 edges
 4. `AnimatedPage()` - 40 edges
 5. `getRegions()` - 36 edges
-6. `getSessionUser` - 31 edges
-7. `getSiteUrl()` - 30 edges
-8. `useConfirm()` - 29 edges
-9. `supabaseAdmin` - 23 edges
-10. `Input` - 21 edges
+6. `revalidateWeb()` - 34 edges
+7. `getSessionUser` - 31 edges
+8. `getSiteUrl()` - 30 edges
+9. `useConfirm()` - 29 edges
+10. `supabaseAdmin` - 23 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `benchmark_pair()` --references--> `Path`  [EXTRACTED]
@@ -126,15 +134,15 @@
 - `compress_file()` --references--> `Path`  [EXTRACTED]
   D:/PROJECTS/Bharatendu_Shikhar/.agents/skills/caveman-compress/scripts/compress.py → .agents/skills/caveman-compress/scripts/compress.py
 
-## Communities (98 total, 13 thin omitted)
+## Communities (106 total, 13 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
 Nodes (19): dependsOn, inputs, outputs, cache, cache, persistent, dependsOn, $schema (+11 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.10
-Nodes (19): compilerOptions, declaration, declarationMap, esModuleInterop, exactOptionalPropertyTypes, isolatedModules, lib, module (+11 more)
+Cohesion: 0.05
+Nodes (38): compilerOptions, declaration, declarationMap, esModuleInterop, exactOptionalPropertyTypes, isolatedModules, lib, module (+30 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.10
@@ -154,7 +162,7 @@ Nodes (37): computedHash, skillPath, source, sourceType, computedHash, skillPath
 
 ### Community 6 - "Community 6"
 Cohesion: 0.06
-Nodes (37): devanagari, geistMono, metadata, newsreader, geistMono, geistSans, inter, metadata (+29 more)
+Nodes (36): devanagari, geistMono, metadata, newsreader, geistMono, geistSans, inter, metadata (+28 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.12
@@ -165,12 +173,12 @@ Cohesion: 0.47
 Nodes (4): code:bash (npm run dev), Deploy on Vercel, Getting Started, Learn More
 
 ### Community 9 - "Community 9"
-Cohesion: 0.08
-Nodes (27): metadata, PageProps, metadata, PageProps, metadata, metadata, PageProps, getCompetitionById() (+19 more)
+Cohesion: 0.06
+Nodes (46): metadata, PageProps, metadata, PageProps, metadata, metadata, PageProps, getCompetitionById() (+38 more)
 
 ### Community 14 - "Community 14"
-Cohesion: 0.11
-Nodes (37): AdvertisementsTable(), ArticlesTable(), BadgesTable(), BadgesTableProps, CategoriesTable(), CompetitionsTable(), CompetitionsTableProps, SPORT_STYLES (+29 more)
+Cohesion: 0.08
+Nodes (45): AdvertisementRow, AdvertisementFormProps, AdvertisementsTable(), AdvertisementsTableProps, ArticlesTable(), BadgesTable(), BadgesTableProps, CategoriesTable() (+37 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.13
@@ -253,40 +261,40 @@ Cohesion: 0.47
 Nodes (4): compilerOptions, types, extends, include
 
 ### Community 37 - "Community 37"
-Cohesion: 0.10
-Nodes (26): loginAction(), LoginState, logoutAction(), metadata, NAV_ITEMS, Home(), DashboardLayout(), getSessionUser() (+18 more)
+Cohesion: 0.17
+Nodes (12): loginAction(), LoginState, ADMIN_PATHS, config, middleware(), PUBLIC_PATHS, ADMIN_PATHS, config (+4 more)
 
 ### Community 38 - "Community 38"
-Cohesion: 0.15
-Nodes (13): CategoriesContent(), CategoriesPage(), metadata, PageProps, CategoryFilters(), RegionFilters(), RegionFiltersProps, metadata (+5 more)
+Cohesion: 0.16
+Nodes (14): DashboardStats, getDashboardStats(), DashboardContent(), DashboardPage(), metadata, STATS, metadata, PageProps (+6 more)
 
 ### Community 42 - "Community 42"
-Cohesion: 0.20
-Nodes (12): robots(), sitemap(), generateMetadata(), generateMetadata(), GET(), escapeXml(), GET(), escapeXml() (+4 more)
+Cohesion: 0.13
+Nodes (19): JsonLdSchema(), robots(), sitemap(), generateMetadata(), generateMetadata(), generateMetadata(), ContactPage(), generateMetadata() (+11 more)
 
 ### Community 44 - "Community 44"
 Cohesion: 0.16
 Nodes (10): generateMetadata(), generateMetadata(), generateMetadata(), generateMetadata(), iconMap, LegalDialog(), LegalDialogProps, generateLegalMetadata() (+2 more)
 
 ### Community 46 - "Community 46"
-Cohesion: 0.07
-Nodes (46): createArticleAction(), deleteArticleAction(), ensureLiveBadge(), getAuth(), publishArticleAction(), resolveLiveBadgeId(), sendPushNotificationAction(), updateArticleAction() (+38 more)
+Cohesion: 0.15
+Nodes (20): deleteCompetitionAction(), TeamForm(), TeamFormProps, createEpaperAction(), deleteEpaperAction(), epaperSchema, getAuth(), updateEpaperAction() (+12 more)
 
 ### Community 47 - "Community 47"
 Cohesion: 0.13
-Nodes (20): metadata, PageProps, metadata, metadata, metadata, EpaperForm(), RegionFormPlaceholder(), EditEpaperContent() (+12 more)
+Nodes (13): metadata, metadata, metadata, ElectionTabs(), ElectionTabsProps, RegionFormPlaceholder(), EditRegionContent(), EditRegionPage() (+5 more)
 
 ### Community 48 - "Community 48"
-Cohesion: 0.29
-Nodes (10): PublisherForm(), PublisherFormProps, createPublisherAction(), togglePublisherActiveAction(), updatePublisherAction(), verifyAdmin(), PublisherInput, PublisherRow (+2 more)
+Cohesion: 0.16
+Nodes (15): metadata, PublisherFormProps, EditPublisherContent(), EditPublisherPage(), Props, createPublisherAction(), togglePublisherActiveAction(), updatePublisherAction() (+7 more)
 
 ### Community 49 - "Community 49"
-Cohesion: 0.09
-Nodes (32): BadgeRow, BadgeFormPlaceholder(), BadgeFormProps, PRESET_COLORS, CandidatesList(), CandidatesListProps, LiveUpdatesList(), LiveUpdatesListProps (+24 more)
+Cohesion: 0.12
+Nodes (32): AdvertisementForm(), BadgeFormPlaceholder(), BadgeFormProps, PRESET_COLORS, CompetitionForm(), ElectionForm(), MatchUpdatesListProps, UPDATE_TYPE_STYLES (+24 more)
 
 ### Community 50 - "Community 50"
-Cohesion: 0.13
-Nodes (16): BadgeRow, ArticleFiltersProps, ArticleFormProps, ArticlesTableProps, CategoriesTableProps, CategoryFormProps, ArticleInsert, ArticleRow (+8 more)
+Cohesion: 0.07
+Nodes (31): BadgeRow, ArticleFilters(), ArticleFiltersProps, ArticleFormProps, ArticlesTableProps, CategoriesTableProps, CategoryFormProps, CompetitionFormProps (+23 more)
 
 ### Community 51 - "Community 51"
 Cohesion: 0.08
@@ -294,23 +302,23 @@ Nodes (41): updateAdvertisementsAction(), updateContactAction(), updateHomepageA
 
 ### Community 52 - "Community 52"
 Cohesion: 0.11
-Nodes (23): DashboardStats, getDashboardStats(), DashboardContent(), DashboardPage(), metadata, STATS, supabase, supabaseAdmin (+15 more)
+Nodes (21): AdvertisementPlacementRow, LiveTimeline(), LiveUpdate, ElectionUpdate, UpdatesTimeline(), supabase, createSupabaseMiddlewareClient(), updateSession() (+13 more)
 
 ### Community 53 - "Community 53"
-Cohesion: 0.11
-Nodes (28): TOPIC_CATEGORIES, ExpandableSectionLayout(), calculateReadTime(), FeatureArticle(), getImageUrl(), getImageUrl(), LiveUpdatesSection(), getImageUrl() (+20 more)
+Cohesion: 0.15
+Nodes (22): calculateReadTime(), FeatureArticle(), getImageUrl(), getImageUrl(), LiveUpdatesSection(), getImageUrl(), SecondaryFeatureArticle(), calculateReadTime() (+14 more)
 
 ### Community 54 - "Community 54"
-Cohesion: 0.25
-Nodes (8): getCachedPublishers, metadata, PageProps, PublishersContent(), PublishersPage(), PublishersStatsContent(), PublishersTableContent(), getPublishers()
+Cohesion: 0.23
+Nodes (9): PublisherFilters(), getCachedPublishers, metadata, PageProps, PublishersContent(), PublishersPage(), PublishersStatsContent(), PublishersTableContent() (+1 more)
 
 ### Community 55 - "Community 55"
-Cohesion: 0.36
-Nodes (6): metadata, EditPublisherContent(), EditPublisherPage(), Props, getPublisherById(), GetPublishersOptions
+Cohesion: 0.13
+Nodes (24): CandidatesList(), CandidatesListProps, GroupsList(), GroupsListProps, LiveUpdatesList(), LiveUpdatesListProps, candidateSchema, createCandidateAction() (+16 more)
 
 ### Community 57 - "Community 57"
-Cohesion: 0.12
-Nodes (24): metadata, metadata, ArticlesContent(), ArticlesPage(), metadata, PageProps, BadgesPage(), metadata (+16 more)
+Cohesion: 0.14
+Nodes (23): metadata, metadata, ArticlesContent(), ArticlesPage(), metadata, PageProps, BadgesPage(), metadata (+15 more)
 
 ### Community 58 - "Community 58"
 Cohesion: 0.25
@@ -325,48 +333,48 @@ Cohesion: 0.15
 Nodes (26): Path, Path, str, Path, Path, str, benchmark_pair(), count_tokens() (+18 more)
 
 ### Community 61 - "Community 61"
-Cohesion: 0.19
-Nodes (12): LiveUpdateModal(), LiveUpdateModalProps, LiveUpdatesSectionProps, LiveUpdateRow, ButtonProps, Size, SIZES, Variant (+4 more)
+Cohesion: 0.16
+Nodes (14): LiveUpdateModal(), LiveUpdateModalProps, LiveUpdatesSectionProps, LiveUpdateRow, ButtonProps, Size, SIZES, Variant (+6 more)
 
 ### Community 63 - "Community 63"
-Cohesion: 0.07
-Nodes (37): getAdvertisementById(), metadata, PageProps, metadata, metadata, metadata, metadata, metadata (+29 more)
+Cohesion: 0.09
+Nodes (19): getAdvertisementById(), metadata, PageProps, metadata, metadata, metadata, metadata, CategoryFormPlaceholder() (+11 more)
 
 ### Community 64 - "Community 64"
-Cohesion: 0.12
-Nodes (13): JsonLdSchema(), generateMetadata(), HorizontalArticleSlider(), Ticker(), Advertisement(), CategoryPageSkeleton(), BottomSlidersSkeleton(), CategorySectionsSkeleton() (+5 more)
+Cohesion: 0.15
+Nodes (9): Ticker(), Advertisement(), CategoryPageSkeleton(), BottomSlidersSkeleton(), CategorySectionsSkeleton(), FeaturedSkeleton(), TickerSkeleton(), AdData (+1 more)
 
 ### Community 65 - "Community 65"
-Cohesion: 0.06
-Nodes (49): createBadgeAction(), createCategoryAction(), createRegionAction(), deleteBadgeAction(), deleteCategoryAction(), deleteRegionAction(), toggleCategoryActiveAction(), toggleRegionActiveAction() (+41 more)
+Cohesion: 0.08
+Nodes (45): createArticleAction(), createBadgeAction(), createCategoryAction(), createRegionAction(), deleteArticleAction(), deleteBadgeAction(), deleteCategoryAction(), deleteRegionAction() (+37 more)
 
 ### Community 66 - "Community 66"
-Cohesion: 0.11
-Nodes (11): BLANK_ROW, groupBy(), PointsTableEditor(), PointsTableEditorProps, ScorePanel(), ScorePanelProps, Toast, ToastContext (+3 more)
+Cohesion: 0.14
+Nodes (17): metadata, metadata, metadata, SettingsForm(), EditBadgeContent(), EditBadgePage(), EditBadgePageProps, NewBadgeContent() (+9 more)
 
 ### Community 67 - "Community 67"
-Cohesion: 0.21
-Nodes (7): metadata, PageProps, MatchesContent(), metadata, PageProps, getMatches(), TableSkeleton()
+Cohesion: 0.40
+Nodes (4): MatchesContent(), metadata, PageProps, getMatches()
 
 ### Community 68 - "Community 68"
-Cohesion: 0.28
-Nodes (6): metadata, PageProps, TeamsContent(), getTeams(), Pagination(), PaginationProps
+Cohesion: 0.19
+Nodes (9): PublisherFiltersProps, RegionFilters(), RegionFiltersProps, metadata, PageProps, TeamsContent(), getTeams(), SearchInput() (+1 more)
 
 ### Community 69 - "Community 69"
-Cohesion: 0.07
-Nodes (26): generateMetadata(), DialChart(), Candidate, ElectionResultsTabbed(), ElectionResultsTabbedProps, Group, UpdatesTimeline(), DialChart() (+18 more)
+Cohesion: 0.08
+Nodes (24): metadata, generateMetadata(), DialChart(), Candidate, ElectionResultsTabbed(), ElectionResultsTabbedProps, Group, UpdatesTimeline() (+16 more)
 
 ### Community 73 - "Community 73"
 Cohesion: 0.18
-Nodes (17): NotFound(), Home(), RootLayout(), ContactPage(), ArticlePage(), CategoryContent(), DynamicRoutePage(), _fetchArticleBySlug() (+9 more)
+Nodes (17): NotFound(), Home(), RootLayout(), ArticleContent(), ArticlePage(), CategoryContent(), DynamicRoutePage(), _fetchArticleBySlug() (+9 more)
 
 ### Community 75 - "Community 75"
 Cohesion: 0.11
-Nodes (18): metadata, PageProps, metadata, ElectionTabs(), ElectionTabsProps, GroupsList(), getElectionById(), getElectionCandidates() (+10 more)
+Nodes (23): metadata, metadata, PageProps, LoginForm(), EditCategoryContent(), EditCategoryPage(), EditCategoryPageProps, getElectionById() (+15 more)
 
 ### Community 76 - "Community 76"
-Cohesion: 0.14
-Nodes (12): generateMetadata(), DoubleRowRelatedSlider(), LiveTimeline(), LiveUpdate, SliderItem, getRelativeTime(), RelativeTime(), ArticleSkeleton() (+4 more)
+Cohesion: 0.15
+Nodes (10): DoubleRowRelatedSlider(), HorizontalArticleSlider(), SliderItem, BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps, getRelativeTime(), RelativeTime() (+2 more)
 
 ### Community 77 - "Community 77"
 Cohesion: 0.18
@@ -378,67 +386,99 @@ Nodes (9): createLiveUpdateAction(), deleteLiveUpdateAction(), getAuth(), update
 
 ### Community 79 - "Community 79"
 Cohesion: 0.29
-Nodes (6): metadata, ElectionsContent(), ElectionsListingPage(), PageProps, getElections(), TableBodySkeleton()
+Nodes (6): metadata, ElectionsContent(), ElectionsListingPage(), PageProps, getElections(), TableSkeleton()
 
 ### Community 81 - "Community 81"
-Cohesion: 0.12
-Nodes (23): CompetitionForm(), CompetitionFormProps, ElectionForm(), ElectionFormProps, EpaperFormProps, EpapersTableProps, MatchForm(), MatchFormProps (+15 more)
+Cohesion: 0.24
+Nodes (8): LiveUpdatesPage(), LiveUpdatesPageProps, metadata, metadata, PreviewArticlePage(), PreviewArticlePageProps, getLiveUpdatesByArticleId(), sanitize()
 
 ### Community 82 - "Community 82"
-Cohesion: 0.25
-Nodes (13): createMatchAction(), createMatchUpdateAction(), deleteMatchAction(), deleteMatchUpdateAction(), getAuth(), matchSchema, parseMatchFormData(), scoreSchema (+5 more)
+Cohesion: 0.18
+Nodes (8): geistSans, inter, playfair, plusJakarta, geistMono, geistSans, inter, metadata
 
 ### Community 87 - "Community 87"
-Cohesion: 0.07
-Nodes (27): geistSans, inter, playfair, plusJakarta, geistMono, geistSans, inter, metadata (+19 more)
+Cohesion: 0.19
+Nodes (12): DashboardLayout(), getSessionUser(), DashboardShell(), DashboardShellProps, NAV_ITEMS, Sidebar(), SidebarProps, TopbarProps (+4 more)
 
 ### Community 88 - "Community 88"
-Cohesion: 0.36
-Nodes (3): Skeleton(), DashboardSkeleton(), Skeleton()
+Cohesion: 0.21
+Nodes (7): AdvertisementsContent(), metadata, PageProps, getAdvertisements(), Skeleton(), TableBodySkeleton(), Skeleton()
 
 ### Community 89 - "Community 89"
-Cohesion: 0.18
-Nodes (17): AdSlot, createAdvertisementAction(), deleteAdvertisementAction(), deleteAdvertisementImageAction(), getAdvertisementSlotsAction(), getAdvertisementUploadUrlAction(), getAuth(), updateAdvertisementAction() (+9 more)
+Cohesion: 0.29
+Nodes (11): AdSlot, createAdvertisementAction(), deleteAdvertisementAction(), deleteAdvertisementImageAction(), getAdvertisementSlotsAction(), getAdvertisementUploadUrlAction(), getAuth(), updateAdvertisementAction() (+3 more)
 
 ### Community 90 - "Community 90"
-Cohesion: 0.29
-Nodes (5): metadata, CompetitionsContent(), metadata, PageProps, getCompetitions()
+Cohesion: 0.22
+Nodes (6): metadata, CompetitionsContent(), metadata, PageProps, Pagination(), PaginationProps
+
+### Community 91 - "Community 91"
+Cohesion: 0.33
+Nodes (10): competitionSchema, createCompetitionAction(), deletePointsRowAction(), getAuth(), parseCompetitionFormData(), pointsRowSchema, slugify(), toggleCompetitionPublishAction() (+2 more)
 
 ### Community 92 - "Community 92"
 Cohesion: 0.07
 Nodes (37): CompetitionsPage(), metadata, PageProps, PageProps, metadata, LivePage(), metadata, metadata (+29 more)
 
-### Community 93 - "Community 93"
-Cohesion: 0.31
-Nodes (5): DashboardMockup(), LoginForm(), LoginPage(), metadata, ThemeTogglePill()
-
 ### Community 95 - "Community 95"
-Cohesion: 0.32
-Nodes (5): CategoryFiltersProps, PublisherFilters(), PublisherFiltersProps, SearchInput(), SearchInputProps
+Cohesion: 0.29
+Nodes (6): CategoriesContent(), CategoriesPage(), metadata, PageProps, CategoryFilters(), CategoryFiltersProps
 
 ### Community 96 - "Community 96"
-Cohesion: 0.47
-Nodes (3): metadata, RegionSelect(), _getElections()
+Cohesion: 0.27
+Nodes (6): TOPIC_CATEGORIES, ExpandableSectionLayout(), TopicCategoryData, TopicSection(), CategoryHeader(), SectionLayout()
+
+### Community 98 - "Community 98"
+Cohesion: 0.20
+Nodes (9): chunks, corsHeaders, expo, invalidTokens, messages, supabaseAdmin, tickets, tokens (+1 more)
+
+### Community 99 - "Community 99"
+Cohesion: 0.28
+Nodes (5): logoutAction(), Topbar(), Badge(), BadgeVariant, VARIANTS
+
+### Community 100 - "Community 100"
+Cohesion: 0.32
+Nodes (6): DarkModeToggleItem(), Theme, ThemeContext, ThemeContextValue, ThemeProvider(), useTheme()
+
+### Community 101 - "Community 101"
+Cohesion: 0.38
+Nodes (6): metadata, PageProps, EditEpaperContent(), EditEpaperPage(), PageProps, getEpaperById()
+
+### Community 102 - "Community 102"
+Cohesion: 0.50
+Nodes (4): metadata, NAV_ITEMS, Home(), hasPermission()
+
+### Community 103 - "Community 103"
+Cohesion: 0.40
+Nodes (4): compilerOptions, allowJs, lib, strict
+
+### Community 104 - "Community 104"
+Cohesion: 0.50
+Nodes (3): BadgeRow, BadgeInsert, BadgeUpdate
+
+### Community 105 - "Community 105"
+Cohesion: 0.50
+Nodes (3): expo, PushPayload, PushResult
 
 ## Knowledge Gaps
-- **541 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+536 more)
+- **571 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+566 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createSupabaseServerClient()` connect `Community 37` to `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 52`, `Community 57`, `Community 58`, `Community 63`, `Community 65`, `Community 69`, `Community 73`, `Community 75`, `Community 78`, `Community 79`, `Community 82`, `Community 89`, `Community 92`, `Community 93`, `Community 96`?**
+- **Why does `createSupabaseServerClient()` connect `Community 75` to `Community 9`, `Community 37`, `Community 38`, `Community 46`, `Community 47`, `Community 48`, `Community 51`, `Community 52`, `Community 55`, `Community 57`, `Community 58`, `Community 63`, `Community 65`, `Community 66`, `Community 69`, `Community 73`, `Community 78`, `Community 79`, `Community 81`, `Community 87`, `Community 89`, `Community 91`, `Community 92`, `Community 99`, `Community 101`, `Community 102`?**
   _High betweenness centrality (0.062) - this node is a cross-community bridge._
-- **Why does `Skeleton()` connect `Community 88` to `Community 64`, `Community 67`, `Community 74`, `Community 76`, `Community 49`, `Community 54`, `Community 56`, `Community 57`, `Community 92`, `Community 63`?**
-  _High betweenness centrality (0.021) - this node is a cross-community bridge._
-- **Why does `useToast()` connect `Community 14` to `Community 65`, `Community 66`, `Community 75`, `Community 47`, `Community 48`, `Community 81`, `Community 49`, `Community 51`, `Community 89`, `Community 57`, `Community 61`, `Community 63`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+- **Why does `Skeleton()` connect `Community 88` to `Community 64`, `Community 38`, `Community 74`, `Community 76`, `Community 49`, `Community 54`, `Community 56`, `Community 57`, `Community 92`, `Community 63`?**
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
+- **Why does `useToast()` connect `Community 14` to `Community 9`, `Community 46`, `Community 47`, `Community 49`, `Community 51`, `Community 55`, `Community 57`, `Community 61`, `Community 63`?**
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `packageManager` to the rest of the system?**
-  _549 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _579 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.10476190476190476 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.10476190476190476 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.052564102564102565 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.10476190476190476 - nodes in this community are weakly interconnected._

@@ -134,8 +134,8 @@ export async function uploadPdfAction(formData: FormData) {
 
 export async function getSignedUploadUrlAction(bucket: string, fileName: string) {
   try {
-    const { supabase } = await getAuth();
-    const { data, error } = await supabase.storage.from(bucket).createSignedUploadUrl(fileName);
+    await getAuth(); // just to ensure user is authenticated
+    const { data, error } = await supabaseAdmin.storage.from(bucket).createSignedUploadUrl(fileName);
     if (error) throw error;
     
     return { success: true, signedUrl: data.signedUrl, token: data.token, path: data.path };
@@ -181,10 +181,11 @@ export async function cleanupOrphanedFilesAction(bucket = "articles") {
         return parts.pop() || "";
       });
     } else if (bucket === "epapers") {
-      const { data: epapers } = await supabase.from("epapers").select("pdf_url, thumbnail_url");
-      const pdfs = (epapers || []).filter(e => (e as { pdf_url?: string }).pdf_url).map(e => ((e as { pdf_url: string }).pdf_url).split("/").pop() || "");
-      const thumbs = (epapers || []).filter(e => (e as { thumbnail_url?: string }).thumbnail_url).map(e => ((e as { thumbnail_url: string }).thumbnail_url).split("/").pop() || "");
-      usedFileNames = [...pdfs, ...thumbs];
+      const { data: epapers } = await supabase.from("epapers").select("pdf_url");
+      usedFileNames = (epapers || []).filter(e => (e as { pdf_url?: string }).pdf_url).map(e => ((e as { pdf_url: string }).pdf_url).split("/").pop() || "");
+    } else if (bucket === "epaper_thumbnails") {
+      const { data: epapers } = await supabase.from("epapers").select("thumbnail_url");
+      usedFileNames = (epapers || []).filter(e => (e as { thumbnail_url?: string }).thumbnail_url).map(e => ((e as { thumbnail_url: string }).thumbnail_url).split("/").pop() || "");
     } else {
       throw new Error("Unsupported bucket for automated cleanup");
     }

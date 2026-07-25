@@ -94,7 +94,7 @@ export async function updateEpaperAction(id: number, formData: FormData) {
       .select("author_id, pdf_url, thumbnail_url")
       .eq("id", id)
       .single();
-    const existing = data as any;
+    const existing = data as { author_id: string; pdf_url: string | null; thumbnail_url: string | null };
       
     if (fetchError || !existing) {
       throw new Error("Epaper not found");
@@ -135,7 +135,7 @@ export async function updateEpaperAction(id: number, formData: FormData) {
       await deleteFileAction(existing.pdf_url, "epapers").catch(console.error);
     }
     if (existing.thumbnail_url && validated.thumbnail_url !== existing.thumbnail_url) {
-      await deleteFileAction(existing.thumbnail_url, "epapers").catch(console.error);
+      await deleteFileAction(existing.thumbnail_url, "epaper_thumbnails").catch(console.error);
     }
 
     revalidatePath("/epapers");
@@ -159,7 +159,7 @@ export async function deleteEpaperAction(id: number) {
       .select("author_id, pdf_url, thumbnail_url")
       .eq("id", id)
       .single();
-    const existing = data as any;
+    const existing = data as { author_id: string; pdf_url: string | null; thumbnail_url: string | null };
       
     if (fetchError || !existing) {
       throw new Error("Epaper not found");
@@ -182,7 +182,7 @@ export async function deleteEpaperAction(id: number) {
       await deleteFileAction(existing.pdf_url, "epapers").catch(console.error);
     }
     if (existing.thumbnail_url) {
-      await deleteFileAction(existing.thumbnail_url, "epapers").catch(console.error);
+      await deleteFileAction(existing.thumbnail_url, "epaper_thumbnails").catch(console.error);
     }
 
     revalidatePath("/epapers");
@@ -190,5 +190,21 @@ export async function deleteEpaperAction(id: number) {
   } catch (error: unknown) {
     console.error("Action error:", error);
     return { success: false, error: error instanceof Error ? error.message : "Failed to delete epaper" };
+  }
+}
+
+export async function updateEpaperThumbnailBulkAction(id: number, thumbnailUrl: string) {
+  try {
+    const { supabaseAdmin } = await import("@repo/api");
+    const { error } = await supabaseAdmin
+      .from("epapers")
+      .update({ thumbnail_url: thumbnailUrl })
+      .eq("id", id);
+
+    if (error) throw error;
+    return { success: true };
+  } catch (error: unknown) {
+    console.error("Action error:", error);
+    return { success: false, error: error instanceof Error ? error.message : "Failed to update epaper thumbnail" };
   }
 }

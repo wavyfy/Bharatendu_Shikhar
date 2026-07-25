@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: "Browse and read our latest digital e-papers online.",
 };
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 function getImageUrl(path: string | null): string | null {
   if (!path) return null;
   if (path.startsWith("http")) return path;
@@ -23,9 +25,12 @@ async function EpaperContent({ page }: { page: number }) {
   const to = from + limit - 1;
 
   const { data: settings } = await supabase.from("settings").select("site_logo_url, site_logo_dark_url").eq("id", 1).single();
+  const now = new Date().toISOString();
   const { data: epapers, count } = await supabase
     .from("epapers")
     .select("*, regions(name)", { count: 'exact' })
+    .lte("published_at", now)
+    .or(`expiry_date.is.null,expiry_date.gt.${now}`)
     .order("published_at", { ascending: false })
     .range(from, to);
 
@@ -50,21 +55,9 @@ async function EpaperContent({ page }: { page: number }) {
                       src={getImageUrl(paper.thumbnail_url)!}
                       alt={paper.title}
                       fill
-                      className="object-cover transition-transform duration-500 ease-out"
+                      className="object-cover object-top transition-transform duration-500 ease-out"
                     />
                     <div className="absolute inset-0 z-10 border border-gray-200 dark:border-news-border rounded-t-xl pointer-events-none" />
-                  </div>
-                ) : paper.pdf_url ? (
-                  <div className="relative w-full h-full overflow-hidden bg-white dark:bg-gray-100 rounded-t-xl">
-                    <iframe
-                      src={`${getImageUrl(paper.pdf_url)}#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-                      className="absolute top-0 h-[150%] pointer-events-none"
-                      style={{ width: 'calc(100% + 20px)', left: '-2px' }}
-                      title={paper.title}
-                      scrolling="no"
-                      tabIndex={-1}
-                    />
-                    <div className="absolute inset-0 z-10 bg-transparent border border-gray-200 dark:border-news-border rounded-t-xl pointer-events-none" />
                   </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-news-card p-8">
