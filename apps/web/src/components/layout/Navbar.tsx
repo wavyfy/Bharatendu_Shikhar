@@ -545,7 +545,7 @@ export function Navbar({
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full right-0 z-60 w-max min-w-50 pt-2"
+                      className={`absolute top-full z-60 w-max min-w-50 pt-2 ${visibleLinks.length > 4 ? 'right-0' : 'left-0'}`}
                     >
                       <div className="w-max">
                         <div className="bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-xl py-2 flex rounded-xs">

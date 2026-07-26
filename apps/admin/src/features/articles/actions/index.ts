@@ -76,7 +76,7 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
     const validatedData = validationResult.data;
 
     // Generate slug
-    let slug = generateSlug(validatedData.title);
+    const slug = generateSlug(validatedData.title);
     
     // Ensure slug is unique by appending timestamp if we hit a conflict
     // We will just try to insert, and if it fails with unique violation, we catch it below.
@@ -111,10 +111,11 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
     revalidatePath("/articles");
     revalidateWeb(["articles", "categories", "regions"]);
     return { success: true, articleId: inserted?.id };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Create article error:", error);
-    let message = error?.message || "Failed to create article";
-    if (error?.code === '23505') { // Unique violation in Postgres
+    const err = error as { message?: string, code?: string };
+    let message = err?.message || "Failed to create article";
+    if (err?.code === '23505') { // Unique violation in Postgres
       message = "An article with a similar title already exists. Please change the title slightly.";
     }
     return { success: false, error: message };
@@ -192,10 +193,11 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput,
     revalidatePath(`/articles/${id}/edit`);
     revalidateWeb(["articles", "categories", "regions"]);
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Update article error:", error);
-    let message = error?.message || "Failed to update article";
-    if (error?.code === '23505') {
+    const err = error as { message?: string, code?: string };
+    let message = err?.message || "Failed to update article";
+    if (err?.code === '23505') { // Unique violation in Postgres
       message = "An article with a similar title already exists. Please change the title slightly.";
     }
     return { success: false, error: message };
@@ -248,17 +250,18 @@ export async function sendPushNotificationAction(params: {
 }) {
   try {
     await getAuth(); // Ensure caller is authenticated
-
     const { supabaseAdmin } = await import("@repo/api");
 
     // Fetch all device tokens
     const { data: rows, error } = await supabaseAdmin
       .from("device_tokens")
-      .select("token");
+      .select("id, token");
 
     if (error) throw new Error(`Failed to fetch device tokens: ${error.message}`);
 
-    const tokens: string[] = (rows ?? []).map((r: { token: string }) => r.token).filter(Boolean);
+    // Map trimmed token strings to their row IDs for exact deletion
+    const tokenMap = new Map((rows ?? []).map((r: { id: number; token: string }) => [r.token?.trim(), r.id]));
+    const tokens = Array.from(tokenMap.keys()).filter(Boolean) as string[];
 
     if (tokens.length === 0) {
       console.log("[sendPushNotification] No device tokens registered.");
@@ -276,16 +279,25 @@ export async function sendPushNotificationAction(params: {
 
     // Clean up invalid tokens
     if (result.invalidTokens.length > 0) {
-      const { error: deleteError } = await supabaseAdmin
-        .from("device_tokens")
-        .delete()
-        .in("token", result.invalidTokens);
+      const invalidIds = result.invalidTokens.map(t => tokenMap.get(t)).filter((id): id is number => typeof id === "number");
+      
+      if (invalidIds.length > 0) {
+        const { error: deleteError } = await supabaseAdmin
+          .from("device_tokens")
+          .delete()
+          .in("id", invalidIds);
 
-      if (deleteError) {
-        console.error("[sendPushNotification] Failed to remove invalid tokens:", deleteError.message);
-      } else {
-        console.log(`[sendPushNotification] Removed ${result.invalidTokens.length} invalid token(s).`);
+        if (deleteError) {
+          console.error("[sendPushNotification] Failed to remove invalid tokens:", deleteError.message);
+        } else {
+          console.log(`[sendPushNotification] Removed ${invalidIds.length} invalid token(s).`);
+        }
       }
+    }
+
+    if (result.sent === 0 && result.failed > 0) {
+      const exactError = result.errors?.[0] || "Check Expo credentials or token validity.";
+      return { success: false, sent: 0, failed: result.failed, error: `Expo Error: ${exactError}` };
     }
 
     return { success: true, sent: result.sent, failed: result.failed };
