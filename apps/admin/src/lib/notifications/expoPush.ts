@@ -1,6 +1,6 @@
-import Expo, { type ExpoPushMessage, type ExpoPushTicket } from "expo-server-sdk";
+import Expo, { type ExpoPushMessage } from "expo-server-sdk";
 
-const expo = new Expo();
+const expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN });
 
 export interface PushPayload {
   title: string;
@@ -12,6 +12,7 @@ export interface PushResult {
   sent: number;
   failed: number;
   invalidTokens: string[];
+  errors?: string[];
 }
 
 /**
@@ -44,38 +45,37 @@ export async function sendExpoPushNotifications(
 
   // Chunk & send
   const chunks = expo.chunkPushNotifications(messages);
-  const ticketSets: ExpoPushTicket[][] = [];
+  let sent = 0;
+  let failed = 0;
+  const invalidTokens: string[] = [];
+  const errorMessages: string[] = [];
 
   for (const chunk of chunks) {
     try {
       const tickets = await expo.sendPushNotificationsAsync(chunk);
-      ticketSets.push(tickets);
-    } catch (err) {
+      tickets.forEach((ticket, i) => {
+        const token = chunk[i].to as string;
+        if (ticket.status === "ok") {
+          sent++;
+        } else {
+          failed++;
+          const details = (ticket as { details?: { error?: string } }).details;
+          const msg = (ticket as { message?: string }).message;
+          if (details?.error === "DeviceNotRegistered") {
+            invalidTokens.push(token);
+          }
+          if (msg) errorMessages.push(msg);
+          console.error("[expoPush] Ticket error:", msg);
+        }
+      });
+    } catch (err: unknown) {
       console.error("[expoPush] Chunk send error:", err);
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      errorMessages.push(errorMessage);
+      failed += chunk.length; // Count the whole chunk as failed
     }
   }
 
-  // Inspect tickets for errors
-  const allTickets = ticketSets.flat();
-  let sent = 0;
-  let failed = 0;
-  const invalidTokens: string[] = [];
-
-  allTickets.forEach((ticket, idx) => {
-    if (ticket.status === "ok") {
-      sent++;
-    } else {
-      failed++;
-      const details = (ticket as { details?: { error?: string } }).details;
-      if (details?.error === "DeviceNotRegistered") {
-        // Map ticket index back to the token
-        const token = validTokens[idx];
-        if (token) invalidTokens.push(token);
-      }
-      console.error("[expoPush] Ticket error:", (ticket as { message?: string }).message);
-    }
-  });
-
   console.log(`[expoPush] Sent: ${sent}, Failed: ${failed}, Invalid: ${invalidTokens.length}`);
-  return { sent, failed, invalidTokens };
+  return { sent, failed, invalidTokens, errors: errorMessages };
 }
