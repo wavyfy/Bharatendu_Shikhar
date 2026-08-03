@@ -257,7 +257,7 @@ export async function sendPushNotificationAction(params: {
 
     const { error } = await supabaseAdmin
       .from("articles")
-      .update({ push_due_at: dueTime } as never)
+      .update({ push_due_at: dueTime, push_sent_at: null } as never)
       .eq("id", params.articleId);
 
     if (error) throw new Error(`Failed to schedule push notification: ${error.message}`);

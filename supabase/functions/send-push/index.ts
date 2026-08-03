@@ -13,7 +13,14 @@ serve(async (req: Request) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
+  const url = new URL(req.url);
+
   try {
+    if (url.searchParams.get("action") === "cron") {
+      const result = await processPushQueue();
+      return new Response(JSON.stringify(result), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+
     const { title, body, data } = await req.json();
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
@@ -32,7 +39,7 @@ serve(async (req: Request) => {
 
     const tokens = (rows ?? []).map((r: any) => r.token).filter(Boolean);
     if (tokens.length === 0) {
-      return new Response(JSON.stringify({ success: true, sent: 0, failed: 0, message: "No tokens found" }), {
+      return new Response(JSON.stringify({ success: true, sent: 0, failed: 0, error: "No device tokens found." }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -41,7 +48,7 @@ serve(async (req: Request) => {
     const validTokens = tokens.filter((t: string) => Expo.isExpoPushToken(t));
     
     if (validTokens.length === 0) {
-      return new Response(JSON.stringify({ success: true, sent: 0, failed: 0, message: "No valid expo tokens found" }), {
+      return new Response(JSON.stringify({ success: true, sent: 0, failed: tokens.length, error: "No valid Expo push tokens found." }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -51,7 +58,7 @@ serve(async (req: Request) => {
       sound: "default",
       title,
       body,
-      data: data || {},
+      data,
     }));
 
     const chunks = expo.chunkPushNotifications(messages);
@@ -61,23 +68,15 @@ serve(async (req: Request) => {
       try {
         const ticketChunk = await expo.sendPushNotificationsAsync(chunk);
         tickets.push(...ticketChunk);
-      } catch (err) {
-        console.error("Chunk send error:", err);
+      } catch (error) {
+        console.error("Error sending chunk:", error);
       }
     }
 
-    let sent = 0;
-    let failed = 0;
     const invalidTokens: string[] = [];
-
     tickets.forEach((ticket: any, idx) => {
-      if (ticket.status === "ok") {
-        sent++;
-      } else {
-        failed++;
-        if (ticket.details && ticket.details.error === "DeviceNotRegistered") {
-          invalidTokens.push(validTokens[idx]);
-        }
+      if (ticket.status !== "ok" && ticket.details && ticket.details.error === "DeviceNotRegistered") {
+        invalidTokens.push(validTokens[idx]);
       }
     });
 
@@ -85,7 +84,7 @@ serve(async (req: Request) => {
       await supabaseAdmin.from("device_tokens").delete().in("token", invalidTokens);
     }
 
-    return new Response(JSON.stringify({ success: true, sent, failed, invalidTokens: invalidTokens.length }), {
+    return new Response(JSON.stringify({ success: true, sent: tickets.length, failed: invalidTokens.length }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error: any) {
@@ -97,19 +96,18 @@ serve(async (req: Request) => {
   }
 });
 
-Deno.cron("Process Scheduled Push Notifications", "* * * * *", async () => {
+async function processPushQueue() {
   console.log("Running scheduled push notification check...");
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
   const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   
   if (!supabaseUrl || !supabaseServiceKey) {
     console.error("Missing Supabase environment variables for cron");
-    return;
+    return { success: false, error: "Missing env vars" };
   }
 
   const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
-  // Fetch articles due for push
   const { data: articles, error: articlesError } = await supabaseAdmin
     .from("articles")
     .select("id, title, excerpt, slug")
@@ -118,25 +116,24 @@ Deno.cron("Process Scheduled Push Notifications", "* * * * *", async () => {
 
   if (articlesError) {
     console.error("Failed to fetch due articles:", articlesError);
-    return;
+    return { success: false, error: articlesError.message };
   }
 
   if (!articles || articles.length === 0) {
     console.log("No scheduled push notifications found.");
-    return;
+    return { success: true, message: "No notifications due" };
   }
 
-  // Fetch device tokens
   const { data: rows, error: tokenError } = await supabaseAdmin.from("device_tokens").select("token");
   if (tokenError) {
     console.error("Failed to fetch device tokens:", tokenError);
-    return;
+    return { success: false, error: tokenError.message };
   }
 
   const tokens = (rows ?? []).map((r: any) => r.token).filter(Boolean);
   if (tokens.length === 0) {
     console.log("No device tokens registered, skipping pushes.");
-    return;
+    return { success: true, message: "No tokens" };
   }
 
   const expo = new Expo();
@@ -144,7 +141,7 @@ Deno.cron("Process Scheduled Push Notifications", "* * * * *", async () => {
   
   if (validTokens.length === 0) {
     console.log("No valid expo tokens found, skipping pushes.");
-    return;
+    return { success: true, message: "No valid Expo tokens" };
   }
 
   for (const article of articles) {
@@ -159,7 +156,7 @@ Deno.cron("Process Scheduled Push Notifications", "* * * * *", async () => {
     }));
 
     const chunks = expo.chunkPushNotifications(messages);
-    const tickets = [];
+    const tickets: any[] = [];
 
     for (const chunk of chunks) {
       try {
@@ -181,10 +178,15 @@ Deno.cron("Process Scheduled Push Notifications", "* * * * *", async () => {
       await supabaseAdmin.from("device_tokens").delete().in("token", invalidTokens);
     }
 
-    // Mark as sent
     await supabaseAdmin
       .from("articles")
-      .update({ push_sent_at: new Date().toISOString() })
+      .update({ push_sent_at: new Date().toISOString() } as never)
       .eq("id", article.id);
   }
+
+  return { success: true, message: `Processed ${articles.length} articles` };
+}
+
+Deno.cron("Process Scheduled Push Notifications", "* * * * *", () => {
+  processPushQueue();
 });
