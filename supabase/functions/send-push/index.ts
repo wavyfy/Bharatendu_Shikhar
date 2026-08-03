@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { Expo } from "npm:expo-server-sdk";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -21,7 +21,15 @@ serve(async (req: Request) => {
       return new Response(JSON.stringify(result), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const { title, body, data } = await req.json();
+    let title, body, data;
+    try {
+      const payload = await req.json();
+      title = payload.title;
+      body = payload.body;
+      data = payload.data;
+    } catch (e) {
+      // If it's a GET request (like from pg_cron), req.json() will fail, which is fine!
+    }
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
@@ -186,7 +194,3 @@ async function processPushQueue() {
 
   return { success: true, message: `Processed ${articles.length} articles` };
 }
-
-Deno.cron("Process Scheduled Push Notifications", "* * * * *", () => {
-  processPushQueue();
-});
