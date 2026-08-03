@@ -127,7 +127,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
                 body: payload.excerpt ?? "Tap to read the full article.",
               });
               if (pushResult.success) {
-                toast.success(`Push notification sent to ${pushResult.sent} device(s).`);
+                toast.success(`Push notification scheduled and will be sent shortly.`);
               } else {
                 toast.error(`Push notification failed: ${pushResult.error ?? "Unknown error"}`);
               }

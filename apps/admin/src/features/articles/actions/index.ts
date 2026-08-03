@@ -8,7 +8,7 @@ import { createArticleSchema, updateArticleSchema, type CreateArticleInput, type
 import { generateSlug } from "../utils/slug";
 import { getArticleById } from "../queries";
 import { deleteFileAction } from "../../storage/actions";
-import { sendExpoPushNotifications } from "@/lib/notifications/expoPush";
+
 
 
 // Helper to get authenticated user and client
@@ -239,8 +239,8 @@ export async function publishArticleAction(id: number, status: "draft" | "publis
 }
 
 /**
- * Send an Expo push notification for the given article to all registered device tokens.
- * Invalid/unregistered tokens are automatically removed from the device_tokens table.
+ * Schedule an Expo push notification for the given article.
+ * The actual push is sent by a Supabase Edge Function (Deno.cron) 5 minutes later.
  */
 export async function sendPushNotificationAction(params: {
   articleId: number;
@@ -252,58 +252,22 @@ export async function sendPushNotificationAction(params: {
     await getAuth(); // Ensure caller is authenticated
     const { supabaseAdmin } = await import("@repo/api");
 
-    // Fetch all device tokens
-    const { data: rows, error } = await supabaseAdmin
-      .from("device_tokens")
-      .select("id, token");
+    // Set the push_due_at to 1 minute from now for testing (change back to 5 for production)
+    const dueTime = new Date(Date.now() + 1 * 60 * 1000).toISOString();
 
-    if (error) throw new Error(`Failed to fetch device tokens: ${error.message}`);
+    const { error } = await supabaseAdmin
+      .from("articles")
+      .update({ push_due_at: dueTime } as never)
+      .eq("id", params.articleId);
 
-    // Map trimmed token strings to their row IDs for exact deletion
-    const tokenMap = new Map((rows ?? []).map((r: { id: number; token: string }) => [r.token?.trim(), r.id]));
-    const tokens = Array.from(tokenMap.keys()).filter(Boolean) as string[];
+    if (error) throw new Error(`Failed to schedule push notification: ${error.message}`);
 
-    if (tokens.length === 0) {
-      console.log("[sendPushNotification] No device tokens registered.");
-      return { success: true, sent: 0, failed: 0 };
-    }
+    console.log(`[sendPushNotification] Scheduled push for article ${params.articleId} at ${dueTime}`);
 
-    const result = await sendExpoPushNotifications(tokens, {
-      title: params.title,
-      body: params.body || "Tap to read the full article.",
-      data: {
-        article_id: params.articleId,
-        article_slug: params.articleSlug,
-      },
-    });
-
-    // Clean up invalid tokens
-    if (result.invalidTokens.length > 0) {
-      const invalidIds = result.invalidTokens.map(t => tokenMap.get(t)).filter((id): id is number => typeof id === "number");
-      
-      if (invalidIds.length > 0) {
-        const { error: deleteError } = await supabaseAdmin
-          .from("device_tokens")
-          .delete()
-          .in("id", invalidIds);
-
-        if (deleteError) {
-          console.error("[sendPushNotification] Failed to remove invalid tokens:", deleteError.message);
-        } else {
-          console.log(`[sendPushNotification] Removed ${invalidIds.length} invalid token(s).`);
-        }
-      }
-    }
-
-    if (result.sent === 0 && result.failed > 0) {
-      const exactError = result.errors?.[0] || "Check Expo credentials or token validity.";
-      return { success: false, sent: 0, failed: result.failed, error: `Expo Error: ${exactError}` };
-    }
-
-    return { success: true, sent: result.sent, failed: result.failed };
+    return { success: true, sent: 0, failed: 0 };
   } catch (error: unknown) {
     console.error("[sendPushNotification] Error:", error);
-    const message = error instanceof Error ? error.message : "Failed to send push notification";
+    const message = error instanceof Error ? error.message : "Failed to schedule push notification";
     return { success: false, sent: 0, failed: 0, error: message };
   }
 }
