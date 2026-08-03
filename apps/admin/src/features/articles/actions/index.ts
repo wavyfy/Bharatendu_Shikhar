@@ -8,7 +8,7 @@ import { createArticleSchema, updateArticleSchema, type CreateArticleInput, type
 import { generateSlug } from "../utils/slug";
 import { getArticleById } from "../queries";
 import { deleteFileAction } from "../../storage/actions";
-import { sendExpoPushNotifications } from "@/lib/notifications/expoPush";
+
 
 
 // Helper to get authenticated user and client
@@ -257,7 +257,7 @@ export async function sendPushNotificationAction(params: {
 
     const { error } = await supabaseAdmin
       .from("articles")
-      .update({ push_due_at: dueTime })
+      .update({ push_due_at: dueTime } as never)
       .eq("id", params.articleId);
 
     if (error) throw new Error(`Failed to schedule push notification: ${error.message}`);
