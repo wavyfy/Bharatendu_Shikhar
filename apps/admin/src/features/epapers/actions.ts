@@ -12,6 +12,7 @@ const epaperSchema = z.object({
   thumbnail_url: z.string().url().nullable().optional(),
   region_id: z.coerce.number().nullable().optional(),
   published_at: z.string().nullable().optional(),
+  expiry_date: z.string().nullable().optional(),
 });
 
 async function getAuth() {
@@ -51,6 +52,7 @@ export async function createEpaperAction(formData: FormData) {
       thumbnail_url: formData.get("thumbnail_url")?.toString() || null,
       region_id: formData.get("region_id") || null,
       published_at: formData.get("published_at") || null,
+      expiry_date: formData.get("expiry_date") || null,
     };
 
     const validationResult = epaperSchema.safeParse(payload);
@@ -109,6 +111,7 @@ export async function updateEpaperAction(id: number, formData: FormData) {
       thumbnail_url: formData.get("thumbnail_url")?.toString() || null,
       region_id: formData.get("region_id") || null,
       published_at: formData.get("published_at") || null,
+      expiry_date: formData.get("expiry_date") || null,
     };
 
     const validationResult = epaperSchema.safeParse(payload);

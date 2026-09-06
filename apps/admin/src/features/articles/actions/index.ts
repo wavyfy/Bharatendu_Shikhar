@@ -84,13 +84,19 @@ export async function createArticleAction(input: CreateArticleInput, badgeIds: n
     // Auto-assign Live badge when is_live is enabled
     const resolvedBadgeIds = await ensureLiveBadge(badgeIds, validatedData.is_live ?? false);
 
+    const publishedAtValue = validatedData.published_at
+      ? validatedData.published_at
+      : validatedData.status === "published"
+      ? new Date().toISOString()
+      : null;
+
     const { data, error } = await supabase
       .from("articles")
       .insert({
         ...validatedData,
         slug,
         author_id: user.id,
-        published_at: validatedData.status === "published" ? new Date().toISOString() : null,
+        published_at: publishedAtValue,
       } as never)
       .select("id")
       .single();
@@ -149,9 +155,11 @@ export async function updateArticleAction(id: number, input: UpdateArticleInput,
       updated_at: new Date().toISOString(),
     };
 
-    if (validatedData.status === "published" && existing.status !== "published") {
+    if (validatedData.published_at !== undefined) {
+      updates.published_at = validatedData.published_at;
+    } else if (validatedData.status === "published" && !existing.published_at) {
       updates.published_at = new Date().toISOString();
-    } else if (validatedData.status === "draft") {
+    } else if (validatedData.status === "draft" && validatedData.published_at === undefined) {
       updates.published_at = null;
     }
 

@@ -1,6 +1,6 @@
 import { supabase } from "@repo/api";
 import { fetchSettings } from "@/utils/fetchData";
-import { getSiteUrl, getAbsoluteImageUrl } from "@/utils/seo";
+import { getSiteUrlString, getAbsoluteImageUrl } from "@/utils/seo";
 import { NextResponse } from "next/server";
 
 /** Escape XML special characters. */
@@ -18,7 +18,7 @@ export const revalidate = 0;
 
 export async function GET() {
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
 
   const now = new Date().toISOString();
   // Fetch published articles with featured images

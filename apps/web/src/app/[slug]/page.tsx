@@ -9,7 +9,7 @@ import { fetchDynamicPageData, fetchTickerArticles, fetchSettings } from "@/util
 import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
 import { CategoryPageSkeleton } from "@/components/skeletons/CategorySkeletons";
 import type { Metadata } from "next";
-import { getSiteUrl } from "@/utils/seo";
+import { getSiteUrlString } from "@/utils/seo";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 /** CollectionPage + ItemList structured data for category/region listing pages. */
@@ -25,7 +25,7 @@ async function CollectionPageAndItemListSchema({
   topArticles: { title: string | null; slug: string }[];
 }) {
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
   const pageUrl = `${siteUrl}/${slug}`;
 
   const collectionPageSchema = {
@@ -72,11 +72,15 @@ export async function generateMetadata(
   const { slug } = await params;
   const pageData = await fetchDynamicPageData(slug);
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
   
   if (!pageData) {
     return {
-      title: "Category Not Found",
+      title: "पेज नहीं मिला | भारतेन्दु शिखर",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
@@ -117,7 +121,7 @@ async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slu
   const { slug } = await paramsPromise;
   const pageData = await fetchDynamicPageData(slug);
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
   
   if (!pageData) {
     notFound();

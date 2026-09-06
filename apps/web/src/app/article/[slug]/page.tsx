@@ -14,7 +14,7 @@ import { RelatedArticlesList } from "@/components/shared/RelatedArticlesList";
 import { RelativeTime } from "@/components/shared/RelativeTime";
 import type { Metadata, ResolvingMetadata } from "next";
 import { sanitize } from "@repo/api";
-import { getSiteUrl, getAbsoluteImageUrl } from "@/utils/seo";
+import { getSiteUrlString, getAbsoluteImageUrl } from "@/utils/seo";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
@@ -27,7 +27,7 @@ export async function generateMetadata(
   const { slug } = await params;
   const article = await fetchArticleBySlug(slug);
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
 
   if (!article) {
     return {
@@ -79,7 +79,7 @@ export async function generateMetadata(
 
 async function JsonLdSchema({ article }: { article: ArticleWithAuthor & { categories?: { name?: string } | null; slug: string } }) {
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
 
   const publishedAt = article.published_at || article.created_at || new Date().toISOString();
   const updatedAt = article.updated_at || publishedAt;
@@ -168,7 +168,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
     fetchArticleBySlug(slug),
     fetchSettings(),
   ]);
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
 
   if (!article) {
     notFound();

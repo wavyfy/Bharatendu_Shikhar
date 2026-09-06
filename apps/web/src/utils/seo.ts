@@ -15,6 +15,10 @@ export function getSiteUrl(settingsSiteUrl?: string | null): URL {
   return new URL(url);
 }
 
+export function getSiteUrlString(settingsSiteUrl?: string | null): string {
+  return getSiteUrl(settingsSiteUrl).origin;
+}
+
 export function getAbsoluteImageUrl(imagePath?: string | null, fallbackUrl?: string | null): string | null {
   if (!imagePath || imagePath.trim() === "") {
     return fallbackUrl || null;

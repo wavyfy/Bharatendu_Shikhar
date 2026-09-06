@@ -12,13 +12,13 @@ import {
   BottomSlidersSkeleton 
 } from "@/components/skeletons/HomeSkeletons";
 import { fetchSettings } from "@/utils/fetchData";
-import { getSiteUrl } from "@/utils/seo";
+import { getSiteUrlString } from "@/utils/seo";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
 async function JsonLdSchema() {
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
   const siteName = "भारतेन्दु शिखर";
 
   const websiteSchema = {

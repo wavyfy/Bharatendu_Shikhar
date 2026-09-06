@@ -47,6 +47,34 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
   const [isUploading, setIsUploading] = useState(false);
   const [sendPushNotification, setSendPushNotification] = useState(false);
 
+  const formatDateForInputState = (isoString?: string | null) => {
+    if (!isoString) return "";
+    const d = new Date(isoString);
+    if (isNaN(d.getTime())) return "";
+    return d.toISOString().split("T")[0];
+  };
+
+  const [publishedAtDate, setPublishedAtDate] = useState<string>(
+    formatDateForInputState(initialData?.published_at)
+  );
+
+  const calculateExpiryDate = (pubDateStr: string): string => {
+    if (!pubDateStr) return "";
+    const date = new Date(pubDateStr);
+    if (isNaN(date.getTime())) return "";
+    date.setMonth(date.getMonth() + 3);
+    return date.toISOString().split("T")[0];
+  };
+
+  const autoExpiryDate = calculateExpiryDate(publishedAtDate);
+
+  const handleStatusChange = (newStatus: string) => {
+    setStatus(newStatus);
+    if (newStatus === "published" && !publishedAtDate) {
+      setPublishedAtDate(new Date().toISOString().split("T")[0]);
+    }
+  };
+
   // Find Live badge from available badges list (by slug)
   const liveBadge = badges.find((b) => b.slug === "live");
 
@@ -104,6 +132,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
       category_id: categoryId ? parseInt(categoryId, 10) : null,
       region_id: regionId ? parseInt(regionId, 10) : null,
       featured_image: featuredImage || null,
+      published_at: publishedAtDate ? new Date(publishedAtDate).toISOString() : null,
     };
 
     try {
@@ -232,7 +261,7 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
                 <input type="hidden" name="status" value={status} />
                 <Select
                   value={status}
-                  onChange={setStatus}
+                  onChange={handleStatusChange}
                   options={[
                     { label: "Draft", value: "draft" },
                     { label: "Published", value: "published" },
@@ -254,6 +283,35 @@ export function ArticleFormPlaceholder({ initialData, categories, regions, badge
                     ...categories.map(c => ({ label: c.name, value: c.id.toString() }))
                   ]}
                 />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="published_at_date" className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Publish Date
+                </label>
+                <Input
+                  type="date"
+                  id="published_at_date"
+                  name="published_at_date"
+                  value={publishedAtDate}
+                  onChange={(e) => setPublishedAtDate(e.target.value)}
+                />
+                <p className="text-xs text-slate-500">Date when this article is published.</p>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="expiry_date_display" className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Expiry Date (Auto 3 Months)
+                </label>
+                <Input
+                  type="date"
+                  id="expiry_date_display"
+                  value={autoExpiryDate}
+                  readOnly
+                  disabled
+                  className="bg-slate-100 dark:bg-slate-800/60 text-slate-500 cursor-not-allowed opacity-80"
+                />
+                <p className="text-xs text-slate-500">Auto-calculated 3 months after publish date.</p>
               </div>
 
               <div className="flex flex-col gap-1.5 md:col-span-2">

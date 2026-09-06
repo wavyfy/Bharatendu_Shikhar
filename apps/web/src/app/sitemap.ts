@@ -1,11 +1,11 @@
 import { MetadataRoute } from "next";
 import { supabase } from "@repo/api";
 import { fetchSettings } from "@/utils/fetchData";
-import { getSiteUrl } from "@/utils/seo";
+import { getSiteUrlString } from "@/utils/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
 
   const entries: MetadataRoute.Sitemap = [];
   const seenUrls = new Set<string>();
