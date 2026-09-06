@@ -290,11 +290,6 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
     setPdfUrl("");
     await handleDeleteThumbnail();
   };
-  
-  const formatDateForInput = (isoString?: string | null) => {
-    if (!isoString) return "";
-    return new Date(isoString).toISOString().split('T')[0];
-  };
 
   return (
     <>
