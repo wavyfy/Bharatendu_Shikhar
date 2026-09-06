@@ -42,11 +42,7 @@ export async function getEpapers(options: GetEpapersOptions = {}) {
   }
 
   if (status === "active") {
-    // Active means either no expiry date, or expiry date is in the future
-    query = query.or(`expiry_date.is.null,expiry_date.gte.${new Date().toISOString()}`);
-  } else if (status === "expired") {
-    // Expired means expiry date is in the past
-    query = query.lt("expiry_date", new Date().toISOString());
+    query = query.lte("published_at", new Date().toISOString());
   }
 
   const from = (page - 1) * limit;

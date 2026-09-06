@@ -1,6 +1,6 @@
 import { supabase } from "@repo/api";
 import { fetchSettings } from "@/utils/fetchData";
-import { getSiteUrl } from "@/utils/seo";
+import { getSiteUrl, getAbsoluteImageUrl } from "@/utils/seo";
 import { NextResponse } from "next/server";
 
 /** Infer MIME type from image URL extension. Returns null if unknown. */
@@ -44,16 +44,18 @@ export const revalidate = 0;
 export async function GET() {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();
-  const siteName = escapeXml(settings?.site_name || "Bharatendu Shikhar");
+  const siteName = escapeXml(settings?.site_name || "भारतेन्दु शिखर");
   const siteDescription = escapeXml(
     settings?.meta_description || "Latest News and Updates"
   );
-  const logoUrl = settings?.site_logo_url || "";
+  const logoUrl = getAbsoluteImageUrl(settings?.site_logo_url);
 
+  const now = new Date().toISOString();
   const { data: articles } = await supabase
     .from("articles")
     .select("slug, title, excerpt, featured_image, published_at, updated_at, created_at")
     .eq("status", "published")
+    .lte("published_at", now)
     .order("published_at", { ascending: false })
     .limit(50);
 
@@ -67,10 +69,11 @@ export async function GET() {
         : "";
 
       let enclosureTag = "";
-      if (article.featured_image) {
-        const mimeType = getImageMimeType(article.featured_image);
+      const absoluteImage = getAbsoluteImageUrl(article.featured_image);
+      if (absoluteImage) {
+        const mimeType = getImageMimeType(absoluteImage);
         if (mimeType) {
-          enclosureTag = `\n      <enclosure url="${escapeXml(article.featured_image)}" length="0" type="${mimeType}" />`;
+          enclosureTag = `\n      <enclosure url="${escapeXml(absoluteImage)}" length="0" type="${mimeType}" />`;
         }
       }
 

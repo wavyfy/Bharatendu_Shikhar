@@ -46,7 +46,7 @@ export function MaintenanceScreen({
         `}</style>
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           
-          <div className="relative z-10 w-full max-w-[600px] p-6 mx-auto animate-in fade-in duration-1000 ease-out fill-mode-both flex flex-col items-center text-center">
+          <div className="relative z-10 w-full max-w-150 p-6 mx-auto animate-in fade-in duration-1000 ease-out fill-mode-both flex flex-col items-center text-center">
             
             {/* Logo Section */}
             <div className="relative flex justify-center mb-14 animate-breathe">
@@ -60,7 +60,7 @@ export function MaintenanceScreen({
                       // eslint-disable-next-line @next/next/no-img-element
                       <img 
                         src={settings.site_logo_url.startsWith("http") ? settings.site_logo_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${settings.site_logo_url}`}
-                        alt="Bharatendu Shikhar Logo"
+                        alt="भारतेन्दु शिखर"
                         className={`h-20 sm:h-24 object-contain ${settings?.site_logo_dark_url ? 'dark:hidden' : ''}`}
                       />
                     )}
@@ -68,41 +68,41 @@ export function MaintenanceScreen({
                       // eslint-disable-next-line @next/next/no-img-element
                       <img 
                         src={settings.site_logo_dark_url.startsWith("http") ? settings.site_logo_dark_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${settings.site_logo_dark_url}`}
-                        alt="Bharatendu Shikhar Logo (Dark)"
+                        alt="भारतेन्दु शिखर (डार्क)"
                         className={`h-20 sm:h-24 object-contain ${settings?.site_logo_url ? 'hidden dark:block' : ''}`}
                       />
                     )}
                   </>
                 ) : (
-                  <h2 className="text-4xl font-medium tracking-tight text-black dark:text-white font-serif">BHARATENDU SHIKHAR</h2>
+                  <h2 className="text-4xl font-medium tracking-tight text-black dark:text-white font-serif">भारतेन्दु शिखर</h2>
                 )}
               </div>
             </div>
 
             {/* Content Section */}
             <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-black dark:text-white mb-6">
-              Website Under Maintenance
+              वेबसाइट रखरखाव में है
             </h1>
             
             <div className="space-y-4 mb-10 px-4">
               <p className="text-[18px] sm:text-[20px] leading-relaxed text-gray-800 dark:text-gray-200">
-                {settings.maintenance_message || "We are performing scheduled updates to improve the Bharatendu Shikhar experience."}
+                {settings.maintenance_message || "भारतेन्दु शिखर अनुभव को और बेहतर बनाने के लिए हम आवश्यक तकनीकी अपडेट कर रहे हैं।"}
               </p>
             </div>
 
             {/* Editorial Separator */}
             <div className="w-full flex justify-center my-8">
-              <div className="h-px w-full max-w-[200px] bg-linear-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent"></div>
+              <div className="h-px w-full max-w-50 bg-linear-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent"></div>
             </div>
 
             {/* Status Section */}
             <div className="flex flex-col items-center justify-center space-y-6">
               <span className="text-[14px] font-semibold tracking-widest text-red-700 dark:text-red-500 uppercase">
-                Expected Return Soon
+                शीघ्र ही वापस आएंगे
               </span>
               
-              <p className="text-[15px] leading-relaxed text-gray-600 dark:text-gray-400 max-w-[400px]">
-                Our editorial and technical teams are working to bring the platform back online.
+              <p className="text-[15px] leading-relaxed text-gray-600 dark:text-gray-400 max-w-100">
+                हमारी संपादकीय और तकनीकी टीम वेबसाइट को शीघ्र पुनः चालू करने में जुटी है।
               </p>
 
               {/* Minimal Loading Indicator */}
@@ -115,7 +115,7 @@ export function MaintenanceScreen({
 
             {/* Footer Area */}
             <div className="mt-20 text-center text-xs font-semibold text-gray-400 dark:text-gray-600 tracking-[0.2em] uppercase">
-              &copy; {new Date().getFullYear()} Bharatendu Shikhar
+              &copy; {new Date().getFullYear()} भारतेन्दु शिखर
             </div>
             
           </div>

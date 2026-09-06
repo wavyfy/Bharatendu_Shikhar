@@ -47,6 +47,25 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
   const [isGeneratingThumb, setIsGeneratingThumb] = useState(false);
   const [isUploadingThumb, setIsUploadingThumb] = useState(false);
 
+  const formatDateForInputState = (isoString?: string | null) => {
+    if (!isoString) return "";
+    return new Date(isoString).toISOString().split('T')[0];
+  };
+
+  const [publishedAtDate, setPublishedAtDate] = useState<string>(
+    formatDateForInputState(initialData?.published_at)
+  );
+
+  const calculateExpiryDate = (pubDateStr: string): string => {
+    if (!pubDateStr) return "";
+    const date = new Date(pubDateStr);
+    if (isNaN(date.getTime())) return "";
+    date.setMonth(date.getMonth() + 3);
+    return date.toISOString().split("T")[0];
+  };
+
+  const autoExpiryDate = calculateExpiryDate(publishedAtDate);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!pdfUrl) {
@@ -63,13 +82,18 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
 
     const publishedAtStr = formData.get("published_at_date") as string;
     if (publishedAtStr) {
-      formData.set("published_at", new Date(publishedAtStr).toISOString());
+      const pubDate = new Date(publishedAtStr);
+      formData.set("published_at", pubDate.toISOString());
+
+      const expDate = new Date(publishedAtStr);
+      expDate.setMonth(expDate.getMonth() + 3);
+      formData.set("expiry_date", expDate.toISOString());
+    } else {
+      formData.delete("published_at");
+      formData.delete("expiry_date");
     }
     
-    const expiryDateStr = formData.get("expiry_date_input") as string;
-    if (expiryDateStr) {
-      formData.set("expiry_date", new Date(expiryDateStr).toISOString());
-    }
+
 
     startTransition(async () => {
       let result;
@@ -266,11 +290,6 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
     setPdfUrl("");
     await handleDeleteThumbnail();
   };
-  
-  const formatDateForInput = (isoString?: string | null) => {
-    if (!isoString) return "";
-    return new Date(isoString).toISOString().split('T')[0];
-  };
 
   return (
     <>
@@ -457,22 +476,25 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
                   type="date"
                   id="published_at_date"
                   name="published_at_date"
-                  defaultValue={formatDateForInput(initialData?.published_at)}
+                  value={publishedAtDate}
+                  onChange={(e) => setPublishedAtDate(e.target.value)}
                 />
                 <p className="text-xs text-slate-500">If blank, remains a draft.</p>
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="expiry_date_input" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                  Expiry Date
+                <label htmlFor="expiry_date_display" className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Expiry Date (Auto 3 Months)
                 </label>
                 <Input
                   type="date"
-                  id="expiry_date_input"
-                  name="expiry_date_input"
-                  defaultValue={formatDateForInput(initialData?.expiry_date)}
+                  id="expiry_date_display"
+                  value={autoExpiryDate}
+                  readOnly
+                  disabled
+                  className="bg-slate-100 dark:bg-slate-800/60 text-slate-500 cursor-not-allowed opacity-80"
                 />
-                <p className="text-xs text-slate-500">Optional. Auto-unpublish after this date.</p>
+                <p className="text-xs text-slate-500">Auto-calculated 3 months after publish date.</p>
               </div>
             </div>
           </FormSection>

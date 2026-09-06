@@ -14,7 +14,7 @@ import { RelatedArticlesList } from "@/components/shared/RelatedArticlesList";
 import { RelativeTime } from "@/components/shared/RelativeTime";
 import type { Metadata, ResolvingMetadata } from "next";
 import { sanitize } from "@repo/api";
-import { getSiteUrl } from "@/utils/seo";
+import { getSiteUrlString, getAbsoluteImageUrl } from "@/utils/seo";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 import { TickerSkeleton } from "@/components/skeletons/HomeSkeletons";
@@ -27,7 +27,7 @@ export async function generateMetadata(
   const { slug } = await params;
   const article = await fetchArticleBySlug(slug);
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
 
   if (!article) {
     return {
@@ -36,14 +36,19 @@ export async function generateMetadata(
   }
 
   const previousImages = (await parent).openGraph?.images || [];
-  const defaultImage = settings?.og_image_url ? [settings.og_image_url] : previousImages;
-  const ogImages = article.featured_image ? [article.featured_image, ...previousImages] : defaultImage;
+  const rawImage = article.featured_image || settings?.og_image_url;
+  const absoluteImageUrl = getAbsoluteImageUrl(rawImage);
+  const ogImages = absoluteImageUrl
+    ? [{ url: absoluteImageUrl, alt: article.title || "भारतेन्दु शिखर" }]
+    : previousImages;
   const publishedAt = article.published_at || article.created_at || new Date().toISOString();
   const updatedAt = article.updated_at || publishedAt;
-  const authorName = "Bharatendu Shikhar"; // Fallback to publisher name
-
-  const title = article.title || settings?.meta_title || "Bharatendu Shikhar";
-  const description = article.excerpt || settings?.meta_description || `Read ${title}`;
+  
+  const articleWithProfiles = article as (typeof article & { profiles?: { full_name?: string } | null });
+  const authorName = articleWithProfiles?.profiles?.full_name || "भारतेन्दु शिखर";
+  const title = article.title || settings?.meta_title || "भारतेन्दु शिखर";
+  const fallbackDescription = `भारतेन्दु शिखर पर पढ़ें ${article.title} से जुड़ी सभी ताज़ा ख़बरें और अपडेट।`;
+  const description = article.excerpt || settings?.meta_description || fallbackDescription;
 
   return {
     title,
@@ -60,27 +65,71 @@ export async function generateMetadata(
       modifiedTime: updatedAt,
       authors: [authorName],
       images: ogImages,
+      locale: "hi_IN",
+      siteName: "भारतेन्दु शिखर",
     },
     twitter: {
       card: "summary_large_image",
-      title: article.title,
-      description: article.excerpt || `Read ${article.title}`,
+      title,
+      description,
       images: ogImages,
     },
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function JsonLdSchema({ article }: { article: any }) {
+async function JsonLdSchema({ article }: { article: ArticleWithAuthor & { categories?: { name?: string } | null; slug: string } }) {
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
 
   const publishedAt = article.published_at || article.created_at || new Date().toISOString();
   const updatedAt = article.updated_at || publishedAt;
 
-  const title = article.title || settings?.meta_title || "Bharatendu Shikhar";
+  const title = article.title || settings?.meta_title || "भारतेन्दु शिखर";
   const description = article.excerpt || settings?.meta_description || title;
-  const imageUrl = article.featured_image || settings?.og_image_url;
+  const rawImage = article.featured_image || settings?.og_image_url;
+  const imageUrl = getAbsoluteImageUrl(rawImage);
+  const logoUrl = getAbsoluteImageUrl(settings?.site_logo_url, `${siteUrl}/logo.png`);
+
+  const socialSameAs = [
+    settings?.facebook_url,
+    settings?.twitter_url,
+    settings?.instagram_url,
+    settings?.youtube_url,
+    settings?.linkedin_url,
+  ].filter((url): url is string => Boolean(url));
+
+  const publisherSchema = {
+    "@type": "NewsMediaOrganization",
+    "name": "भारतेन्दु शिखर",
+    "alternateName": "Bhartendu Shikhar",
+    "url": siteUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": logoUrl,
+    },
+    ...(socialSameAs.length > 0 ? { "sameAs": socialSameAs } : {}),
+    ...(settings?.contact_email || settings?.contact_phone ? {
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": settings?.contact_phone || undefined,
+        "email": settings?.contact_email || undefined,
+        "contactType": "customer service",
+      }
+    } : {})
+  };
+
+  const articleWithProfiles = article as (typeof article & { profiles?: { full_name?: string } | null });
+  const realAuthorName = articleWithProfiles?.profiles?.full_name;
+  const authorSchema = realAuthorName
+    ? {
+        "@type": "Person",
+        "name": realAuthorName,
+      }
+    : {
+        "@type": "Organization",
+        "name": "भारतेन्दु शिखर",
+        "url": siteUrl,
+      };
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -94,6 +143,10 @@ async function JsonLdSchema({ article }: { article: any }) {
     "image": imageUrl ? [imageUrl] : [],
     "datePublished": publishedAt,
     "dateModified": updatedAt,
+    "inLanguage": "hi",
+    ...(article.categories?.name ? { "articleSection": article.categories.name } : {}),
+    "author": authorSchema,
+    "publisher": publisherSchema
   };
 
   return (
@@ -115,7 +168,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
     fetchArticleBySlug(slug),
     fetchSettings(),
   ]);
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
+  const siteUrl = getSiteUrlString(settings?.site_url);
 
   if (!article) {
     notFound();
@@ -133,46 +186,50 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
   }
   breadcrumbs.push({ label: article.title, href: "#" });
 
+  const publishedAt = article.published_at || article.created_at || new Date().toISOString();
+
   return (
     <article className="flex-1 min-w-0 flex flex-col animate-in fade-in duration-300">
       <JsonLdSchema article={article} />
       <div className="flex flex-col lg:grid lg:grid-cols-13 gap-0 md:gap-6">
         <div className="lg:col-span-9 flex flex-col min-w-0">
-          <Breadcrumbs items={breadcrumbs} siteUrl={siteUrl} />
-          {/* Article Title */}
-          <h1 className="text-2xl md:text-4xl font-medium text-black dark:text-white mb-3">
-            {article.title}
-          </h1>
+          <header>
+            <Breadcrumbs items={breadcrumbs} siteUrl={siteUrl} />
+            {/* Article Title */}
+            <h1 className="text-2xl md:text-4xl font-medium text-black dark:text-white mb-3">
+              {article.title}
+            </h1>
 
-          {/* Article Meta */}
-          <div className="mb-4">
-            <ArticleMeta article={article as unknown as ArticleWithAuthor} isArticlePage={true} alignRight={true} />
-          </div>
+            {/* Article Meta */}
+            <div className="mb-4">
+              <ArticleMeta article={article as unknown as ArticleWithAuthor} isArticlePage={true} alignRight={true} />
+            </div>
 
-          {/* Featured Image */}
-          {article.featured_image && (
-            <div className="w-full mb-5 flex flex-col">
-              <div className="relative w-full aspect-16/10 md:aspect-2/1 bg-gray-100 dark:bg-gray-800">
-                <Image
-                  src={article.featured_image}
-                  alt={article.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="object-cover"
-                  priority
-                />
+            {/* Featured Image */}
+            {article.featured_image && (
+              <div className="w-full mb-5 flex flex-col">
+                <div className="relative w-full aspect-16/10 md:aspect-2/1 bg-gray-100 dark:bg-gray-800">
+                  <Image
+                    src={getAbsoluteImageUrl(article.featured_image)!}
+                    alt={article.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Article Excerpt / Lead Paragraph */}
-          {article.excerpt && (
-            <div className="pl-4 border-l-4 border-red-500">
-              <p className="text-lg italic md:text-[18px] leading-relaxed text-gray-700 dark:text-gray-400 font-medium">
-                {article.excerpt}
-              </p>
-            </div>
-          )}
+            {/* Article Excerpt / Lead Paragraph */}
+            {article.excerpt && (
+              <div className="pl-4 border-l-4 border-red-500 mb-6">
+                <p className="text-lg italic md:text-[18px] leading-relaxed text-gray-700 dark:text-gray-400 font-medium">
+                  {article.excerpt}
+                </p>
+              </div>
+            )}
+          </header>
 
           <div
             className="w-full text-left prose prose-lg md:prose-xl max-w-none dark:prose-invert prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-a:text-red-600 dark:prose-a:text-news-accent hover:prose-a:text-red-700 prose-img:rounded-md"
@@ -180,10 +237,12 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
           />
 
           <div className="w-full flex justify-end mt-4">
-            <RelativeTime 
-              dateString={article.published_at || article.created_at || ""} 
-              className="text-sm font-medium text-gray-500 dark:text-gray-400"
-            />
+            <time dateTime={publishedAt}>
+              <RelativeTime 
+                dateString={publishedAt} 
+                className="text-sm font-medium text-gray-500 dark:text-gray-400"
+              />
+            </time>
           </div>
 
           {/* Live Timeline (Only for LIVE articles) */}
@@ -242,7 +301,7 @@ async function RelatedSection({ paramsPromise }: { paramsPromise: Promise<{ slug
   }
 
   return (
-    <div className="max-w-[1400px] mx-auto px-4 pb-4 w-full animate-in fade-in duration-300">
+    <div className="max-w-350 mx-auto px-4 pb-4 w-full animate-in fade-in duration-300">
       <DoubleRowRelatedSlider
         topTitle={article.categories?.name || "Topic"}
         topItems={categorySliderItems}
@@ -264,9 +323,9 @@ export default function ArticlePage({
       <Suspense fallback={<TickerSkeleton />}>
         <TickerSection />
       </Suspense>
-      <main className="max-w-[1700px] mx-auto px-4 flex justify-between gap-4 mb-2 items-start mt-4 w-full">
+      <main className="max-w-425 mx-auto px-4 flex justify-between gap-4 mb-2 items-start mt-4 w-full">
         {/* Left Sticky Ad */}
-        <div className="hidden xl:block w-[160px] shrink-0 sticky top-4">
+        <div className="hidden xl:block w-40 shrink-0 sticky top-4">
           <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
         </div>
 
@@ -275,7 +334,7 @@ export default function ArticlePage({
         </Suspense>
 
         {/* Right Sticky Ad */}
-        <div className="hidden xl:block w-[160px] shrink-0 sticky top-4">
+        <div className="hidden xl:block w-40 shrink-0 sticky top-4">
           <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
         </div>
       </main>

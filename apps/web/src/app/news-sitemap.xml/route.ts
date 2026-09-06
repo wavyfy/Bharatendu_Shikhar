@@ -1,6 +1,6 @@
 import { supabase } from "@repo/api";
 import { fetchSettings } from "@/utils/fetchData";
-import { getSiteUrl } from "@/utils/seo";
+import { getSiteUrlString } from "@/utils/seo";
 import { NextResponse } from "next/server";
 
 /** Escape XML special characters. */
@@ -18,26 +18,39 @@ export const revalidate = 0;
 
 export async function GET() {
   const settings = await fetchSettings();
-  const siteUrl = getSiteUrl(settings?.site_url).toString();
-  const siteName = escapeXml(settings?.site_name || "Bharatendu Shikhar");
+  const siteUrl = getSiteUrlString(settings?.site_url);
+  const publicationName = escapeXml("भारतेन्दु शिखर");
 
+  const now = new Date();
   const twoDaysAgo = new Date();
   twoDaysAgo.setHours(twoDaysAgo.getHours() - 48);
+
+  const nowISO = now.toISOString();
   const twoDaysAgoISO = twoDaysAgo.toISOString();
 
-  // Fetch published articles from the last 48 hours
+  // Fetch published news articles from the last 48 hours (strictly published & published_at <= NOW)
   const { data: articles } = await supabase
     .from("articles")
     .select("slug, title, published_at, created_at")
     .eq("status", "published")
     .gte("published_at", twoDaysAgoISO)
+    .lte("published_at", nowISO)
     .order("published_at", { ascending: false })
     .limit(1000);
 
+  const seenSlugs = new Set<string>();
+
   const articleEntries = (articles || [])
+    .filter((article) => {
+      if (!article.slug || !article.title || seenSlugs.has(article.slug)) {
+        return false;
+      }
+      seenSlugs.add(article.slug);
+      return true;
+    })
     .map((article) => {
       const pageUrl = `${siteUrl}/article/${article.slug}`;
-      const pubDate = article.published_at || article.created_at || new Date().toISOString();
+      const pubDate = article.published_at || article.created_at || nowISO;
       const title = escapeXml(article.title || "");
 
       return `
@@ -45,7 +58,7 @@ export async function GET() {
     <loc>${pageUrl}</loc>
     <news:news>
       <news:publication>
-        <news:name>${siteName}</news:name>
+        <news:name>${publicationName}</news:name>
         <news:language>hi</news:language>
       </news:publication>
       <news:publication_date>${pubDate}</news:publication_date>

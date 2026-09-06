@@ -187,6 +187,7 @@ async function _fetchDynamicPageData(slug: string) {
         .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("region_id", region.id)
+        .lte("published_at", new Date().toISOString())
         .order("published_at", { ascending: false })
         .limit(200),
       supabase.from("categories").select("*").eq("is_active", true),
@@ -230,6 +231,7 @@ async function _fetchDynamicPageData(slug: string) {
         .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
         .eq("category_id", category.id)
+        .lte("published_at", new Date().toISOString())
         .order("published_at", { ascending: false })
         .limit(200),
       supabase.from("regions").select("*").eq("is_active", true),
@@ -357,11 +359,13 @@ async function _fetchArticleBySlug(slug: string) {
       *,
       categories(id, name, slug),
       regions(id, name, slug),
+      profiles:profiles(id, full_name),
       article_live_updates(*),
       article_badges(badge:badges(id, name, slug, color))
     `)
     .eq("slug", decodedSlug)
     .eq("status", "published")
+    .lte("published_at", new Date().toISOString())
     .maybeSingle();
 
   if (error) {

@@ -125,15 +125,15 @@ export function GoogleTranslateButton() {
       <Languages size={14} className="shrink-0 transition-transform duration-500 group-hover:rotate-180" />
       
       <div 
-        className={`overflow-hidden transition-all duration-500 ease-out ml-2 h-[20px] ${
-          lang === "hi" ? "w-[54px] group-hover:w-[130px]" : "w-[36px] group-hover:w-[110px]"
+        className={`overflow-hidden transition-all duration-500 ease-out ml-2 h-5 ${
+          lang === "hi" ? "w-13.5 group-hover:w-32.5" : "w-9 group-hover:w-27.5"
         }`}
       >
-        <div className="flex flex-col transition-transform duration-500 group-hover:translate-y-[-20px]">
-          <span className="whitespace-nowrap leading-[20px] transition-opacity duration-500 opacity-100 group-hover:opacity-0">
+        <div className="flex flex-col transition-transform duration-500 group-hover:-translate-y-5">
+          <span className="whitespace-nowrap leading-5 transition-opacity duration-500 opacity-100 group-hover:opacity-0">
             {lang === "hi" ? "English" : "हिंदी"}
           </span>
-          <span className="whitespace-nowrap leading-[20px] transition-opacity duration-500 opacity-0 group-hover:opacity-100">
+          <span className="whitespace-nowrap leading-5 transition-opacity duration-500 opacity-0 group-hover:opacity-100">
             {lang === "hi" ? "Switch to English" : "हिंदी में बदलें"}
           </span>
         </div>

@@ -12,14 +12,14 @@ function getImageUrl(path: string | null): string | null {
 export function SecondaryFeatureArticle({ article }: { article?: ArticleWithAuthor }) {
   if (!article) return null;
   return (
-    <Link href={`/article/${article.slug}`} className="block group/article hover:translate-y-[-2px] transition-all duration-300 rounded-[2px] overflow-hidden">
+    <Link href={`/article/${article.slug}`} className="block group/article transition-all duration-300 rounded-xs overflow-hidden">
       <article className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className={`order-2 lg:order-1 flex flex-col h-full ${article.featured_image ? "lg:col-span-7" : "lg:col-span-12"}`}>
-          <h3 className="font-medium text-[29px] leading-snug mb-4 pr-4 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+          <h3 className="font-medium text-[29px] leading-normal mb-4 pr-4 line-clamp-4 max-h-[5.75em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
             {article.title}
           </h3>
           {article.excerpt && (
-            <p className="text-gray-600 dark:text-gray-400 text-[17px] leading-snug mb-6 pr-4 line-clamp-3">
+            <p className="text-gray-600 dark:text-gray-400 text-[17px] leading-normal mb-6 pr-4 line-clamp-3 max-h-[4.25em] overflow-hidden">
               {article.excerpt}
             </p>
           )}
@@ -29,7 +29,7 @@ export function SecondaryFeatureArticle({ article }: { article?: ArticleWithAuth
       </div>
       {article.featured_image && (
         <div className="order-1 lg:order-2 lg:col-span-5 flex flex-col h-full justify-stretch">
-          <div className="relative w-full aspect-video lg:aspect-auto lg:h-full bg-gray-100 dark:bg-news-card rounded-[2px] overflow-hidden">
+          <div className="relative w-full aspect-video lg:aspect-auto lg:h-full bg-gray-100 dark:bg-news-card rounded-xs overflow-hidden">
             <Image
               src={getImageUrl(article.featured_image)!}
               alt={article.title}

@@ -8,7 +8,7 @@ import { SearchButton } from "../shared/SearchButton";
 
 export function Header({ logoUrl, logoDarkUrl }: { logoUrl?: string | null, logoDarkUrl?: string | null }) {
   return (
-    <header className="hidden lg:block pb-2 px-4 w-full max-w-[1400px] mx-auto">
+    <header className="hidden lg:block pb-2 px-4 w-full max-w-350 mx-auto">
       <div className="flex justify-between items-center">
         <div className="w-48 text-sm text-gray-700 dark:text-news-text-secondary space-y-1">
           <p><CurrentDate /></p>
@@ -31,10 +31,10 @@ export function Header({ logoUrl, logoDarkUrl }: { logoUrl?: string | null, logo
                   <div className={logoDarkUrl ? "dark:hidden" : ""}>
                     <Image 
                       src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
-                      alt="Bharatendu Shikhar Logo" 
+                      alt="भारतेन्दु शिखर" 
                       width={550} 
                       height={100} 
-                      className="w-auto h-[100px] object-contain object-left"
+                      className="w-auto h-25 object-contain object-left"
                       style={{ width: "auto" }}
                       priority
                     />
@@ -44,10 +44,10 @@ export function Header({ logoUrl, logoDarkUrl }: { logoUrl?: string | null, logo
                   <div className={logoUrl ? "hidden dark:block" : ""}>
                     <Image 
                       src={logoDarkUrl.startsWith("http") ? logoDarkUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoDarkUrl}`} 
-                      alt="Bharatendu Shikhar Logo (Dark)" 
+                      alt="भारतेन्दु शिखर (डार्क)" 
                       width={550} 
                       height={100} 
-                      className="w-auto h-[100px] object-contain object-left"
+                      className="w-auto h-25 object-contain object-left"
                       style={{ width: "auto" }}
                       priority
                     />
@@ -57,7 +57,7 @@ export function Header({ logoUrl, logoDarkUrl }: { logoUrl?: string | null, logo
             ) : (
               <div className="flex items-center gap-6">
                 <h1 className="text-5xl md:text-6xl font-medium tracking-tight">
-                  Bharatendu Shikhar
+                  भारतेन्दु शिखर
                 </h1>
               </div>
             )}

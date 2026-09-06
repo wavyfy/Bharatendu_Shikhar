@@ -3,7 +3,7 @@ import { Trophy } from "lucide-react";
 
 
 export const metadata = {
-  title: "Competitions | Sports | Bharatendu Shikhar",
+  title: "प्रतियोगिताएं | खेल | भारतेन्दु शिखर",
 };
 
 export const dynamic = "force-dynamic";

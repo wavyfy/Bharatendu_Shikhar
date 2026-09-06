@@ -59,17 +59,6 @@ export function EpaperFilters({ currentStatus }: EpaperFiltersProps) {
             <motion.div layoutId="epaperStatusIndicator" className="absolute -bottom-px left-0 w-full h-0.5 bg-red-600 rounded-t-sm" transition={{ type: "spring", stiffness: 300, damping: 30 }} />
           )}
         </button>
-        <button
-          onClick={() => setFilter("status", "expired")}
-          className={`relative pb-3 text-sm font-medium transition-colors ${
-            currentStatus === "expired" ? "text-red-600" : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200"
-          }`}
-        >
-          Expired
-          {currentStatus === "expired" && (
-            <motion.div layoutId="epaperStatusIndicator" className="absolute -bottom-px left-0 w-full h-0.5 bg-red-600 rounded-t-sm" transition={{ type: "spring", stiffness: 300, damping: 30 }} />
-          )}
-        </button>
       </div>
       
       <div className="p-4">

@@ -424,9 +424,9 @@ export function Navbar({
                     <button onClick={() => setIsSettingsOpen(true)} className="flex items-center justify-end w-full gap-3 text-[15px] font-medium dark:text-news-text hover:text-red-600 transition-colors">
                       सेटिंग्स <Settings size={20} />
                     </button>
-                    <Link href="/app" onClick={() => setIsMobileMenuOpen(false)} className="bg-red-600 text-white rounded-full py-3 flex items-center justify-center font-bold tracking-wider text-[15px] hover:bg-red-700 transition-colors capitalize">
+                    <button onClick={() => setIsMobileMenuOpen(false)} className="bg-red-600 text-white rounded-full py-3 flex items-center justify-center font-bold tracking-wider text-[15px] hover:bg-red-700 transition-colors capitalize w-full">
                       ऐप डाउनलोड करें
-                    </Link>
+                    </button>
                   </div>
                 </motion.div>
               ) : (

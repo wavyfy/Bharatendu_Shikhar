@@ -9,6 +9,7 @@ export const articleSchema = z.object({
   is_live: z.boolean().default(false),
   category_id: z.coerce.number().positive("Select a valid category").optional().nullable(),
   region_id: z.coerce.number().positive("Select a valid region").optional().nullable(),
+  published_at: z.string().optional().nullable(),
 });
 
 export const createArticleSchema = articleSchema;

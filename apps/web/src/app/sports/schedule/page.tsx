@@ -6,7 +6,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Match Schedule | Sports | Bharatendu Shikhar",
+  title: "मैच शेड्यूल | खेल | भारतेन्दु शिखर",
 };
 
 export const dynamic = "force-dynamic";

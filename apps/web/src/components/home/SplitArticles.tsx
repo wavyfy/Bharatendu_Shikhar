@@ -16,16 +16,16 @@ export function SplitArticles({ articles }: { articles: ArticleWithAuthor[] }) {
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-0">
       {leftArticle ? (
-        <Link href={`/article/${leftArticle.slug}`} className="group/article lg:pr-8 flex flex-col h-full hover:translate-y-[-2px] transition-all duration-300">
+        <Link href={`/article/${leftArticle.slug}`} className="group/article lg:pr-8 flex flex-col h-full transition-all duration-300">
           <article className="flex flex-col h-full">
             <div className="flex flex-row gap-5 items-start">
               <div className="flex-1 min-w-0 pr-0">
-                <h3 className="font-medium text-[19px] leading-snug mb-2 line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+                <h3 className="font-medium text-[19px] leading-normal mb-2 line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
                   {leftArticle.title}
                 </h3>
               </div>
               {leftArticle.featured_image && (
-                <div className="w-[120px] sm:w-[140px] shrink-0 lg:hidden">
+                <div className="w-30 sm:w-35 shrink-0 lg:hidden">
                   <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card">
                     <Image
                       src={getImageUrl(leftArticle.featured_image)!}
@@ -50,20 +50,20 @@ export function SplitArticles({ articles }: { articles: ArticleWithAuthor[] }) {
       )}
       
       {leftArticle && rightArticle && (
-        <div className="lg:hidden h-[2px] w-full bg-gray-300 dark:bg-news-border my-6"></div>
+        <div className="lg:hidden h-0.5 w-full bg-gray-300 dark:bg-news-border my-6"></div>
       )}
       
       {rightArticle ? (
-        <Link href={`/article/${rightArticle.slug}`} className="group/article lg:pl-8 lg:border-l-2 border-gray-300 dark:border-news-border flex flex-col h-full hover:translate-y-[-2px] transition-all duration-300">
+        <Link href={`/article/${rightArticle.slug}`} className="group/article lg:pl-8 lg:border-l-2 border-gray-300 dark:border-news-border flex flex-col h-full transition-all duration-300">
           <article className="flex flex-col h-full">
             <div className="flex flex-row gap-5 items-start">
               <div className="flex-1 min-w-0 pr-0">
-                <h3 className="font-medium text-[19px] leading-snug mb-2 line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+                <h3 className="font-medium text-[19px] leading-normal mb-2 line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
                   {rightArticle.title}
                 </h3>
               </div>
               {rightArticle.featured_image && (
-                <div className="w-[120px] sm:w-[140px] shrink-0 lg:hidden">
+                <div className="w-30 sm:w-35 shrink-0 lg:hidden">
                   <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card">
                     <Image
                       src={getImageUrl(rightArticle.featured_image)!}

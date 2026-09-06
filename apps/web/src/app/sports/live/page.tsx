@@ -5,7 +5,7 @@ import { Activity } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Live Scores | Sports | Bharatendu Shikhar",
+  title: "लाइव स्कोर | खेल | भारतेन्दु शिखर",
 };
 
 export const dynamic = "force-dynamic";

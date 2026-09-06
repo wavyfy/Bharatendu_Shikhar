@@ -43,16 +43,16 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
       >
         {articles.map((article, index) => (
         <div key={article.id} className="min-w-[85vw] lg:min-w-0 snap-center lg:snap-none relative h-full">
-          <Link href={`/article/${article.slug}`} className="block group/article hover:translate-y-[-2px] transition-all duration-300 h-full">
+          <Link href={`/article/${article.slug}`} className="block group/article transition-all duration-300 h-full">
             <article className="flex flex-col h-full justify-between">
               <div className="flex flex-row gap-5 items-start">
                 <div className="flex-1 min-w-0 pr-0">
-                  <h4 className="font-medium text-[19px] leading-snug mb-2 line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+                  <h3 className="font-medium text-[19px] leading-normal mb-2 line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
                     {article.title}
-                  </h4>
+                  </h3>
                 </div>
                 {article.featured_image && (
-                  <div className="w-[90px] sm:w-[110px] shrink-0">
+                  <div className="w-22.5 sm:w-27.5 shrink-0">
                     <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card">
                       <Image
                         src={getImageUrl(article.featured_image)!}
@@ -72,8 +72,8 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
           </Link>
           {index < articles.length - 1 && (
             <>
-              <div className="hidden lg:block h-[2px] w-full bg-gray-300 dark:bg-news-border my-4"></div>
-              <div className="block lg:hidden absolute -right-4 top-0 bottom-0 w-[2px] bg-gray-300 dark:bg-news-border"></div>
+              <div className="hidden lg:block h-0.5 w-full bg-gray-300 dark:bg-news-border my-4"></div>
+              <div className="block lg:hidden absolute -right-4 top-0 bottom-0 w-0.5 bg-gray-300 dark:bg-news-border"></div>
             </>
           )}
         </div>

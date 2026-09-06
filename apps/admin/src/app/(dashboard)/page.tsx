@@ -5,6 +5,8 @@ import Image from "next/image";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { DashboardSkeleton } from "@/components/skeletons/DashboardSkeleton";
 
+import { DashboardStats } from "./DashboardStats";
+
 export const metadata = {
   title: "Dashboard | Bharatendu Shikhar Admin",
 };
@@ -24,7 +26,7 @@ async function DashboardContent() {
   };
 
   const BASE_STATS = [
-    { label: "Total Articles", value: stats.totalArticles, icon: "description", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+    { label: "All Articles", value: stats.totalArticles, icon: "description", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
     { label: "Published", value: stats.publishedArticles, icon: "check_circle", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
     { label: "Drafts", value: stats.draftArticles, icon: "edit_document", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
     { label: "E-Papers", value: stats.totalEpapers, icon: "newspaper", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
@@ -35,7 +37,7 @@ async function DashboardContent() {
         { label: "Categories", value: stats.totalCategories, icon: "category", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
         { label: "Regions", value: stats.totalRegions, icon: "public", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
         { label: "Active Publishers", value: stats.activePublishers, icon: "group", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
-        { label: "Total Publishers", value: stats.totalPublishers, icon: "business", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
+        { label: "All Publishers", value: stats.totalPublishers, icon: "business", cardBg: "btn-primary-gradient text-white", iconBg: "bg-surface/20 text-white" },
       ]
     : [];
 
@@ -44,26 +46,7 @@ async function DashboardContent() {
   return (
     <div className="space-y-8">
       {/* Stats bento grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {STATS.map(({ label, value, icon, cardBg, iconBg }) => (
-          <div
-            key={label}
-            className={`rounded-2xl p-5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 shadow-md ${cardBg}`}
-          >
-            <div className="flex justify-between items-start mb-4">
-              <span className="text-sm font-semibold opacity-90">{label}</span>
-              <span
-                className={`material-symbols-outlined text-base p-2 rounded-xl backdrop-blur-sm ${iconBg}`}
-              >
-                {icon}
-              </span>
-            </div>
-            <div className="font-bold tracking-tight" style={{ fontSize: "32px", lineHeight: "36px" }}>
-              {value}
-            </div>
-          </div>
-        ))}
-      </div>
+      <DashboardStats stats={STATS} />
 
       {/* Two column layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

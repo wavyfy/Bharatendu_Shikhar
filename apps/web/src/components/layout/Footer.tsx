@@ -72,7 +72,7 @@ export function Footer({
                   <div className={logoDarkUrl ? "dark:hidden" : ""}>
                     <Image 
                       src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
-                      alt="Bharatendu Shikhar Logo" 
+                      alt="भारतेन्दु शिखर" 
                       width={240} 
                       height={60} 
                       className="w-auto h-8 md:h-15 object-contain object-left"
@@ -84,7 +84,7 @@ export function Footer({
                   <div className={logoUrl ? "hidden dark:block" : ""}>
                     <Image 
                       src={logoDarkUrl.startsWith("http") ? logoDarkUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoDarkUrl}`} 
-                      alt="Bharatendu Shikhar Logo (Dark)" 
+                      alt="भारतेन्दु शिखर (डार्क)" 
                       width={240} 
                       height={60} 
                       className="w-auto h-8 md:h-15 object-contain object-left"
@@ -349,7 +349,7 @@ export function Footer({
         <div className="flex flex-col xl:flex-row justify-between items-center xl:items-start gap-6 w-full">
           {/* Copyright & T&C */}
           <div className="text-[13px] text-gray-500 dark:text-news-text-muted flex justify-center xl:justify-start items-center">
-            <span className="font-medium whitespace-nowrap">&copy; {new Date().getFullYear()} {settings?.copyright_text || "Bharatendu Shikhar. सर्वाधिकार सुरक्षित।"}</span>
+            <span className="font-medium whitespace-nowrap">&copy; {new Date().getFullYear()} {settings?.copyright_text || "भारतेन्दु शिखर। सर्वाधिकार सुरक्षित।"}</span>
           </div>
 
           {/* Bottom Buttons */}
@@ -357,9 +357,15 @@ export function Footer({
             <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap">
               ई-पेपर पढ़ें
             </Link>
-            <Link href="/app" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap capitalize">
-              ऐप डाउनलोड करें
-            </Link>
+            {settings?.app_download_url ? (
+              <a href={settings.app_download_url as string} target="_blank" rel="noopener noreferrer" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap capitalize">
+                ऐप डाउनलोड करें
+              </a>
+            ) : (
+              <button className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap capitalize">
+                ऐप डाउनलोड करें
+              </button>
+            )}
           </div>
         </div>
 

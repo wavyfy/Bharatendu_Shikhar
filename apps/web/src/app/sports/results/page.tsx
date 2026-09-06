@@ -3,7 +3,7 @@ import { MatchCard } from "@/components/sports/MatchCard";
 import { CheckSquare } from "lucide-react";
 
 export const metadata = {
-  title: "Match Results | Sports | Bharatendu Shikhar",
+  title: "मैच परिणाम | खेल | भारतेन्दु शिखर",
 };
 
 export const dynamic = "force-dynamic";

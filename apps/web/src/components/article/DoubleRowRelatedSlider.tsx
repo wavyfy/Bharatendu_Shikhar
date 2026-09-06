@@ -52,8 +52,8 @@ export function DoubleRowRelatedSlider({
   };
 
   const renderItem = (item: SliderItem) => (
-    <div key={item.id} className="w-[260px] shrink-0">
-      <Link href={`/article/${item.article.slug}`} className="group/article block hover:translate-y-[-2px] transition-all duration-300" draggable={false}>
+    <div key={item.id} className="w-65 shrink-0">
+      <Link href={`/article/${item.article.slug}`} className="group/article block transition-all duration-300" draggable={false}>
         <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card mb-2 overflow-hidden rounded-sm border border-gray-200 dark:border-news-border">
           {item.article.featured_image && (
             <Image
@@ -66,9 +66,9 @@ export function DoubleRowRelatedSlider({
             />
           )}
         </div>
-        <h4 className="text-[15px] leading-snug line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors pointer-events-none">
+        <h3 className="text-[15px] leading-normal line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300 pointer-events-none">
           {item.article.title}
-        </h4>
+        </h3>
       </Link>
     </div>
   );
@@ -78,8 +78,8 @@ export function DoubleRowRelatedSlider({
       
       {/* Header & Controls */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="font-medium text-xl uppercase tracking-wide">
-          Related Articles
+        <h2 className="font-medium text-xl tracking-wide">
+          संबंधित समाचार
         </h2>
         <div className="flex gap-4">
           <button onClick={() => scroll('left')} className="p-2 bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:bg-gray-50 rounded-full transition-colors" aria-label="Scroll left">
@@ -102,13 +102,13 @@ export function DoubleRowRelatedSlider({
         <div className="flex flex-col gap-8 w-max">
           {topItems.length > 0 && (
             <div className="flex gap-8 items-start">
-              <div className="w-[120px] shrink-0 border-l-4 border-red-600 pl-3">
-                <h3 className="font-medium text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                  Topic
-                </h3>
-                <h4 className="font-medium text-sm mt-1 leading-relaxed text-gray-900 dark:text-gray-100">
+              <div className="w-30 shrink-0 border-l-4 border-red-600 pl-3">
+                <span className="font-medium text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 block">
+                  विषय
+                </span>
+                <span className="font-medium text-sm mt-1 leading-relaxed text-gray-900 dark:text-gray-100 block">
                   {topTitle}
-                </h4>
+                </span>
               </div>
               {topItems.map(renderItem)}
             </div>
@@ -116,13 +116,13 @@ export function DoubleRowRelatedSlider({
           
           {bottomItems.length > 0 && (
             <div className="flex gap-8 items-start">
-              <div className="w-[120px] shrink-0 border-l-4 border-red-600 pl-3">
-                <h3 className="font-medium text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                  Region
-                </h3>
-                <h4 className="font-medium text-sm mt-1 leading-relaxed text-gray-900 dark:text-gray-100">
+              <div className="w-30 shrink-0 border-l-4 border-red-600 pl-3">
+                <span className="font-medium text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 block">
+                  क्षेत्र
+                </span>
+                <span className="font-medium text-sm mt-1 leading-relaxed text-gray-900 dark:text-gray-100 block">
                   {bottomTitle}
-                </h4>
+                </span>
               </div>
               {bottomItems.map(renderItem)}
             </div>
