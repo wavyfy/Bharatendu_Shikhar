@@ -35,6 +35,7 @@ export function FeatureArticle({ article }: { article?: ArticleWithAuthor }) {
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover transition-transform duration-500 ease-out"
+              priority
             />
           </div>
         </div>

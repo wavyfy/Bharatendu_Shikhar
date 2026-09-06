@@ -9,11 +9,19 @@ function calculateReadTime(content: string | undefined | null): string {
 
 export function ArticleMeta({ article, isArticlePage, alignRight }: { article: ArticleWithAuthor, isArticlePage?: boolean, alignRight?: boolean }) {
   const badges = getArticleBadges(article, isArticlePage);
-  const dateStr = new Date(article.published_at || article.created_at || new Date()).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const dateStr = new Date(article.published_at || article.created_at || new Date()).toLocaleDateString("hi-IN", { month: "short", day: "numeric", year: "numeric" });
   const readTime = calculateReadTime(article.content);
+  const authorName = article.profiles?.full_name;
 
   return (
-    <div className={`flex items-center gap-3 w-full text-[11px] text-gray-500 dark:text-news-text-muted font-bold tracking-widest uppercase whitespace-nowrap overflow-hidden text-ellipsis ${alignRight ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex flex-wrap items-center gap-2 md:gap-3 w-full text-[11px] text-gray-500 dark:text-news-text-muted font-bold tracking-widest uppercase ${alignRight ? 'justify-end' : 'justify-start'}`}>
+      {authorName && (
+        <>
+          <span className="text-gray-700 dark:text-gray-300 font-semibold">{authorName}</span>
+          <span className="text-gray-300 dark:text-news-border">&bull;</span>
+        </>
+      )}
+
       {badges.length > 0 && (
         <>
           <div className="flex items-center gap-2">

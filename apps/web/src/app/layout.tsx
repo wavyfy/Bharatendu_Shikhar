@@ -29,19 +29,16 @@ const devanagari = Noto_Sans_Devanagari({
 
 import { fetchSettings } from "@/utils/fetchData";
 
-import { getSiteUrl } from "@/utils/seo";
+import { getSiteUrl, getAbsoluteImageUrl } from "@/utils/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url);
-  const siteName = settings?.site_name || "Bharatendu Shikhar";
+  const siteName = settings?.site_name || "भारतेन्दु शिखर";
   const title = settings?.meta_title || siteName;
-  const description = settings?.meta_description || "Latest News and Updates";
-  const ogImageUrl = settings?.og_image_url || "/default-og.jpg";
-  
-  const iconUrl = settings?.favicon_url 
-    ? (settings.favicon_url.startsWith("http") ? settings.favicon_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${settings.favicon_url}`)
-    : "/favicon.ico";
+  const description = settings?.meta_description || "ताज़ा ख़बरें और समाचार";
+  const absoluteOgImage = getAbsoluteImageUrl(settings?.og_image_url, `${siteUrl.toString().replace(/\/$/, "")}/default-og.jpg`)!;
+  const iconUrl = getAbsoluteImageUrl(settings?.favicon_url, "/favicon.ico")!;
 
   return {
     metadataBase: siteUrl,
@@ -64,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName,
       images: [
         {
-          url: ogImageUrl,
+          url: absoluteOgImage,
           width: 1200,
           height: 630,
           alt: siteName,
@@ -77,7 +74,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: [ogImageUrl],
+      images: [absoluteOgImage],
     },
     icons: {
       icon: iconUrl,

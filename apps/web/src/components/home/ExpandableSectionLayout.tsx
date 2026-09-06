@@ -58,9 +58,7 @@ export function ExpandableSectionLayout({
                 {i > 0 && <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-6"></div>}
                 <div className="grid grid-cols-1 lg:grid-cols-13 gap-8 lg:gap-5">
                 <div className="lg:col-span-9 lg:pr-0">
-                  {i === 0 && headerNode && (
-                    <h2 className="uppercase">{headerNode}</h2>
-                  )}
+                  {i === 0 && headerNode}
 
                   {leftArticles[0] && (
                     <>

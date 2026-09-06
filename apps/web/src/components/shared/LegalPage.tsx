@@ -25,7 +25,7 @@ export async function generateLegalMetadata(field: string, title: string, slug: 
   const settings = await fetchSettings();
   const content = settings?.[field as keyof typeof settings] as string | null;
   const siteUrl = getSiteUrl(settings?.site_url).toString().replace(/\/$/, "");
-  const siteName = settings?.site_name || "Bharatendu Shikhar";
+  const siteName = settings?.site_name || "भारतेन्दु शिखर";
 
   if (!content || content.trim() === "") {
     return {};
@@ -45,7 +45,7 @@ export async function generateLegalMetadata(field: string, title: string, slug: 
       description: `${title} for ${siteName}. Read our policies and guidelines.`,
       url: url,
       siteName,
-      locale: "en_US",
+      locale: "hi_IN",
       type: "website",
     },
   };

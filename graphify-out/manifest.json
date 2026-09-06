@@ -635,8 +635,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\admin\\src\\features\\epapers\\components\\EpapersTable.tsx": {
-    "mtime": 1788679065.750425,
-    "ast_hash": "7f8c3d6bda858d32f92ece06ea90bca6",
+    "mtime": 1788680281.226808,
+    "ast_hash": "f4432425ae52d8b056d8730f0595889b",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\admin\\src\\features\\epapers\\queries\\index.ts": {
@@ -805,8 +805,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\page.tsx": {
-    "mtime": 1782278645.0835254,
-    "ast_hash": "bfd77283e4e79a0257dd0649cfb11d77",
+    "mtime": 1788686649.518885,
+    "ast_hash": "a11559941a03b242a1f7a3e39128d2c0",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\template.tsx": {
@@ -820,8 +820,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\article\\[slug]\\page.tsx": {
-    "mtime": 1784215763.7689033,
-    "ast_hash": "c091af9b9125021cb591ab95a772c8ca",
+    "mtime": 1788686750.6799033,
+    "ast_hash": "f12a7b67795e1a88998d4e58877fb51c",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\elections\\page.tsx": {
@@ -845,8 +845,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\[slug]\\page.tsx": {
-    "mtime": 1782280976.015198,
-    "ast_hash": "3b5d6a397215cb0afe0d229d02a748bc",
+    "mtime": 1788687112.26028,
+    "ast_hash": "c22f191baff7083fe5d7823c56975f33",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\ThemeProvider.tsx": {
@@ -945,8 +945,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\ArticleMeta.tsx": {
-    "mtime": 1782278153.478261,
-    "ast_hash": "d9e5c3ea4eb54c6ff109d90167eb4827",
+    "mtime": 1788685916.5271149,
+    "ast_hash": "688877cbab3a1eeffcf9019f18216126",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\BackToTop.tsx": {
@@ -1035,8 +1035,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\utils\\fetchData.ts": {
-    "mtime": 1784217011.944723,
-    "ast_hash": "283d2e78fcfac93287e72f652d9dd10a",
+    "mtime": 1788687119.7297082,
+    "ast_hash": "1a8dc98fd385380542f46ad806e819f6",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\utils\\fetchElections.ts": {
@@ -1260,8 +1260,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\sitemap.ts": {
-    "mtime": 1782240341.2231631,
-    "ast_hash": "774fc42a5923705bebb4ab4a9dbc42f3",
+    "mtime": 1788686479.497824,
+    "ast_hash": "7a41976e3adbb6020e3b08cb0cf5fca8",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\about\\page.tsx": {
@@ -1300,8 +1300,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\news-sitemap.xml\\route.ts": {
-    "mtime": 1782225476.9284544,
-    "ast_hash": "731116b6130f468243ea78c4587cd7c4",
+    "mtime": 1788686919.3100083,
+    "ast_hash": "875970472cae93f83955c0452f6cd415",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\privacy\\page.tsx": {
@@ -1725,8 +1725,28 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\supabase\\migrations\\20260906000000_content_cleanup_job.sql": {
-    "mtime": 1788679050.5937724,
-    "ast_hash": "996506462db0a202dba7cd214b27c728",
+    "mtime": 1788681409.0083961,
+    "ast_hash": "2f7561c05c7681c5f8ee59f9bdcb2e59",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\supabase\\migrations\\20260906000001_add_get_cron_jobs_rpc.sql": {
+    "mtime": 1788681302.5766833,
+    "ast_hash": "ca3fc05620fe0e192ee1f7066bc7fa87",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\supabase\\migrations\\20260906000002_get_cron_history.sql": {
+    "mtime": 1788682161.1564178,
+    "ast_hash": "db4454c0875ad6faa9a8f17ae348435a",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\supabase\\migrations\\20260906000003_check_internal_tables.sql": {
+    "mtime": 1788682211.5764036,
+    "ast_hash": "3487a9c84a3b49775544ebd6f993c176",
+    "semantic_hash": ""
+  },
+  "D:\\PROJECTS\\Bhartendu_Shikhar\\supabase\\migrations\\20260906000004_update_push_cron_schedule.sql": {
+    "mtime": 1788683985.2216287,
+    "ast_hash": "a4160a74b9858ab5a76adf167ee0e97e",
     "semantic_hash": ""
   }
 }

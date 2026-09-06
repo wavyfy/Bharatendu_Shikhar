@@ -357,9 +357,15 @@ export function Footer({
             <Link href="/epaper" className="border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap">
               ई-पेपर पढ़ें
             </Link>
-            <Link href="/app" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap capitalize">
-              ऐप डाउनलोड करें
-            </Link>
+            {settings?.app_download_url ? (
+              <a href={settings.app_download_url as string} target="_blank" rel="noopener noreferrer" className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap capitalize">
+                ऐप डाउनलोड करें
+              </a>
+            ) : (
+              <button className="bg-red-600 text-white hover:bg-red-700 rounded-full px-6 py-2 text-sm font-bold transition-colors flex items-center justify-center w-full sm:w-auto whitespace-nowrap capitalize">
+                ऐप डाउनलोड करें
+              </button>
+            )}
           </div>
         </div>
 

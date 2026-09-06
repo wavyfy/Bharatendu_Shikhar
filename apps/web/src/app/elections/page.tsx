@@ -6,10 +6,31 @@ import { fetchNavbarData } from "@/utils/fetchData";
 
 import { RegionSelect } from "./RegionSelect";
 
-export const metadata = {
-  title: "चुनाव | भारतेंदु शिखर",
-  description: "आगामी और पिछले चुनावों के लाइव अपडेट, परिणाम और जानकारी।",
-};
+import type { Metadata } from "next";
+import { fetchSettings } from "@/utils/fetchData";
+import { getSiteUrl } from "@/utils/seo";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString().replace(/\/$/, "");
+  const siteName = settings?.site_name || "भारतेन्दु शिखर";
+
+  return {
+    title: `चुनाव समाचार | ${siteName}`,
+    description: "आगामी और पिछले चुनावों के लाइव अपडेट, परिणाम और कवरेज।",
+    alternates: {
+      canonical: `${siteUrl}/elections`,
+    },
+    openGraph: {
+      title: `चुनाव समाचार | ${siteName}`,
+      description: "आगामी और पिछले चुनावों के लाइव अपडेट, परिणाम और कवरेज।",
+      url: `${siteUrl}/elections`,
+      siteName,
+      locale: "hi_IN",
+      type: "website",
+    },
+  };
+}
 
 export default async function ElectionsListingPage({ searchParams }: { searchParams: Promise<{ region?: string }> }) {
   const params = await searchParams;

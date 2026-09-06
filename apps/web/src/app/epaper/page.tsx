@@ -5,11 +5,30 @@ import { FileText } from "lucide-react";
 import Link from "next/link";
 import { EpaperSkeleton } from "@/components/skeletons/EpaperSkeletons";
 import type { Metadata } from "next";
+import { fetchSettings } from "@/utils/fetchData";
+import { getSiteUrl } from "@/utils/seo";
 
-export const metadata: Metadata = {
-  title: "E-Papers",
-  description: "Browse and read our latest digital e-papers online.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString().replace(/\/$/, "");
+  const siteName = settings?.site_name || "भारतेन्दु शिखर";
+
+  return {
+    title: `ई-पेपर | ${siteName}`,
+    description: "नवीनतम डिजिटल ई-पेपर ऑनलाइन पढ़ें और डाउनलोड करें।",
+    alternates: {
+      canonical: `${siteUrl}/epaper`,
+    },
+    openGraph: {
+      title: `ई-पेपर | ${siteName}`,
+      description: "नवीनतम डिजिटल ई-पेपर ऑनलाइन पढ़ें और डाउनलोड करें।",
+      url: `${siteUrl}/epaper`,
+      siteName,
+      locale: "hi_IN",
+      type: "website",
+    },
+  };
+}
 
 export const revalidate = 60; // Revalidate every 60 seconds
 

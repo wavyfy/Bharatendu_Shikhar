@@ -16,19 +16,17 @@ import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 async function CollectionPageAndItemListSchema({
   pageTitle,
   displayDescription,
-  pageType,
   slug,
   topArticles,
 }: {
   pageTitle: string;
   displayDescription: string;
-  pageType: "category" | "region";
   slug: string;
   topArticles: { title: string | null; slug: string }[];
 }) {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();
-  const pageUrl = `${siteUrl}/${pageType}/${slug}`;
+  const pageUrl = `${siteUrl}/${slug}`;
 
   const collectionPageSchema = {
     "@context": "https://schema.org",
@@ -36,6 +34,7 @@ async function CollectionPageAndItemListSchema({
     "name": pageTitle,
     "description": displayDescription,
     "url": pageUrl,
+    "inLanguage": "hi",
   };
 
   const itemListSchema = {
@@ -81,8 +80,6 @@ export async function generateMetadata(
     };
   }
 
-  const urlType = pageData.type === "region" ? "region" : "category";
-
   const fallbackDescription = pageData.type === "region"
     ? `भारतेंदु शिखर से नवीनतम ${pageData.pageTitle} समाचार, स्थानीय अपडेट और क्षेत्रीय कवरेज।`
     : `भारतेंदु शिखर से नवीनतम ${pageData.pageTitle} समाचार, अपडेट और ब्रेकिंग स्टोरीज़।`;
@@ -93,13 +90,15 @@ export async function generateMetadata(
     title: pageData.pageTitle,
     description: metaDescription,
     alternates: {
-      canonical: `${siteUrl}/${urlType}/${slug}`,
+      canonical: `${siteUrl}/${slug}`,
     },
     openGraph: {
       title: pageData.pageTitle,
       description: metaDescription,
-      url: `${siteUrl}/${urlType}/${slug}`,
+      url: `${siteUrl}/${slug}`,
       type: "website",
+      locale: "hi_IN",
+      siteName: "भारतेन्दु शिखर",
     },
     twitter: {
       card: "summary_large_image",
@@ -142,7 +141,6 @@ async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slu
       <CollectionPageAndItemListSchema
         pageTitle={pageTitle}
         displayDescription={displayDescription}
-        pageType={type as "category" | "region"}
         slug={pageData.slug}
         topArticles={topArticles}
       />
@@ -189,9 +187,9 @@ export default function DynamicRoutePage({
         <TickerSection />
       </Suspense>
 
-      <div className="max-w-[1700px] mx-auto px-4 flex gap-6 mb-20 items-start">
+      <div className="max-w-425 mx-auto px-4 flex gap-6 mb-20 items-start">
         {/* Left Sticky Ad */}
-        <div className="hidden xl:block w-[160px] shrink-0 sticky top-4 mt-8">
+        <div className="hidden xl:block w-40 shrink-0 sticky top-4 mt-8">
           <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
         </div>
 
@@ -200,7 +198,7 @@ export default function DynamicRoutePage({
         </Suspense>
 
         {/* Right Sticky Ad */}
-        <div className="hidden xl:block w-[160px] shrink-0 sticky top-4 mt-8">
+        <div className="hidden xl:block w-40 shrink-0 sticky top-4 mt-8">
           <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
         </div>
       </div>

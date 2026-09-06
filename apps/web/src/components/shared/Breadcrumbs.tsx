@@ -12,12 +12,25 @@ interface BreadcrumbsProps {
 }
 
 export function Breadcrumbs({ items, siteUrl }: BreadcrumbsProps) {
-  const schemaList = items.map((item, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    name: item.label,
-    item: item.href ? `${siteUrl}${item.href}` : undefined,
-  }));
+  const cleanSiteUrl = siteUrl.replace(/\/$/, "");
+  const schemaList = items.map((item, index) => {
+    let itemUrl: string | undefined = undefined;
+    if (item.href) {
+      if (item.href.startsWith("http://") || item.href.startsWith("https://")) {
+        itemUrl = item.href;
+      } else if (item.href.startsWith("/")) {
+        itemUrl = `${cleanSiteUrl}${item.href}`;
+      } else if (item.href !== "#") {
+        itemUrl = `${cleanSiteUrl}/${item.href}`;
+      }
+    }
+    return {
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.label,
+      ...(itemUrl ? { item: itemUrl } : {}),
+    };
+  });
 
   const jsonLd = {
     "@context": "https://schema.org",

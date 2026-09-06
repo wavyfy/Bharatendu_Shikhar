@@ -1,6 +1,6 @@
 import { supabase } from "@repo/api";
 import { fetchSettings } from "@/utils/fetchData";
-import { getSiteUrl } from "@/utils/seo";
+import { getSiteUrl, getAbsoluteImageUrl } from "@/utils/seo";
 import { NextResponse } from "next/server";
 
 /** Escape XML special characters. */
@@ -20,11 +20,13 @@ export async function GET() {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();
 
+  const now = new Date().toISOString();
   // Fetch published articles with featured images
   const { data: articles } = await supabase
     .from("articles")
     .select("slug, title, featured_image")
     .eq("status", "published")
+    .lte("published_at", now)
     .not("featured_image", "is", null)
     .order("published_at", { ascending: false });
 
@@ -40,11 +42,12 @@ export async function GET() {
     .filter((a) => a.featured_image)
     .map((article) => {
       const pageUrl = `${siteUrl}/article/${article.slug}`;
+      const imgUrl = getAbsoluteImageUrl(article.featured_image)!;
       return `
   <url>
     <loc>${pageUrl}</loc>
     <image:image>
-      <image:loc>${escapeXml(article.featured_image!)}</image:loc>
+      <image:loc>${escapeXml(imgUrl)}</image:loc>
       <image:title>${escapeXml(article.title || "")}</image:title>
     </image:image>
   </url>`;
@@ -55,11 +58,12 @@ export async function GET() {
     .filter((e) => e.featured_image_url)
     .map((election) => {
       const pageUrl = `${siteUrl}/elections/${election.slug}`;
+      const imgUrl = getAbsoluteImageUrl(election.featured_image_url)!;
       return `
   <url>
     <loc>${pageUrl}</loc>
     <image:image>
-      <image:loc>${escapeXml(election.featured_image_url!)}</image:loc>
+      <image:loc>${escapeXml(imgUrl)}</image:loc>
       <image:title>${escapeXml(election.title || "")}</image:title>
     </image:image>
   </url>`;

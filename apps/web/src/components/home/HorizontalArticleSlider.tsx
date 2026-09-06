@@ -91,9 +91,9 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
                       />
                     )}
                   </div>
-                  <h4 className="text-[14px] leading-normal line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300 pointer-events-none">
+                  <h3 className="text-[14px] leading-normal line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300 pointer-events-none">
                     {item.article.title}
-                  </h4>
+                  </h3>
                 </Link>
               </div>
             ))}

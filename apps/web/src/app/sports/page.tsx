@@ -3,10 +3,31 @@ import { getPublishedCompetitions } from "@/utils/fetchSports";
 import { CompetitionCard } from "@/components/sports/CompetitionCard";
 import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Sports | Bharatendu Shikhar",
-  description: "Live scores, match schedules, points tables, and tournament coverage for cricket and football.",
-};
+import type { Metadata } from "next";
+import { fetchSettings } from "@/utils/fetchData";
+import { getSiteUrl } from "@/utils/seo";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchSettings();
+  const siteUrl = getSiteUrl(settings?.site_url).toString().replace(/\/$/, "");
+  const siteName = settings?.site_name || "भारतेन्दु शिखर";
+
+  return {
+    title: `खेल समाचार | ${siteName}`,
+    description: "क्रिकेट, फुटबॉल और अन्य खेलों के लाइव स्कोर, मैच शेड्यूल और अपडेट।",
+    alternates: {
+      canonical: `${siteUrl}/sports`,
+    },
+    openGraph: {
+      title: `खेल समाचार | ${siteName}`,
+      description: "क्रिकेट, फुटबॉल और अन्य खेलों के लाइव स्कोर, मैच शेड्यूल और अपडेट।",
+      url: `${siteUrl}/sports`,
+      siteName,
+      locale: "hi_IN",
+      type: "website",
+    },
+  };
+}
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;

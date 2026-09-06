@@ -14,3 +14,17 @@ export function getSiteUrl(settingsSiteUrl?: string | null): URL {
 
   return new URL(url);
 }
+
+export function getAbsoluteImageUrl(imagePath?: string | null, fallbackUrl?: string | null): string | null {
+  if (!imagePath || imagePath.trim() === "") {
+    return fallbackUrl || null;
+  }
+  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+    return imagePath;
+  }
+  const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || "").replace(/\/$/, "");
+  if (imagePath.startsWith("/")) {
+    return `${supabaseUrl}${imagePath}`;
+  }
+  return `${supabaseUrl}/storage/v1/object/public/${imagePath}`;
+}

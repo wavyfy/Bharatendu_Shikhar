@@ -19,22 +19,44 @@ export const revalidate = 60; // Revalidate every 60 seconds
 async function JsonLdSchema() {
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();
-  const siteName = settings?.site_name || "Bharatendu Shikhar";
-  const logoUrl = settings?.site_logo_url || "";
+  const siteName = "भारतेन्दु शिखर";
 
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": siteName,
+    "alternateName": "Bhartendu Shikhar",
     "url": siteUrl,
+    "inLanguage": "hi",
   };
+
+  const socialSameAs = [
+    settings?.facebook_url,
+    settings?.twitter_url,
+    settings?.instagram_url,
+    settings?.youtube_url,
+    settings?.linkedin_url,
+  ].filter((url): url is string => Boolean(url));
 
   const orgSchema = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "NewsMediaOrganization",
     "name": siteName,
+    "alternateName": "Bhartendu Shikhar",
     "url": siteUrl,
-    "logo": logoUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": settings?.site_logo_url || `${siteUrl}/logo.png`,
+    },
+    ...(socialSameAs.length > 0 ? { "sameAs": socialSameAs } : {}),
+    ...(settings?.contact_email || settings?.contact_phone ? {
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": settings?.contact_phone || undefined,
+        "email": settings?.contact_email || undefined,
+        "contactType": "customer service",
+      }
+    } : {})
   };
 
   // ItemList: latest published articles for search engine article ordering
@@ -101,7 +123,7 @@ async function CategoriesSection() {
 async function BottomSlidersSection() {
   const { regionSliderItems, categorySliderItems } = await fetchBottomSlidersData();
   return (
-    <div className="max-w-[1400px] mx-auto px-0 mb-0 mt-4 flex flex-col gap-0 shadow-sm" style={{ zoom: 1 }}>
+    <div className="max-w-350 mx-auto px-0 mb-0 mt-4 flex flex-col gap-0 shadow-sm" style={{ zoom: 1 }}>
       <HorizontalArticleSlider title="उत्तराखंड क्षेत्र" items={regionSliderItems} />
       <HorizontalArticleSlider title="विश्व समाचार" items={categorySliderItems} />
     </div>
@@ -116,9 +138,9 @@ export default function Home() {
         <TickerSection />
       </Suspense>
 
-      <div className="max-w-[1700px] mx-auto px-4 flex gap-6 mb-8 items-start">
+      <div className="max-w-425 mx-auto px-4 flex gap-6 mb-8 items-start">
         {/* Left Sticky Ad */}
-        <div className="hidden xl:block w-[160px] shrink-0 sticky top-15 mt-8">
+        <div className="hidden xl:block w-40 shrink-0 sticky top-15 mt-8">
           <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
         </div>
 
@@ -143,7 +165,7 @@ export default function Home() {
         </div>
 
         {/* Right Sticky Ad */}
-        <div className="hidden xl:block w-[160px] shrink-0 sticky top-15 mt-8">
+        <div className="hidden xl:block w-40 shrink-0 sticky top-15 mt-8">
           <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
         </div>
       </div>

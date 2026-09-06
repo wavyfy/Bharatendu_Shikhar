@@ -12,9 +12,9 @@ export function CategoryHeader({ title, slug, links }: { title: string, slug?: s
       )}
       <div className="flex flex-wrap gap-6 text-[13px] font-medium text-gray-700 dark:text-news-text-secondary">
         {links.map((link) => (
-          <a href="#" key={link} className="hover:text-red-600 dark:hover:text-news-accent transition-colors">
+          <span key={link} className="hover:text-red-600 dark:hover:text-news-accent transition-colors">
             {link}
-          </a>
+          </span>
         ))}
       </div>
     </div>
