@@ -13,13 +13,13 @@ export function FeatureArticle({ article }: { article?: ArticleWithAuthor }) {
   if (!article) return null;
 
   return (
-    <Link href={`/article/${article.slug}`} className="block group/article hover:translate-y-[-2px] transition-all duration-300 rounded-[2px] overflow-hidden">
+    <Link href={`/article/${article.slug}`} className="block group/article transition-all duration-300 rounded-xs overflow-hidden">
       <article className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className={`order-2 lg:order-1 flex flex-col h-full ${article.featured_image ? 'lg:col-span-6' : 'lg:col-span-12'}`}>
-          <h2 className="text-[23px] lg:text-[35px] font-medium mb-4 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors">
+          <h2 className="text-[23px] lg:text-[35px] font-medium mb-4 line-clamp-4 leading-normal max-h-[5.75em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
             {article.title}
           </h2>
-        <p className="text-gray-600 dark:text-news-text-secondary text-[15px] leading-snug mb-4 line-clamp-5">
+        <p className="text-gray-600 dark:text-news-text-secondary text-[15px] leading-normal mb-4 line-clamp-5 max-h-[7.25em] overflow-hidden">
           {article.excerpt || article.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."}
         </p>
         <div className="mt-auto">

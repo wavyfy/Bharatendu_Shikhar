@@ -74,11 +74,11 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
         >
           <div className="flex gap-6 w-max">
             {items.map((item) => (
-              <div key={item.id} className="w-[220px] shrink-0">
+              <div key={item.id} className="w-55 shrink-0">
                 <Link href={`/${item.slug}`} className="block mb-2 font-bold text-[14px] hover:text-red-600 dark:hover:text-news-accent transition-colors">
                   {item.label}
                 </Link>
-                <Link href={`/article/${item.article.slug}`} className="group/article block hover:translate-y-[-2px] transition-all duration-300" draggable={false}>
+                <Link href={`/article/${item.article.slug}`} className="group/article block transition-all duration-300" draggable={false}>
                   <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card mb-3 overflow-hidden">
                     {item.article.featured_image && (
                       <Image
@@ -91,7 +91,7 @@ export function HorizontalArticleSlider({ title, items }: { title: string, items
                       />
                     )}
                   </div>
-                  <h4 className="text-[14px] leading-snug line-clamp-3 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors pointer-events-none">
+                  <h4 className="text-[14px] leading-normal line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300 pointer-events-none">
                     {item.article.title}
                   </h4>
                 </Link>

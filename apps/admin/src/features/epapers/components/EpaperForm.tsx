@@ -66,10 +66,7 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
       formData.set("published_at", new Date(publishedAtStr).toISOString());
     }
     
-    const expiryDateStr = formData.get("expiry_date_input") as string;
-    if (expiryDateStr) {
-      formData.set("expiry_date", new Date(expiryDateStr).toISOString());
-    }
+
 
     startTransition(async () => {
       let result;
@@ -460,19 +457,6 @@ export function EpaperForm({ initialData, regions }: EpaperFormProps) {
                   defaultValue={formatDateForInput(initialData?.published_at)}
                 />
                 <p className="text-xs text-slate-500">If blank, remains a draft.</p>
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="expiry_date_input" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                  Expiry Date
-                </label>
-                <Input
-                  type="date"
-                  id="expiry_date_input"
-                  name="expiry_date_input"
-                  defaultValue={formatDateForInput(initialData?.expiry_date)}
-                />
-                <p className="text-xs text-slate-500">Optional. Auto-unpublish after this date.</p>
               </div>
             </div>
           </FormSection>

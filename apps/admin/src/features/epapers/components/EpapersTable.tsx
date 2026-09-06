@@ -8,7 +8,7 @@ import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ActionMenu } from "@/components/ui/ActionMenu";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { StatusBadge, type StatusVariant } from "@/components/ui/StatusBadge";
 import { Pencil, Trash2, FileText } from "lucide-react";
 
 interface EpapersTableProps {
@@ -65,7 +65,6 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
               <th className="px-6 py-3 w-16 font-medium">S.No.</th>
               <th className="px-6 py-3 font-medium">Title & Region</th>
               <th className="px-6 py-3 font-medium">Published Date</th>
-              <th className="px-6 py-3 font-medium">Expiry Date</th>
               <th className="px-6 py-3 font-medium">Status</th>
               <th className="px-6 py-3 font-medium">Author</th>
               <th className="px-6 py-3 font-medium text-right">Actions</th>
@@ -73,18 +72,14 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
           </thead>
           <tbody className="divide-y divide-outline-variant bg-surface">
           {epapers.map((epaper, index) => {
-            const isExpired = epaper.expiry_date && new Date(epaper.expiry_date) < new Date();
             const isPublished = epaper.published_at && new Date(epaper.published_at) <= new Date();
-            
-            let statusVariant = "draft";
-            if (isExpired) statusVariant = "expired";
-            else if (isPublished) statusVariant = "published";
+            const statusVariant: StatusVariant = isPublished ? "published" : "draft";
 
             return (
               <tr key={epaper.id} className="hover:bg-surface-container-low transition-colors duration-150">
                 <td className="px-6 py-4 text-gray-500 dark:text-slate-400 font-medium">{serialStart + index + 1}</td>
                 <td className="px-6 py-4 font-medium text-on-surface">
-                  <div className="truncate max-w-[250px]">{epaper.title}</div>
+                  <div className="truncate max-w-62.5">{epaper.title}</div>
                   <div className="text-xs text-outline mt-1">
                     {epaper.region?.name || "No Region"}
                   </div>
@@ -99,16 +94,7 @@ export function EpapersTable({ epapers }: EpapersTableProps) {
                   )}
                 </td>
                 <td className="px-6 py-4">
-                  {epaper.expiry_date ? (
-                    <span className={isExpired ? "text-red-500 line-through text-sm" : "text-on-surface-variant text-sm"}>
-                      {new Date(epaper.expiry_date).toLocaleDateString()}
-                    </span>
-                  ) : (
-                    <span className="text-outline-variant italic text-sm">Never</span>
-                  )}
-                </td>
-                <td className="px-6 py-4">
-                  <StatusBadge variant={statusVariant as any} />
+                  <StatusBadge variant={statusVariant} />
                 </td>
                 <td className="px-6 py-4 text-outline">
                   {epaper.author?.full_name || "—"}

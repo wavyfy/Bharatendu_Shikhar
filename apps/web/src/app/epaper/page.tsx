@@ -30,7 +30,6 @@ async function EpaperContent({ page }: { page: number }) {
     .from("epapers")
     .select("*, regions(name)", { count: 'exact' })
     .lte("published_at", now)
-    .or(`expiry_date.is.null,expiry_date.gt.${now}`)
     .order("published_at", { ascending: false })
     .range(from, to);
 
