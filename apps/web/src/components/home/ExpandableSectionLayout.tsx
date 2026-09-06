@@ -55,7 +55,7 @@ export function ExpandableSectionLayout({
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                {i > 0 && <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-6"></div>}
+                {i > 0 && <div className="h-0.5 w-full bg-gray-300 dark:bg-news-border my-6"></div>}
                 <div className="grid grid-cols-1 lg:grid-cols-13 gap-8 lg:gap-5">
                 <div className="lg:col-span-9 lg:pr-0">
                   {i === 0 && headerNode}
@@ -63,14 +63,14 @@ export function ExpandableSectionLayout({
                   {leftArticles[0] && (
                     <>
                       <FeatureArticle article={leftArticles[0]} />
-                      {(leftArticles[1] || leftArticles[2] || leftArticles[3]) && <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-6"></div>}
+                      {(leftArticles[1] || leftArticles[2] || leftArticles[3]) && <div className="h-0.5 w-full bg-gray-300 dark:bg-news-border my-6"></div>}
                     </>
                   )}
                   
                   {(leftArticles[1] || leftArticles[2]) && (
                     <>
                       <SplitArticles articles={leftArticles.slice(1, 3)} />
-                      {leftArticles[3] && <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-6"></div>}
+                      {leftArticles[3] && <div className="h-0.5 w-full bg-gray-300 dark:bg-news-border my-6"></div>}
                     </>
                   )}
                   

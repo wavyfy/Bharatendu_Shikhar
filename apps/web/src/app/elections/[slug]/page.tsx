@@ -33,27 +33,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const settings = await fetchSettings();
   const siteUrl = getSiteUrl(settings?.site_url).toString();
 
-  if (!election) return { title: "Not Found | Bharatendu Shikhar" };
+  if (!election) return { title: "पेज नहीं मिला | भारतेन्दु शिखर" };
 
-  const title = election.title || settings?.meta_title || "Bharatendu Shikhar";
-  const description = election.description || settings?.meta_description || `Live updates and results for ${title}.`;
+  const title = election.title || settings?.meta_title || "भारतेन्दु शिखर";
+  const description = election.description || settings?.meta_description || `${title} से जुड़ी ताज़ा ख़बरें और परिणाम।`;
 
   return {
-    title: `${title} | Bharatendu Shikhar`,
+    title: `${title} | भारतेन्दु शिखर`,
     description,
     alternates: {
       canonical: `${siteUrl}/elections/${slug}`,
     },
     openGraph: {
-      title: `${title} | Bharatendu Shikhar`,
+      title: `${title} | भारतेन्दु शिखर`,
       description,
       url: `${siteUrl}/elections/${slug}`,
       type: "website",
       images: settings?.og_image_url ? [settings.og_image_url] : [],
+      locale: "hi_IN",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Bharatendu Shikhar`,
+      title: `${title} | भारतेन्दु शिखर`,
       description,
     },
   };
@@ -167,7 +168,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
         
         {/* Live Updates Timeline */}
         <div className="lg:col-span-2">
-          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-[420px] flex flex-col">
+          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm h-105 flex flex-col">
             <div className="p-5 border-b border-gray-200 dark:border-news-border shrink-0">
               <h2 className="text-base font-medium flex items-center gap-3">
                 <span className="text-red-600 uppercase border border-red-200 bg-red-50 px-2.5 py-1 rounded-full text-xs font-bold">लाइव</span>
@@ -182,7 +183,7 @@ export default async function ElectionDetailPage({ params }: { params: Promise<{
 
         {/* Party Standings Box */}
         <div className="lg:col-span-1">
-          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-6 h-[420px] flex flex-col">
+          <div className="bg-card border-2 border-gray-200 dark:border-news-border rounded-sm p-6 h-105 flex flex-col">
             <div className="flex items-center gap-2 mb-6 border-b border-gray-200 dark:border-news-border pb-4 shrink-0">
               <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold bg-red-600 text-white">
                 पार्टी की स्थिति

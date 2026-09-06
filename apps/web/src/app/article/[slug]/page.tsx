@@ -84,7 +84,7 @@ async function JsonLdSchema({ article }: { article: ArticleWithAuthor & { catego
   const publishedAt = article.published_at || article.created_at || new Date().toISOString();
   const updatedAt = article.updated_at || publishedAt;
 
-  const title = article.title || settings?.meta_title || "Bharatendu Shikhar";
+  const title = article.title || settings?.meta_title || "भारतेन्दु शिखर";
   const description = article.excerpt || settings?.meta_description || title;
   const rawImage = article.featured_image || settings?.og_image_url;
   const imageUrl = getAbsoluteImageUrl(rawImage);
@@ -107,15 +107,29 @@ async function JsonLdSchema({ article }: { article: ArticleWithAuthor & { catego
       "@type": "ImageObject",
       "url": logoUrl,
     },
-    ...(socialSameAs.length > 0 ? { "sameAs": socialSameAs } : {})
+    ...(socialSameAs.length > 0 ? { "sameAs": socialSameAs } : {}),
+    ...(settings?.contact_email || settings?.contact_phone ? {
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": settings?.contact_phone || undefined,
+        "email": settings?.contact_email || undefined,
+        "contactType": "customer service",
+      }
+    } : {})
   };
 
   const articleWithProfiles = article as (typeof article & { profiles?: { full_name?: string } | null });
-  const authorName = articleWithProfiles?.profiles?.full_name || "भारतेन्दु शिखर";
-  const authorSchema = {
-    "@type": "Person",
-    "name": authorName,
-  };
+  const realAuthorName = articleWithProfiles?.profiles?.full_name;
+  const authorSchema = realAuthorName
+    ? {
+        "@type": "Person",
+        "name": realAuthorName,
+      }
+    : {
+        "@type": "Organization",
+        "name": "भारतेन्दु शिखर",
+        "url": siteUrl,
+      };
 
   const articleSchema = {
     "@context": "https://schema.org",

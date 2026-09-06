@@ -5,7 +5,7 @@ import Link from "next/link";
 import { SafeImage } from "@/components/shared/SafeImage";
 
 export const metadata = {
-  title: "Points Tables | Sports | Bharatendu Shikhar",
+  title: "अंक तालिका | खेल | भारतेन्दु शिखर",
 };
 
 export const dynamic = "force-dynamic";

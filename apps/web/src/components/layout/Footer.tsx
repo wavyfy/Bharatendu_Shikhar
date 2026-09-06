@@ -72,7 +72,7 @@ export function Footer({
                   <div className={logoDarkUrl ? "dark:hidden" : ""}>
                     <Image 
                       src={logoUrl.startsWith("http") ? logoUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoUrl}`} 
-                      alt="Bharatendu Shikhar Logo" 
+                      alt="भारतेन्दु शिखर" 
                       width={240} 
                       height={60} 
                       className="w-auto h-8 md:h-15 object-contain object-left"
@@ -84,7 +84,7 @@ export function Footer({
                   <div className={logoUrl ? "hidden dark:block" : ""}>
                     <Image 
                       src={logoDarkUrl.startsWith("http") ? logoDarkUrl : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${logoDarkUrl}`} 
-                      alt="Bharatendu Shikhar Logo (Dark)" 
+                      alt="भारतेन्दु शिखर (डार्क)" 
                       width={240} 
                       height={60} 
                       className="w-auto h-8 md:h-15 object-contain object-left"
@@ -349,7 +349,7 @@ export function Footer({
         <div className="flex flex-col xl:flex-row justify-between items-center xl:items-start gap-6 w-full">
           {/* Copyright & T&C */}
           <div className="text-[13px] text-gray-500 dark:text-news-text-muted flex justify-center xl:justify-start items-center">
-            <span className="font-medium whitespace-nowrap">&copy; {new Date().getFullYear()} {settings?.copyright_text || "Bharatendu Shikhar. सर्वाधिकार सुरक्षित।"}</span>
+            <span className="font-medium whitespace-nowrap">&copy; {new Date().getFullYear()} {settings?.copyright_text || "भारतेन्दु शिखर। सर्वाधिकार सुरक्षित।"}</span>
           </div>
 
           {/* Bottom Buttons */}
