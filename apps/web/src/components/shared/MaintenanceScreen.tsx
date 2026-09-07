@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { CommonListener } from "@/components/shared/CommonListener";
+import { GoogleTagManagerScript, GoogleTagManagerNoScript } from "@/components/analytics/GoogleTagManager";
 
 export function MaintenanceScreen({
   settings,
@@ -24,7 +25,9 @@ export function MaintenanceScreen({
       suppressHydrationWarning
       className={`${geistSansVariable} ${geistMonoVariable} h-full antialiased`}
     >
+      <GoogleTagManagerScript />
       <body className="min-h-full bg-[#FAFAFA] dark:bg-[#050505] text-[#111] dark:text-[#EAEAEA] flex flex-col items-center justify-center relative selection:bg-red-600/20 overflow-hidden texture-bg">
+        <GoogleTagManagerNoScript />
         <CommonListener currentMaintenanceMode={true} currentHideAllAds={settings?.hide_all_ads ?? false} />
         <style>{`
           @keyframes gentle-breathe {
