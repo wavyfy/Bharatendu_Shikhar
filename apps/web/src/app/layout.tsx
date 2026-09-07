@@ -90,6 +90,7 @@ import { FloatingNav } from "@/components/shared/FloatingNav";
 
 import { MaintenanceScreen } from "@/components/shared/MaintenanceScreen";
 import { CommonListener } from "@/components/shared/CommonListener";
+import { GoogleTagManagerScript, GoogleTagManagerNoScript } from "@/components/analytics/GoogleTagManager";
 
 export default async function RootLayout({
   children,
@@ -117,7 +118,9 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${geistMono.variable} ${newsreader.variable} ${devanagari.variable} h-full antialiased`}
     >
+      <GoogleTagManagerScript />
       <body suppressHydrationWarning className="min-h-full flex flex-col bg-news-bg text-news-text dark:bg-news-bg dark:text-news-text">
+        <GoogleTagManagerNoScript />
         <CommonListener 
           currentMaintenanceMode={false} 
           currentHideAllAds={settings?.hide_all_ads ?? false}
