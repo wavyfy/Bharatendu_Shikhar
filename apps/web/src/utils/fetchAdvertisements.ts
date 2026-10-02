@@ -1,16 +1,13 @@
 import { supabase } from "@repo/api";
 import type { Database } from "@repo/api";
+import { fetchSettings } from "@/utils/fetchData";
 
 export type AdData = Database["public"]["Tables"]["advertisements"]["Row"];
 
 export async function fetchAdsForSlot(slotIdentifier: string): Promise<AdData | null> {
   try {
     // 1. Check global settings to see if ads are disabled
-    const { data: settings } = await supabase
-      .from("settings")
-      .select("hide_all_ads")
-      .eq("id", 1)
-      .single();
+    const settings = await fetchSettings();
 
     if (settings?.hide_all_ads) {
       return null;

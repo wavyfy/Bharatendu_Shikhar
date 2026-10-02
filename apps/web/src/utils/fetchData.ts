@@ -385,7 +385,7 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
     (categoryId && regionId)
       ? supabase.from("articles").select(baseSelect).eq("status", "published")
           .eq("category_id", categoryId).eq("region_id", regionId)
-          .neq("id", excludeId).order("published_at", { ascending: false }).limit(8)
+          .neq("id", excludeId).order("published_at", { ascending: false }).limit(9)
           .then(r => r.data)
       : Promise.resolve(null),
 
@@ -393,7 +393,7 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
     categoryId
       ? supabase.from("articles").select(baseSelect).eq("status", "published")
           .eq("category_id", categoryId)
-          .neq("id", excludeId).order("published_at", { ascending: false }).limit(8)
+          .neq("id", excludeId).order("published_at", { ascending: false }).limit(9)
           .then(r => r.data)
       : Promise.resolve(null),
 
@@ -401,13 +401,13 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
     regionId
       ? supabase.from("articles").select(baseSelect).eq("status", "published")
           .eq("region_id", regionId)
-          .neq("id", excludeId).order("published_at", { ascending: false }).limit(8)
+          .neq("id", excludeId).order("published_at", { ascending: false }).limit(9)
           .then(r => r.data)
       : Promise.resolve(null),
 
     // 4. Fallback latest
     supabase.from("articles").select(baseSelect).eq("status", "published")
-      .neq("id", excludeId).order("published_at", { ascending: false }).limit(8)
+      .neq("id", excludeId).order("published_at", { ascending: false }).limit(9)
       .then(r => r.data),
   ]);
 
@@ -425,7 +425,7 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
   addArticles(regData as ArticleWithAuthor[] | null);
   addArticles(fallbackData as ArticleWithAuthor[] | null);
 
-  return Array.from(relatedMap.values()).slice(0, 8);
+  return Array.from(relatedMap.values()).slice(0, 9);
 }
 
 

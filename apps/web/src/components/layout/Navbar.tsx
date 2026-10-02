@@ -35,7 +35,7 @@ function MobileRegionItem({
   const hasSubRegions = region.subRegions && region.subRegions.length > 0;
 
   return (
-    <div className={`border-gray-300 dark:border-news-border ${!isLast ? 'border-b' : ''}`}>
+    <div className={`border-gray-200 dark:border-news-border ${!isLast ? 'border-b' : ''}`}>
       <div className="flex justify-between items-center pr-2">
         <Link 
           href={targetPath} 
@@ -340,7 +340,7 @@ export function Navbar({
                   </div>
                   
                   <div className="flex-1 overflow-y-auto px-5">
-                     <Link href="/sports" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center gap-2 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border ${pathname === '/sports' || pathname.startsWith('/sports/') ? 'text-red-700 dark:text-red-500' : 'text-red-600'}`}>
+                     <Link href="/sports" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center gap-2 font-bold uppercase tracking-wide py-4 border-b border-gray-200 dark:border-news-border ${pathname === '/sports' || pathname.startsWith('/sports/') ? 'text-red-700 dark:text-red-500' : 'text-red-600'}`}>
                        {isSportsLive && (
                          <span className="relative flex h-2 w-2">
                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
@@ -350,7 +350,7 @@ export function Navbar({
                        <span className="show-in-hi">खेल</span>
                        <span className="show-in-en" translate="no">Sports</span>
                      </Link>
-                     <Link href="/elections" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center gap-2 font-bold uppercase tracking-wide py-4 border-b border-gray-300 dark:border-news-border ${pathname === '/elections' || pathname.startsWith('/elections/') ? 'text-red-700 dark:text-red-500' : 'text-red-600'}`}>
+                     <Link href="/elections" onClick={() => setIsMobileMenuOpen(false)} className={`flex items-center gap-2 font-bold uppercase tracking-wide py-4 border-b border-gray-200 dark:border-news-border ${pathname === '/elections' || pathname.startsWith('/elections/') ? 'text-red-700 dark:text-red-500' : 'text-red-600'}`}>
                        {isElectionLive && (
                          <span className="relative flex h-2 w-2">
                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
@@ -360,9 +360,9 @@ export function Navbar({
                        <span className="show-in-hi">चुनाव</span>
                        <span className="show-in-en" translate="no">Elections</span>
                      </Link>
-                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-300 dark:border-news-border text-[16px] capitalize transition-colors ${pathname === '/' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>होम</Link>
+                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 border-b border-gray-200 dark:border-news-border text-[16px] capitalize transition-colors ${pathname === '/' ? 'text-red-600 dark:text-news-accent font-bold' : 'dark:text-news-text hover:text-red-600 font-medium'}`}>होम</Link>
                      
-                     <div className="border-b border-gray-300 dark:border-news-border">
+                     <div className="border-b border-gray-200 dark:border-news-border">
                        <button onClick={() => setIsCategoriesOpen(!isCategoriesOpen)} className="w-full py-4 flex justify-between items-center font-medium text-[16px] capitalize dark:text-news-text hover:text-red-600 transition-colors">
                          श्रेणियां
                          <ChevronDown size={20} strokeWidth={1.5} className={`transition-transform duration-300 ${isCategoriesOpen ? 'rotate-180' : ''}`} />
@@ -380,7 +380,7 @@ export function Navbar({
                                const targetPath = `/${category.slug}`;
                                const isCurrentPage = pathname === targetPath;
                                return (
-                                 <Link key={category.slug} href={targetPath} onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 px-2 border-b border-gray-300 dark:border-news-border hover:text-black dark:hover:text-white transition-colors ${idx === navCategories.length - 1 ? 'border-b-0' : ''} ${isCurrentPage ? 'text-red-600 dark:text-news-accent font-medium' : 'text-gray-600 dark:text-news-text-secondary'}`}>
+                                 <Link key={category.slug} href={targetPath} onClick={() => setIsMobileMenuOpen(false)} className={`block py-4 px-2 border-b border-gray-200 dark:border-news-border hover:text-black dark:hover:text-white transition-colors ${idx === navCategories.length - 1 ? 'border-b-0' : ''} ${isCurrentPage ? 'text-red-600 dark:text-news-accent font-medium' : 'text-gray-600 dark:text-news-text-secondary'}`}>
                                    {category.name}
                                  </Link>
                                );
@@ -390,7 +390,7 @@ export function Navbar({
                        </AnimatePresence>
                      </div>
                      
-                     <div className="border-b border-black dark:border-news-border">
+                     <div className="border-b border-gray-200 dark:border-news-border">
                        <button onClick={() => setIsRegionsOpen(!isRegionsOpen)} className="w-full py-4 flex justify-between items-center font-medium text-[16px] capitalize dark:text-news-text hover:text-red-600 transition-colors">
                          <span className="show-in-hi">क्षेत्र</span>
                          <span className="show-in-en" translate="no">Regions</span>
@@ -444,12 +444,12 @@ export function Navbar({
                     </button>
                   </div>
                   <div className="px-5">
-                    <h2 className="text-red-600 text-2xl font-medium border-b border-black dark:border-news-border pb-4 mb-2">सेटिंग्स</h2>
-                    <div className="flex justify-between items-center py-5 border-b border-gray-300 dark:border-news-border">
+                    <h2 className="text-red-600 text-2xl font-medium border-b border-gray-200 dark:border-news-border pb-4 mb-2">सेटिंग्स</h2>
+                    <div className="flex justify-between items-center py-5 border-b border-gray-200 dark:border-news-border">
                       <span className="font-medium text-[16px] dark:text-news-text">Theme</span>
                       <MobileThemeToggle />
                     </div>
-                    <div className="flex justify-between items-center py-5 border-b border-gray-300 dark:border-news-border">
+                    <div className="flex justify-between items-center py-5 border-b border-gray-200 dark:border-news-border">
                       <span className="font-medium text-[16px] dark:text-news-text">Language</span>
                       <button 
                         onClick={toggleTranslate}

@@ -123,9 +123,9 @@ async function CategoriesSection() {
 async function BottomSlidersSection() {
   const { regionSliderItems, categorySliderItems } = await fetchBottomSlidersData();
   return (
-    <div className="max-w-350 mx-auto px-0 mb-0 mt-4 flex flex-col gap-0 shadow-sm" style={{ zoom: 1 }}>
+    <div className="w-full mx-auto px-0 mb-0 mt-1 flex flex-col gap-0" style={{ zoom: 1 }}>
       <HorizontalArticleSlider title="उत्तराखंड क्षेत्र" items={regionSliderItems} />
-      <HorizontalArticleSlider title="विश्व समाचार" items={categorySliderItems} />
+      <HorizontalArticleSlider title="विश्व समाचार" items={categorySliderItems} hideBottomBorder={true} />
     </div>
   );
 }
@@ -138,13 +138,11 @@ export default function Home() {
         <TickerSection />
       </Suspense>
 
-      <div className="max-w-425 mx-auto px-4 flex gap-6 mb-8 items-start">
+      <div className="max-w-350 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex gap-6 mb-2 items-start">
         {/* Left Sticky Ad */}
-        <div className="hidden xl:block w-40 shrink-0 sticky top-15 mt-8">
-          <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
-        </div>
+        <Advertisement slotId="fixed:vertical_left" orientation="vertical" position="left" />
 
-        <div className="flex-1 min-w-0 flex flex-col mt-8">
+        <div className="flex-1 min-w-0 flex flex-col mt-2 md:mt-8">
           <main style={{ zoom: 0.95 }}>
             <Suspense fallback={<FeaturedSkeleton />}>
               <FeaturedSection />
@@ -162,18 +160,16 @@ export default function Home() {
               <CategoriesSection />
             </Suspense>
           </div>
+
+          {/* Bottom Sliders */}
+          <Suspense fallback={<BottomSlidersSkeleton />}>
+            <BottomSlidersSection />
+          </Suspense>
         </div>
 
         {/* Right Sticky Ad */}
-        <div className="hidden xl:block w-40 shrink-0 sticky top-15 mt-8">
-          <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
-        </div>
+        <Advertisement slotId="fixed:vertical_right" orientation="vertical" position="right" />
       </div>
-
-      {/* Bottom Sliders */}
-      <Suspense fallback={<BottomSlidersSkeleton />}>
-        <BottomSlidersSection />
-      </Suspense>
     </div>
   );
 }

@@ -1,16 +1,16 @@
-# Graph Report - Bhartendu_Shikhar  (2026-09-07)
+# Graph Report - Bhartendu_Shikhar  (2026-10-02)
 
 ## Corpus Check
-- 352 files · ~108,360 words
+- 352 files · ~108,363 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1822 nodes · 4066 edges · 100 communities (85 shown, 15 thin omitted)
+- 1822 nodes · 4066 edges · 101 communities (86 shown, 15 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 20 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `20ae8fc4`
+- Built from commit: `974af87c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -93,6 +93,7 @@
 - [[_COMMUNITY_Community 82|Community 82]]
 - [[_COMMUNITY_Community 87|Community 87]]
 - [[_COMMUNITY_Community 88|Community 88]]
+- [[_COMMUNITY_Community 89|Community 89]]
 - [[_COMMUNITY_Community 91|Community 91]]
 - [[_COMMUNITY_Community 92|Community 92]]
 - [[_COMMUNITY_Community 93|Community 93]]
@@ -128,7 +129,7 @@
 - `compress_file()` --references--> `Path`  [EXTRACTED]
   D:/PROJECTS/Bharatendu_Shikhar/.agents/skills/caveman-compress/scripts/compress.py → .agents/skills/caveman-compress/scripts/compress.py
 
-## Communities (100 total, 15 thin omitted)
+## Communities (101 total, 15 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
@@ -275,16 +276,16 @@ Cohesion: 0.10
 Nodes (33): competitionSchema, createCompetitionAction(), deleteCompetitionAction(), deletePointsRowAction(), getAuth(), parseCompetitionFormData(), pointsRowSchema, slugify() (+25 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.07
-Nodes (34): getAdvertisementById(), metadata, PageProps, metadata, metadata, metadata, metadata, metadata (+26 more)
+Cohesion: 0.11
+Nodes (14): getAdvertisementById(), metadata, PageProps, metadata, metadata, BadgesPage(), metadata, PageProps (+6 more)
 
 ### Community 48 - "Community 48"
 Cohesion: 0.27
 Nodes (10): PublisherFormProps, createPublisherAction(), togglePublisherActiveAction(), updatePublisherAction(), verifyAdmin(), GetPublishersOptions, PublisherInput, PublisherRow (+2 more)
 
 ### Community 49 - "Community 49"
-Cohesion: 0.10
-Nodes (40): ArticleFiltersProps, BadgeFormProps, PRESET_COLORS, CandidatesListProps, CompetitionFormProps, ElectionFormProps, EpaperFormProps, LiveUpdatesListProps (+32 more)
+Cohesion: 0.11
+Nodes (36): ArticleFiltersProps, CandidatesListProps, CompetitionFormProps, ElectionFormProps, EpaperFormProps, LiveUpdatesListProps, MatchFormProps, MatchUpdatesList() (+28 more)
 
 ### Community 50 - "Community 50"
 Cohesion: 0.16
@@ -311,8 +312,8 @@ Cohesion: 0.06
 Nodes (67): createArticleAction(), createBadgeAction(), createCategoryAction(), createRegionAction(), deleteArticleAction(), deleteBadgeAction(), deleteCategoryAction(), deleteRegionAction() (+59 more)
 
 ### Community 57 - "Community 57"
-Cohesion: 0.24
-Nodes (9): NotFound(), metadata, PageProps, EpaperForm(), EditEpaperContent(), EditEpaperPage(), PageProps, getEpaperById() (+1 more)
+Cohesion: 0.16
+Nodes (14): NotFound(), metadata, PageProps, metadata, EpaperForm(), EditEpaperContent(), EditEpaperPage(), EditPublisherContent() (+6 more)
 
 ### Community 58 - "Community 58"
 Cohesion: 0.06
@@ -375,16 +376,16 @@ Cohesion: 0.18
 Nodes (10): 📜 Available Scripts, Bharatendu Shikhar, code:text (.), code:bash (pnpm install), code:bash (pnpm run dev), 🏃‍♂️ Getting Started, 🛠️ Prerequisites, 📁 Project Structure (+2 more)
 
 ### Community 78 - "Community 78"
-Cohesion: 0.18
-Nodes (13): CategoriesContent(), CategoriesPage(), metadata, PageProps, CategoryFilters(), CategoryFiltersProps, metadata, SettingsContent() (+5 more)
+Cohesion: 0.16
+Nodes (15): EpaperFilters(), EpaperFiltersProps, EpapersContent(), EPapersPage(), metadata, PageProps, getEpapers(), GetEpapersOptions (+7 more)
 
 ### Community 79 - "Community 79"
 Cohesion: 0.40
 Nodes (3): generateMetadata(), ArticleWithCategories, SearchPageClient()
 
 ### Community 81 - "Community 81"
-Cohesion: 0.13
-Nodes (19): metadata, metadata, metadata, metadata, BadgeFormPlaceholder(), CategoryFormPlaceholder(), EditBadgeContent(), EditBadgePage() (+11 more)
+Cohesion: 0.11
+Nodes (24): metadata, metadata, metadata, metadata, metadata, BadgeFormPlaceholder(), CategoryFormPlaceholder(), metadata (+16 more)
 
 ### Community 87 - "Community 87"
 Cohesion: 0.12
@@ -392,7 +393,11 @@ Nodes (14): geistSans, inter, playfair, plusJakarta, geistMono, geistSans, inter
 
 ### Community 88 - "Community 88"
 Cohesion: 0.07
-Nodes (38): metadata, PageProps, metadata, metadata, metadata, PageProps, EpaperFilters(), EpaperFiltersProps (+30 more)
+Nodes (36): metadata, PageProps, metadata, metadata, CategoriesContent(), CategoriesPage(), metadata, PageProps (+28 more)
+
+### Community 89 - "Community 89"
+Cohesion: 0.19
+Nodes (10): metadata, metadata, RegionFormPlaceholder(), EditRegionContent(), EditRegionPage(), EditRegionPageProps, NewEpaperContent(), NewEpaperPage() (+2 more)
 
 ### Community 91 - "Community 91"
 Cohesion: 0.22
@@ -419,8 +424,8 @@ Cohesion: 0.40
 Nodes (4): compilerOptions, allowJs, lib, strict
 
 ### Community 104 - "Community 104"
-Cohesion: 0.21
-Nodes (7): Skeleton(), BadgeRow, cn(), BadgeInsert, BadgeUpdate, BadgeMultiSelect(), BadgeMultiSelectProps
+Cohesion: 0.15
+Nodes (11): Skeleton(), BadgeRow, BadgeFormProps, PRESET_COLORS, cn(), BadgeInsert, BadgeUpdate, BadgeMultiSelect() (+3 more)
 
 ## Knowledge Gaps
 - **620 isolated node(s):** `name`, `version`, `packageManager`, `description`, `main` (+615 more)
@@ -430,11 +435,11 @@ Nodes (7): Skeleton(), BadgeRow, cn(), BadgeInsert, BadgeUpdate, BadgeMultiSelec
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createSupabaseServerClient()` connect `Community 66` to `Community 38`, `Community 46`, `Community 47`, `Community 48`, `Community 51`, `Community 52`, `Community 54`, `Community 55`, `Community 57`, `Community 61`, `Community 65`, `Community 67`, `Community 68`, `Community 69`, `Community 73`, `Community 75`, `Community 78`, `Community 81`, `Community 88`, `Community 91`, `Community 92`?**
+- **Why does `createSupabaseServerClient()` connect `Community 66` to `Community 38`, `Community 46`, `Community 48`, `Community 51`, `Community 52`, `Community 54`, `Community 55`, `Community 57`, `Community 61`, `Community 65`, `Community 67`, `Community 68`, `Community 69`, `Community 73`, `Community 75`, `Community 78`, `Community 81`, `Community 88`, `Community 89`, `Community 91`, `Community 92`?**
   _High betweenness centrality (0.074) - this node is a cross-community bridge._
-- **Why does `Skeleton()` connect `Community 64` to `Community 66`, `Community 104`, `Community 74`, `Community 76`, `Community 47`, `Community 88`, `Community 56`, `Community 91`, `Community 95`?**
+- **Why does `Skeleton()` connect `Community 64` to `Community 66`, `Community 104`, `Community 74`, `Community 76`, `Community 81`, `Community 88`, `Community 56`, `Community 91`, `Community 95`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
-- **Why does `useToast()` connect `Community 14` to `Community 66`, `Community 37`, `Community 9`, `Community 75`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 81`, `Community 51`, `Community 55`, `Community 57`, `Community 61`?**
+- **Why does `useToast()` connect `Community 14` to `Community 89`, `Community 66`, `Community 37`, `Community 104`, `Community 9`, `Community 75`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 81`, `Community 51`, `Community 55`, `Community 57`, `Community 61`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `packageManager` to the rest of the system?**
   _628 weakly-connected nodes found - possible documentation gaps or missing edges._

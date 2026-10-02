@@ -19,7 +19,7 @@ export function ExpandableSectionLayout({
   initialVisibleChunks?: number
 }) {
   const [visibleChunks, setVisibleChunks] = useState(initialVisibleChunks);
-  const CHUNK_SIZE = 8;
+  const CHUNK_SIZE = 9;
   const totalChunks = Math.ceil(articles.length / CHUNK_SIZE);
   
   const handleLoadMore = () => {
@@ -40,7 +40,7 @@ export function ExpandableSectionLayout({
         
         const isVisible = i < visibleChunks;
         
-        const leftCount = Math.max(Math.min(chunk.length, 4), chunk.length - 4);
+        const leftCount = Math.min(chunk.length, 4);
         const leftArticles = chunk.slice(0, leftCount);
         
         const rightArticles = chunk.slice(leftCount);
@@ -79,7 +79,7 @@ export function ExpandableSectionLayout({
                   )}
                 </div>
 
-                <div className="lg:col-span-4 lg:pl-5 border-t-2 lg:border-t-0 lg:border-l-2 border-gray-300 dark:border-news-border mt-6 pt-6 lg:mt-0 lg:pt-0">
+                <div className="border-t-2 lg:border-t-0 lg:col-span-4 lg:pl-5 lg:border-l-2 border-gray-300 dark:border-news-border mt-3 pt-3 lg:mt-0 lg:pt-0">
                   <RelatedArticlesList articles={rightArticles} />
                 </div>
               </div>
@@ -90,13 +90,13 @@ export function ExpandableSectionLayout({
       })}
 
       {(totalChunks > 1) && (
-        <div className="flex justify-center mt-6 mb-4 border-t-2 border-gray-300 dark:border-news-border pt-6 relative">
-          <div className="absolute -top-px left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-news-bg px-6 sm:px-8 flex gap-2 sm:gap-4 w-[95%] sm:w-auto justify-center">
+        <div className="flex justify-center mt-4 mb-1 border-t-2 border-gray-300 dark:border-news-border pt-3 relative">
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-news-bg px-4 sm:px-8 flex gap-2 sm:gap-4 w-auto justify-center">
             {visibleChunks > 1 && (
               <motion.button 
                 whileTap={{ scale: 0.97 }}
                 onClick={handleLoadLess}
-                className="whitespace-nowrap px-3 sm:px-5 py-2 border border-gray-400 dark:border-news-text-muted text-gray-600 dark:text-news-text-muted font-bold uppercase tracking-wider text-[12px] sm:text-[13px] hover:bg-gray-200 dark:hover:bg-news-card transition-colors flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
+                className="whitespace-nowrap px-4 sm:px-6 py-2 rounded-full border border-gray-400 dark:border-news-text-muted text-gray-600 dark:text-news-text-muted font-bold uppercase tracking-wider text-[12px] sm:text-[13px] hover:bg-gray-200 dark:hover:bg-news-card transition-colors flex items-center justify-center gap-1.5 flex-none"
               >
                 <ChevronUp className="w-4 h-4 shrink-0" /> कम दिखाएं
               </motion.button>
@@ -105,7 +105,7 @@ export function ExpandableSectionLayout({
               <motion.button 
                 whileTap={{ scale: 0.97 }}
                 onClick={handleLoadMore}
-                className="whitespace-nowrap px-3 sm:px-5 py-2 border border-black dark:border-news-border text-black dark:text-news-text font-bold uppercase tracking-wider text-[12px] sm:text-[13px] hover:bg-black dark:hover:bg-news-card hover:text-white dark:hover:text-news-accent transition-colors flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
+                className="whitespace-nowrap px-4 sm:px-6 py-2 rounded-full border border-black dark:border-news-border text-black dark:text-news-text font-bold uppercase tracking-wider text-[12px] sm:text-[13px] hover:bg-black dark:hover:bg-news-card hover:text-white dark:hover:text-news-accent transition-colors flex items-center justify-center gap-1.5 flex-none"
               >
                 और दिखाएं <ChevronDown className="w-4 h-4 shrink-0" />
               </motion.button>

@@ -58,10 +58,10 @@ export function Footer({
   const [showAllRegions, setShowAllRegions] = useState(false);
 
   return (
-    <footer className="w-full bg-white dark:bg-news-card text-black dark:text-news-text pb-24 lg:pb-4 mt-auto border-t-2 border-gray-200 dark:border-news-border">
-      <div className="max-w-300 mx-auto px-5 lg:px-8">
+    <footer className="w-full bg-[#E5E7EB] dark:bg-news-card text-black dark:text-news-text pb-24 lg:pb-4 mt-auto">
+      <div className="max-w-300 mx-auto px-5 lg:px-8 border-t-2 border-gray-300 dark:border-news-border">
         
-        <div className="mb-4 w-full border-b-2 border-gray-200 dark:border-news-border py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="mb-4 w-full border-b-2 border-gray-300 dark:border-news-border py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-left outline-none hover:opacity-80 transition-opacity"
@@ -108,13 +108,13 @@ export function Footer({
             
             {/* Categories */}
             {categories && categories.length > 0 && (
-              <div className="flex flex-col gap-4 md:border-r-2 border-gray-200 dark:border-news-border md:pr-8">
+              <div className="flex flex-col gap-4 md:border-r-2 border-gray-300 dark:border-news-border md:pr-8">
                 <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
 
                   श्रेणियाँ
                 </h3>
                 <div className="flex flex-col gap-3">
-                  {categories?.slice(0, 9).map((cat) => (
+                  {categories?.slice(0, 8).map((cat) => (
                     <Link key={cat.id} href={`/${cat.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
                       <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
                       <span className="group-hover:translate-x-1 transition-transform">{cat.name}</span>
@@ -128,7 +128,7 @@ export function Footer({
                         exit={{ height: 0, opacity: 0 }}
                         className="flex flex-col gap-3 overflow-hidden"
                       >
-                        {categories?.slice(9).map((cat) => (
+                        {categories?.slice(8).map((cat) => (
                           <Link key={cat.id} href={`/${cat.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
                             <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
                             <span className="group-hover:translate-x-1 transition-transform">{cat.name}</span>
@@ -137,7 +137,7 @@ export function Footer({
                       </motion.div>
                     )}
                   </AnimatePresence>
-                  {categories && categories.length > 9 && (
+                  {categories && categories.length > 8 && (
                     <button 
                       onClick={() => setShowAllCategories(!showAllCategories)}
                       className="text-[13px] font-medium text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors text-left mt-1 flex items-center gap-1"
@@ -153,13 +153,13 @@ export function Footer({
 
             {/* Regions */}
             {displayRegions && displayRegions.length > 0 && (
-              <div className="flex flex-col gap-4 md:border-r-2 border-gray-200 dark:border-news-border md:pr-8">
+              <div className="flex flex-col gap-4 md:border-r-2 border-gray-300 dark:border-news-border md:pr-8">
                 <h3 className="font-bold text-[16px] uppercase tracking-wider mb-2 flex items-center gap-2">
                   <span className="show-in-hi">क्षेत्र</span>
                   <span className="show-in-en" translate="no">Regions</span>
                 </h3>
                 <div className="flex flex-col gap-3 relative">
-                  {displayRegions?.slice(0, 9).map((reg: RegionItem) => (
+                  {displayRegions?.slice(0, 8).map((reg: RegionItem) => (
                     <div key={reg.id || reg.slug} className="group/state relative w-full sm:w-max">
                       <Link href={`/${reg.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
                         <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
@@ -192,7 +192,7 @@ export function Footer({
                         exit={{ height: 0, opacity: 0 }}
                         className="flex flex-col gap-3 overflow-hidden"
                       >
-                        {displayRegions?.slice(9).map((reg: RegionItem) => (
+                        {displayRegions?.slice(8).map((reg: RegionItem) => (
                           <div key={reg.id || reg.slug} className="group/state relative w-full sm:w-max">
                             <Link href={`/${reg.slug}`} className="group flex items-center text-[14px] text-gray-600 dark:text-news-text-secondary hover:text-red-600 dark:hover:text-red-500 transition-all capitalize">
                               <ChevronRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-red-600 mr-1" />
@@ -220,7 +220,7 @@ export function Footer({
                       </motion.div>
                     )}
                   </AnimatePresence>
-                  {displayRegions && displayRegions.length > 9 && (
+                  {displayRegions && displayRegions.length > 8 && (
                     <button 
                       onClick={() => setShowAllRegions(!showAllRegions)}
                       className="text-[13px] font-medium text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors text-left mt-1 flex items-center gap-1"
@@ -276,31 +276,33 @@ export function Footer({
           </div>
 
           {/* Right Sidebar - Account & Follow Us */}
-          <div className="flex flex-col lg:border-l-2 border-gray-200 dark:border-news-border lg:pl-10">
+          <div className="flex flex-col lg:border-l-2 border-gray-300 dark:border-news-border lg:pl-10">
             
             {/* Contact */}
             <div className="mb-10">
               <h3 className="font-bold text-[16px] uppercase tracking-wider mb-5 flex items-center gap-2">
-                संपर्क करें
+                <Link href="/contact" className="hover:text-red-600 transition-colors">
+                  संपर्क करें
+                </Link>
               </h3>
               <div className="flex flex-col gap-4 text-[14px] text-gray-600 dark:text-news-text-secondary">
                 {settings?.contact_email && (
-                  <div className="flex items-start gap-3 group">
+                  <Link href="/contact" className="flex items-start gap-3 group">
                     <Mail size={18} className="mt-0.5 text-gray-400 group-hover:text-red-600 transition-colors shrink-0" />
                     <span className="group-hover:text-black dark:group-hover:text-white transition-colors">{settings.contact_email}</span>
-                  </div>
+                  </Link>
                 )}
                 {settings?.contact_phone && (
-                  <div className="flex items-start gap-3 group">
+                  <Link href="/contact" className="flex items-start gap-3 group">
                     <Phone size={18} className="mt-0.5 text-gray-400 group-hover:text-red-600 transition-colors shrink-0" />
                     <span className="group-hover:text-black dark:group-hover:text-white transition-colors">{settings.contact_phone}</span>
-                  </div>
+                  </Link>
                 )}
                 {settings?.contact_address && (
-                  <div className="flex items-start gap-3 group">
+                  <Link href="/contact" className="flex items-start gap-3 group">
                     <MapPin size={18} className="mt-0.5 text-gray-400 group-hover:text-red-600 transition-colors shrink-0" />
                     <span className="group-hover:text-black dark:group-hover:text-white transition-colors leading-relaxed">{settings.contact_address}</span>
-                  </div>
+                  </Link>
                 )}
               </div>
             </div>
@@ -343,7 +345,7 @@ export function Footer({
         </div>
 
         {/* Bottom Border */}
-        <div className="h-0.5 w-full bg-gray-200 dark:bg-news-border my-6"></div>
+        <div className="h-0.5 w-full bg-gray-300 dark:bg-news-border my-6"></div>
 
         {/* Bottom Content */}
         <div className="flex flex-col xl:flex-row justify-between items-center xl:items-start gap-6 w-full">

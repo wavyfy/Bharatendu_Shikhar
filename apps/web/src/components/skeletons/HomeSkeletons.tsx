@@ -2,8 +2,8 @@ import { Skeleton } from "@/components/ui/Skeleton";
 
 export function TickerSkeleton() {
   return (
-    <div className="sticky top-0 z-50 w-full bg-news-bg dark:bg-news-bg py-2 mb-8 shadow-sm animate-in fade-in duration-300">
-      <div className="max-w-[1400px] mx-auto px-4">
+    <div className="sticky top-0 z-50 w-full bg-news-bg dark:bg-news-bg py-2 mb-8 animate-in fade-in duration-300">
+      <div className="max-w-350 mx-auto px-4">
         <div className="flex items-stretch text-xs">
           <div className="bg-gray-200 dark:bg-news-card text-transparent font-bold px-4 py-2 uppercase tracking-wide z-10 shadow-[2px_0_5px_rgba(0,0,0,0.2)]">
              <Skeleton className="h-4 w-24 rounded-none" />
@@ -29,7 +29,7 @@ export function FeaturedSkeleton() {
            <Skeleton className="h-8 md:h-10 w-3/4 mb-4" />
            <Skeleton className="h-4 w-1/2 mb-8" />
            
-           <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-4"></div>
+           <div className="h-0.5 w-full bg-gray-300 dark:bg-news-border my-4"></div>
            
            {/* Split Articles */}
            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -68,7 +68,7 @@ export function CategorySectionsSkeleton() {
       {[1, 2].map((section) => (
         <div key={section} className="flex flex-col w-full mb-12">
           {/* Category Header Skeleton */}
-          <div className="flex items-center gap-4 mb-6 border-b-2 border-black dark:border-white pb-2">
+          <div className="flex items-center gap-4 mb-6 border-b-2 border-gray-300 dark:border-news-border pb-2">
             <Skeleton className="h-8 w-48 rounded-none" />
           </div>
           
@@ -79,7 +79,7 @@ export function CategorySectionsSkeleton() {
                <Skeleton className="h-8 md:h-10 w-full mb-2" />
                <Skeleton className="h-8 md:h-10 w-3/4 mb-4" />
                
-               <div className="h-[2px] w-full bg-gray-300 dark:bg-news-border my-4"></div>
+               <div className="h-0.5 w-full bg-gray-300 dark:bg-news-border my-4"></div>
                
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {[1, 2].map((i) => (
@@ -113,13 +113,13 @@ export function CategorySectionsSkeleton() {
 
 export function BottomSlidersSkeleton() {
   return (
-    <div className="max-w-[1400px] mx-auto px-0 mb-0 mt-4 flex flex-col gap-0 shadow-sm animate-in fade-in duration-300" style={{ zoom: 1 }}>
-      {[1, 2].map((slider) => (
-        <div key={slider} className="py-8 border-b-2 border-gray-300 dark:border-news-border">
-          <Skeleton className="h-6 w-64 rounded-none mb-4" />
+    <div className="w-full mx-auto px-0 mb-0 mt-1 flex flex-col gap-0 shadow-sm animate-in fade-in duration-300" style={{ zoom: 1 }}>
+      {[1, 2].map((slider, idx) => (
+        <div key={slider} className={`pt-3 pb-3 mx-4 ${idx === 1 ? '' : 'border-b-2 border-gray-300 dark:border-news-border'}`}>
+          <Skeleton className="h-6 w-44 rounded-none mb-4" />
           <div className="flex gap-6 overflow-hidden pb-4">
-            {[1, 2, 3, 4, 5, 6].map((card) => (
-              <div key={card} className="w-[220px] shrink-0">
+            {[1, 2, 3, 4, 5].map((card) => (
+              <div key={card} className="w-55 shrink-0">
                 <Skeleton className="h-4 w-24 rounded-none mb-2" />
                 <Skeleton className="w-full aspect-4/3 rounded-none mb-3" />
                 <Skeleton className="h-4 w-full rounded-none mb-1" />
