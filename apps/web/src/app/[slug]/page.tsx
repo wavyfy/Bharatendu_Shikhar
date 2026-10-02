@@ -141,7 +141,7 @@ async function CategoryContent({ paramsPromise }: { paramsPromise: Promise<{ slu
   const displayDescription = seoDescription || fallbackDescription;
 
   return (
-    <div className="flex-1 min-w-0 flex flex-col mt-5 animate-in fade-in duration-300">
+    <div className="flex-1 min-w-0 flex flex-col mt-2 md:mt-5 animate-in fade-in duration-300">
       <CollectionPageAndItemListSchema
         pageTitle={pageTitle}
         displayDescription={displayDescription}
@@ -191,20 +191,16 @@ export default function DynamicRoutePage({
         <TickerSection />
       </Suspense>
 
-      <div className="max-w-425 mx-auto px-4 flex gap-6 mb-20 items-start">
+      <div className="max-w-350 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex gap-6 mb-20 items-start">
         {/* Left Sticky Ad */}
-        <div className="hidden xl:block w-40 shrink-0 sticky top-4 mt-8">
-          <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
-        </div>
+        <Advertisement slotId="fixed:vertical_left" orientation="vertical" position="left" stickyTop="top-4" />
 
         <Suspense fallback={<CategoryPageSkeleton />}>
           <CategoryContent paramsPromise={params} />
         </Suspense>
 
         {/* Right Sticky Ad */}
-        <div className="hidden xl:block w-40 shrink-0 sticky top-4 mt-8">
-          <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
-        </div>
+        <Advertisement slotId="fixed:vertical_right" orientation="vertical" position="right" stickyTop="top-4" />
       </div>
     </div>
   );

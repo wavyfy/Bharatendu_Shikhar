@@ -118,7 +118,9 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${geistMono.variable} ${newsreader.variable} ${devanagari.variable} h-full antialiased`}
     >
-      <GoogleTagManagerScript />
+      <head>
+        <GoogleTagManagerScript />
+      </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col bg-news-bg text-news-text dark:bg-news-bg dark:text-news-text">
         <GoogleTagManagerNoScript />
         <CommonListener 

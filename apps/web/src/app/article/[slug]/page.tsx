@@ -247,7 +247,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
 
           {/* Live Timeline (Only for LIVE articles) */}
           {article.is_live && article.article_live_updates && article.article_live_updates.length > 0 && (
-            <div className="mt-8 border-t-2 border-gray-300 dark:border-gray-800 pt-8">
+            <div className="mt-8 border-t-2 border-gray-300 dark:border-news-border pt-8">
               <LiveTimeline updates={article.article_live_updates} />
             </div>
           )}
@@ -255,7 +255,7 @@ async function ArticleContent({ paramsPromise }: { paramsPromise: Promise<{ slug
 
         {/* Related News Sidebar */}
         {relatedArticles.length > 0 && (
-          <div className="lg:col-span-4 lg:pl-5 border-t-2 lg:border-t-0 lg:border-l-2 border-gray-300 dark:border-news-border mt-4 pt-4 lg:mt-0 lg:pt-0">
+          <div className="border-t-2 lg:border-t-0 lg:col-span-4 lg:pl-5 lg:border-l-2 border-gray-300 dark:border-news-border mt-3 pt-3 lg:mt-0 lg:pt-0">
             <div className="sticky top-4 overflow-y-auto max-h-[calc(100vh-2rem)] pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
               <RelatedArticlesList articles={relatedArticles as unknown as ArticleWithAuthor[]} />
             </div>
@@ -301,7 +301,7 @@ async function RelatedSection({ paramsPromise }: { paramsPromise: Promise<{ slug
   }
 
   return (
-    <div className="max-w-350 mx-auto px-4 pb-4 w-full animate-in fade-in duration-300">
+    <div className="w-full pb-4 animate-in fade-in duration-300">
       <DoubleRowRelatedSlider
         topTitle={article.categories?.name || "Topic"}
         topItems={categorySliderItems}
@@ -323,26 +323,24 @@ export default function ArticlePage({
       <Suspense fallback={<TickerSkeleton />}>
         <TickerSection />
       </Suspense>
-      <main className="max-w-425 mx-auto px-4 flex justify-between gap-4 mb-2 items-start mt-4 w-full">
+      <main className="max-w-350 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex justify-between gap-6 mb-2 items-start mt-2 md:mt-4 w-full">
         {/* Left Sticky Ad */}
-        <div className="hidden xl:block w-40 shrink-0 sticky top-4">
-          <Advertisement slotId="fixed:vertical_left" orientation="vertical" />
-        </div>
+        <Advertisement slotId="fixed:vertical_left" orientation="vertical" position="left" stickyTop="top-4" />
 
-        <Suspense fallback={<ArticleSkeleton />}>
-          <ArticleContent paramsPromise={params} />
-        </Suspense>
+        <div className="flex-1 min-w-0 flex flex-col">
+          <Suspense fallback={<ArticleSkeleton />}>
+            <ArticleContent paramsPromise={params} />
+          </Suspense>
+
+          {/* Related Article Sliders Section */}
+          <Suspense fallback={<RelatedArticlesSkeleton />}>
+            <RelatedSection paramsPromise={params} />
+          </Suspense>
+        </div>
 
         {/* Right Sticky Ad */}
-        <div className="hidden xl:block w-40 shrink-0 sticky top-4">
-          <Advertisement slotId="fixed:vertical_right" orientation="vertical" />
-        </div>
+        <Advertisement slotId="fixed:vertical_right" orientation="vertical" position="right" stickyTop="top-4" />
       </main>
-
-      {/* Related Article Sliders Section */}
-      <Suspense fallback={<RelatedArticlesSkeleton />}>
-        <RelatedSection paramsPromise={params} />
-      </Suspense>
     </div>
   );
 }

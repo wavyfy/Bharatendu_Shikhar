@@ -40,7 +40,13 @@ export function ArticleMeta({ article, isArticlePage, alignRight }: { article: A
       )}
       
       <div className="flex items-center gap-2 shrink-0">
-        <span>{dateStr}</span>
+        {isArticlePage && (
+          <>
+            <span>प्रकाशक: भारतेन्दु शिखर</span>
+            <span className="text-gray-300 dark:text-news-border">&bull;</span>
+          </>
+        )}
+        <span suppressHydrationWarning>{dateStr}</span>
         <span className="text-gray-300 dark:text-news-border">&bull;</span>
         <span>{readTime}</span>
       </div>

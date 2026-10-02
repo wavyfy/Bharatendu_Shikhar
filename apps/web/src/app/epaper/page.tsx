@@ -43,7 +43,7 @@ async function EpaperContent({ page }: { page: number }) {
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
-  const { data: settings } = await supabase.from("settings").select("site_logo_url, site_logo_dark_url").eq("id", 1).single();
+  const settings = await fetchSettings();
   const now = new Date().toISOString();
   const { data: epapers, count } = await supabase
     .from("epapers")
@@ -64,9 +64,9 @@ async function EpaperContent({ page }: { page: number }) {
               href={getImageUrl(paper.pdf_url) || "#"} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group bg-white dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:shadow-lg hover:translate-y-0.5 transition-all duration-300 rounded-xl overflow-hidden flex flex-col"
+              className="group bg-[#E5E7EB] dark:bg-news-card border border-gray-200 dark:border-news-border shadow-sm hover:shadow-lg hover:translate-y-0.5 transition-all duration-300 rounded-xl overflow-hidden flex flex-col"
             >
-              <div className="relative w-full aspect-video bg-gray-100 dark:bg-news-card overflow-hidden border-b border-gray-200 dark:border-news-border">
+              <div className="relative w-full aspect-video bg-[#E5E7EB] dark:bg-news-card overflow-hidden border-b border-gray-200 dark:border-news-border">
                 {paper.thumbnail_url ? (
                   <div className="relative w-full h-full">
                     <SafeImage
@@ -78,7 +78,7 @@ async function EpaperContent({ page }: { page: number }) {
                     <div className="absolute inset-0 z-10 border border-gray-200 dark:border-news-border rounded-t-xl pointer-events-none" />
                   </div>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-news-card p-8">
+                  <div className="w-full h-full flex items-center justify-center bg-[#E5E7EB] dark:bg-news-card p-8">
                     {settings?.site_logo_url || settings?.site_logo_dark_url ? (
                       <>
                         {settings?.site_logo_url && (

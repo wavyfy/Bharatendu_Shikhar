@@ -5,8 +5,8 @@ export function Ticker({ articles = [] }: { articles?: ArticleWithAuthor[] }) {
   const displayArticles = articles.slice(0, 10);
 
   return (
-    <div className="sticky top-0 z-50 w-full bg-news-bg dark:bg-news-bg py-2 mb-0 shadow-sm">
-      <div className="max-w-[1400px] mx-auto px-4">
+    <div className="sticky top-0 z-50 w-full bg-news-bg dark:bg-news-bg py-2 mb-0">
+      <div className="max-w-350 mx-auto px-4">
         <div className="flex items-stretch text-xs">
         <div className="bg-red-600 text-white font-bold px-4 py-2.5 uppercase tracking-wide z-10 shadow-[2px_0_5px_rgba(0,0,0,0.2)]">
           ब्रेकिंग न्यूज़
@@ -17,7 +17,7 @@ export function Ticker({ articles = [] }: { articles?: ArticleWithAuthor[] }) {
               {displayArticles.length > 0 ? (
                 displayArticles.map((art, idx) => (
                   <Link href={`/article/${art.slug}`} key={idx} className="flex items-center gap-3 hover:text-gray-200 transition-colors">
-                    <span className="flex items-center justify-center bg-white text-red-600 rounded-full w-[18px] h-[18px] text-[10px] font-bold shrink-0">{idx + 1}</span>
+                    <span className="flex items-center justify-center bg-white text-red-600 rounded-full w-4.5 h-4.5 text-[10px] font-bold shrink-0">{idx + 1}</span>
                     <span className="font-medium text-[13px] whitespace-nowrap">{art.title}</span>
                   </Link>
                 ))
@@ -29,7 +29,7 @@ export function Ticker({ articles = [] }: { articles?: ArticleWithAuthor[] }) {
               {displayArticles.length > 0 ? (
                 displayArticles.map((art, idx) => (
                   <Link href={`/article/${art.slug}`} key={idx} className="flex items-center gap-3 hover:text-gray-200 transition-colors">
-                    <span className="flex items-center justify-center bg-white text-red-600 rounded-full w-[18px] h-[18px] text-[10px] font-bold shrink-0">{idx + 1}</span>
+                    <span className="flex items-center justify-center bg-white text-red-600 rounded-full w-4.5 h-4.5 text-[10px] font-bold shrink-0">{idx + 1}</span>
                     <span className="font-medium text-[13px] whitespace-nowrap">{art.title}</span>
                   </Link>
                 ))

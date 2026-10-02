@@ -4,7 +4,7 @@ import { FeaturedSkeleton, CategorySectionsSkeleton } from "@/components/skeleto
 export function CategoryPageSkeleton() {
   return (
     <div className="flex-1 min-w-0 flex flex-col animate-in fade-in duration-300 mt-8">
-      <div className="py-6 mb-2 border-b-2 border-gray-200 dark:border-gray-800">
+      <div className="py-6 mb-2 border-b-2 border-gray-300 dark:border-news-border">
         <Skeleton className="h-10 w-64 rounded-none" />
       </div>
       <main className="mt-6">

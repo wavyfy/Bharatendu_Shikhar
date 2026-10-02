@@ -6,7 +6,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export function TopBar() {
   return (
-    <div className="hidden lg:block pt-2 px-4 w-full max-w-[1400px] mx-auto text-sm">
+    <div className="hidden lg:block pt-2 px-4 w-full max-w-350 mx-auto text-sm">
       <div className="flex justify-between items-center">
         <div className="flex gap-3">
           <GoogleTranslateButton />

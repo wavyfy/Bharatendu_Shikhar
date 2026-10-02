@@ -19,8 +19,8 @@ export function FeatureArticle({ article }: { article?: ArticleWithAuthor }) {
           <h2 className="text-[23px] lg:text-[35px] font-medium mb-4 line-clamp-4 leading-normal max-h-[5.75em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
             {article.title}
           </h2>
-        <p className="text-gray-600 dark:text-news-text-secondary text-[15px] leading-normal mb-4 line-clamp-5 max-h-[7.25em] overflow-hidden">
-          {article.excerpt || article.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."}
+        <p className="text-gray-600 dark:text-news-text-secondary text-[17px] leading-relaxed mb-4 line-clamp-3 max-h-[4.8em] overflow-hidden">
+          {article.excerpt || article.content.replace(/<[^>]+>/g, '').substring(0, 170) + "..."}
         </p>
         <div className="mt-auto">
           <ArticleMeta article={article} />
@@ -28,13 +28,13 @@ export function FeatureArticle({ article }: { article?: ArticleWithAuthor }) {
       </div>
       {article.featured_image && (
         <div className="order-1 lg:order-2 lg:col-span-6 flex flex-col h-full">
-          <div className="relative w-full aspect-4/3 bg-gray-100 dark:bg-news-card mb-2">
+          <div className="relative w-full aspect-16/11 bg-gray-100 dark:bg-news-card mb-2">
             <Image
               src={getImageUrl(article.featured_image)}
               alt={article.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 ease-out"
+              className="object-cover object-top transition-transform duration-500 ease-out"
               priority
             />
           </div>

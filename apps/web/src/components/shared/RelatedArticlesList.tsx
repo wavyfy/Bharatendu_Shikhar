@@ -35,7 +35,7 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
 
   return (
     <div className="flex flex-col">
-      <h2 className="font-medium text-[19px] text-black dark:text-news-text mb-6 text-center border-b-2 border-gray-300 dark:border-news-border pb-2">संबंधित खबरें</h2>
+      <h2 className="hidden lg:block font-medium text-[19px] text-black dark:text-news-text mb-6 text-center border-b-2 border-gray-300 dark:border-news-border pb-2">संबंधित खबरें</h2>
       <div 
         ref={scrollRef}
         onScroll={handleScroll}
@@ -82,7 +82,7 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
       
       {/* Slider Dots (Mobile Only) */}
       {articles.length > 1 && (
-        <div className="flex justify-center gap-2 mt-6 mb-6 lg:mb-0 lg:hidden">
+        <div className="flex justify-center gap-2 mt-3 mb-2 lg:mb-0 lg:hidden">
           {articles.map((_, idx) => (
             <div
               key={idx}

@@ -60,10 +60,10 @@ export function LegalDialog({ title, field, children }: LegalDialogProps) {
           {/* Dialog Box */}
           <motion.div 
             className="relative w-full max-w-4xl bg-white dark:bg-news-card rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] border border-gray-100 dark:border-news-border"
-            initial={{ scale: 0.96, opacity: 0, y: 15 }}
+            initial={{ scale: 0.96, opacity: 0, y: 30 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.96, opacity: 0, y: 15 }}
-            transition={{ type: "spring", damping: 25, stiffness: 350 }}
+            exit={{ scale: 0.96, opacity: 0, y: 30 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Header */}
             <div className="px-6 py-5 border-b border-gray-200 dark:border-news-border flex justify-between items-center bg-gray-50 dark:bg-news-bg/50">

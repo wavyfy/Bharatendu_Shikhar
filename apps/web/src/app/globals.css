@@ -4,9 +4,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
+  --background: #F8F9FA;
   --foreground: #000000;
-  --news-bg: #ffffff;
+  --news-bg: #F8F9FA;
   --news-card: #f3f4f6;
   --news-border: #d1d5db;
   --news-text: #000000;
@@ -47,6 +47,22 @@
   --font-sans: var(--font-inter), var(--font-devanagari), sans-serif;
   --font-serif: var(--font-newsreader), var(--font-devanagari), serif;
   --font-mono: var(--font-geist-mono);
+}
+
+/* Hide scrollbars globally */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+html,
+body,
+* {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
 body {
