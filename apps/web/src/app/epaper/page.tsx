@@ -1,11 +1,10 @@
 import { Suspense } from "react";
-import { supabase } from "@repo/api";
 import { SafeImage } from "@/components/shared/SafeImage";
 import { FileText } from "lucide-react";
 import Link from "next/link";
 import { EpaperSkeleton } from "@/components/skeletons/EpaperSkeletons";
 import type { Metadata } from "next";
-import { fetchSettings } from "@/utils/fetchData";
+import { fetchSettings, fetchEpapers } from "@/utils/fetchData";
 import { getSiteUrl } from "@/utils/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -39,18 +38,8 @@ function getImageUrl(path: string | null): string | null {
 }
 
 async function EpaperContent({ page }: { page: number }) {
-  const limit = 20;
-  const from = (page - 1) * limit;
-  const to = from + limit - 1;
-
   const settings = await fetchSettings();
-  const now = new Date().toISOString();
-  const { data: epapers, count } = await supabase
-    .from("epapers")
-    .select("*, regions(name)", { count: 'exact' })
-    .lte("published_at", now)
-    .order("published_at", { ascending: false })
-    .range(from, to);
+  const { epapers, count, limit } = await fetchEpapers(page);
 
   const totalPages = count ? Math.ceil(count / limit) : 0;
 

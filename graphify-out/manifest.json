@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\admin\\src\\features\\advertisements\\actions.ts": {
-    "mtime": 1783702909.4724183,
-    "ast_hash": "836bd3cda03423991280b4ebc6df4379",
+    "mtime": 1791212242.6365104,
+    "ast_hash": "b1882f9a5953ed5fcf67d0e25fc9f4bf",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\admin\\src\\features\\advertisements\\queries.ts": {
@@ -625,8 +625,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\admin\\src\\features\\epapers\\actions.ts": {
-    "mtime": 1788692406.901992,
-    "ast_hash": "46440270b3d0be9b1af4ce2ba339442a",
+    "mtime": 1791212278.626851,
+    "ast_hash": "5ae69b03177d7321c709b9c753461e69",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\admin\\src\\features\\epapers\\components\\EpaperForm.tsx": {
@@ -765,8 +765,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\next-env.d.ts": {
-    "mtime": 1790945091.5035243,
-    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
+    "mtime": 1790966551.0515163,
+    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\next.config.ts": {
@@ -805,13 +805,13 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\page.tsx": {
-    "mtime": 1790948924.4782693,
-    "ast_hash": "3ee265d269699308a8fe11ff5e9e2de2",
+    "mtime": 1790960158.8385968,
+    "ast_hash": "b9ac10c0e739670d1033dfbf31c9a3d0",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\template.tsx": {
-    "mtime": 1782227842.7080393,
-    "ast_hash": "afd464ae9c61b577e209dcfd341e10a5",
+    "mtime": 1790964253.1206846,
+    "ast_hash": "f300fb97e2ace6856e765621e0d838a2",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\api\\revalidate\\route.ts": {
@@ -820,8 +820,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\article\\[slug]\\page.tsx": {
-    "mtime": 1790948627.0597415,
-    "ast_hash": "ab342590b78cc2edcef1c70dba62d725",
+    "mtime": 1790960038.0064988,
+    "ast_hash": "1904e34fb738f832105f612ccf4c6a96",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\elections\\page.tsx": {
@@ -840,13 +840,13 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\epaper\\page.tsx": {
-    "mtime": 1788687387.1907787,
-    "ast_hash": "9273974ee46600b8de21162f54d9d37c",
+    "mtime": 1791212192.877706,
+    "ast_hash": "4aa7168e41d3378a3f9b26bd92e82049",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\[slug]\\page.tsx": {
-    "mtime": 1790947848.0623248,
-    "ast_hash": "25813a242661530c20afd0cb7e0c1b39",
+    "mtime": 1790960018.9382179,
+    "ast_hash": "09f4f8cdb52c5ff623915da48102820f",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\ThemeProvider.tsx": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\article\\DoubleRowRelatedSlider.tsx": {
-    "mtime": 1788690332.3847764,
-    "ast_hash": "4f547c785e0f615cdd6fae7bfc0ada39",
+    "mtime": 1790967139.5899901,
+    "ast_hash": "5bf3a84f83a8e99c8634b222112a0917",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\article\\LiveTimeline.tsx": {
@@ -865,23 +865,23 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\home\\ExpandableSectionLayout.tsx": {
-    "mtime": 1790948896.4656353,
-    "ast_hash": "31d01be24f41b7e627479dc8f7a55845",
+    "mtime": 1790962016.5251083,
+    "ast_hash": "b596486e6005e24f533af89580f66d77",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\home\\FeatureArticle.tsx": {
-    "mtime": 1788690520.752243,
-    "ast_hash": "f7b263bfe444e4dcbcfa55ccd6d9b19a",
+    "mtime": 1790957832.4889357,
+    "ast_hash": "9b8791de400c9b926a9017cbe70bbea1",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\home\\HorizontalArticleSlider.tsx": {
-    "mtime": 1790948796.7261949,
-    "ast_hash": "4795c5540edf1ced937c095c989f532a",
+    "mtime": 1790967407.0881648,
+    "ast_hash": "29813bc15f71c81541c60ef5eb2603e9",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\home\\SecondaryFeatureArticle.tsx": {
-    "mtime": 1786034973.423203,
-    "ast_hash": "def6eacd444cb1c3c2c9040886cb7d1e",
+    "mtime": 1790958873.2535405,
+    "ast_hash": "52a6b51c8dbf1f20a09f17afbfac271b",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\home\\SplitArticles.tsx": {
@@ -890,8 +890,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\home\\Ticker.tsx": {
-    "mtime": 1782281150.551095,
-    "ast_hash": "387d08329379db58af1cece3210fb243",
+    "mtime": 1790954169.2972417,
+    "ast_hash": "609db1620443ce9c3352fa5cdd52bb83",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\home\\TopicSection.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\layout\\Footer.tsx": {
-    "mtime": 1790949355.9750237,
-    "ast_hash": "2df12ef199f534c0180c15521d1b8510",
+    "mtime": 1790962374.4160275,
+    "ast_hash": "72ed15bbb4e8285dfb108cde9f172549",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\layout\\GoogleTranslate.tsx": {
@@ -915,7 +915,7 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\layout\\Header.tsx": {
-    "mtime": 1788691565.045473,
+    "mtime": 1790953072.0145998,
     "ast_hash": "be9033872f67064a61b3a6ead6085b13",
     "semantic_hash": ""
   },
@@ -925,8 +925,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\layout\\Navbar.tsx": {
-    "mtime": 1788690357.584425,
-    "ast_hash": "07d90d5358b25fb2a2aa484d1a72796c",
+    "mtime": 1790961607.4483898,
+    "ast_hash": "00044030c7833ad1fe43787f241f2376",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\layout\\ThemeToggle.tsx": {
@@ -935,13 +935,13 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\layout\\TopBar.tsx": {
-    "mtime": 1782281582.5531034,
-    "ast_hash": "5224488c170a7ac695ce4fef10f27018",
+    "mtime": 1790953117.642236,
+    "ast_hash": "a85430d7e37752804c3445eeff1ee801",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\Advertisement.tsx": {
-    "mtime": 1790947794.8433561,
-    "ast_hash": "f5e96fde95769ed3f117e8e46187cbfb",
+    "mtime": 1790954440.3690808,
+    "ast_hash": "ad7940ee8d8a5510505a91f79745ad28",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\ArticleMeta.tsx": {
@@ -950,8 +950,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\BackToTop.tsx": {
-    "mtime": 1781469659.6361587,
-    "ast_hash": "bf719c66ef8778ff6e822f19678b3f1a",
+    "mtime": 1790959290.3728025,
+    "ast_hash": "0df289167b2b44973911382373e12fc4",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\CategoryHeader.tsx": {
@@ -960,13 +960,13 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\CommonListener.tsx": {
-    "mtime": 1781549970.3501441,
-    "ast_hash": "c8aa1df044f941db3a47b4938771ad71",
+    "mtime": 1790967564.2898242,
+    "ast_hash": "af0608cc47e206bd9a85d506e09257f2",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\FloatingNav.tsx": {
-    "mtime": 1784566557.2483892,
-    "ast_hash": "8034aa5bfd86326c7220268f40cf75f9",
+    "mtime": 1790961333.1751053,
+    "ast_hash": "1d53ac47bc27e5a3bbbba9306aea8796",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\MaintenanceScreen.tsx": {
@@ -995,18 +995,18 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\SectionLayout.tsx": {
-    "mtime": 1781253274.8986516,
-    "ast_hash": "8790dacd63c7b0189a2d803abcbe0b09",
+    "mtime": 1790954572.6010394,
+    "ast_hash": "be0d87bed567def6442fe3e422cbcd2c",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\skeletons\\ArticleSkeletons.tsx": {
-    "mtime": 1781463189.4240165,
-    "ast_hash": "3bd9d43195efd2a4f4931905053cefc5",
+    "mtime": 1790954598.828809,
+    "ast_hash": "297cf6528e92b75d24bf460b7011226f",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\skeletons\\CategorySkeletons.tsx": {
-    "mtime": 1781445593.9883356,
-    "ast_hash": "d5fc92a21d2a3d5410181448aa0faf69",
+    "mtime": 1790954611.0669942,
+    "ast_hash": "58ca63e5ddadcd2da36fc39e5e0fa264",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\skeletons\\EpaperSkeletons.tsx": {
@@ -1015,8 +1015,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\skeletons\\HomeSkeletons.tsx": {
-    "mtime": 1781450690.6087022,
-    "ast_hash": "1b19f86ace0dbf42a78033d5d8016ee4",
+    "mtime": 1790954586.1642394,
+    "ast_hash": "d36f9f58c6d558c81fb1f5f3b778e65d",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\ui\\Skeleton.tsx": {
@@ -1030,13 +1030,13 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\utils\\fetchAdvertisements.ts": {
-    "mtime": 1781549858.5603774,
-    "ast_hash": "be031c85bc0c1d4fb0a1a10c12a6a50d",
+    "mtime": 1791212022.319394,
+    "ast_hash": "7beda59a074dafa123f417c3c49bfb2b",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\utils\\fetchData.ts": {
-    "mtime": 1788690513.231515,
-    "ast_hash": "37c103f8a4d4e068e879525e93927983",
+    "mtime": 1791213921.3317542,
+    "ast_hash": "15e49677bc6005d9ebca135c8b1a8587",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\utils\\fetchElections.ts": {
@@ -1270,8 +1270,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\contact\\page.tsx": {
-    "mtime": 1788690987.2095442,
-    "ast_hash": "10313b25713c82466719bdd8a77d5b03",
+    "mtime": 1790964598.2932937,
+    "ast_hash": "3cdcc0a8e37bba0d0031bafbb65bc758",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\correction-policy\\page.tsx": {
@@ -1340,13 +1340,13 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\LegalDialog.tsx": {
-    "mtime": 1782276418.7329135,
-    "ast_hash": "9d5feba1f278bb25c0a12a1d653e9935",
+    "mtime": 1790964287.1027727,
+    "ast_hash": "5fdc8f08795d01accd510d5e12f1fa31",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\shared\\LegalPage.tsx": {
-    "mtime": 1788687344.4321852,
-    "ast_hash": "b31560586690d8b6038f7b17c0934926",
+    "mtime": 1790964584.542187,
+    "ast_hash": "6b1c8a75c2d175391b8cb281e98c953b",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\components\\skeletons\\ElectionSkeletons.tsx": {
@@ -1620,8 +1620,8 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\utils\\fetchSports.ts": {
-    "mtime": 1783941886.5796144,
-    "ast_hash": "ff15e6c858512561522495aeabaf3c6a",
+    "mtime": 1791213940.8051007,
+    "ast_hash": "e65e37e3291d9832131944b93237b397",
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\supabase\\migrations\\20260706000000_sports_module.sql": {
@@ -1750,7 +1750,7 @@
     "semantic_hash": ""
   },
   "D:\\PROJECTS\\Bhartendu_Shikhar\\apps\\web\\src\\app\\search\\page.tsx": {
-    "mtime": 1788692026.3150723,
+    "mtime": 1790963686.157326,
     "ast_hash": "e29d213cc9df2fdbf948e2696189ebb2",
     "semantic_hash": ""
   },

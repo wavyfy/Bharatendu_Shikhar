@@ -1,22 +1,15 @@
-import { createSupabaseServerClient } from "@repo/api";
-import { cookies } from "next/headers";
+import { cache } from "react";
+import { unstable_cache } from "next/cache";
+import { supabase } from "@repo/api";
 
-async function getClient() {
-  const cookieStore = await cookies();
-  return createSupabaseServerClient({
-    get: (name) => cookieStore.get(name)?.value,
-    set: () => {},
-    remove: () => {},
-  });
-}
+const IS_DEV = process.env.NODE_ENV === "development";
 
-export async function getPublishedCompetitions(options: {
+async function _getPublishedCompetitions(options: {
   sport?: string;
   status?: string;
   limit?: number;
 } = {}) {
   const { sport, status, limit = 20 } = options;
-  const supabase = await getClient();
 
   let query = (supabase as any) /* eslint-disable-line @typescript-eslint/no-explicit-any */
     .from("sports_competitions")
@@ -37,9 +30,20 @@ export async function getPublishedCompetitions(options: {
   return data as any[];
 }
 
-export async function getCompetitionBySlug(slug: string) {
-  const supabase = await getClient();
+export const getPublishedCompetitions = cache((options: {
+  sport?: string;
+  status?: string;
+  limit?: number;
+} = {}) => {
+  if (IS_DEV) return _getPublishedCompetitions(options);
+  const key = `getPublishedCompetitions-${options.sport || ""}-${options.status || ""}-${options.limit || 20}`;
+  return unstable_cache(() => _getPublishedCompetitions(options), [key], {
+    tags: ["sports"],
+    revalidate: 60,
+  })();
+});
 
+async function _getCompetitionBySlug(slug: string) {
   const { data: competition, error } = await (supabase as any) /* eslint-disable-line @typescript-eslint/no-explicit-any */
     .from("sports_competitions")
     .select("*")
@@ -76,8 +80,15 @@ export async function getCompetitionBySlug(slug: string) {
   };
 }
 
-export async function getPointsTableByCompetitionId(competitionId: string) {
-  const supabase = await getClient();
+export const getCompetitionBySlug = cache((slug: string) => {
+  if (IS_DEV) return _getCompetitionBySlug(slug);
+  return unstable_cache(() => _getCompetitionBySlug(slug), [`getCompetitionBySlug-${slug}`], {
+    tags: ["sports"],
+    revalidate: 60,
+  })();
+});
+
+async function _getPointsTableByCompetitionId(competitionId: string) {
   const { data: pointsTable } = await (supabase as any) /* eslint-disable-line @typescript-eslint/no-explicit-any */
     .from("sports_points_table_entries")
     .select("*, team:sports_teams(id, name, short_name, logo_url)")
@@ -89,8 +100,16 @@ export async function getPointsTableByCompetitionId(competitionId: string) {
   return (pointsTable || []) as any[];
 }
 
-export async function getLiveAndFeaturedMatches() {
-  const supabase = await getClient();
+export const getPointsTableByCompetitionId = cache((competitionId: string) => {
+  if (IS_DEV) return _getPointsTableByCompetitionId(competitionId);
+  return unstable_cache(
+    () => _getPointsTableByCompetitionId(competitionId),
+    [`getPointsTableByCompetitionId-${competitionId}`],
+    { tags: ["sports"], revalidate: 60 }
+  )();
+});
+
+async function _getLiveAndFeaturedMatches() {
   const [{ data: live }, { data: featured }] = await Promise.all([
     (supabase as any) /* eslint-disable-line @typescript-eslint/no-explicit-any */
       .from("sports_matches")
@@ -115,15 +134,20 @@ export async function getLiveAndFeaturedMatches() {
   return { live: (live || []) as any[], featured: (featured || []) as any[] };
 }
 
-export async function getPublishedMatches(
-  options: {
-    sport?: string;
-    status?: string;
-    limit?: number;
-  } = {}
-) {
+export const getLiveAndFeaturedMatches = cache(() => {
+  if (IS_DEV) return _getLiveAndFeaturedMatches();
+  return unstable_cache(() => _getLiveAndFeaturedMatches(), ["getLiveAndFeaturedMatches"], {
+    tags: ["sports", "live-matches"],
+    revalidate: 10,
+  })();
+});
+
+async function _getPublishedMatches(options: {
+  sport?: string;
+  status?: string;
+  limit?: number;
+} = {}) {
   const { sport, status, limit = 20 } = options;
-  const supabase = await getClient();
 
   let query = (supabase as any) /* eslint-disable-line @typescript-eslint/no-explicit-any */
     .from("sports_matches")
@@ -143,9 +167,21 @@ export async function getPublishedMatches(
   return data as any[];
 }
 
-export async function getMatchBySlug(slug: string) {
-  const supabase = await getClient();
+export const getPublishedMatches = cache((options: {
+  sport?: string;
+  status?: string;
+  limit?: number;
+} = {}) => {
+  if (IS_DEV) return _getPublishedMatches(options);
+  const key = `getPublishedMatches-${options.sport || ""}-${options.status || ""}-${options.limit || 20}`;
+  const isLive = options.status === "live";
+  return unstable_cache(() => _getPublishedMatches(options), [key], {
+    tags: ["sports"],
+    revalidate: isLive ? 10 : 30,
+  })();
+});
 
+async function _getMatchBySlug(slug: string) {
   const { data: match, error } = await (supabase as any) /* eslint-disable-line @typescript-eslint/no-explicit-any */
     .from("sports_matches")
     .select(
@@ -171,3 +207,11 @@ export async function getMatchBySlug(slug: string) {
     updates: (updates || []) as any[],
   };
 }
+
+export const getMatchBySlug = cache((slug: string) => {
+  if (IS_DEV) return _getMatchBySlug(slug);
+  return unstable_cache(() => _getMatchBySlug(slug), [`getMatchBySlug-${slug}`], {
+    tags: ["sports"],
+    revalidate: 15,
+  })();
+});
