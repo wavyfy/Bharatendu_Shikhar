@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { randomUUID } from "crypto";
 import { getSettings } from "@/features/settings/queries";
+import { revalidateWeb } from "@/utils/revalidateWeb";
 
 async function getAuth() {
   const cookieStore = await cookies();
@@ -72,6 +73,7 @@ export async function createAdvertisementAction(formData: FormData) {
   }
 
   revalidatePath("/advertisements");
+  revalidateWeb(["advertisements"]);
   
   let warning;
   if (is_active) {
@@ -139,6 +141,7 @@ export async function updateAdvertisementAction(id: string, formData: FormData) 
   }
 
   revalidatePath("/advertisements");
+  revalidateWeb(["advertisements"]);
 
   let warning;
   if (is_active) {
@@ -172,6 +175,7 @@ export async function deleteAdvertisementAction(id: string) {
   }
   
   revalidatePath("/advertisements");
+  revalidateWeb(["advertisements"]);
   return { success: true };
 }
 
@@ -182,6 +186,7 @@ export async function updateAdvertisementStatusAction(id: string, is_active: boo
     return { success: false, error: error.message };
   }
   revalidatePath("/advertisements");
+  revalidateWeb(["advertisements"]);
 
   let warning;
   if (is_active) {
@@ -217,7 +222,7 @@ export async function getAdvertisementUploadUrlAction(fileExt: string) {
 
 export async function deleteAdvertisementImageAction(url: string) {
   try {
-    const { supabase } = await getAuth();
+    await getAuth();
     if (!url) return { success: true }; 
     
     // URL format: https://[...]/storage/v1/object/public/advertisements/[user_id]/[file_name]

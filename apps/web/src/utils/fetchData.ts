@@ -62,15 +62,25 @@ async function _fetchHomepageData() {
       .eq("is_active", true),
   ]);
 
-  const topArticlesData = topArticlesResponse.data;
+  const topArticlesData = (topArticlesResponse.data as ArticleWithAuthor[]) || [];
   const categoriesData = categoriesResponse.data;
 
-  // 3. Fetch articles for each category in parallel
+  // 3. Process articles for each category: use in-memory filter from top 200 first, fallback to DB query if < 10
   const categorySections: TopicCategoryData[] = [];
 
   if (categoriesData) {
     const results = await fetchInBatches(categoriesData, 5, async (category) => {
-      const { data: catArticles } = await supabase
+      const inMemoryArticles = topArticlesData.filter(
+        (art) => art.category_id === category.id
+      ).slice(0, 10);
+
+      // If top 200 already has 10 published articles for this category, reuse them without extra query
+      if (inMemoryArticles.length >= 10) {
+        return { category, catArticles: inMemoryArticles };
+      }
+
+      // Fallback query only if top 200 list yields fewer than 10 articles for this category
+      const { data: dbArticles } = await supabase
         .from("articles")
         .select(`*, article_badges(badge:badges(id, name, slug, color))`)
         .eq("status", "published")
@@ -79,6 +89,8 @@ async function _fetchHomepageData() {
         .lte("published_at", endISO)
         .order("published_at", { ascending: false })
         .limit(10);
+
+      const catArticles = (dbArticles && dbArticles.length > 0) ? dbArticles : inMemoryArticles;
       return { category, catArticles };
     });
 
@@ -99,7 +111,7 @@ async function _fetchHomepageData() {
   }
 
   return {
-    topArticles: (topArticlesData as ArticleWithAuthor[]) || [],
+    topArticles: topArticlesData,
     categorySections,
   };
 }
@@ -301,7 +313,7 @@ async function _fetchBottomSlidersData() {
         .eq("region_id", region.id)
         .order("published_at", { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
       return { region, latestArticle };
     });
 
@@ -327,7 +339,7 @@ async function _fetchBottomSlidersData() {
         .eq("category_id", category.id)
         .order("published_at", { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
       return { category, latestArticle };
     });
 
@@ -379,8 +391,8 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
   const baseSelect = `*, article_badges(badge:badges(id, name, slug, color))`;
   const excludeId = excludeArticleId || -1;
 
-  // Fire all queries in parallel — skip queries that can't yield results
-  const [catRegData, catData, regData, fallbackData] = await Promise.all([
+  // 1. Primary queries (same category+region, same category, same region) in parallel
+  const [catRegData, catData, regData] = await Promise.all([
     // 1. Same category + same region
     (categoryId && regionId)
       ? supabase.from("articles").select(baseSelect).eq("status", "published")
@@ -404,11 +416,6 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
           .neq("id", excludeId).order("published_at", { ascending: false }).limit(9)
           .then(r => r.data)
       : Promise.resolve(null),
-
-    // 4. Fallback latest
-    supabase.from("articles").select(baseSelect).eq("status", "published")
-      .neq("id", excludeId).order("published_at", { ascending: false }).limit(9)
-      .then(r => r.data),
   ]);
 
   // Merge in priority order, deduplicating by id
@@ -423,11 +430,37 @@ async function _fetchRelatedArticles(categoryId?: number | null, regionId?: numb
   addArticles(catRegData as ArticleWithAuthor[] | null);
   addArticles(catData as ArticleWithAuthor[] | null);
   addArticles(regData as ArticleWithAuthor[] | null);
+
+  // If primary queries already returned at least 9 articles, return them directly
+  if (relatedMap.size >= 9) {
+    return Array.from(relatedMap.values()).slice(0, 9);
+  }
+
+  // 4. Fallback latest articles only when primary queries returned fewer than 9
+  const { data: fallbackData } = await supabase.from("articles").select(baseSelect).eq("status", "published")
+    .neq("id", excludeId).order("published_at", { ascending: false }).limit(9);
+
   addArticles(fallbackData as ArticleWithAuthor[] | null);
 
   return Array.from(relatedMap.values()).slice(0, 9);
 }
 
+
+async function _fetchEpapers(page = 1) {
+  const limit = 20;
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+  const now = new Date().toISOString();
+
+  const { data: epapers, count } = await supabase
+    .from("epapers")
+    .select("*, regions(name)", { count: "exact" })
+    .lte("published_at", now)
+    .order("published_at", { ascending: false })
+    .range(from, to);
+
+  return { epapers, count, limit };
+}
 
 // --- Cached Exports ---
 import { cache } from "react";
@@ -441,3 +474,14 @@ export const fetchDynamicPageData = IS_DEV ? cache(_fetchDynamicPageData) : unst
 export const fetchBottomSlidersData = IS_DEV ? cache(_fetchBottomSlidersData) : unstable_cache(cache(_fetchBottomSlidersData), ["fetchBottomSlidersData"], { tags: ["articles", "categories", "regions"] });
 export const fetchArticleBySlug = IS_DEV ? cache(_fetchArticleBySlug) : unstable_cache(cache(_fetchArticleBySlug), ["fetchArticleBySlug"], { tags: ["articles", "categories", "regions"] });
 export const fetchRelatedArticles = IS_DEV ? cache(_fetchRelatedArticles) : unstable_cache(cache(_fetchRelatedArticles), ["fetchRelatedArticles"], { tags: ["articles", "categories", "regions"] });
+export const fetchEpapers = cache((page = 1) => {
+  if (IS_DEV) {
+    return _fetchEpapers(page);
+  }
+  return unstable_cache(
+    () => _fetchEpapers(page),
+    [`fetchEpapers-${page}`],
+    { tags: ["epaper"], revalidate: 60 }
+  )();
+});
+

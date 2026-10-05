@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createSupabaseServerClient } from "@repo/api";
 import { revalidatePath } from "next/cache";
 import { deleteFileAction } from "../storage/actions";
+import { revalidateWeb } from "@/utils/revalidateWeb";
 
 const epaperSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters").max(200),
@@ -74,6 +75,7 @@ export async function createEpaperAction(formData: FormData) {
     }
 
     revalidatePath("/epapers");
+    revalidateWeb(["epaper"]);
     return { success: true };
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
@@ -139,6 +141,7 @@ export async function updateEpaperAction(id: number, formData: FormData) {
     }
 
     revalidatePath("/epapers");
+    revalidateWeb(["epaper"]);
     return { success: true };
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
@@ -186,6 +189,7 @@ export async function deleteEpaperAction(id: number) {
     }
 
     revalidatePath("/epapers");
+    revalidateWeb(["epaper"]);
     return { success: true };
   } catch (error: unknown) {
     console.error("Action error:", error);
