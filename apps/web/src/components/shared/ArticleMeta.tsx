@@ -9,7 +9,8 @@ function calculateReadTime(content: string | undefined | null): string {
 
 export function ArticleMeta({ article, isArticlePage, alignRight }: { article: ArticleWithAuthor, isArticlePage?: boolean, alignRight?: boolean }) {
   const badges = getArticleBadges(article, isArticlePage);
-  const dateStr = new Date(article.published_at || article.created_at || new Date()).toLocaleDateString("hi-IN", { month: "short", day: "numeric", year: "numeric" });
+  const rawDateStr = new Date(article.published_at || article.created_at || new Date()).toLocaleDateString("hi-IN", { month: "long", day: "numeric", year: "numeric" });
+  const dateStr = rawDateStr.replace(/अक्तू(बर|°)?/g, "अक्टूबर");
   const readTime = calculateReadTime(article.content);
   const authorName = article.profiles?.full_name;
 

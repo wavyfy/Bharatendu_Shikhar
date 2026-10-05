@@ -85,8 +85,8 @@ export async function generateMetadata(): Promise<Metadata> {
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SearchProvider } from "@/context/SearchContext";
 import { SearchModal } from "@/components/shared/SearchModal";
-import { BackToTop } from "@/components/shared/BackToTop";
 import { FloatingNav } from "@/components/shared/FloatingNav";
+import { BackToTop } from "@/components/shared/BackToTop";
 
 import { MaintenanceScreen } from "@/components/shared/MaintenanceScreen";
 import { CommonListener } from "@/components/shared/CommonListener";
@@ -116,12 +116,12 @@ export default async function RootLayout({
     <html
       lang="hi"
       suppressHydrationWarning
-      className={`${inter.variable} ${geistMono.variable} ${newsreader.variable} ${devanagari.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${newsreader.variable} ${devanagari.variable} min-h-screen antialiased`}
     >
       <head>
         <GoogleTagManagerScript />
       </head>
-      <body suppressHydrationWarning className="min-h-full flex flex-col bg-news-bg text-news-text dark:bg-news-bg dark:text-news-text">
+      <body suppressHydrationWarning className="min-h-screen flex flex-col bg-news-bg text-news-text dark:bg-news-bg dark:text-news-text overflow-x-hidden">
         <GoogleTagManagerNoScript />
         <CommonListener 
           currentMaintenanceMode={false} 
@@ -129,8 +129,8 @@ export default async function RootLayout({
         />
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           <SearchProvider>
-            <div className="flex flex-col min-h-screen overflow-x-hidden">
-              <div className="flex flex-col flex-1 bg-white dark:bg-news-bg relative z-10">
+            <div className="w-full min-h-screen flex flex-col bg-news-bg dark:bg-news-bg">
+              <div className="flex flex-col flex-1 relative z-10">
                 <TopBar />
                 <Header logoUrl={settings?.site_logo_url} logoDarkUrl={settings?.site_logo_dark_url} />
                 <Navbar navRegions={regions} navCategories={categories} logoUrl={settings?.site_logo_url} logoDarkUrl={settings?.site_logo_dark_url} />
@@ -147,8 +147,8 @@ export default async function RootLayout({
               />
             </div>
             <SearchModal />
-            <BackToTop />
             <FloatingNav />
+            <BackToTop />
           </SearchProvider>
         </ThemeProvider>
       </body>
