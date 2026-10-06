@@ -199,6 +199,11 @@ html:not(.translated-ltr) .show-in-en {
   border-left-color: #374151;
 }
 
+/* body.menu-open .floating-nav {
+  display: none !important;
+} */
+
+
 body.menu-open .floating-nav {
   display: none !important;
 }

@@ -39,14 +39,26 @@ async function _fetchAdsForSlot(slotIdentifier: string): Promise<AdData | null> 
   }
 }
 
+const _adSlotCacheMap = new Map<string, () => Promise<AdData | null>>();
+
+function getCachedAdFetcher(slotId: string) {
+  if (!_adSlotCacheMap.has(slotId)) {
+    _adSlotCacheMap.set(
+      slotId,
+      unstable_cache(
+        () => _fetchAdsForSlot(slotId),
+        [`fetchAdsForSlot-${slotId}`],
+        { tags: ["advertisements"], revalidate: 60 }
+      )
+    );
+  }
+  return _adSlotCacheMap.get(slotId)!;
+}
+
 export const fetchAdsForSlot = cache((slotIdentifier: string) => {
   if (IS_DEV) {
     return _fetchAdsForSlot(slotIdentifier);
   }
-  return unstable_cache(
-    () => _fetchAdsForSlot(slotIdentifier),
-    [`fetchAdsForSlot-${slotIdentifier}`],
-    { tags: ["advertisements"], revalidate: 60 }
-  )();
+  return getCachedAdFetcher(slotIdentifier)();
 });
 
