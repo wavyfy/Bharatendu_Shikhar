@@ -91,7 +91,7 @@ export function HorizontalArticleSlider({
   if (!items || items.length === 0) return null;
 
   return (
-    <div className={`pt-3 pb-3 mx-4 ${hideBottomBorder ? '' : 'border-b-2 border-gray-300 dark:border-news-border'}`}>
+    <div className={`pt-3 pb-3 mx-0 px-0 ${hideBottomBorder ? '' : 'border-b-2 border-gray-300 dark:border-news-border'}`}>
       <h2 className="font-medium text-lg mb-4 capitalize tracking-wide">
         {title}
       </h2>
@@ -125,7 +125,7 @@ export function HorizontalArticleSlider({
           onMouseMove={handleMouseMove}
           className="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none cursor-grab active:cursor-grabbing select-none py-2"
         >
-          <div className="flex gap-6 w-max">
+          <div className="flex gap-8 w-max">
             {displayItems.map((item, idx) => (
               <div key={`${item.id}-dup-${idx}`} className="w-55 shrink-0">
                 <Link href={`/${item.slug}`} className="block mb-2 font-medium text-[14px] leading-relaxed py-0.5 hover:text-red-600 dark:hover:text-news-accent transition-colors">
@@ -144,7 +144,7 @@ export function HorizontalArticleSlider({
                       />
                     )}
                   </div>
-                  <h3 className="text-[14px] font-light! leading-relaxed line-clamp-3 max-h-[4.8em] py-0.5 overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300 pointer-events-none">
+                  <h3 className="text-[14px] font-normal leading-relaxed line-clamp-3 max-h-[3.85em] overflow-hidden text-gray-900 dark:text-news-text group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300 pointer-events-none">
                     {item.article.title}
                   </h3>
                 </Link>

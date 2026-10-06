@@ -4,9 +4,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #F8F9FA;
+  --background: #FFFFFF;
   --foreground: #000000;
-  --news-bg: #F8F9FA;
+  --news-bg: #FFFFFF;
   --news-card: #f3f4f6;
   --news-border: #d1d5db;
   --news-text: #000000;
@@ -198,6 +198,11 @@ html:not(.translated-ltr) .show-in-en {
 .dark .prose blockquote {
   border-left-color: #374151;
 }
+
+/* body.menu-open .floating-nav {
+  display: none !important;
+} */
+
 
 body.menu-open .floating-nav {
   display: none !important;

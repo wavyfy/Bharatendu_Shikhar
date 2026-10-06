@@ -474,14 +474,26 @@ export const fetchDynamicPageData = IS_DEV ? cache(_fetchDynamicPageData) : unst
 export const fetchBottomSlidersData = IS_DEV ? cache(_fetchBottomSlidersData) : unstable_cache(cache(_fetchBottomSlidersData), ["fetchBottomSlidersData"], { tags: ["articles", "categories", "regions"] });
 export const fetchArticleBySlug = IS_DEV ? cache(_fetchArticleBySlug) : unstable_cache(cache(_fetchArticleBySlug), ["fetchArticleBySlug"], { tags: ["articles", "categories", "regions"] });
 export const fetchRelatedArticles = IS_DEV ? cache(_fetchRelatedArticles) : unstable_cache(cache(_fetchRelatedArticles), ["fetchRelatedArticles"], { tags: ["articles", "categories", "regions"] });
+const _epaperCacheMap = new Map<number, () => Promise<Awaited<ReturnType<typeof _fetchEpapers>>>>();
+
+function getEpaperFetcher(page: number) {
+  if (!_epaperCacheMap.has(page)) {
+    _epaperCacheMap.set(
+      page,
+      unstable_cache(
+        () => _fetchEpapers(page),
+        [`fetchEpapers-${page}`],
+        { tags: ["epaper"], revalidate: 60 }
+      )
+    );
+  }
+  return _epaperCacheMap.get(page)!;
+}
+
 export const fetchEpapers = cache((page = 1) => {
   if (IS_DEV) {
     return _fetchEpapers(page);
   }
-  return unstable_cache(
-    () => _fetchEpapers(page),
-    [`fetchEpapers-${page}`],
-    { tags: ["epaper"], revalidate: 60 }
-  )();
+  return getEpaperFetcher(page)();
 });
 

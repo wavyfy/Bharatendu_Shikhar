@@ -28,10 +28,10 @@ export function SecondaryFeatureArticle({ article }: { article?: ArticleWithAuth
         </div>
       )}
         <div className={`order-2 lg:order-2 flex flex-col h-full ${article.featured_image ? "lg:col-span-7" : "lg:col-span-12"}`}>
-          <h3 className="font-medium text-[29px] leading-normal mb-4 line-clamp-4 max-h-[5.75em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
+          <h3 className="font-medium text-[29px] leading-normal mb-4 line-clamp-4 group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
             {article.title}
           </h3>
-          <p className="text-gray-600 dark:text-news-text-secondary text-[17px] leading-relaxed mb-4 line-clamp-3 max-h-[4.8em] overflow-hidden">
+          <p className="text-gray-600 dark:text-news-text-secondary text-[17px] leading-relaxed mb-4 line-clamp-3">
             {article.excerpt || article.content.replace(/<[^>]+>/g, '').substring(0, 200) + "..."}
           </p>
           <div className="mt-auto">

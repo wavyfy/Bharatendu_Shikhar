@@ -115,7 +115,7 @@ export function BottomSlidersSkeleton() {
   return (
     <div className="w-full mx-auto px-0 mb-0 mt-1 flex flex-col gap-0 shadow-sm animate-in fade-in duration-300" style={{ zoom: 1 }}>
       {[1, 2].map((slider, idx) => (
-        <div key={slider} className={`pt-3 pb-3 mx-4 ${idx === 1 ? '' : 'border-b-2 border-gray-300 dark:border-news-border'}`}>
+        <div key={slider} className={`pt-3 pb-3 mx-0 px-0 ${idx === 1 ? '' : 'border-b-2 border-gray-300 dark:border-news-border'}`}>
           <Skeleton className="h-6 w-44 rounded-none mb-4" />
           <div className="flex gap-6 overflow-hidden pb-4">
             {[1, 2, 3, 4, 5].map((card) => (

@@ -45,15 +45,17 @@ export function ExpandableSectionLayout({
         
         const rightArticles = chunk.slice(leftCount);
         
+        const isInitialChunk = i < initialVisibleChunks;
+
         return (
           <AnimatePresence key={i} initial={false}>
             {isVisible && (
               <motion.div
-                initial={{ height: 0, opacity: 0 }}
+                initial={isInitialChunk ? false : { height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="overflow-hidden"
+                className={isInitialChunk ? "" : "overflow-hidden"}
               >
                 {i > 0 && <div className="h-0.5 w-full bg-gray-300 dark:bg-news-border my-6"></div>}
                 <div className="grid grid-cols-1 lg:grid-cols-13 gap-8 lg:gap-5">
@@ -90,8 +92,8 @@ export function ExpandableSectionLayout({
       })}
 
       {(totalChunks > 1) && (
-        <div className="flex justify-center mt-4 mb-1 border-t-2 border-gray-300 dark:border-news-border pt-3 relative">
-          <div className="absolute -top-px left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-news-bg px-4 sm:px-8 flex gap-2 sm:gap-4 w-auto justify-center">
+        <div className="flex justify-center mt-10 mb-3 border-t-2 border-gray-300 dark:border-news-border pt-3 relative">
+          <div className="absolute -top-px left-1/2 -translate-x-1/2 -translate-y-1/2 bg-news-bg dark:bg-news-bg px-4 sm:px-8 flex gap-2 sm:gap-4 w-auto justify-center">
             {visibleChunks > 1 && (
               <motion.button 
                 whileTap={{ scale: 0.97 }}

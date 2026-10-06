@@ -20,7 +20,7 @@ export function SplitArticles({ articles }: { articles: ArticleWithAuthor[] }) {
           <article className="flex flex-col h-full">
             <div className="flex flex-row gap-5 items-start">
               <div className="flex-1 min-w-0 pr-0">
-                <h3 className="font-medium text-[19px] leading-normal mb-2 line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
+                <h3 className="font-medium text-[19px] leading-normal mb-2 line-clamp-3 max-h-[3.65em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
                   {leftArticle.title}
                 </h3>
               </div>
@@ -45,7 +45,7 @@ export function SplitArticles({ articles }: { articles: ArticleWithAuthor[] }) {
         </Link>
       ) : (
         <article className="lg:pr-8 flex flex-col h-full">
-          <h3 className="font-medium text-[19px] leading-snug mb-2 line-clamp-3">और खबरें जल्द आ रही हैं</h3>
+          <h3 className="font-medium text-[19px] leading-snug mb-2 line-clamp-3 max-h-[3.65em] overflow-hidden">और खबरें जल्द आ रही हैं</h3>
         </article>
       )}
       
@@ -58,7 +58,7 @@ export function SplitArticles({ articles }: { articles: ArticleWithAuthor[] }) {
           <article className="flex flex-col h-full">
             <div className="flex flex-row gap-5 items-start">
               <div className="flex-1 min-w-0 pr-0">
-                <h3 className="font-medium text-[19px] leading-normal mb-2 line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
+                <h3 className="font-medium text-[19px] leading-normal mb-2 line-clamp-3 max-h-[3.65em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
                   {rightArticle.title}
                 </h3>
               </div>

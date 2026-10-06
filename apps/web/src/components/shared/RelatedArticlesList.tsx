@@ -46,7 +46,7 @@ export function RelatedArticlesList({ articles }: { articles: ArticleWithAuthor[
           <Link href={`/article/${article.slug}`} className="block group/article transition-all duration-300 h-full">
             <article className="flex flex-col h-full justify-between">
               <div className="flex flex-row gap-5 items-start">
-                <div className="flex-1 min-w-0 pr-0">
+                <div className="flex-1 min-w-0 pr-4">
                   <h3 className="font-medium text-[19px] leading-normal mb-2 line-clamp-3 max-h-[4.25em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300">
                     {article.title}
                   </h3>

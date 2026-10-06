@@ -92,7 +92,7 @@ export function DoubleRowRelatedSlider({
             />
           )}
         </div>
-        <h3 className="text-[15px] font-light leading-relaxed line-clamp-3 max-h-[4.8em] py-0.5 overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300 pointer-events-none">
+        <h3 className="text-[15px] font-light leading-relaxed line-clamp-3 max-h-[4.65em] overflow-hidden group-hover/article:text-red-600 dark:group-hover/article:text-news-accent transition-colors duration-300 pointer-events-none">
           {item.article.title}
         </h3>
       </Link>
