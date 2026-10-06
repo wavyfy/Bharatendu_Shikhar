@@ -1,4 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 import { Inter, Geist_Mono, Newsreader, Noto_Sans_Devanagari } from "next/font/google";
 import "./globals.css";
 import { TopBar } from "@/components/layout/TopBar";
@@ -116,7 +123,7 @@ export default async function RootLayout({
     <html
       lang="hi"
       suppressHydrationWarning
-      className={`${inter.variable} ${geistMono.variable} ${newsreader.variable} ${devanagari.variable} min-h-screen antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${newsreader.variable} ${devanagari.variable} min-h-screen overflow-x-hidden antialiased`}
     >
       <head>
         <GoogleTagManagerScript />
