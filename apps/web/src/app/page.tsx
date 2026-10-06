@@ -123,7 +123,7 @@ async function CategoriesSection() {
 async function BottomSlidersSection() {
   const { regionSliderItems, categorySliderItems } = await fetchBottomSlidersData();
   return (
-    <div className="w-full mx-auto px-0 mb-0 mt-1 flex flex-col gap-0" style={{ zoom: 1 }}>
+    <div className="w-full mx-auto px-0 mb-0 mt-1 flex flex-col gap-0">
       <HorizontalArticleSlider title="उत्तराखंड क्षेत्र" items={regionSliderItems} />
       <HorizontalArticleSlider title="विश्व समाचार" items={categorySliderItems} hideBottomBorder={true} />
     </div>
@@ -143,7 +143,7 @@ export default function Home() {
         <Advertisement slotId="fixed:vertical_left" orientation="vertical" position="left" />
 
         <div className="flex-1 min-w-0 flex flex-col mt-2 md:mt-8">
-          <main style={{ zoom: 0.95 }}>
+          <main className="lg:zoom-[0.95]">
             <Suspense fallback={<FeaturedSkeleton />}>
               <FeaturedSection />
             </Suspense>
@@ -155,7 +155,7 @@ export default function Home() {
           </div>
 
           {/* Dynamic Topic Sections */}
-          <div style={{ zoom: 0.95 }}>
+          <div className="lg:zoom-[0.95]">
             <Suspense fallback={<CategorySectionsSkeleton />}>
               <CategoriesSection />
             </Suspense>
