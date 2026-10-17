@@ -48,7 +48,7 @@ function getCachedAdFetcher(slotId: string) {
       unstable_cache(
         () => _fetchAdsForSlot(slotId),
         [`fetchAdsForSlot-${slotId}`],
-        { tags: ["advertisements"], revalidate: 60 }
+        { tags: ["advertisements"], revalidate: 3600 }
       )
     );
   }

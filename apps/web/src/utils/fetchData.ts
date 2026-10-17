@@ -467,7 +467,7 @@ import { cache } from "react";
 const IS_DEV = process.env.NODE_ENV === "development";
 
 export const fetchTickerArticles = IS_DEV ? cache(_fetchTickerArticles) : unstable_cache(cache(_fetchTickerArticles), ["fetchTickerArticles"], { tags: ["articles"] });
-export const fetchHomepageData = IS_DEV ? cache(_fetchHomepageData) : unstable_cache(cache(_fetchHomepageData), ["fetchHomepageData"], { tags: ["articles", "categories"] });
+export const fetchHomepageData = IS_DEV ? cache(_fetchHomepageData) : unstable_cache(cache(_fetchHomepageData), ["fetchHomepageData"], { tags: ["articles", "categories"], revalidate: 3600 }); // 1h fallback rolls the 3-day UTC window
 export const fetchNavbarData = IS_DEV ? cache(_fetchNavbarData) : unstable_cache(cache(_fetchNavbarData), ["fetchNavbarData"], { tags: ["categories", "regions"] });
 export const fetchSettings = IS_DEV ? cache(_fetchSettings) : unstable_cache(cache(_fetchSettings), ["fetchSettings"], { tags: ["settings"] });
 export const fetchDynamicPageData = IS_DEV ? cache(_fetchDynamicPageData) : unstable_cache(cache(_fetchDynamicPageData), ["fetchDynamicPageData"], { tags: ["articles", "categories", "regions"] });
