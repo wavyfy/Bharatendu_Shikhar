@@ -6,7 +6,28 @@ export type ArticleWithAuthor = ArticleRow & {
   profiles?: { full_name?: string } | null;
   article_live_updates?: Database["public"]["Tables"]["article_live_updates"]["Row"][];
   article_badges?: { badge?: { name: string; color: string | null } | null }[] | null;
+  /** Set by toCardArticle, where `content` is only a short preview. */
+  read_time_minutes?: number;
 };
+
+export function getReadTimeMinutes(content: string | undefined | null): number {
+  if (!content) return 1;
+  return Math.ceil(content.trim().split(/\s+/).length / 200);
+}
+
+// Card components read `content` only for the excerpt fallback (first <=200 chars of
+// tag-stripped text) and the read time, so cards rendered by client components get a
+// preview instead of the full HTML body to keep it out of the RSC payload.
+const CARD_CONTENT_PREVIEW_LENGTH = 200;
+
+export function toCardArticle(article: ArticleWithAuthor): ArticleWithAuthor {
+  if (!article.content) return article;
+  return {
+    ...article,
+    content: article.content.replace(/<[^>]+>/g, "").substring(0, CARD_CONTENT_PREVIEW_LENGTH),
+    read_time_minutes: getReadTimeMinutes(article.content),
+  };
+}
 
 export type TopicCategoryData = {
   id: string;
