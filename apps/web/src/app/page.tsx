@@ -19,7 +19,7 @@ import type { SliderItem } from "@/components/home/HorizontalArticleSlider";
 const toCardSliderItems = (items: SliderItem[]) =>
   items.map((item) => ({ ...item, article: toCardArticle(item.article) }));
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 3600; // 1-hour fallback; CMS changes revalidate on demand via cache tags
 
 async function JsonLdSchema() {
   const settings = await fetchSettings();
