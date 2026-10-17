@@ -1,9 +1,7 @@
-import { ArticleWithAuthor, getArticleBadges } from "@/utils/mapArticleData";
+import { ArticleWithAuthor, getArticleBadges, getReadTimeMinutes } from "@/utils/mapArticleData";
 
-function calculateReadTime(content: string | undefined | null): string {
-  if (!content) return "1 मिनट पढ़ें";
-  const words = content.trim().split(/\s+/).length;
-  const minutes = Math.ceil(words / 200);
+function calculateReadTime(article: ArticleWithAuthor): string {
+  const minutes = article.read_time_minutes ?? getReadTimeMinutes(article.content);
   return `${minutes} मिनट पढ़ें`;
 }
 
@@ -11,7 +9,7 @@ export function ArticleMeta({ article, isArticlePage, alignRight }: { article: A
   const badges = getArticleBadges(article, isArticlePage);
   const rawDateStr = new Date(article.published_at || article.created_at || new Date()).toLocaleDateString("hi-IN", { month: "long", day: "numeric", year: "numeric" });
   const dateStr = rawDateStr.replace(/अक्तू(बर|°)?/g, "अक्टूबर");
-  const readTime = calculateReadTime(article.content);
+  const readTime = calculateReadTime(article);
   const authorName = article.profiles?.full_name;
 
   return (

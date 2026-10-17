@@ -2,8 +2,7 @@ import { notFound } from "next/navigation";
 import { fetchSettings } from "@/utils/fetchData";
 import type { Metadata } from "next";
 import { getSiteUrl } from "@/utils/seo";
-import { LegalDialog } from "@/components/shared/LegalDialog";
-import Home from "@/app/page";
+import { LegalStandalonePage } from "@/components/shared/LegalStandalonePage";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
@@ -43,10 +42,9 @@ export default async function ContactPage() {
   }
 
   return (
-    <>
-      <Home />
-      <LegalDialog field="contact" title="संपर्क करें">
-        <div className="flex flex-col divide-y divide-gray-200 dark:divide-news-border">
+    <LegalStandalonePage field="contact" title="संपर्क करें">
+        {/* not-prose: keep the original contact-card styling inside the standalone prose wrapper */}
+        <div className="not-prose flex flex-col divide-y divide-gray-200 dark:divide-news-border">
           {settings.contact_email && (
             <div className="py-4.5 px-2 transition-all duration-200">
               <h3 className="text-xs font-semibold text-red-600 uppercase tracking-wider mb-1.5">ई-मेल</h3>
@@ -74,7 +72,6 @@ export default async function ContactPage() {
             </div>
           )}
         </div>
-      </LegalDialog>
-    </>
+    </LegalStandalonePage>
   );
 }

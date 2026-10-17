@@ -13,6 +13,11 @@ import {
 } from "@/components/skeletons/HomeSkeletons";
 import { fetchSettings } from "@/utils/fetchData";
 import { getSiteUrlString } from "@/utils/seo";
+import { toCardArticle } from "@/utils/mapArticleData";
+import type { SliderItem } from "@/components/home/HorizontalArticleSlider";
+
+const toCardSliderItems = (items: SliderItem[]) =>
+  items.map((item) => ({ ...item, article: toCardArticle(item.article) }));
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -99,7 +104,7 @@ async function TickerSection() {
 
 async function FeaturedSection() {
   const { topArticles } = await fetchHomepageData();
-  return <ExpandableSectionLayout articles={topArticles} />;
+  return <ExpandableSectionLayout articles={topArticles.map(toCardArticle)} />;
 }
 
 async function CategoriesSection() {
@@ -113,7 +118,7 @@ async function CategoriesSection() {
               <Advertisement slotId={`category:${topic.id}`} orientation="horizontal" />
             </div>
           )}
-          <TopicSection data={topic} />
+          <TopicSection data={{ ...topic, articles: topic.articles.map(toCardArticle) }} />
         </div>
       ))}
     </>
@@ -124,8 +129,8 @@ async function BottomSlidersSection() {
   const { regionSliderItems, categorySliderItems } = await fetchBottomSlidersData();
   return (
     <div className="w-full mx-auto px-0 mb-0 mt-1 flex flex-col gap-0">
-      <HorizontalArticleSlider title="उत्तराखंड क्षेत्र" items={regionSliderItems} />
-      <HorizontalArticleSlider title="विश्व समाचार" items={categorySliderItems} hideBottomBorder={true} />
+      <HorizontalArticleSlider title="उत्तराखंड क्षेत्र" items={toCardSliderItems(regionSliderItems)} />
+      <HorizontalArticleSlider title="विश्व समाचार" items={toCardSliderItems(categorySliderItems)} hideBottomBorder={true} />
     </div>
   );
 }

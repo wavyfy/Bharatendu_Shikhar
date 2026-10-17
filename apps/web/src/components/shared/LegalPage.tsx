@@ -2,8 +2,7 @@ import { notFound } from "next/navigation";
 import { fetchSettings } from "@/utils/fetchData";
 import type { Metadata } from "next";
 import { getSiteUrl } from "@/utils/seo";
-import { LegalDialog } from "./LegalDialog";
-import Home from "@/app/page";
+import { LegalStandalonePage } from "./LegalStandalonePage";
 
 export async function LegalPage({ field, title }: { field: string, title: string }) {
   const settings = await fetchSettings();
@@ -14,14 +13,9 @@ export async function LegalPage({ field, title }: { field: string, title: string
   }
 
   return (
-    <>
-      <Home />
-      <LegalDialog field={field} title={title}>
-        <article className="prose prose-lg dark:prose-invert max-w-none prose-a:text-red-600 hover:prose-a:text-red-700 prose-a:transition-colors prose-a:font-medium prose-headings:tracking-tight marker:text-red-600 prose-li:my-1">
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-        </article>
-      </LegalDialog>
-    </>
+    <LegalStandalonePage field={field} title={title}>
+      <div dangerouslySetInnerHTML={{ __html: content }} />
+    </LegalStandalonePage>
   );
 }
 
